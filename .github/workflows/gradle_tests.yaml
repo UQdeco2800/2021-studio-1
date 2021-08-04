@@ -40,8 +40,8 @@ jobs:
           SLACK_TITLE: 'Test Results'
           SLACK_MESSAGE: 'Unit Tests reported *${{steps.tests.conclusion}}*! Commit message: ```${{ github.event.head_commit.message }}```'
           SLACK_COLOR: ${{ job.status }} # Automatically changes color of the message
-          SLACK_USERNAME: DECO2800 Overwatch
-          SLACK_ICON: https://static.wikia.nocookie.net/1547a0b1-0227-43c5-ac81-9f1d0895824b
+          SLACK_USERNAME: DECO Bot
+          SLACK_ICON: https://icons.iconarchive.com/icons/google/noto-emoji-smileys/1024/10103-robot-face-icon.png
           SLACK_FOOTER: ''
           MSG_MINIMAL: commit,actions url # We only want the commit link and actions url
 
