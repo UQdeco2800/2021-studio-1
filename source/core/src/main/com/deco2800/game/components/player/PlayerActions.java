@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -50,6 +51,9 @@ public class PlayerActions extends Component {
   void walk(Vector2 direction) {
     this.walkDirection = direction;
     moving = true;
+    entity.getComponent(AnimationRenderComponent.class).stopAnimation();
+    entity.getComponent(AnimationRenderComponent.class)
+            .startAnimation("run");
   }
 
   /**
@@ -59,6 +63,9 @@ public class PlayerActions extends Component {
     this.walkDirection = Vector2.Zero.cpy();
     updateSpeed();
     moving = false;
+    entity.getComponent(AnimationRenderComponent.class).stopAnimation();
+    entity.getComponent(AnimationRenderComponent.class)
+            .startAnimation("still");
   }
 
   /**
