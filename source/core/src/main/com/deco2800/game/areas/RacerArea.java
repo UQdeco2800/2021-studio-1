@@ -21,12 +21,13 @@ import org.slf4j.LoggerFactory;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class RacerArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(RacerArea.class);
-  private static final int NUM_TREES = 7;
+  private static final int NUM_TREES = 2;
   private static final int NUM_GHOSTS = 2;
-  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
+  private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
+  private static final GridPoint2 FLOOR = new GridPoint2(10, 5);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/box_boy_leaf.png",
+    "images/box_boy_leaf.png", "images/floor.png", "images/platform.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -64,6 +65,8 @@ public class RacerArea extends GameArea {
     displayUI();
 
     spawnTerrain();
+    spawnTrees();
+    spawnFloor();
     player = spawnPlayer();
     playMusic();
   }
@@ -104,14 +107,37 @@ public class RacerArea extends GameArea {
   }
 
   private void spawnTrees() {
-    GridPoint2 minPos = new GridPoint2(0, 0);
-    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+//    GridPoint2 minPos = new GridPoint2(0, 0);
+//    GridPoint2 minPos = new GridPoint2(0, 0);
+//    System.out.println(minPos);
+//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(5, 20);
+//    System.out.println(maxPos);
+//    System.out.println(terrain.getMapBounds(0));
 
-    for (int i = 0; i < NUM_TREES; i++) {
-      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-      Entity tree = ObstacleFactory.createTree();
-      spawnEntityAt(tree, randomPos, true, false);
+//    for (int i = 0; i < NUM_TREES; i++) {
+//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//      Entity tree = ObstacleFactory.createTree();
+//      spawnEntityAt(tree, randomPos, true, false);
+//      System.out.println(randomPos);
+//    }
+    GridPoint2 pos1 = terrain.getMapBounds(0).sub(10, 10);
+    Entity tree = ObstacleFactory.createTree();
+    spawnEntityAt(tree, pos1, true, false);
+    System.out.println(pos1);
+
+    GridPoint2 pos2 = terrain.getMapBounds(0).sub(15, 15);
+    Entity tree2 = ObstacleFactory.createTree();
+    spawnEntityAt(tree2, pos2, true, false);
+    System.out.println(pos2);
+  }
+
+  private void spawnFloor() {
+    for (int i = 1; i < 29; i++) {
+      Entity newFloor = ObstacleFactory.createFloor();
+      GridPoint2 position = new GridPoint2(i, 4);
+      spawnEntityAt(newFloor, position, true, true);
     }
+//    spawnEntityAt(newFloor, FLOOR, true, true);
   }
 
   private Entity spawnPlayer() {

@@ -22,15 +22,33 @@ public class ObstacleFactory {
   public static Entity createTree() {
     Entity tree =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/tree.png"))
+            .addComponent(new TextureRenderComponent("images/platform.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
     tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(2.5f);
+    tree.scaleHeight(0.8f);
     PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
     return tree;
+  }
+
+  /**
+   * Creates a floor entity.
+   * @return entity
+   */
+  public static Entity createFloor() {
+    Entity floor =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/floor.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    floor.getComponent(TextureRenderComponent.class).scaleEntity();
+    floor.scaleHeight(0.8f);
+    PhysicsUtils.setScaledCollider(floor, 0.5f, 0.2f);
+    return floor;
   }
 
   /**
