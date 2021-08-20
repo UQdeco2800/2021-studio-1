@@ -6,6 +6,7 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
 /**
@@ -34,6 +35,25 @@ public class ObstacleFactory {
   }
 
   /**
+   * Creates a platform entity.
+   * @return entity
+   */
+  public static Entity createPlatform() {
+    Entity platform =
+            new Entity()
+            .addComponent(new TextureRenderComponent("images/platform.png"))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    platform.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    platform.getComponent(TextureRenderComponent.class).scaleEntity();
+    // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
+    // difficult.
+    platform.scaleHeight(0.5f);
+    return platform;
+  }
+
+  /**
    * Creates a floor entity.
    * @return entity
    */
@@ -46,8 +66,8 @@ public class ObstacleFactory {
 
     floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     floor.getComponent(TextureRenderComponent.class).scaleEntity();
-    floor.scaleHeight(0.8f);
-    PhysicsUtils.setScaledCollider(floor, 0.5f, 0.2f);
+    floor.scaleHeight(1f);
+    //PhysicsUtils.setScaledCollider(floor, 0.5f, 0.2f);
     return floor;
   }
 

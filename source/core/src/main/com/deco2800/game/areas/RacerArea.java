@@ -23,11 +23,16 @@ public class RacerArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(RacerArea.class);
   private static final int NUM_TREES = 2;
   private static final int NUM_GHOSTS = 2;
+  private static final int LANE_1 = 9;
+  private static final int LANE_2 = 15;
+  private static final int LANE_3 = 21;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
   private static final GridPoint2 FLOOR = new GridPoint2(10, 5);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/box_boy_leaf.png", "images/floor.png", "images/platform.png",
+    "images/box_boy_leaf.png",
+    "images/floor.png",
+    "images/platform.png",
     "images/tree.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
@@ -48,6 +53,7 @@ public class RacerArea extends GameArea {
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
   private static final String[] forestMusic = {backgroundMusic};
 
+
   private final TerrainFactory terrainFactory;
 
   private Entity player;
@@ -65,7 +71,8 @@ public class RacerArea extends GameArea {
     displayUI();
 
     spawnTerrain();
-    spawnTrees();
+    //spawnTrees();
+    spawnPlatforms();
     spawnFloor();
     player = spawnPlayer();
     playMusic();
@@ -106,6 +113,37 @@ public class RacerArea extends GameArea {
         ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
   }
 
+  private void spawnPlatforms() {
+    spawnPlatform(2, LANE_1, 0);
+    spawnPlatform(3, LANE_1, 21);
+    spawnPlatform(4, LANE_2, 10);
+    spawnPlatform(1, LANE_3, 20);
+    spawnPlatform(2, LANE_3, 5);
+  }
+
+  /**
+   * Spawn a platform that is length long with height given by lane and x coordinate given by xCord.
+   *
+   * @param length the length of the platform to be made
+   * @param lane the y coordinate of the platform in the game area. It is preferable but not
+   *             required to use the variables LANE_1, LANE_2, ... for this value
+   * @param xCord the x coordinate of this platform in the game area's grid system
+   */
+  private void spawnPlatform(int length, int lane, int xCord) {
+    // In later implementations, length should create a platform that is (length * platform unit
+    // length) long. But at the moment it just creates multiple platforms stacked next to each
+    // other.
+    for (int i = 0; i < length; i++) {
+      Entity platform = ObstacleFactory.createPlatform();
+      // Make the  lane refer to the height of the top of the platform, not the bottom. This breaks
+      // when the scale height is set to 1 for some reason, as the scale height does not correlate
+      // to actual height.
+      lane = Math.round(lane - platform.getScale().y);
+      GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * platform.getScale().x) * 2), lane);
+      spawnEntityAt(platform, pos, false, false);
+    }
+  }
+
   private void spawnTrees() {
 //    GridPoint2 minPos = new GridPoint2(0, 0);
 //    GridPoint2 minPos = new GridPoint2(0, 0);
@@ -132,12 +170,11 @@ public class RacerArea extends GameArea {
   }
 
   private void spawnFloor() {
-    for (int i = 1; i < 29; i++) {
+    for (int i = 0; i < 15; i++) {
       Entity newFloor = ObstacleFactory.createFloor();
-      GridPoint2 position = new GridPoint2(i, 4);
-      spawnEntityAt(newFloor, position, true, true);
+      GridPoint2 position = new GridPoint2(i * 2, 3);
+      spawnEntityAt(newFloor, position, false, false);
     }
-//    spawnEntityAt(newFloor, FLOOR, true, true);
   }
 
   private Entity spawnPlayer() {
