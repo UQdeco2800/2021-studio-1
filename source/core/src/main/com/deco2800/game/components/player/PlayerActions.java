@@ -94,9 +94,6 @@ public class PlayerActions extends Component {
 
   void jump() {
     jumping = true;
-    entity.getComponent(AnimationRenderComponent.class).stopAnimation();
-    entity.getComponent(AnimationRenderComponent.class)
-            .startAnimation("jump");
   }
 
   void crouch() {
