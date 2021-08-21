@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.screens.MainMenuScreen;
+import com.deco2800.game.screens.PauseScreen;
 import com.deco2800.game.screens.SettingsScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ import static com.badlogic.gdx.Gdx.app;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
+  //reference to whether the game is paused
+  public boolean paused = false;
 
   @Override
   public void create() {
