@@ -27,16 +27,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     switch (keycode) {
       case Keys.W:
-        walkDirection.add(Vector2Utils.UP);
-        triggerWalkEvent();
+        triggerJumpEvent();
         return true;
       case Keys.A:
         walkDirection.add(Vector2Utils.LEFT);
         triggerWalkEvent();
         return true;
       case Keys.S:
-        walkDirection.add(Vector2Utils.DOWN);
-        triggerWalkEvent();
+        triggerCrouchEvent();
         return true;
       case Keys.D:
         walkDirection.add(Vector2Utils.RIGHT);
@@ -60,16 +58,14 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyUp(int keycode) {
     switch (keycode) {
       case Keys.W:
-        walkDirection.sub(Vector2Utils.UP);
-        triggerWalkEvent();
+        //triggerJumpEvent();
         return true;
       case Keys.A:
         walkDirection.sub(Vector2Utils.LEFT);
         triggerWalkEvent();
         return true;
       case Keys.S:
-        walkDirection.sub(Vector2Utils.DOWN);
-        triggerWalkEvent();
+        triggerStopCrouchEvent();
         return true;
       case Keys.D:
         walkDirection.sub(Vector2Utils.RIGHT);
@@ -86,5 +82,17 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     } else {
       entity.getEvents().trigger("walk", walkDirection);
     }
+  }
+
+  private void triggerJumpEvent() {
+    entity.getEvents().trigger("jump");
+  }
+
+  private void triggerCrouchEvent() {
+    entity.getEvents().trigger("crouch");
+  }
+
+  private void triggerStopCrouchEvent() {
+    entity.getEvents().trigger("stop crouch");
   }
 }
