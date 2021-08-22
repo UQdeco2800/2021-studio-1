@@ -4,10 +4,12 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.utils.math.Vector2Utils;
+
+import java.security.Provider;
 
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
@@ -23,7 +25,9 @@ public class PlayerActions extends Component {
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
   private boolean jumping = false;
+  private boolean falling = false;
   private boolean crouching = false;
+  private long time;
 
   @Override
   public void create() {
@@ -34,6 +38,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("crouch", this::crouch);
     entity.getEvents().addListener("stop crouch", this::stopCrouching);
     entity.getEvents().addListener("attack", this::attack);
+    time = 0;
   }
 
   @Override
@@ -41,7 +46,7 @@ public class PlayerActions extends Component {
     if (moving) {
       updateWalkingSpeed();
     } else if (jumping) {
-      jumpSpeed();
+      applyJumpForce();
     }
   }
 
@@ -59,12 +64,27 @@ public class PlayerActions extends Component {
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
   }
 
-  private void jumpSpeed() {
-    /*
-    Apply upwards for to jump
-    Overtime, gravity force will be greater than the jump for and the player
-    will start to fall
-     */
+  private void applyJumpForce() {
+    if (time == 0) {
+      time = ServiceLocator.getTimeSource().getTime();
+      physicsComponent.getBody().applyForce(new Vector2(0, 100f),
+              physicsComponent.getEntity().getPosition(), true);
+    } else if (falling) {
+      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
+        time = 0;
+        physicsComponent.getBody().applyForce(new Vector2(0, 0),
+                physicsComponent.getEntity().getPosition(), true);
+        jumping = false;
+        falling = false;
+      }
+    } else {
+      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
+        time = ServiceLocator.getTimeSource().getTime();
+        physicsComponent.getBody().applyForce(new Vector2(0, -100f),
+                physicsComponent.getEntity().getPosition(), true);
+        falling = true;
+      }
+    }
   }
 
   /**
