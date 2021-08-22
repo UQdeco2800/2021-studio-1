@@ -55,10 +55,13 @@ public class PlayerFactory {
             Animation.PlayMode.LOOP);
     animator.addAnimation("run", 0.3f,
             Animation.PlayMode.LOOP);
+
     player.addComponent(animator);
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
+    player.getComponent(PhysicsComponent.class).setGravityScale(1.0f);
+
     return player;
   }
 
