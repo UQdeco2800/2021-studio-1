@@ -51,6 +51,9 @@ public class PlayerActions extends Component {
   }
 
   private void updateWalkingSpeed() {
+    if (jumping) {
+      applyMovingJumpForce();
+    }
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity;
@@ -81,6 +84,28 @@ public class PlayerActions extends Component {
       if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
         time = ServiceLocator.getTimeSource().getTime();
         physicsComponent.getBody().applyForce(new Vector2(0, -100f),
+                physicsComponent.getEntity().getPosition(), true);
+        falling = true;
+      }
+    }
+  }
+  private void applyMovingJumpForce() {
+    if (time == 0) {
+      time = ServiceLocator.getTimeSource().getTime();
+      physicsComponent.getBody().applyForce(new Vector2(0, 1000f),
+              physicsComponent.getEntity().getPosition(), true);
+    } else if (falling) {
+      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
+        time = 0;
+        physicsComponent.getBody().applyForce(new Vector2(0, 0),
+                physicsComponent.getEntity().getPosition(), true);
+        jumping = false;
+        falling = false;
+      }
+    } else {
+      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
+        time = ServiceLocator.getTimeSource().getTime();
+        physicsComponent.getBody().applyForce(new Vector2(0, -1000f),
                 physicsComponent.getEntity().getPosition(), true);
         falling = true;
       }
