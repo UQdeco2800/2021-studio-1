@@ -63,17 +63,34 @@ public class PlayerActions extends Component {
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
   }
 
+  /**
+   * Applies an upwards force to the player for 100ms, then removes the force
+   */
   private void applyJumpForce() {
+    Body body = physicsComponent.getBody();
       if (time == 0) {
+        //Get the time when the force begins to be applied
         time = ServiceLocator.getTimeSource().getTime();
+        //Apply the force to the player
+        body.applyLinearImpulse(new Vector2(0, 20f)
+                .scl(body.getMass()), body.getWorldCenter(), true);
+        /*
         physicsComponent.getBody().applyForce(new Vector2(0, 250f),
                 physicsComponent.getEntity().getPosition(), true);
-      } else if (time + 50 < ServiceLocator.getTimeSource().getTime()) {
+         */
+        //Check if 100ms has passed
+      } else if (time + 100 < ServiceLocator.getTimeSource().getTime()) {
+        //Remove the force from the player and reset the time
+        body.applyLinearImpulse(new Vector2(0, 0)
+                .scl(body.getMass()), body.getWorldCenter(), true);
+        /*
         physicsComponent.getBody().applyForce(new Vector2(0, 0),
                 physicsComponent.getEntity().getPosition(), true);
+                */
         time = 0;
         jumping = false;
       }
+
   }
 
   /**
