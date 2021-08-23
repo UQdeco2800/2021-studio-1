@@ -61,7 +61,7 @@ public class PlayerFactory {
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     //gravity scalar used to multiply gravity from physics engine, used 1 for base character
-    //vary based on how the weights of the different character are meant to be perceived
+    //vary based on how heavy we want characters to look
     player.getComponent(PhysicsComponent.class).setGravityScale(1.0f);
 
     return player;
