@@ -7,6 +7,9 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.physics.components.HitboxComponent;
 
 /**
  * Factory to create obstacle entities.
@@ -28,8 +31,8 @@ public class ObstacleFactory {
 
     rock.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     rock.getComponent(TextureRenderComponent.class).scaleEntity();
-    rock.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(rock, 0.5f, 0.2f);
+    rock.setScale(1.5f, 1.5f);
+    PhysicsUtils.setScaledCollider(rock, 0.5f, 0.5f);
     return rock;
   }
 
@@ -42,12 +45,15 @@ public class ObstacleFactory {
             new Entity()
                     .addComponent(new TextureRenderComponent("images/Spike_1.png"))
                     .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f))
+                    .addComponent(new CombatStatsComponent(1, 100));
 
     spikes.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     spikes.getComponent(TextureRenderComponent.class).scaleEntity();
-    spikes.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(spikes, 0.5f, 0.2f);
+    spikes.setScale(2f, 1.5f);
+    PhysicsUtils.setScaledCollider(spikes, 0.7f, 0.2f);
     return spikes;
   }
 
