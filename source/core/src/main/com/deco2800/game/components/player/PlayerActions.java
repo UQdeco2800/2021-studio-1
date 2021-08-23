@@ -83,7 +83,7 @@ public class PlayerActions extends Component {
     } else {
       if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
         time = ServiceLocator.getTimeSource().getTime();
-        physicsComponent.getBody().applyForce(new Vector2(0, -100f),
+        physicsComponent.getBody().applyForce(new Vector2(0, 0),
                 physicsComponent.getEntity().getPosition(), true);
         falling = true;
       }
@@ -92,7 +92,7 @@ public class PlayerActions extends Component {
   private void applyMovingJumpForce() {
     if (time == 0) {
       time = ServiceLocator.getTimeSource().getTime();
-      physicsComponent.getBody().applyForce(new Vector2(0, 1000f),
+      physicsComponent.getBody().applyForce(new Vector2(0, 200f),
               physicsComponent.getEntity().getPosition(), true);
     } else if (falling) {
       if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
@@ -105,7 +105,7 @@ public class PlayerActions extends Component {
     } else {
       if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
         time = ServiceLocator.getTimeSource().getTime();
-        physicsComponent.getBody().applyForce(new Vector2(0, -1000f),
+        physicsComponent.getBody().applyForce(new Vector2(0, 0),
                 physicsComponent.getEntity().getPosition(), true);
         falling = true;
       }
