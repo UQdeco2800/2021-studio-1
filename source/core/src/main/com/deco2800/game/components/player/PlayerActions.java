@@ -25,7 +25,6 @@ public class PlayerActions extends Component {
   private Vector2 walkDirection = Vector2.Zero.cpy();
   private boolean moving = false;
   private boolean jumping = false;
-  private boolean falling = false;
   private boolean crouching = false;
   private long time;
 
@@ -43,17 +42,14 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
-    if (moving) {
-      updateWalkingSpeed();
-    } else if (jumping) {
+    if (jumping) {
       applyJumpForce();
+    } else if (moving) {
+      updateWalkingSpeed();
     }
   }
 
   private void updateWalkingSpeed() {
-    if (jumping) {
-      applyMovingJumpForce();
-    }
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity;
@@ -68,48 +64,16 @@ public class PlayerActions extends Component {
   }
 
   private void applyJumpForce() {
-    if (time == 0) {
-      time = ServiceLocator.getTimeSource().getTime();
-      physicsComponent.getBody().applyForce(new Vector2(0, 100f),
-              physicsComponent.getEntity().getPosition(), true);
-    } else if (falling) {
-      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
-        time = 0;
-        physicsComponent.getBody().applyForce(new Vector2(0, 0),
-                physicsComponent.getEntity().getPosition(), true);
-        jumping = false;
-        falling = false;
-      }
-    } else {
-      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
+      if (time == 0) {
         time = ServiceLocator.getTimeSource().getTime();
+        physicsComponent.getBody().applyForce(new Vector2(0, 250f),
+                physicsComponent.getEntity().getPosition(), true);
+      } else if (time + 50 < ServiceLocator.getTimeSource().getTime()) {
         physicsComponent.getBody().applyForce(new Vector2(0, 0),
                 physicsComponent.getEntity().getPosition(), true);
-        falling = true;
-      }
-    }
-  }
-  private void applyMovingJumpForce() {
-    if (time == 0) {
-      time = ServiceLocator.getTimeSource().getTime();
-      physicsComponent.getBody().applyForce(new Vector2(0, 200f),
-              physicsComponent.getEntity().getPosition(), true);
-    } else if (falling) {
-      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
         time = 0;
-        physicsComponent.getBody().applyForce(new Vector2(0, 0),
-                physicsComponent.getEntity().getPosition(), true);
         jumping = false;
-        falling = false;
       }
-    } else {
-      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
-        time = ServiceLocator.getTimeSource().getTime();
-        physicsComponent.getBody().applyForce(new Vector2(0, 0),
-                physicsComponent.getEntity().getPosition(), true);
-        falling = true;
-      }
-    }
   }
 
   /**

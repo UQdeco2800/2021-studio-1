@@ -100,7 +100,7 @@ public class ForestGameArea extends GameArea {
         false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
         new GridPoint2(0, tileBounds.y),
         false,
         false);
