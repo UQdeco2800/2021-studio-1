@@ -16,21 +16,39 @@ import com.deco2800.game.rendering.TextureRenderComponent;
 public class ObstacleFactory {
 
   /**
-   * Creates a tree entity.
-   * @return entity
+   * Creates a rock entity.
+   * @return rock entity
    */
-  public static Entity createTree() {
-    Entity tree =
+  public static Entity createRock() {
+    Entity rock =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/tree.png"))
+            .addComponent(new TextureRenderComponent("images/Rock_1.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    tree.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    tree.getComponent(TextureRenderComponent.class).scaleEntity();
-    tree.scaleHeight(2.5f);
-    PhysicsUtils.setScaledCollider(tree, 0.5f, 0.2f);
-    return tree;
+    rock.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    rock.getComponent(TextureRenderComponent.class).scaleEntity();
+    rock.scaleHeight(2.5f);
+    PhysicsUtils.setScaledCollider(rock, 0.5f, 0.2f);
+    return rock;
+  }
+
+  /**
+   * Creates a spikes entity
+   * @return spikes entity
+   */
+  public static Entity createSpikes() {
+    Entity spikes =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/Spike_1.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    spikes.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    spikes.getComponent(TextureRenderComponent.class).scaleEntity();
+    spikes.scaleHeight(2.5f);
+    PhysicsUtils.setScaledCollider(spikes, 0.5f, 0.2f);
+    return spikes;
   }
 
   /**
