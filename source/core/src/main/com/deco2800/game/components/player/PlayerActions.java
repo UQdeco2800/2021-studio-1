@@ -23,14 +23,11 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
 
   private Vector2 runDirection = Vector2.Zero.cpy();
-  private Vector2 position;
 
   private boolean moving = false;
   private boolean jumping = false;
   private boolean falling = false;
   private boolean crouching = false;
-  private long timeJumping;
-  private long timeFalling;
 
   @Override
   public void create() {
@@ -41,7 +38,6 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("crouch", this::crouch);
     entity.getEvents().addListener("stop crouch", this::stopCrouching);
     entity.getEvents().addListener("attack", this::attack);
-    timeJumping = 0;
   }
 
   @Override
@@ -86,8 +82,6 @@ public class PlayerActions extends Component {
       body.applyLinearImpulse(new Vector2(0, 5f), body.getPosition(),
               true);
     }
-    timeFalling = ServiceLocator.getTimeSource().getTime();
-    position = body.getPosition();
     falling = true;
     jumping = false;
   }
