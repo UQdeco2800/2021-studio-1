@@ -108,7 +108,8 @@ public class ForestGameArea extends GameArea {
     //The width of this block has been temporarily increased by 5 grid spaces so we can test jumping with gravity
     //without the character falling off
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x  , WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+        ObstacleFactory.createWall(worldBounds.x  , WALL_WIDTH + 5),
+            GridPoint2Utils.ZERO, false, false);
 
   }
 
