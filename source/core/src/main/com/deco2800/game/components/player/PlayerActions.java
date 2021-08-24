@@ -11,14 +11,15 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
 /**
- * Action component for interacting with the player. Player events should be initialised in create()
- * and when triggered should call methods within this class.
+ * Action component for interacting with the player. Player events should be
+ * initialised in create() and when triggered should call methods within this
+ * class.
  */
 public class PlayerActions extends Component {
   private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres
   // per second
-  private static final Vector2 CROUCH_SPEED = new Vector2(1f, 1f); // Metres
-  // per second
+  private static final Vector2 CROUCH_SPEED = new Vector2(1f, 1f);
+  // Metres per second
 
   private PhysicsComponent physicsComponent;
 
@@ -37,7 +38,8 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("stop run", this::stopRunning);
     entity.getEvents().addListener("jump", this::jump);
     entity.getEvents().addListener("crouch", this::crouch);
-    entity.getEvents().addListener("stop crouch", this::stopCrouching);
+    entity.getEvents().addListener("stop crouch",
+            this::stopCrouching);
     entity.getEvents().addListener("attack", this::attack);
   }
 
@@ -81,7 +83,7 @@ public class PlayerActions extends Component {
                   true);
         }
       } else { //Applies force when player is not moving
-        body.applyLinearImpulse(new Vector2(0, 5f), body.getPosition(),
+        body.applyLinearImpulse(new Vector2(0, 7f), body.getPosition(),
                 true);
       }
       falling = true;
@@ -124,7 +126,8 @@ public class PlayerActions extends Component {
 
 
   /**
-   * Moves the player towards a given direction and copies that direction as the previous direction
+   * Moves the player towards a given direction and copies that direction as
+   * the previous direction
    *
    * @param direction direction to move in
    */
@@ -138,7 +141,6 @@ public class PlayerActions extends Component {
       if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
         entity.getComponent(AnimationRenderComponent.class)
                 .startAnimation("run-right");
-
       } else {
         entity.getComponent(AnimationRenderComponent.class)
                 .startAnimation("run-left");
@@ -230,7 +232,8 @@ public class PlayerActions extends Component {
    * Makes the player attack.
    */
   void attack() {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+    Sound attackSound = ServiceLocator.getResourceService().getAsset(
+            "sounds/Impact4.ogg", Sound.class);
     attackSound.play();
   }
 }
