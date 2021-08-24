@@ -76,14 +76,14 @@ public class PlayerActions extends Component {
       if (moving) { //Checks if the player is moving and applies respective
         // force
         if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          body.applyLinearImpulse(new Vector2(2f, 7f), body.getPosition(),
+          body.applyLinearImpulse(new Vector2(4f, 12f), body.getPosition(),
                   true);
         } else {
-          body.applyLinearImpulse(new Vector2(-2f, 7f), body.getPosition(),
+          body.applyLinearImpulse(new Vector2(-4f, 12f), body.getPosition(),
                   true);
         }
       } else { //Applies force when player is not moving
-        body.applyLinearImpulse(new Vector2(0, 7f), body.getPosition(),
+        body.applyLinearImpulse(new Vector2(0, 12f), body.getPosition(),
                 true);
       }
       falling = true;
