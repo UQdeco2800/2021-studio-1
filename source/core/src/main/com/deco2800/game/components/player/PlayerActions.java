@@ -56,6 +56,9 @@ public class PlayerActions extends Component {
 
   private void updateRunningSpeed() {
     Body body = physicsComponent.getBody();
+    if (physicsComponent.getBody().getLinearVelocity().y != 0) {
+      falling = true;
+    }
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity;
     if (crouching) { //Determine speed based on whether crouching or not
@@ -69,32 +72,39 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Applies an upwards force to the player for 100ms, then removes the force
+   * Applies an upwards force to the player
    */
   private void applyJumpForce() {
     Body body = physicsComponent.getBody();
-      if (moving) { //Checks if the player is moving and applies respective
-        // force
-        if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          body.applyLinearImpulse(new Vector2(4f, 12f), body.getPosition(),
-                  true);
-        } else {
-          body.applyLinearImpulse(new Vector2(-4f, 12f), body.getPosition(),
-                  true);
-        }
-      } else { //Applies force when player is not moving
-        body.applyLinearImpulse(new Vector2(0, 12f), body.getPosition(),
+    if (moving) { //Checks if the player is moving and applies respective
+      // force
+      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        body.applyLinearImpulse(new Vector2(4f, 12f), body.getPosition(),
+                true);
+      } else {
+        body.applyLinearImpulse(new Vector2(-4f, 12f), body.getPosition(),
                 true);
       }
-      falling = true;
-      jumping = false;
-
+    } else { //Applies force when player is not moving
+      body.applyLinearImpulse(new Vector2(0, 12f), body.getPosition(),
+              true);
+    }
+    falling = true;
+    jumping = false;
   }
 
   /**
    * Checks if the player is still falling by checking their y velocity
    */
   private void checkFalling() {
+    entity.getComponent(AnimationRenderComponent.class).stopAnimation();
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("jump-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("jump-left");
+    }
     if (physicsComponent.getBody().getLinearVelocity().y == 0) {
       falling = false;
       //Determine which animation to play
