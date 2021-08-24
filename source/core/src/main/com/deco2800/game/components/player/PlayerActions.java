@@ -9,6 +9,11 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
+import java.security.Provider;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
 /**
  * Action component for interacting with the player. Player events should be initialised in create()
  * and when triggered should call methods within this class.
@@ -20,12 +25,15 @@ public class PlayerActions extends Component {
   // per second
 
   private PhysicsComponent physicsComponent;
+
   private Vector2 runDirection = Vector2.Zero.cpy();
+  private Vector2 position;
+
   private boolean moving = false;
   private boolean jumping = false;
   private boolean falling = false;
   private boolean crouching = false;
-  private long time;
+  private long timeJumping;
 
   @Override
   public void create() {
@@ -37,7 +45,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("crouch", this::crouch);
     entity.getEvents().addListener("stop crouch", this::stopCrouching);
     entity.getEvents().addListener("attack", this::attack);
-    time = 0;
+    timeJumping = 0;
   }
 
   @Override
@@ -51,8 +59,9 @@ public class PlayerActions extends Component {
 
   private void updateRunningSpeed() {
     if (jumping) {
-      applyMovingJumpForce();
+      applyJumpForce();
     }
+
     Body body = physicsComponent.getBody();
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity;
@@ -66,48 +75,44 @@ public class PlayerActions extends Component {
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
   }
 
+  /**
+   * Applies an upwards force to the player for 100ms, then removes the force
+   */
   private void applyJumpForce() {
-    if (time == 0) {
-      time = ServiceLocator.getTimeSource().getTime();
-      physicsComponent.getBody().applyForce(new Vector2(0, 100f),
-              physicsComponent.getEntity().getPosition(), true);
-    } else if (falling) {
-      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
-        time = 0;
-        physicsComponent.getBody().applyForce(new Vector2(0, 0),
-                physicsComponent.getEntity().getPosition(), true);
+    Body body = physicsComponent.getBody();
+    if (!falling) {
+      if (timeJumping == 0) {
+        //Get the time when the force begins to be applied
+        timeJumping = ServiceLocator.getTimeSource().getTime();
+        //Apply the force to the player
+        body.applyLinearImpulse(new Vector2(0, 20f)
+                .scl(body.getMass()), body.getWorldCenter(), true);
+        //Check if 100ms has passed
+      } else if (ServiceLocator.getTimeSource().getTimeSince(timeJumping)
+              >= 100) {
+        //Remove the force from the player and reset the time
+        body.applyLinearImpulse(new Vector2(0, 0)
+                .scl(body.getMass()), body.getWorldCenter(), true);
+        timeJumping = 0;
+        falling = true;
         jumping = false;
-        falling = false;
+        position = physicsComponent.getEntity().getPosition();
       }
     } else {
-      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
-        time = ServiceLocator.getTimeSource().getTime();
-        physicsComponent.getBody().applyForce(new Vector2(0, 0),
-                physicsComponent.getEntity().getPosition(), true);
-        falling = true;
-      }
+      checkFalling();
     }
   }
-  private void applyMovingJumpForce() {
-    if (time == 0) {
-      time = ServiceLocator.getTimeSource().getTime();
-      physicsComponent.getBody().applyForce(new Vector2(0, 200f),
-              physicsComponent.getEntity().getPosition(), true);
-    } else if (falling) {
-      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
-        time = 0;
-        physicsComponent.getBody().applyForce(new Vector2(0, 0),
-                physicsComponent.getEntity().getPosition(), true);
-        jumping = false;
-        falling = false;
-      }
+
+  /**
+   * Checks if the player is still falling by comparing their current
+   * position to their previously saved position
+   */
+  private void checkFalling() {
+    if (position.epsilonEquals(physicsComponent.getEntity().getPosition())) {
+      jumping = false;
+      falling = false;
     } else {
-      if (ServiceLocator.getTimeSource().getTime() > time + 500f) {
-        time = ServiceLocator.getTimeSource().getTime();
-        physicsComponent.getBody().applyForce(new Vector2(0, 0),
-                physicsComponent.getEntity().getPosition(), true);
-        falling = true;
-      }
+      position = physicsComponent.getEntity().getPosition();
     }
   }
 
