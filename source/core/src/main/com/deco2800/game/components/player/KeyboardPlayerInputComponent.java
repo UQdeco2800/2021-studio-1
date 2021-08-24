@@ -11,7 +11,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
  * This input handler only uses keyboard input.
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
-  private final Vector2 walkDirection = Vector2.Zero.cpy();
+  private final Vector2 runDirection = Vector2.Zero.cpy();
 
   public KeyboardPlayerInputComponent() {
     super(5);
@@ -30,15 +30,15 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerJumpEvent();
         return true;
       case Keys.A:
-        walkDirection.add(Vector2Utils.LEFT);
-        triggerWalkEvent();
+        runDirection.add(Vector2Utils.LEFT);
+        triggerRunEvent();
         return true;
       case Keys.S:
         triggerCrouchEvent();
         return true;
       case Keys.D:
-        walkDirection.add(Vector2Utils.RIGHT);
-        triggerWalkEvent();
+        runDirection.add(Vector2Utils.RIGHT);
+        triggerRunEvent();
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
@@ -58,34 +58,38 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyUp(int keycode) {
     switch (keycode) {
       case Keys.W:
-        //triggerJumpEvent();
+        triggerStopJumpEvent();
         return true;
       case Keys.A:
-        walkDirection.sub(Vector2Utils.LEFT);
-        triggerWalkEvent();
+        runDirection.sub(Vector2Utils.LEFT);
+        triggerRunEvent();
         return true;
       case Keys.S:
         triggerStopCrouchEvent();
         return true;
       case Keys.D:
-        walkDirection.sub(Vector2Utils.RIGHT);
-        triggerWalkEvent();
+        runDirection.sub(Vector2Utils.RIGHT);
+        triggerRunEvent();
         return true;
       default:
         return false;
     }
   }
 
-  private void triggerWalkEvent() {
-    if (walkDirection.epsilonEquals(Vector2.Zero)) {
-      entity.getEvents().trigger("walkStop");
+  private void triggerRunEvent() {
+    if (runDirection.epsilonEquals(Vector2.Zero)) {
+      entity.getEvents().trigger("stop run");
     } else {
-      entity.getEvents().trigger("walk", walkDirection);
+      entity.getEvents().trigger("run", runDirection);
     }
   }
 
   private void triggerJumpEvent() {
     entity.getEvents().trigger("jump");
+  }
+
+  private void triggerStopJumpEvent() {
+    entity.getEvents().trigger("stop jump");
   }
 
   private void triggerCrouchEvent() {

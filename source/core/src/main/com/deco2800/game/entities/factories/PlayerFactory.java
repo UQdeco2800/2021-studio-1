@@ -50,10 +50,23 @@ public class PlayerFactory {
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(ServiceLocator.getResourceService()
-                    .getAsset("images/tyr.atlas", TextureAtlas.class));
-    animator.addAnimation("still", 1f,
+                    .getAsset("images/odin.atlas", TextureAtlas.class));
+
+    animator.addAnimation("still-right", 1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("run", 0.3f,
+    animator.addAnimation("still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("run-left", 0.1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("run-right", 0.1f,
+              Animation.PlayMode.LOOP);
+    animator.addAnimation("crouch-left", 0.1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("crouch-right", 0.1f,
             Animation.PlayMode.LOOP);
 
     player.addComponent(animator);
