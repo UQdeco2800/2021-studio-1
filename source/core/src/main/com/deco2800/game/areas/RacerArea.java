@@ -145,30 +145,30 @@ public class RacerArea extends GameArea {
     }
   }
 
-  private void spawnTrees() {
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    GridPoint2 minPos = new GridPoint2(0, 0);
-//    System.out.println(minPos);
-//    GridPoint2 maxPos = terrain.getMapBounds(0).sub(5, 20);
-//    System.out.println(maxPos);
-//    System.out.println(terrain.getMapBounds(0));
-
-//    for (int i = 0; i < NUM_TREES; i++) {
-//      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//      Entity tree = ObstacleFactory.createTree();
-//      spawnEntityAt(tree, randomPos, true, false);
-//      System.out.println(randomPos);
-//    }
-    GridPoint2 pos1 = terrain.getMapBounds(0).sub(10, 10);
-    Entity tree = ObstacleFactory.createTree();
-    spawnEntityAt(tree, pos1, true, false);
-    System.out.println(pos1);
-
-    GridPoint2 pos2 = terrain.getMapBounds(0).sub(15, 15);
-    Entity tree2 = ObstacleFactory.createTree();
-    spawnEntityAt(tree2, pos2, true, false);
-    System.out.println(pos2);
-  }
+//  private void spawnTrees() {
+////    GridPoint2 minPos = new GridPoint2(0, 0);
+////    GridPoint2 minPos = new GridPoint2(0, 0);
+////    System.out.println(minPos);
+////    GridPoint2 maxPos = terrain.getMapBounds(0).sub(5, 20);
+////    System.out.println(maxPos);
+////    System.out.println(terrain.getMapBounds(0));
+//
+////    for (int i = 0; i < NUM_TREES; i++) {
+////      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+////      Entity tree = ObstacleFactory.createTree();
+////      spawnEntityAt(tree, randomPos, true, false);
+////      System.out.println(randomPos);
+////    }
+//    GridPoint2 pos1 = terrain.getMapBounds(0).sub(10, 10);
+//    Entity tree = ObstacleFactory.createTree();
+//    spawnEntityAt(tree, pos1, true, false);
+//    System.out.println(pos1);
+//
+//    GridPoint2 pos2 = terrain.getMapBounds(0).sub(15, 15);
+//    Entity tree2 = ObstacleFactory.createTree();
+//    spawnEntityAt(tree2, pos2, true, false);
+//    System.out.println(pos2);
+//  }
 
   private void spawnFloor() {
     for (int i = 0; i < 15; i++) {

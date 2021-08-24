@@ -11,6 +11,7 @@ import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.entities.factories.ProjectileFactory;
 
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
@@ -49,9 +50,9 @@ public class ForestGameArea extends GameArea {
           "images/iso_grass_2.png",
           "images/iso_grass_3.png"
   };
-
   private static final String[] forestTextureAtlases = {
-    "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+    "images/terrain_iso_grass.atlas", "images/ghost.atlas",
+          "images/ghostKing.atlas", "images/odin.atlas"
   };
   private static final String[] forestSounds = {"sounds/Impact4.ogg"};
   private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -113,13 +114,17 @@ public class ForestGameArea extends GameArea {
         false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
         new GridPoint2(0, tileBounds.y),
         false,
         false);
     // Bottom
+    //The width of this block has been temporarily increased by 5 grid spaces so we can test jumping with gravity
+    //without the character falling off
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+        ObstacleFactory.createWall(worldBounds.x  , WALL_WIDTH),
+            GridPoint2Utils.ZERO, false, false);
+
   }
 
   private void spawnRocks() {
