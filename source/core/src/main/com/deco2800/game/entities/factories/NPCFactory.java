@@ -22,6 +22,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.rendering.TextureRenderComponent;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -54,13 +55,30 @@ public class NPCFactory {
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
     ghost
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
-
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+            .addComponent(new GhostAnimationController());
     ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     return ghost;
+  }
+
+  public static Entity createSkeleton(Entity target) {
+    Entity skeleton = createBaseNPC(target);
+    BaseEntityConfig config = configs.ghost;
+    skeleton
+            .addComponent(new TextureRenderComponent("images/skeleton.png"))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+    return skeleton;
+  }
+
+  public static Entity createWolf(Entity target) {
+    Entity wolf = createBaseNPC(target);
+    BaseEntityConfig config = configs.ghost;
+    wolf
+            .addComponent(new TextureRenderComponent("images/wolf_1.png"))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+    return wolf;
   }
 
   /**

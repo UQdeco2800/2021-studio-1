@@ -25,25 +25,29 @@ public class ForestGameArea extends GameArea {
   private static final int NUM_ROCKS = 7;
   private static final int NUM_SPIKES = 3;
   private static final int NUM_GHOSTS = 2;
+  private static final int NUM_SKELETONS = 3;
+  private static final int NUM_WOLF = 3;
   private static final int NUM_SPEARS = 4;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 10);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
-    "images/box_boy_leaf.png",
+          "images/box_boy_leaf.png",
           "images/Rock_1.png",
           "images/Spike_1.png",
           "images/Spear_1.png",
-    "images/ghost_king.png",
-    "images/ghost_1.png",
-    "images/grass_1.png",
-    "images/grass_2.png",
-    "images/grass_3.png",
-    "images/hex_grass_1.png",
-    "images/hex_grass_2.png",
-    "images/hex_grass_3.png",
-    "images/iso_grass_1.png",
-    "images/iso_grass_2.png",
-    "images/iso_grass_3.png"
+          "images/ghost_king.png",
+          "images/ghost_1.png",
+          "images/grass_1.png",
+          "images/grass_2.png",
+          "images/grass_3.png",
+          "images/skeleton.png",
+          "images/wolf_1.png",
+          "images/hex_grass_1.png",
+          "images/hex_grass_2.png",
+          "images/hex_grass_3.png",
+          "images/iso_grass_1.png",
+          "images/iso_grass_2.png",
+          "images/iso_grass_3.png"
   };
 
   private static final String[] forestTextureAtlases = {
@@ -74,8 +78,10 @@ public class ForestGameArea extends GameArea {
     spawnSpikes();
     spawnSpears();
     player = spawnPlayer();
-    spawnGhosts();
-    spawnGhostKing();
+    //spawnGhosts();
+    //spawnGhostKing();
+    spawnSkeletons();
+    spawnWolf();
 
     playMusic();
   }
@@ -154,7 +160,7 @@ public class ForestGameArea extends GameArea {
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
-
+/*
   private void spawnGhosts() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -165,7 +171,29 @@ public class ForestGameArea extends GameArea {
       spawnEntityAt(ghost, randomPos, true, true);
     }
   }
+*/
+  private void spawnSkeletons() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
+    for (int i = 0; i < NUM_SKELETONS; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity skeleton = NPCFactory.createSkeleton(player);
+      spawnEntityAt(skeleton, randomPos, true, true);
+    }
+  }
+
+  private void spawnWolf() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_WOLF; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity wolf = NPCFactory.createWolf(player);
+      spawnEntityAt(wolf, randomPos, true, true);
+    }
+  }
+/*
   private void spawnGhostKing() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -174,7 +202,7 @@ public class ForestGameArea extends GameArea {
     Entity ghostKing = NPCFactory.createGhostKing(player);
     spawnEntityAt(ghostKing, randomPos, true, true);
   }
-
+*/
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
     music.setLooping(true);
