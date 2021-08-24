@@ -193,3 +193,17 @@ still-right
   orig: 64, 64
   offset: 0, 0
   index: 0
+crouch-still-left
+  rotate: false
+  xy: 2, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+crouch-still-right
+  rotate: false
+  xy: 68, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0

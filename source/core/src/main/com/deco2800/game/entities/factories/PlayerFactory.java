@@ -56,6 +56,10 @@ public class PlayerFactory {
             Animation.PlayMode.LOOP);
     animator.addAnimation("still-left", 1f,
             Animation.PlayMode.LOOP);
+    animator.addAnimation("crouch-still-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("crouch-still-left", 1f,
+            Animation.PlayMode.LOOP);
     animator.addAnimation("jump-left", 1f,
             Animation.PlayMode.LOOP);
     animator.addAnimation("jump-right", 1f,

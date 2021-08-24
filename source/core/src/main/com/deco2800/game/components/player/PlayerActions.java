@@ -131,20 +131,27 @@ public class PlayerActions extends Component {
   void run(Vector2 direction) {
     this.runDirection = direction;
     moving = true;
-    if (!jumping || crouching) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .stopAnimation();
+    entity.getComponent(AnimationRenderComponent.class)
+            .stopAnimation();
+    if (!crouching) {
       if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
         entity.getComponent(AnimationRenderComponent.class)
                 .startAnimation("run-right");
 
-        previousDirection = this.runDirection.cpy();
       } else {
         entity.getComponent(AnimationRenderComponent.class)
                 .startAnimation("run-left");
-        previousDirection = this.runDirection.cpy();
+      }
+    } else {
+      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("crouch-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("crouch-left");
       }
     }
+    previousDirection = this.runDirection.cpy();
   }
 
   /**
@@ -154,9 +161,9 @@ public class PlayerActions extends Component {
     this.runDirection = Vector2.Zero;
     update();
     moving = false;
+    entity.getComponent(AnimationRenderComponent.class)
+            .stopAnimation();
     if (!crouching) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .stopAnimation();
       if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
         entity.getComponent(AnimationRenderComponent.class)
                 .startAnimation("still-right");
@@ -164,6 +171,14 @@ public class PlayerActions extends Component {
         entity.getComponent(AnimationRenderComponent.class)
                 .startAnimation("still-left");
 
+      }
+    } else {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("crouch-still-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("crouch-still-left");
       }
     }
   }
@@ -186,11 +201,11 @@ public class PlayerActions extends Component {
     entity.getComponent(AnimationRenderComponent.class).stopAnimation();
     if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
       entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("crouch-right");
+              .startAnimation("crouch-still-right");
 
     } else {
       entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("crouch-left");
+              .startAnimation("crouch-still-left");
     }
   }
 
