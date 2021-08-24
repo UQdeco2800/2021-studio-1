@@ -58,7 +58,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyUp(int keycode) {
     switch (keycode) {
       case Keys.W:
-        triggerStopJumpEvent();
         return true;
       case Keys.A:
         runDirection.sub(Vector2Utils.LEFT);
