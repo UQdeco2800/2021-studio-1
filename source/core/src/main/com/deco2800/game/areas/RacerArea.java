@@ -9,9 +9,11 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.entities.factories.ProjectileFactory;
+
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
-
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -22,11 +24,14 @@ import org.slf4j.LoggerFactory;
 public class RacerArea extends GameArea {
   private static final Logger logger = LoggerFactory.getLogger(RacerArea.class);
   private static final int NUM_TREES = 2;
-  private static final int NUM_GHOSTS = 2;
+  private static final int NUM_GHOSTS = 1;
+  private static final int NUM_SKELETONS = 2;
+  private static final int NUM_WOLF = 2;
   private static final int LANE_1 = 9;
   private static final int LANE_2 = 15;
   private static final int LANE_3 = 21;
   private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
+  private static final GridPoint2 SKELETON_SPAWN = new GridPoint2(10, 20);
   private static final GridPoint2 FLOOR = new GridPoint2(10, 5);
   private static final float WALL_WIDTH = 0.1f;
   private static final String[] forestTextures = {
@@ -34,6 +39,8 @@ public class RacerArea extends GameArea {
     "images/floor.png",
     "images/platform.png",
     "images/tree.png",
+          "images/skeleton.png",
+          "images/wolf_1.png",
     "images/ghost_king.png",
     "images/ghost_1.png",
     "images/grass_1.png",
@@ -75,6 +82,9 @@ public class RacerArea extends GameArea {
     //spawnTrees();
     spawnPlatforms();
     spawnFloor();
+    spawnSkeletons();
+    spawnWolf();
+
     player = spawnPlayer();
     playMusic();
   }
@@ -184,6 +194,29 @@ public class RacerArea extends GameArea {
     return newPlayer;
   }
 
+  private void spawnSkeletons() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_SKELETONS; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity skeleton = NPCFactory.createSkeleton(player);
+      spawnEntityAt(skeleton, randomPos, true, true);
+    }
+  }
+
+  private void spawnWolf() {
+    GridPoint2 minPos = new GridPoint2(0, 0);
+    GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+
+    for (int i = 0; i < NUM_WOLF; i++) {
+      GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+      Entity wolf = NPCFactory.createWolf(player);
+      spawnEntityAt(wolf, randomPos, true, true);
+    }
+  }
+
+  /*
   private void spawnGhosts() {
     GridPoint2 minPos = new GridPoint2(0, 0);
     GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -203,6 +236,7 @@ public class RacerArea extends GameArea {
     Entity ghostKing = NPCFactory.createGhostKing(player);
     spawnEntityAt(ghostKing, randomPos, true, true);
   }
+   */
 
   private void playMusic() {
     Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);

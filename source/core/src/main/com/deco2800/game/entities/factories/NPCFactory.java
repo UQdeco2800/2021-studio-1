@@ -44,6 +44,8 @@ public class NPCFactory {
    * @param target entity to chase
    * @return entity
    */
+
+  /*
   public static Entity createGhost(Entity target) {
     Entity ghost = createBaseNPC(target);
     BaseEntityConfig config = configs.ghost;
@@ -62,6 +64,8 @@ public class NPCFactory {
 
     return ghost;
   }
+
+   */
 
   public static Entity createSkeleton(Entity target) {
     Entity skeleton = createBaseNPC(target);
@@ -115,8 +119,8 @@ public class NPCFactory {
   private static Entity createBaseNPC(Entity target) {
     AITaskComponent aiComponent =
         new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 3f, 4f));
+            .addTask(new WanderTask(new Vector2(5f, 5f), 5f));
+            //.addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())
@@ -127,6 +131,9 @@ public class NPCFactory {
             .addComponent(aiComponent);
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+
+    npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+
     return npc;
   }
 

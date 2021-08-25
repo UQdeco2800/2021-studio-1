@@ -7,6 +7,10 @@
     "health": 100,
     "baseAttack": 100,
     "spookyFactor": 7
-  }
+  },
+//  "skeleton": {
+//    "health": 40,
+//    "baseAttack": 100
+//  },
 }
 
