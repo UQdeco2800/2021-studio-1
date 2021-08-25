@@ -181,6 +181,8 @@ public class RacerArea extends GameArea {
 
   private Entity spawnPlayer() {
     Entity newPlayer = PlayerFactory.createPlayer();
+    newPlayer.getComponent(AnimationRenderComponent.class).startAnimation(
+            "still-left");
     spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
     return newPlayer;
   }
