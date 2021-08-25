@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 public class CameraComponent extends Component {
   private final Camera camera;
   private Vector2 lastPosition;
+  private Vector2 targetCenterPosition;
 
   public CameraComponent() {
     this(new OrthographicCamera());
