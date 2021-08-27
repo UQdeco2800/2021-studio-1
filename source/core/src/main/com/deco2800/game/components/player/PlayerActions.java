@@ -79,10 +79,10 @@ public class PlayerActions extends Component {
     if (moving) { //Checks if the player is moving and applies respective
       // force
       if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        body.applyLinearImpulse(new Vector2(4f, 12f), body.getPosition(),
+        body.applyLinearImpulse(new Vector2(7f, 12f), body.getPosition(),
                 true);
       } else {
-        body.applyLinearImpulse(new Vector2(-4f, 12f), body.getPosition(),
+        body.applyLinearImpulse(new Vector2(-7f, 12f), body.getPosition(),
                 true);
       }
     } else { //Applies force when player is not moving
@@ -211,6 +211,8 @@ public class PlayerActions extends Component {
 
   void crouch() {
     crouching = true;
+    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
+            .scl(0.5F));
     //Determine which animation to play
     entity.getComponent(AnimationRenderComponent.class).stopAnimation();
     if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
@@ -225,6 +227,8 @@ public class PlayerActions extends Component {
 
   void stopCrouching() {
     crouching = false;
+    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
+            .scl(2F));
     update();
     //Determine which animation to play
     entity.getComponent(AnimationRenderComponent.class)
