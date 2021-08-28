@@ -32,7 +32,8 @@ public class RacerArea extends GameArea {
     private static final String[] forestTextures = {
         "images/box_boy_leaf.png",
         "images/floor.png",
-        "images/platform.png",
+        "images/platform_gradient.png",
+        "images/platform_no_gradient.png",
         "images/tree.png",
         "images/ghost_king.png",
         "images/ghost_1.png",
