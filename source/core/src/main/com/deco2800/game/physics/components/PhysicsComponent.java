@@ -41,6 +41,7 @@ public class PhysicsComponent extends Component {
     bodyDef.linearDamping = GROUND_FRICTION;
     bodyDef.angle = 0f;
     bodyDef.active = false;
+    bodyDef.gravityScale = 0.0f;
     body = physics.createBody(bodyDef);
   }
 
@@ -53,6 +54,15 @@ public class PhysicsComponent extends Component {
   public PhysicsComponent setBodyType(BodyType bodyType) {
     body.setType(bodyType);
     return this;
+  }
+
+  /**
+   * Adjust gravity scale
+   *
+   * @param scale gravity scale
+   */
+  public void setGravityScale(float scale) {
+    body.setGravityScale(scale);
   }
 
   /**

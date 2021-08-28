@@ -16,6 +16,14 @@ public class PhysicsUtils {
             boundingBox, PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
   }
 
+  public static void setScaledCircleCollider(Entity entity, float scale) {
+    float radius = entity.getScale().cpy().x * scale;
+    entity
+            .getComponent(ColliderComponent.class)
+            .setAsCircleAligned(
+                    radius, PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
+  }
+
   private PhysicsUtils() {
     throw new IllegalStateException("Instantiating static util class");
   }

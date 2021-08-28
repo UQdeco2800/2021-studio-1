@@ -18,9 +18,7 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Forest area for the demo game with trees, a player, and some enemies.
- */
+/** Forest area for the demo game with trees, a player, and some enemies. */
 public class RacerArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(RacerArea.class);
     private static final int NUM_TREES = 2;
@@ -34,8 +32,7 @@ public class RacerArea extends GameArea {
     private static final String[] forestTextures = {
         "images/box_boy_leaf.png",
         "images/floor.png",
-        "images/platform_gradient.png",
-        "images/platform_no_gradient.png",
+        "images/platform.png",
         "images/tree.png",
         "images/ghost_king.png",
         "images/ghost_1.png",
@@ -50,7 +47,8 @@ public class RacerArea extends GameArea {
         "images/iso_grass_3.png"
     };
     private static final String[] forestTextureAtlases = {
-        "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing.atlas"
+        "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing" +
+        ".atlas", "images/odin.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -66,9 +64,7 @@ public class RacerArea extends GameArea {
         this.terrainFactory = terrainFactory;
     }
 
-    /**
-     * Create the game area, including terrain, static entities (trees), dynamic entities (player)
-     */
+    /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
     @Override
     public void create() {
         loadAssets();
@@ -76,6 +72,7 @@ public class RacerArea extends GameArea {
         displayUI();
 
         spawnTerrain();
+        //spawnTrees();
         spawnPlatforms();
         spawnFloor();
         player = spawnPlayer();
@@ -88,42 +85,42 @@ public class RacerArea extends GameArea {
         spawnEntity(ui);
     }
 
-    private void spawnTerrain() {
-        // Background terrain
-        terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
-        spawnEntity(new Entity().addComponent(terrain));
+  private void spawnTerrain() {
+    // Background terrain
+    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+    spawnEntity(new Entity().addComponent(terrain));
 
-        // Terrain walls
-        float tileSize = terrain.getTileSize();
-        GridPoint2 tileBounds = terrain.getMapBounds(0);
-        Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
-        // Left
-        spawnEntityAt(
-            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
-        // Right
-        spawnEntityAt(
-            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-            new GridPoint2(tileBounds.x, 0),
-            false,
-            false);
-        // Top
-        spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            new GridPoint2(0, tileBounds.y),
-            false,
-            false);
-        // Bottom
-        spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
-    }
+    // Terrain walls
+    float tileSize = terrain.getTileSize();
+    GridPoint2 tileBounds = terrain.getMapBounds(0);
+    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
+    // Left
+    spawnEntityAt(
+        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+    // Right
+    spawnEntityAt(
+        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+        new GridPoint2(tileBounds.x, 0),
+        false,
+        false);
+    // Top
+    spawnEntityAt(
+        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+        new GridPoint2(0, tileBounds.y),
+        false,
+        false);
+    // Bottom
+    spawnEntityAt(
+        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+  }
 
-    private void spawnPlatforms() {
-        spawnPlatform(2, LANE_1, 0);
-        spawnPlatform(3, LANE_1, 21);
-        spawnPlatform(4, LANE_2, 10);
-        spawnPlatform(1, LANE_3, 20);
-        spawnPlatform(2, LANE_3, 5);
-    }
+  private void spawnPlatforms() {
+    spawnPlatform(2, LANE_1, 0);
+    spawnPlatform(3, LANE_1, 21);
+    spawnPlatform(4, LANE_2, 10);
+    spawnPlatform(1, LANE_3, 20);
+    spawnPlatform(2, LANE_3, 5);
+  }
 
     /**
      * Spawn a platform that is length long with height given by lane and x coordinate given by xCord.
