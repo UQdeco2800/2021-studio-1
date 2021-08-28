@@ -32,8 +32,7 @@ public class RacerArea extends GameArea {
     private static final String[] forestTextures = {
         "images/box_boy_leaf.png",
         "images/floor.png",
-        "images/platform_gradient.png",
-        "images/platform_no_gradient.png",
+        "images/platform.png",
         "images/tree.png",
         "images/ghost_king.png",
         "images/ghost_1.png",
@@ -135,11 +134,7 @@ public class RacerArea extends GameArea {
         // In later implementations, length should create a platform that is (length * platform unit
         // length) long. But at the moment it just creates multiple platforms stacked next to each
         // other.
-        Entity platformGradient = ObstacleFactory.createPlatformWithGradient();
-        lane = Math.round(lane - platformGradient.getScale().y);
-        GridPoint2 platformPos1 = new GridPoint2(Math.round(xCord + (0 * platformGradient.getScale().x) * 2), lane);
-        spawnEntityAt(platformGradient, platformPos1, false, false);
-        for (int i = 1; i < length; i++) {
+        for (int i = 0; i < length; i++) {
             Entity platform = ObstacleFactory.createPlatform();
             // Make the  lane refer to the height of the top of the platform, not the bottom. This breaks
             // when the scale height is set to 1 for some reason, as the scale height does not correlate
