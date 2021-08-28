@@ -48,6 +48,10 @@ public class KeyboardTerminalInputComponent extends InputComponent {
       terminal.toggleIsOpen();
       return true;
     }
+    if (keycode == Input.Keys.P) {
+       entity.getEvents().trigger("pause");
+       return true;
+    }
 
     return terminal.isOpen();
   }

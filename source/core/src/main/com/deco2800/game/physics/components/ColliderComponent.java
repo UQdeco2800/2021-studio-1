@@ -83,6 +83,47 @@ public class ColliderComponent extends Component {
   }
 
   /**
+   * Set physics as a circle with the given radius. Circle is aligned based on alignment.
+   *
+   * @param radius radius of the circle
+   * @param alignX how to align x relative to entity
+   * @param alignY how to align y relative to entity
+   * @return self
+   */
+  public ColliderComponent setAsCircleAligned(float radius, AlignX alignX, AlignY alignY) {
+    Vector2 position = new Vector2();
+    switch (alignX) {
+      case LEFT:
+        position.x = radius;
+        break;
+      case CENTER:
+        position.x = entity.getCenterPosition().x;
+        break;
+      case RIGHT:
+        position.x = entity.getScale().x - radius;
+        break;
+    }
+
+    switch (alignY) {
+      case BOTTOM:
+        position.y = radius;
+        break;
+      case CENTER:
+        position.y = entity.getCenterPosition().y;
+        break;
+      case TOP:
+        position.y = entity.getScale().y - radius;
+        break;
+    }
+
+    CircleShape bbox = new CircleShape();
+    bbox.setPosition(position);
+    bbox.setRadius(radius);
+    setShape(bbox);
+    return this;
+  }
+
+  /**
    * Set physics as a box with a given size and local position. Box is centered around the position.
    *
    * @param size size of the box
