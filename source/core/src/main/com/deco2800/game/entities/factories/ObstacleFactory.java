@@ -15,6 +15,43 @@ import com.deco2800.game.rendering.TextureRenderComponent;
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
 public class ObstacleFactory {
+
+  /**
+   * Creates a rock entity.
+   * @return rock entity
+   */
+  public static Entity createRock() {
+    Entity rock =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/Rock_1.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    rock.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    rock.getComponent(TextureRenderComponent.class).scaleEntity();
+    rock.setScale(1.5f, 1.5f);
+    PhysicsUtils.setScaledCollider(rock, 0.5f, 0.5f);
+    return rock;
+  }
+
+  /**
+   * Creates a spikes entity.
+   * @return spikes entity
+   */
+  public static Entity createSpikes() {
+    Entity spikes =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/Spikes_1.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    spikes.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    spikes.getComponent(TextureRenderComponent.class).scaleEntity();
+    spikes.setScale(1.5f, 1.5f);
+    PhysicsUtils.setScaledCollider(spikes, 0.5f, 0.5f);
+    return spikes;
+  }
+
   /**
    * Creates a platform entity.
    * @return entity
