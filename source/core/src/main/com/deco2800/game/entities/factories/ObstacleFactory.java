@@ -22,7 +22,7 @@ public class ObstacleFactory {
   public static Entity createPlatform() {
     Entity platform =
             new Entity()
-            .addComponent(new TextureRenderComponent("images/platform_no_gradient.png"))
+            .addComponent(new TextureRenderComponent("images/platform.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
@@ -32,25 +32,6 @@ public class ObstacleFactory {
     // difficult.
     platform.scaleHeight(0.5f);
     return platform;
-  }
-
-  /**
-   * Creates platform entity with shadow.
-   * @return entity
-   */
-  public static Entity createPlatformWithGradient() {
-    Entity platformGradient =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/platform_gradient.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-    platformGradient.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    platformGradient.getComponent(TextureRenderComponent.class).scaleEntity();
-    // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
-    // difficult.
-    platformGradient.scaleHeight(0.5f);
-    return platformGradient;
   }
 
   /**
