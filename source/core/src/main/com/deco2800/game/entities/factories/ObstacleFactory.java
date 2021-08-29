@@ -47,7 +47,7 @@ public class ObstacleFactory {
 
     floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     floor.getComponent(TextureRenderComponent.class).scaleEntity();
-    floor.scaleHeight(1f);
+    floor.scaleHeight(0.5f);
     return floor;
   }
 

@@ -28,7 +28,6 @@ public class RacerArea extends GameArea {
     private static final int LANE_2 = 15;
     private static final int LANE_3 = 21;
     private static final int[] LANES = new int[]{LANE_0, LANE_1, LANE_2, LANE_3};
-    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
         "images/box_boy_leaf.png",
@@ -55,8 +54,6 @@ public class RacerArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
 
-    private Entity player;
-
     public RacerArea(TerrainFactory terrainFactory) {
         super();
         this.terrainFactory = terrainFactory;
@@ -77,7 +74,7 @@ public class RacerArea extends GameArea {
             System.out.println("File Not Found Quitting");
             app.exit();
         }
-        player = spawnPlayer();
+        
         playMusic();
     }
 
@@ -100,21 +97,25 @@ public class RacerArea extends GameArea {
         FileReader fr = new FileReader(levelFile);
         BufferedReader br = new BufferedReader(fr);
         String line;
-        Integer lane = 7;
+        float lane = 6.8f;
         while ((line = br.readLine()) != null) {
-            // TODO: CHECK LINES ARE ALL THE SAME LENGTH
+            // TODO: PERFORM INPUT CHECKING ON LVL FILE
             for (int i = 0; i < line.length(); i++) {
                 switch ((line.charAt(i))) {
                     case 'P':
                         // PLATFORM
-                        spawnPlatform(1, LANES[Math.round(lane/2)], i*3);
+                        spawnPlatform(1, LANES[Math.round(lane/2)], (i*3));
                         break;
                     case 'F':
                         // FLOOR
-                        spawnFloor(1, LANES[Math.round(lane/2)], i*3);
-                        spawnFloor(1, LANES[Math.round(lane/2)], i*3+1);
-                        spawnFloor(1, LANES[Math.round(lane/2)], i*3+2);
+                        spawnFloor(1, LANES[Math.round(lane/2)], (i*3));
+                        spawnFloor(1, LANES[Math.round(lane/2)], (i*3)+1);
+                        spawnFloor(1, LANES[Math.round(lane/2)], (i*3)+2);
                         break;
+                    case 'A':
+                        //A for Avatar :)
+                        System.out.println(LANES[Math.round(lane/2)]);
+                        spawnPlayer(LANES[Math.round(lane/2)]+1, (i*3)+1);
                     default:
                         break;
                 }
@@ -199,10 +200,10 @@ public class RacerArea extends GameArea {
         }
     }
 
-    private Entity spawnPlayer() {
+    private void spawnPlayer(int lane, int xCord) {
         Entity newPlayer = PlayerFactory.createPlayer();
-        spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-        return newPlayer;
+        GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - newPlayer.getScale().y));
+        spawnEntityAt(newPlayer, pos, true, false);
     }
 
     private void playMusic() {
