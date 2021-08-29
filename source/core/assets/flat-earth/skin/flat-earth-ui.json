@@ -333,6 +333,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: title
 		fontColor: color
 	}
+	popUpFont: {
+		font: font
+		fontColor: white
+	}
+	popUpTitle: {
+		font: font_large
+		fontColor: white
+	}
 	small: {
 		font: font_small,
 		fontColor: black

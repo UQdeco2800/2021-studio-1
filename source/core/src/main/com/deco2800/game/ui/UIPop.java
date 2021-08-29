@@ -1,7 +1,6 @@
 package com.deco2800.game.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.deco2800.game.components.maingame.MainGameActions;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.deco2800.game.entities.Entity;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.deco2800.game.services.ServiceLocator;
 
 import java.util.*;
 
@@ -29,12 +27,14 @@ public class UIPop extends UIComponent {
             new HashMap<>();
     static {
         //background images should ideally be 800 * 500 pixels
-        backGroundImages.put("Default Pop", "images/blue_bck.png");
-        backGroundImages.put("Score Screen", "images/blue_bck.png");
-        backGroundImages.put("Pause Menu", "images/blue_bck.png");
+        backGroundImages.put("Default Pop", "images/Backgrounds/popPauseBack.png");
+        backGroundImages.put("Score Screen", "images/Backgrounds/blue_bck.png");
+        backGroundImages.put("Pause Menu", "images/Backgrounds/popPauseBack.png");
     }
 
-    private MainGameActions action;
+    //the game the popUp will pop onto
+    // Can also be thought of as the entity it will become a component of
+    private Entity game;
 
     // the screen name to instantiate
     private String screenName;
@@ -48,83 +48,44 @@ public class UIPop extends UIComponent {
     private TextButton closeButton;
     // the texture for the popup background
     private Texture popUpBackGround;
-    // texture for button image - Setting
-    private Texture popUpSettingImage;
-    // texture for button image - Resume
-    private Texture popUpResumeImage;
-    // texture for button image - Quit;
-    private Texture popUpQuitImage;
-    // Image button - Setting
-    private ImageButton settingButton;
-    // Image button - Resume
-    private ImageButton resumeButton;
-    // Image button - Quit
-    private ImageButton quitButton;
     //Setting screen
-    private Table setting;
-    //Title of setting screen
-    private Label settingTitle;
     //Back button
     private Button backButton;
-    // the skin for the popup
-    private Skin popUpSkin;
+
+
     /*
-     * UIPop constructor
+     * Constructs a new instance of the screenName parsed
+     *      @param - screenName - The screenName of the screen to instantiate
+     *      @param - game - The game entity to instantiate the popUp
+     *                      Every popUp will have a game entity active.
      */
-    public UIPop(String screenName, MainGameActions action) {
-        this.action = action;
+    public UIPop(String screenName, Entity game) {
+
+        this.game = game;
 
         if (!backGroundImages.containsKey(screenName)){
             throw new NoSuchElementException("Wrong Screen Name");
-            };
+        };
 
         this.screenName = screenName;
         this.popUpBackGround = new Texture(backGroundImages.get(screenName));
 
-        this.popUpSettingImage = new Texture("images/setting.png");
-        this.popUpResumeImage = new Texture("images/resume.png");
-        this.popUpQuitImage = new Texture("images/quit.png");
-
-        this.settingButton = new ImageButton(new TextureRegionDrawable(popUpSettingImage));
-        this.resumeButton = new ImageButton(new TextureRegionDrawable(popUpResumeImage));
-        this.quitButton = new ImageButton(new TextureRegionDrawable(popUpQuitImage));
-
-        resumeButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                action.onPause();
-            }
-        });
-
-        quitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                action.onExit();
-            }
-        });
-
-        settingButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                root.reset();
-                root.add(getSettingScreen()).expandX().expandY();
-            }
-        });
-        setting = new Table();
+        //the base table the element is depend on
         root = new Table();
+        //the popup table for the contents
         popUp = new Table();
 
+        //every popup must have a background
         popUp.setBackground(new TextureRegionDrawable(popUpBackGround));
-        setting.setBackground(new TextureRegionDrawable(popUpBackGround));
 
-        this.popUpSkin = skin;
+        // every pop up must have a close button
+        closeButton = new TextButton("Close", skin);
 
-        closeButton = new TextButton("Close", popUpSkin);
         closeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 if (screenName.equals("Pause Menu")) {
-                    ServiceLocator.getTimeSource().setTimeScale(1);
+                    game.getEvents().trigger("pause");
                 }
                 entity.dispose();
             }
@@ -149,49 +110,63 @@ public class UIPop extends UIComponent {
         addActors(screenName);
     }
 
-    private void InstantiateElement(String screenName) {
-        boolean t = screenName.equals("Pause Menu") ? addActors("111") :
-        screenName.equals("Score Screen") ? addActors("110") :
-        addActors("100");
-    }
-
     // Adds actors based on screen name
-    private boolean addActors(String screeName) {
+    private boolean addActors(String screenName) {
 
         root.setFillParent(true);
 
         root.add(popUp).expandX().expandY();
 
-        title = new Label(screeName, popUpSkin);
+        title = new Label(screenName, skin, "popUpTitle");
         title.setFontScale(2.5f);
 
         popUp.add(title).top();
         popUp.row().padTop(2f);
 
-        if (screeName == "Pause Menu") {
-            popUp.add(title).top();
-            popUp.row().padTop(5f);
-            popUp.add(resumeButton).center();
-            popUp.row().padTop(2.5f);
-            popUp.add(settingButton).center();
-            popUp.row().padTop(2.5f);
-            popUp.add(quitButton).center();
+        getTable();
+        return true;
+    }
+
+    /*
+     * Gets the format of the Table associated with the PopUp name
+     *      @param screenName - the screen name of the popUp
+     */
+    private Table getTable() {
+
+        if (screenName.equals("Pause Menu")) {
+            popUp = formatPauseScreen();
+        }
+        if (screenName.equals("Score Screen")) {
+            popUp = formatScoreScreen();
+            popUp.add(closeButton);
+        }
+        if (screenName.equals("Default Pop")) {
+            popUp = formatDefaultScreen();
+            popUp.add(closeButton);
         }
 
         stage.addActor(root);
-        return true; //no errors
+        return popUp;
     }
 
-    private Table getSettingScreen() {
-        setting.reset();
-        settingTitle = new Label("Setting", skin);
+    /*
+     * Formats the Settings table
+     */
+    private Table formatSettingsScreen() {
+
+        //Setting screen
+        Table setting = new Table();
+        setting.setBackground(new TextureRegionDrawable(popUpBackGround));
+        //Title of setting screen
+        Label settingTitle;
+        settingTitle = new Label("Settings", skin, "popUpTitle");
         settingTitle.setFontScale(2.5f);
         setting.add(settingTitle).top();
         setting.row().padTop(5f);
 
         for (int i = 0; i < 3; i++) {
-            Label infoTitle = new Label(getInformation(screenName, i), popUpSkin);
-            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), popUpSkin);
+            Label infoTitle = new Label(getInformation(screenName, i), skin, "popUpFont");
+            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin, "popUpFont");
             infoTitle.setFontScale(1.5f);
             info.setFontScale(1.5f);
             setting.add(infoTitle).left();
@@ -200,7 +175,7 @@ public class UIPop extends UIComponent {
         }
 
         setting.row().padTop(20f);
-        setting.add(new Label("Volume :", skin)).left();
+        setting.add(new Label("Volume :", skin, "popUpFont")).left();
         setting.add(ScreenSpecialElement(screenName)).right();
 
         setting.row().padTop(20f);
@@ -209,8 +184,98 @@ public class UIPop extends UIComponent {
 
         setting.setZIndex(0);
         return setting;
-
     }
+
+    /*
+     * Formats the Pause table
+     */
+    private Table formatPauseScreen() {
+
+            // texture for button image - Setting
+            Texture popUpSettingImage;
+            // texture for button image - Resume
+            Texture popUpResumeImage;
+            // texture for button image - Quit;
+            Texture popUpQuitImage;
+            popUpSettingImage = new Texture("images/Buttons/setting.png");
+            popUpResumeImage = new Texture("images/Buttons/resume.png");
+            popUpQuitImage = new Texture("images/Buttons/quit.png");
+            // Image button - Setting
+            ImageButton settingButton;
+            // Image button - Resume
+            ImageButton resumeButton;
+            // Image button - Quit
+            ImageButton quitButton;
+
+            settingButton = new ImageButton(new TextureRegionDrawable(popUpSettingImage));
+            resumeButton = new ImageButton(new TextureRegionDrawable(popUpResumeImage));
+            quitButton = new ImageButton(new TextureRegionDrawable(popUpQuitImage));
+
+            resumeButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    game.getEvents().trigger("pause");
+                }
+            });
+
+            quitButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    game.getEvents().trigger("exit");
+                }
+            });
+
+            settingButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    root.reset();
+                    root.add(formatSettingsScreen()).expandX().expandY();
+                }
+            });
+
+            popUp.add(resumeButton).center();
+            popUp.row().padTop(2.5f);
+            popUp.add(settingButton).center();
+            popUp.row().padTop(2.5f);
+            popUp.add(quitButton).center();
+            stage.addActor(root);
+            return popUp;
+    }
+
+
+    /*
+     * Formats the Score screen table
+     */
+    private Table formatScoreScreen() {
+
+        for (int i = 0; i < 3; i++) {
+            Label infoTitle = new Label(getInformation(screenName, i), skin, "popUpFont");
+            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin, "popUpFont");
+            infoTitle.setFontScale(1.5f);
+            info.setFontScale(1.5f);
+            popUp.add(infoTitle).left();
+            popUp.add(info).right();
+            popUp.row().padTop(20f);
+        }
+        return popUp;
+    }
+
+    /*
+     * Formats the Default screen table
+     */
+    private Table formatDefaultScreen() {
+        for (int i = 0; i < 3; i++) {
+            Label infoTitle = new Label(getInformation(screenName, i), skin, "popUpFont");
+            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin, "popUpFont");
+            infoTitle.setFontScale(1.5f);
+            info.setFontScale(1.5f);
+            popUp.add(infoTitle).left();
+            popUp.add(info).right();
+            popUp.row().padTop(20f);
+        }
+        return popUp;
+    }
+
 
     /* Creates and returns the unique widget element associated with the
      * unique pop up
@@ -220,10 +285,9 @@ public class UIPop extends UIComponent {
         Widget element = null;
 
         if (screenName.equals("Pause Menu")) {
-            element = new Slider(0f, 1f, 0.1f, false, skin);
-            element = new Slider(0.2f, 2f, 0.1f, false, popUpSkin);
+            element = new Slider(0.2f, 2f, 0.1f, false, skin);
         } else if (screenName.equals("Score Screen")) {
-            element = new SelectBox<>(popUpSkin);
+            element = new SelectBox<>(skin);
         }
         return element;
 

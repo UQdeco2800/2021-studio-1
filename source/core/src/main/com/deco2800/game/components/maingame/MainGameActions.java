@@ -30,13 +30,13 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("score screen", this::showScore);
   }
 
-
   /**
    * Swaps to the Main Menu screen.
    */
   public void onExit() {
     logger.info("Exiting main game screen");
     game.paused = false;
+    game.scoreShown = false;
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
@@ -59,7 +59,7 @@ public class MainGameActions extends Component {
             }
             System.out.println("paused");
             popUp = new Entity();
-            popUp.addComponent(new UIPop("Pause Menu", this));
+            popUp.addComponent(new UIPop("Pause Menu", entity));
             ServiceLocator.getEntityService().register(popUp);
             //pause sound
             pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
@@ -86,7 +86,7 @@ public class MainGameActions extends Component {
             }
             popUp = new Entity();
             System.out.println("score showing");
-            popUp.addComponent(new UIPop("Score Screen", this));
+            popUp.addComponent(new UIPop("Score Screen", entity));
             ServiceLocator.getEntityService().register(popUp);
             //score screen sound
             scoreScreenSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
