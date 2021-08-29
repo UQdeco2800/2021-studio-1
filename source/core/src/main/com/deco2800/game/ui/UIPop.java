@@ -28,7 +28,7 @@ public class UIPop extends UIComponent {
     static {
         //background images should ideally be 800 * 500 pixels
         backGroundImages.put("Default Pop", "images/Backgrounds/popPauseBack.png");
-        backGroundImages.put("Score Screen", "images/Backgrounds/blue_bck.png");
+        backGroundImages.put("Score Screen", "images/Backgrounds/run_ended.png");
         backGroundImages.put("Pause Menu", "images/Backgrounds/popPauseBack.png");
     }
 
@@ -248,7 +248,7 @@ public class UIPop extends UIComponent {
      */
     private Table formatScoreScreen() {
 
-        for (int i = 0; i < 3; i++) {
+        /*for (int i = 0; i < 3; i++) {
             Label infoTitle = new Label(getInformation(screenName, i), skin, "popUpFont");
             Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin, "popUpFont");
             infoTitle.setFontScale(1.5f);
@@ -256,7 +256,7 @@ public class UIPop extends UIComponent {
             popUp.add(infoTitle).left();
             popUp.add(info).right();
             popUp.row().padTop(20f);
-        }
+        }*/
         return popUp;
     }
 

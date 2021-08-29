@@ -3,7 +3,6 @@ package com.deco2800.game.components.maingame;
 import com.badlogic.gdx.audio.Sound;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.mainmenu.MainMenuActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIPop;
@@ -57,7 +56,6 @@ public class MainGameActions extends Component {
             if (popUp != null) {
                 popUp.dispose();
             }
-            System.out.println("paused");
             popUp = new Entity();
             popUp.addComponent(new UIPop("Pause Menu", entity));
             ServiceLocator.getEntityService().register(popUp);
@@ -85,7 +83,6 @@ public class MainGameActions extends Component {
                 popUp.dispose();
             }
             popUp = new Entity();
-            System.out.println("score showing");
             popUp.addComponent(new UIPop("Score Screen", entity));
             ServiceLocator.getEntityService().register(popUp);
             //score screen sound
