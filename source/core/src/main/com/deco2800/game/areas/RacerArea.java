@@ -176,7 +176,7 @@ public class RacerArea extends GameArea {
     }
 
     /**
-     * Spawns the rocks for the game, they can only spawn on lane 1 and the floor.
+     * Spawns the rocks for the game, they can only spawn in lane 1 and the floor.
      */
     private void spawnRocks() {
         GridPoint2 bottomRightMin = new GridPoint2(21, 10);
@@ -211,7 +211,7 @@ public class RacerArea extends GameArea {
     }
 
     /**
-     * Spawns the spikes for the game, they can only spawn on the floor or on lane 2.
+     * Spawns the spikes for the game, they can only spawn on the floor or in lane 2.
      */
     private void spawnSpikes() {
         GridPoint2 floorMin = new GridPoint2(1, 5);
