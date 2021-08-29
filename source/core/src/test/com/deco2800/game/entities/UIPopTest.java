@@ -22,7 +22,7 @@ import java.util.Set;
 @ExtendWith(MockitoExtension.class)
 public class UIPopTest {
 
-    RenderService service;
+    /*RenderService service;
     EntityService entityService;
     Entity mockGameEntity = new Entity();
 
@@ -121,5 +121,4 @@ public class UIPopTest {
         screenName = pop.GetName() + "Trying to change";
 
         assertEquals("Default Pop", pop.GetName());
-    }
-}
+ */}
