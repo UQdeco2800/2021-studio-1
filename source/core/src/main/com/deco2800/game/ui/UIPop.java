@@ -16,7 +16,7 @@ import java.util.*;
  * and can be added directly to entities.
  *
  * See wiki for full description and example use
- * @Link -- {'to come'}
+ * @Link -- {'https://github.com/UQdeco2800/2021-studio-1/wiki/UI-Popup'}
  */
 public class UIPop extends UIComponent {
 
@@ -66,6 +66,9 @@ public class UIPop extends UIComponent {
         closeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
+                if (screenName.equals("Pause Menu")) {
+                    ServiceLocator.getTimeSource().setTimeScale(1);
+                }
                 entity.dispose();
             }
         });

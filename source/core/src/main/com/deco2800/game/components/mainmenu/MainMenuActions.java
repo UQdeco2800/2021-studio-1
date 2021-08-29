@@ -2,6 +2,10 @@ package com.deco2800.game.components.mainmenu;
 
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.entities.Entity;
+import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.ui.UIComponent;
+import com.deco2800.game.ui.UIPop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +16,7 @@ import org.slf4j.LoggerFactory;
 public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
   private GdxGame game;
+  private Entity mainMenuPop;
 
   public MainMenuActions(GdxGame game) {
     this.game = game;
@@ -23,6 +28,8 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
+    entity.getEvents().addListener("help", this::onHelp);
+    entity.getEvents().addListener("mute", this::onMute);
   }
 
   /**
@@ -55,5 +62,26 @@ public class MainMenuActions extends Component {
   private void onSettings() {
     logger.info("Launching settings screen");
     game.setScreen(GdxGame.ScreenType.SETTINGS);
+  }
+    /**
+     * Creates help popUP on main menu.
+     */
+  private void onHelp() {
+    logger.info("Launching help popUp");
+    if (mainMenuPop == null) {
+        mainMenuPop = new Entity();
+        mainMenuPop.addComponent(new UIPop("Default Pop"));
+        ServiceLocator.getEntityService().register(mainMenuPop);
+    } else {
+        mainMenuPop.dispose();
+        mainMenuPop = null;
+    }
+  }
+
+  /**
+    * Mutes main menu sound.
+    */
+  private void onMute() {
+    logger.info("muting game");
   }
 }
