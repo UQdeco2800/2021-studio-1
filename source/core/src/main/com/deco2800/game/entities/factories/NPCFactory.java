@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.WallAttackComponent;
+import com.deco2800.game.components.npc.DeathGiantAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.ChaseTask;
+import com.deco2800.game.components.tasks.MoveRightTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -21,6 +24,7 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -89,6 +93,31 @@ public class NPCFactory {
     return ghostKing;
   }
 
+//add comments
+  public static Entity createWallOfDeath(Entity target) {
+    Entity wallOfDeath = createWallNPC(target);
+    BaseEntityConfig config = configs.wallOfDeath;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService()
+                            .getAsset("images/wall.atlas", TextureAtlas.class));
+        animator.addAnimation("walk", 0.1f, Animation.PlayMode.LOOP);
+
+    wallOfDeath
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+           // .addComponent(new GhostAnimationController());
+            .addComponent(new DeathGiantAnimationController());
+
+    wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
+    wallOfDeath.setScale(10.5f,10.5f);
+
+    //PhysicsUtils.setScaledCollider(wallOfDeath, 5.9f, 5.4f);
+
+    return wallOfDeath;
+  }
+
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    *
@@ -109,6 +138,26 @@ public class NPCFactory {
             .addComponent(aiComponent);
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    return npc;
+  }
+
+  private static Entity createWallNPC(Entity target) {
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    //parameters don't really matter at this point
+                    .addTask(new MoveRightTask(new Vector2(100f, 100f), 0));
+    //.addTask(new ChaseTask(target, 10, 3f, 4f));
+    Entity npc =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    //component to control collision with other obstacle
+                    .addComponent(new WallAttackComponent(PhysicsLayer.OBSTACLE, 1.5f))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
+                    .addComponent(aiComponent);
+
     return npc;
   }
 

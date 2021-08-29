@@ -42,15 +42,18 @@ public class RacerArea extends GameArea {
         "images/hex_grass_3.png",
         "images/iso_grass_1.png",
         "images/iso_grass_2.png",
-        "images/iso_grass_3.png"
+        "images/iso_grass_3.png",
+            "images/death_giant.png"
     };
     private static final String[] forestTextureAtlases = {
-        "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/odin.atlas"
+        "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing" +
+        ".atlas", "images/odin.atlas", "images/wall.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
     private static final String[] forestMusic = {backgroundMusic};
 
+    private Entity player;
 
     private final TerrainFactory terrainFactory;
 
@@ -67,14 +70,13 @@ public class RacerArea extends GameArea {
         displayUI();
 
         spawnTerrain();
-
         try {
             spawnWorld();
         } catch (IOException ex) {
             System.out.println("File Not Found Quitting");
             app.exit();
         }
-        
+        spawnWallOfDeath();
         playMusic();
     }
 
@@ -83,7 +85,6 @@ public class RacerArea extends GameArea {
         ui.addComponent(new GameAreaDisplay("Box Forest"));
         spawnEntity(ui);
     }
-
 
 
     private void spawnWorld() throws IOException{
@@ -114,8 +115,7 @@ public class RacerArea extends GameArea {
                         break;
                     case 'A':
                         //A for Avatar :)
-                        System.out.println(LANES[Math.round(lane/2)]);
-                        spawnPlayer(LANES[Math.round(lane/2)]+1, (i*3)+1);
+                        player = spawnPlayer(LANES[Math.round(lane/2)]+1, (i*3)+1);
                     default:
                         break;
                 }
@@ -136,8 +136,8 @@ public class RacerArea extends GameArea {
         GridPoint2 tileBounds = terrain.getMapBounds(0);
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
         // Left
-        spawnEntityAt(
-            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+        // spawnEntityAt(
+        //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
         // Right
         // spawnEntityAt(
         //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
@@ -155,6 +155,7 @@ public class RacerArea extends GameArea {
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
         
     }
+
 
     /**
      * Spawn a platform that is length long with height given by lane and x coordinate given by xCord.
@@ -200,10 +201,18 @@ public class RacerArea extends GameArea {
         }
     }
 
-    private void spawnPlayer(int lane, int xCord) {
+    private Entity spawnPlayer(int lane, int xCord) {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - newPlayer.getScale().y));
         spawnEntityAt(newPlayer, pos, true, false);
+        return newPlayer;
+    }
+
+    private void spawnWallOfDeath() {
+
+        GridPoint2 leftPos = new GridPoint2(-2,15);
+        Entity wallOfDeath = NPCFactory.createWallOfDeath(player);
+        spawnEntityAt(wallOfDeath, leftPos, true, true);
     }
 
     private void playMusic() {
