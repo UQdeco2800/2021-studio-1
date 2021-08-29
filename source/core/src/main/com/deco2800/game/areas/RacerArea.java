@@ -44,11 +44,12 @@ public class RacerArea extends GameArea {
         "images/hex_grass_3.png",
         "images/iso_grass_1.png",
         "images/iso_grass_2.png",
-        "images/iso_grass_3.png"
+        "images/iso_grass_3.png",
+            "images/death_giant.png"
     };
     private static final String[] forestTextureAtlases = {
         "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing" +
-        ".atlas", "images/odin.atlas"
+        ".atlas", "images/odin.atlas", "images/wall.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -75,6 +76,9 @@ public class RacerArea extends GameArea {
         //spawnTrees();
         spawnPlatforms();
         spawnFloor();
+
+        spawnWallOfDeath();
+
         player = spawnPlayer();
         playMusic();
     }
@@ -94,9 +98,9 @@ public class RacerArea extends GameArea {
     float tileSize = terrain.getTileSize();
     GridPoint2 tileBounds = terrain.getMapBounds(0);
     Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
-    // Left
-    spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+    // Left - removed for room for Wall of Death
+    //spawnEntityAt(
+      //  ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
     // Right
     spawnEntityAt(
         ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
@@ -157,6 +161,13 @@ public class RacerArea extends GameArea {
         Entity newPlayer = PlayerFactory.createPlayer();
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
         return newPlayer;
+    }
+
+    private void spawnWallOfDeath() {
+
+        GridPoint2 leftPos = new GridPoint2(-2,15);
+        Entity wallOfDeath = NPCFactory.createWallOfDeath(player);
+        spawnEntityAt(wallOfDeath, leftPos, true, true);
     }
 
     private void spawnGhosts() {
