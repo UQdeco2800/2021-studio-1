@@ -34,8 +34,8 @@ public class ObstacleFactory {
     rock.getComponent(TextureRenderComponent.class).scaleEntity();
     rock.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     rock.getComponent(ColliderComponent.class).setDensity(1.0f);
-    rock.setScale(1.25f, 0.75f);
-    PhysicsUtils.setScaledCollider(rock, 1f, 1f);
+    rock.setScale(1.1f, 0.6f);
+    PhysicsUtils.setScaledCollider(rock, .9f, .9f);
     return rock;
   }
 
@@ -57,7 +57,7 @@ public class ObstacleFactory {
     spikes.getComponent(TextureRenderComponent.class).scaleEntity();
     spikes.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     spikes.getComponent(ColliderComponent.class).setDensity(1.0f);
-    spikes.setScale(1.25f, 0.75f);
+    spikes.setScale(1.1f, 0.5f);
     PhysicsUtils.setScaledCollider(spikes, 0.9f, 0.9f);
     return spikes;
   }

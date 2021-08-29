@@ -91,7 +91,7 @@ public class RacerArea extends GameArea {
         spawnSpikes();
         spawnSkeletons();
         spawnWolf();
-        spawnSpear();
+        spawnSpears();
 
         player = spawnPlayer();
         playMusic();
@@ -175,7 +175,9 @@ public class RacerArea extends GameArea {
         }
     }
 
-    // Manually placing rocks on the stationary platforms, starting with bottom right.
+    /**
+     * Spawns the rocks for the game, they can only spawn on lane 1 and the floor.
+     */
     private void spawnRocks() {
         GridPoint2 bottomRightMin = new GridPoint2(21, 10);
         GridPoint2 bottomRightMax = new GridPoint2(27, 10);
@@ -208,6 +210,9 @@ public class RacerArea extends GameArea {
         }
     }
 
+    /**
+     * Spawns the spikes for the game, they can only spawn on the floor or on lane 2.
+     */
     private void spawnSpikes() {
         GridPoint2 floorMin = new GridPoint2(1, 5);
         GridPoint2 floorMax = new GridPoint2(27, 5);
@@ -257,14 +262,26 @@ public class RacerArea extends GameArea {
         }
     }
 
-    private void spawnSpear() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+    /**
+     * This spawns the spears in each of the three different lanes.
+     */
+    private void spawnSpears() {
+        spawnSpear(ProjectileFactory.createSpearLane_1(), new GridPoint2(27, 11));
+        spawnSpear(ProjectileFactory.createSpearLane_2(), new GridPoint2(27, 17));
+        spawnSpear(ProjectileFactory.createSpearLane_3(), new GridPoint2(27, 23));
+    }
+
+    /**
+     * This creates the spears to be spawned in their respective lanes
+     * @param spearLane the lane the spear is assigned to
+     * @param startLocation the starting location for the spear
+     */
+    private void spawnSpear(Entity spearLane, GridPoint2 startLocation) {
 
         for (int i = 0; i < NUM_SPEARS; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity spear = ProjectileFactory.createSpear();
-            spawnEntityAt(spear, randomPos, true, true);
+
+            spawnEntityAt(spearLane, startLocation, true, true);
+
         }
     }
     /*
