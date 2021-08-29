@@ -27,9 +27,9 @@ public class UIPop extends UIComponent {
             new HashMap<>();
     static {
         //background images should ideally be 800 * 500 pixels
-        backGroundImages.put("Default Pop", "images/Backgrounds/popPauseBack.png");
-        backGroundImages.put("Score Screen", "images/Backgrounds/run_ended.png");
-        backGroundImages.put("Pause Menu", "images/Backgrounds/popPauseBack.png");
+        backGroundImages.put("Default Pop", "images/popPauseBack.png");
+        backGroundImages.put("Score Screen", "images/run_ended.png");
+        backGroundImages.put("Pause Menu", "images/popPauseBack.png");
     }
 
     //the game the popUp will pop onto
@@ -197,9 +197,9 @@ public class UIPop extends UIComponent {
             Texture popUpResumeImage;
             // texture for button image - Quit;
             Texture popUpQuitImage;
-            popUpSettingImage = new Texture("images/Buttons/setting.png");
-            popUpResumeImage = new Texture("images/Buttons/resume.png");
-            popUpQuitImage = new Texture("images/Buttons/quit.png");
+            popUpSettingImage = new Texture("images/setting.png");
+            popUpResumeImage = new Texture("images/resume.png");
+            popUpQuitImage = new Texture("images/quit.png");
             // Image button - Setting
             ImageButton settingButton;
             // Image button - Resume

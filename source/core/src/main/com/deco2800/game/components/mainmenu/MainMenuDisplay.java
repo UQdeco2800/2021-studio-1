@@ -47,7 +47,7 @@ public class MainMenuDisplay extends UIComponent {
     Image title =
         new Image(
             ServiceLocator.getResourceService()
-                .getAsset("images/Backgrounds/main_back.png", Texture.class));
+                .getAsset("images/main_back.png", Texture.class));
 
     TextButton startBtn = new TextButton("Run!", skin);
     //This and its descendants are commented out since it could be a button we use in future
@@ -58,7 +58,7 @@ public class MainMenuDisplay extends UIComponent {
 
     ImageButton muteButton = new ImageButton(new TextureRegionDrawable(
             ServiceLocator.getResourceService().getAsset(
-                    "images/Buttons/mute_button_on.png", Texture.class)));
+                    "images/mute_button_on.png", Texture.class)));
 
     // Triggers an event when the button is pressed
 
