@@ -11,6 +11,8 @@ import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
+import java.io.*;
+import static com.badlogic.gdx.Gdx.app;
 
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -25,6 +27,7 @@ public class RacerArea extends GameArea {
     private static final int LANE_1 = 9;
     private static final int LANE_2 = 15;
     private static final int LANE_3 = 21;
+    private static final int[] LANES = new int[]{LANE_0, LANE_1, LANE_2, LANE_3};
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
@@ -67,7 +70,13 @@ public class RacerArea extends GameArea {
         displayUI();
 
         spawnTerrain();
-        spawnWorld();
+
+        try {
+            spawnWorld();
+        } catch (IOException ex) {
+            System.out.println("File Not Found Quitting");
+            app.exit();
+        }
         player = spawnPlayer();
         playMusic();
     }
@@ -80,15 +89,38 @@ public class RacerArea extends GameArea {
 
 
 
-    private void spawnWorld() {
+    private void spawnWorld() throws IOException{
+        // URL url = getClass().getResource("com/deco2800/game/entities/configs/LVL1.txt");
+        // spawnPlatform(1, LANE_0, 3);
+        // spawnPlatform(1, LANE_1, 4);
+        // spawnPlatform(1, LANE_2, 5);
         
-        spawnPlatform(2, LANE_1, 0);
-        spawnPlatform(3, LANE_1, 21);
-        spawnPlatform(4, LANE_2, 10);
-        spawnPlatform(1, LANE_3, 20);
-        spawnPlatform(2, LANE_3, 5);
-        spawnPlatform(2, LANE_3, 27);
-        spawnFloor(15, LANE_0, 0);
+        
+        File levelFile = new File("configs/LVL1.txt");
+        FileReader fr = new FileReader(levelFile);
+        BufferedReader br = new BufferedReader(fr);
+        String line;
+        Integer lane = 7;
+        while ((line = br.readLine()) != null) {
+            // TODO: CHECK LINES ARE ALL THE SAME LENGTH
+            for (int i = 0; i < line.length(); i++) {
+                switch ((line.charAt(i))) {
+                    case 'P':
+                        // PLATFORM
+                        spawnPlatform(1, LANES[Math.round(lane/2)], i*3);
+                        break;
+                    case 'F':
+                        // FLOOR
+                        spawnFloor(1, LANES[Math.round(lane/2)], i*3);
+                        spawnFloor(1, LANES[Math.round(lane/2)], i*3+1);
+                        spawnFloor(1, LANES[Math.round(lane/2)], i*3+2);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            lane = lane -1;
+        }
     }
 
 

@@ -2,5 +2,5 @@
 
 ### Gradle ###
 .gradle/
-.vscode/launch.json
+.vscode/
 source/desktop/build.gradle
