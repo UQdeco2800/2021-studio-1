@@ -21,21 +21,17 @@ import org.slf4j.LoggerFactory;
 /** Forest area for the demo game with trees, a player, and some enemies. */
 public class RacerArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(RacerArea.class);
-    private static final int NUM_TREES = 2;
-    private static final int NUM_GHOSTS = 2;
+    private static final int LANE_0 = 4;
     private static final int LANE_1 = 9;
     private static final int LANE_2 = 15;
     private static final int LANE_3 = 21;
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
-    private static final GridPoint2 FLOOR = new GridPoint2(10, 5);
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
         "images/box_boy_leaf.png",
         "images/floor.png",
         "images/platform.png",
         "images/tree.png",
-        "images/ghost_king.png",
-        "images/ghost_1.png",
         "images/grass_1.png",
         "images/grass_2.png",
         "images/grass_3.png",
@@ -47,8 +43,7 @@ public class RacerArea extends GameArea {
         "images/iso_grass_3.png"
     };
     private static final String[] forestTextureAtlases = {
-        "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing" +
-        ".atlas", "images/odin.atlas"
+        "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/odin.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -72,9 +67,7 @@ public class RacerArea extends GameArea {
         displayUI();
 
         spawnTerrain();
-        //spawnTrees();
-        spawnPlatforms();
-        spawnFloor();
+        spawnWorld();
         player = spawnPlayer();
         playMusic();
     }
@@ -85,71 +78,92 @@ public class RacerArea extends GameArea {
         spawnEntity(ui);
     }
 
-  private void spawnTerrain() {
-    // Background terrain
-    terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
-    spawnEntity(new Entity().addComponent(terrain));
 
-    // Terrain walls
-    float tileSize = terrain.getTileSize();
-    GridPoint2 tileBounds = terrain.getMapBounds(0);
-    Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
-    // Left
-    spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
-    // Right
-    spawnEntityAt(
-        ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        new GridPoint2(tileBounds.x, 0),
-        false,
-        false);
-    // Top
-    spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-        new GridPoint2(0, tileBounds.y),
-        false,
-        false);
-    // Bottom
-    spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
-  }
 
-  private void spawnPlatforms() {
-    spawnPlatform(2, LANE_1, 0);
-    spawnPlatform(3, LANE_1, 21);
-    spawnPlatform(4, LANE_2, 10);
-    spawnPlatform(1, LANE_3, 20);
-    spawnPlatform(2, LANE_3, 5);
-  }
+    private void spawnWorld() {
+        
+        spawnPlatform(2, LANE_1, 0);
+        spawnPlatform(3, LANE_1, 21);
+        spawnPlatform(4, LANE_2, 10);
+        spawnPlatform(1, LANE_3, 20);
+        spawnPlatform(2, LANE_3, 5);
+        spawnPlatform(2, LANE_3, 27);
+        spawnFloor(15, LANE_0, 0);
+    }
+
+
+
+    private void spawnTerrain() {
+        // Background terrain
+        terrain = terrainFactory.createTerrain(TerrainType.FOREST_DEMO);
+        spawnEntity(new Entity().addComponent(terrain));
+
+        // Terrain walls
+        float tileSize = terrain.getTileSize();
+        GridPoint2 tileBounds = terrain.getMapBounds(0);
+        Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
+        // Left
+        spawnEntityAt(
+            ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+        // Right
+        // spawnEntityAt(
+        //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+        //     new GridPoint2(tileBounds.x, 0),
+        //     false,
+        //     false);
+        // Top
+        spawnEntityAt(
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+            new GridPoint2(0, tileBounds.y),
+            false,
+            false);
+        // Bottom
+        spawnEntityAt(
+            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+        
+    }
 
     /**
      * Spawn a platform that is length long with height given by lane and x coordinate given by xCord.
      *
      * @param length the length of the platform to be made
      * @param lane   the y coordinate of the platform in the game area. It is preferable but not
-     *               required to use the variables LANE_1, LANE_2, ... for this value
+     *               required to use the variables LANE_0, LANE_1, LANE_2, ... for this value
      * @param xCord  the x coordinate of this platform in the game area's grid system
      */
     private void spawnPlatform(int length, int lane, int xCord) {
         // In later implementations, length should create a platform that is (length * platform unit
         // length) long. But at the moment it just creates multiple platforms stacked next to each
         // other.
+        
         for (int i = 0; i < length; i++) {
-            Entity platform = ObstacleFactory.createPlatform();
+            
             // Make the  lane refer to the height of the top of the platform, not the bottom. This breaks
             // when the scale height is set to 1 for some reason, as the scale height does not correlate
             // to actual height.
-            lane = Math.round(lane - platform.getScale().y);
-            GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * platform.getScale().x) * 2), lane);
+            Entity platform = ObstacleFactory.createPlatform();
+            GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * platform.getScale().x) * 2), Math.round(lane - platform.getScale().y));
             spawnEntityAt(platform, pos, false, false);
         }
     }
 
-    private void spawnFloor() {
-        for (int i = 0; i < 15; i++) {
-            Entity newFloor = ObstacleFactory.createFloor();
-            GridPoint2 position = new GridPoint2(i * 2, 3);
-            spawnEntityAt(newFloor, position, false, false);
+    /**
+     * Spawn a floor that is length long with height given by lane and x coordinate given by xCord.
+     *
+     * @param length the length of the floor to be made
+     * @param lane   the y coordinate of the floor in the game area. It is preferable but not
+     *               required to use the variables LANE_0, LANE_1, LANE_2, ... for this value
+     * @param xCord  the x coordinate of this floor in the game area's grid system
+     */
+    private void spawnFloor(int length, int lane, int xCord) {
+        
+        for (int i = 0; i < length; i++) {
+            // Make the  lane refer to the height of the top of the platform, not the bottom. This breaks
+            // when the scale height is set to 1 for some reason, as the scale height does not correlate
+            // to actual height.
+            Entity floor = ObstacleFactory.createFloor();
+            GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * floor.getScale().x) * 2), Math.round(lane - floor.getScale().y));
+            spawnEntityAt(floor, pos, false, false);
         }
     }
 
@@ -157,26 +171,6 @@ public class RacerArea extends GameArea {
         Entity newPlayer = PlayerFactory.createPlayer();
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
         return newPlayer;
-    }
-
-    private void spawnGhosts() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for (int i = 0; i < NUM_GHOSTS; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity ghost = NPCFactory.createGhost(player);
-            spawnEntityAt(ghost, randomPos, true, true);
-        }
-    }
-
-    private void spawnGhostKing() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity ghostKing = NPCFactory.createGhostKing(player);
-        spawnEntityAt(ghostKing, randomPos, true, true);
     }
 
     private void playMusic() {
