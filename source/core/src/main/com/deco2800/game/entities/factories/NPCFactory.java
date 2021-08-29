@@ -26,6 +26,7 @@ import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.rendering.TextureRenderComponent;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -47,50 +48,70 @@ public class NPCFactory {
    * @param target entity to chase
    * @return entity
    */
-  public static Entity createGhost(Entity target) {
-    Entity ghost = createBaseNPC(target);
-    BaseEntityConfig config = configs.ghost;
 
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+//  public static Entity createGhost(Entity target) {
+//    Entity ghost = createBaseNPC(target);
+//    BaseEntityConfig config = configs.ghost;
+//
+//    AnimationRenderComponent animator =
+//        new AnimationRenderComponent(
+//            ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
+//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+//
+//    ghost
+//            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+//            .addComponent(animator)
+//            .addComponent(new GhostAnimationController());
+//    ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
+//
+//    return ghost;
+//  }
+//
+//  /**
+//   * Creates a ghost king entity.
+//   *
+//   * @param target entity to chase
+//   * @return entity
+//   */
+//  public static Entity createGhostKing(Entity target) {
+//    Entity ghostKing = createBaseNPC(target);
+//    GhostKingConfig config = configs.ghostKing;
+//
+//    AnimationRenderComponent animator =
+//        new AnimationRenderComponent(
+//            ServiceLocator.getResourceService()
+//                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
+//    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+//
+//    ghostKing
+//        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+//        .addComponent(animator)
+//        .addComponent(new GhostAnimationController());
+//
+//    ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
+//    return ghostKing;
+//  }
 
-    ghost
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
-
-    ghost.getComponent(AnimationRenderComponent.class).scaleEntity();
-
-    return ghost;
+  public static Entity createSkeleton(Entity target) {
+    Entity skeleton = createBaseNPC(target);
+    BaseEntityConfig config = configs.skeleton;
+    skeleton
+            .addComponent(new TextureRenderComponent("images/skeleton.png"))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+    skeleton.setScale(1f, 1.2f);
+    return skeleton;
   }
 
-  /**
-   * Creates a ghost king entity.
-   *
-   * @param target entity to chase
-   * @return entity
-   */
-  public static Entity createGhostKing(Entity target) {
-    Entity ghostKing = createBaseNPC(target);
-    GhostKingConfig config = configs.ghostKing;
-
-    AnimationRenderComponent animator =
-        new AnimationRenderComponent(
-            ServiceLocator.getResourceService()
-                .getAsset("images/ghostKing.atlas", TextureAtlas.class));
-    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-
-    ghostKing
-        .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-        .addComponent(animator)
-        .addComponent(new GhostAnimationController());
-
-    ghostKing.getComponent(AnimationRenderComponent.class).scaleEntity();
-    return ghostKing;
+  public static Entity createWolf(Entity target) {
+    Entity wolf = createBaseNPC(target);
+    BaseEntityConfig config = configs.wolf;
+    wolf
+            .addComponent(new TextureRenderComponent("images/wolf_1.png"))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+    wolf.setScale(1.5f, 1f);
+    return wolf;
   }
 
 //add comments
@@ -126,8 +147,8 @@ public class NPCFactory {
   private static Entity createBaseNPC(Entity target) {
     AITaskComponent aiComponent =
         new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(2f, 2f), 2f))
-            .addTask(new ChaseTask(target, 10, 3f, 4f));
+            .addTask(new WanderTask(new Vector2(10f, 0f), 5f));
+            //.addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())
@@ -138,6 +159,8 @@ public class NPCFactory {
             .addComponent(aiComponent);
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+
     return npc;
   }
 

@@ -8,4 +8,7 @@ public class NPCConfigs {
   public GhostKingConfig ghostKing = new GhostKingConfig();
   //creates a config class for the wall of death.
   public BaseEntityConfig wallOfDeath = new BaseEntityConfig();
+
+  public BaseEntityConfig skeleton = new BaseEntityConfig();
+  public BaseEntityConfig wolf = new BaseEntityConfig();
 }
