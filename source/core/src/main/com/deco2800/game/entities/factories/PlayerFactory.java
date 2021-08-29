@@ -1,5 +1,7 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.PlayerActions;
@@ -13,6 +15,7 @@ import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -36,7 +39,6 @@ public class PlayerFactory {
 
     Entity player =
         new Entity()
-            .addComponent(new TextureRenderComponent("images/box_boy_leaf.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent())
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYER))
@@ -46,9 +48,40 @@ public class PlayerFactory {
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay());
 
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(ServiceLocator.getResourceService()
+                    .getAsset("images/odin.atlas", TextureAtlas.class));
+
+    animator.addAnimation("still-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("crouch-still-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("crouch-still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("run-left", 0.1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("run-right", 0.1f,
+              Animation.PlayMode.LOOP);
+    animator.addAnimation("crouch-left", 0.1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("crouch-right", 0.1f,
+            Animation.PlayMode.LOOP);
+
+    player.addComponent(animator);
     PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.5f);
-    player.getComponent(TextureRenderComponent.class).scaleEntity();
+    player.getComponent(AnimationRenderComponent.class).scaleEntity();
+    //gravity scalar used to multiply gravity from physics engine, used 5 for
+    // base character
+    //vary based on how heavy we want characters to look
+    player.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+
     return player;
   }
 

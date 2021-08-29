@@ -11,7 +11,7 @@ import com.badlogic.gdx.InputProcessor;
  * This input handler uses keyboard and touch input.
  */
 public class TouchPlayerInputComponent extends InputComponent {
-  private final Vector2 walkDirection = Vector2.Zero.cpy();
+  private final Vector2 runDirection = Vector2.Zero.cpy();
 
   public TouchPlayerInputComponent() {
     super(5);
@@ -27,20 +27,20 @@ public class TouchPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
     switch (keycode) {
       case Input.Keys.UP:
-        walkDirection.add(Vector2Utils.UP);
-        triggerWalkEvent();
+        runDirection.add(Vector2Utils.UP);
+        triggerRunEvent();
         return true;
       case Input.Keys.LEFT:
-        walkDirection.add(Vector2Utils.LEFT);
-        triggerWalkEvent();
+        runDirection.add(Vector2Utils.LEFT);
+        triggerRunEvent();
         return true;
       case Input.Keys.DOWN:
-        walkDirection.add(Vector2Utils.DOWN);
-        triggerWalkEvent();
+        runDirection.add(Vector2Utils.DOWN);
+        triggerRunEvent();
         return true;
       case Input.Keys.RIGHT:
-        walkDirection.add(Vector2Utils.RIGHT);
-        triggerWalkEvent();
+        runDirection.add(Vector2Utils.RIGHT);
+        triggerRunEvent();
         return true;
       default:
         return false;
@@ -57,20 +57,20 @@ public class TouchPlayerInputComponent extends InputComponent {
   public boolean keyUp(int keycode) {
     switch (keycode) {
       case Input.Keys.UP:
-        walkDirection.sub(Vector2Utils.UP);
-        triggerWalkEvent();
+        runDirection.sub(Vector2Utils.UP);
+        triggerRunEvent();
         return true;
       case Input.Keys.LEFT:
-        walkDirection.sub(Vector2Utils.LEFT);
-        triggerWalkEvent();
+        runDirection.sub(Vector2Utils.LEFT);
+        triggerRunEvent();
         return true;
       case Input.Keys.DOWN:
-        walkDirection.sub(Vector2Utils.DOWN);
-        triggerWalkEvent();
+        runDirection.sub(Vector2Utils.DOWN);
+        triggerRunEvent();
         return true;
       case Input.Keys.RIGHT:
-        walkDirection.sub(Vector2Utils.RIGHT);
-        triggerWalkEvent();
+        runDirection.sub(Vector2Utils.RIGHT);
+        triggerRunEvent();
         return true;
       default:
         return false;
@@ -88,11 +88,11 @@ public class TouchPlayerInputComponent extends InputComponent {
     return true;
   }
 
-  private void triggerWalkEvent() {
-    if (walkDirection.epsilonEquals(Vector2.Zero)) {
-      entity.getEvents().trigger("walkStop");
+  private void triggerRunEvent() {
+    if (runDirection.epsilonEquals(Vector2.Zero)) {
+      entity.getEvents().trigger("stop run");
     } else {
-      entity.getEvents().trigger("walk", walkDirection);
+      entity.getEvents().trigger("run", runDirection);
     }
   }
 }

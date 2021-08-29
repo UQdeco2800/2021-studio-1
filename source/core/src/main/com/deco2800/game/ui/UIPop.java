@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.deco2800.game.services.ServiceLocator;
+
 import java.util.*;
 
 /*
@@ -16,7 +18,7 @@ import java.util.*;
  * and can be added directly to entities.
  *
  * See wiki for full description and example use
- * @Link -- {'to come'}
+ * @Link -- {'https://github.com/UQdeco2800/2021-studio-1/wiki/UI-Popup'}
  */
 public class UIPop extends UIComponent {
 
@@ -46,6 +48,7 @@ public class UIPop extends UIComponent {
     private TextButton closeButton;
     // the texture for the popup background
     private Texture popUpBackGround;
+<<<<<<< HEAD
     // texture for button image - Setting
     private Texture popUpSettingImage;
     // texture for button image - Resume
@@ -64,6 +67,10 @@ public class UIPop extends UIComponent {
     private Label settingTitle;
     //Back button
     private Button backButton;
+=======
+    // the skin for the popup
+    private Skin popUpSkin;
+>>>>>>> bc1fbcb6c719541b136c04b380cdd2e7b0c8acfb
 
     /*
      * UIPop constructor
@@ -114,10 +121,15 @@ public class UIPop extends UIComponent {
         popUp.setBackground(new TextureRegionDrawable(popUpBackGround));
         setting.setBackground(new TextureRegionDrawable(popUpBackGround));
 
-        closeButton = new TextButton("Close", skin);
+        this.popUpSkin = skin;
+
+        closeButton = new TextButton("Close", popUpSkin);
         closeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
+                if (screenName.equals("Pause Menu")) {
+                    ServiceLocator.getTimeSource().setTimeScale(1);
+                }
                 entity.dispose();
             }
         });
@@ -135,8 +147,11 @@ public class UIPop extends UIComponent {
         popUp.setZIndex(0);
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> bc1fbcb6c719541b136c04b380cdd2e7b0c8acfb
     @Override
     public void create() {
         super.create();
@@ -156,7 +171,7 @@ public class UIPop extends UIComponent {
 
         root.add(popUp).expandX().expandY();
 
-        title = new Label(screeName, skin);
+        title = new Label(screeName, popUpSkin);
         title.setFontScale(2.5f);
 
         popUp.add(title).top();
@@ -184,8 +199,8 @@ public class UIPop extends UIComponent {
         setting.row().padTop(5f);
 
         for (int i = 0; i < 3; i++) {
-            Label infoTitle = new Label(getInformation(screenName, i), skin);
-            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin);
+            Label infoTitle = new Label(getInformation(screenName, i), popUpSkin);
+            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), popUpSkin);
             infoTitle.setFontScale(1.5f);
             info.setFontScale(1.5f);
             setting.add(infoTitle).left();
@@ -193,6 +208,12 @@ public class UIPop extends UIComponent {
             setting.row().padTop(20f);
         }
 
+<<<<<<< HEAD
+=======
+        popUp.row().padTop(20f);
+        popUp.add(new Label("Volume :", popUpSkin)).left();
+        popUp.add(ScreenSpecialElement(screenName)).right();
+>>>>>>> bc1fbcb6c719541b136c04b380cdd2e7b0c8acfb
 
         setting.row().padTop(20f);
         setting.add(new Label("Volume :", skin)).left();
@@ -215,9 +236,13 @@ public class UIPop extends UIComponent {
         Widget element = null;
 
         if (screenName.equals("Pause Menu")) {
+<<<<<<< HEAD
             element = new Slider(0f, 1f, 0.1f, false, skin);
+=======
+            element = new Slider(0.2f, 2f, 0.1f, false, popUpSkin);
+>>>>>>> bc1fbcb6c719541b136c04b380cdd2e7b0c8acfb
         } else if (screenName.equals("Score Screen")) {
-            element = new SelectBox<>(skin);
+            element = new SelectBox<>(popUpSkin);
         }
         return element;
 
@@ -314,6 +339,4 @@ public class UIPop extends UIComponent {
         s = screenName;
         return s;
     }
-
-
 }

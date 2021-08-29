@@ -27,6 +27,7 @@ public class MainGameActions extends Component {
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("pause", this::onPause);
+    entity.getEvents().addListener("score screen", this::showScore);
   }
 
 
@@ -48,12 +49,15 @@ public class MainGameActions extends Component {
 
         if (game.paused) {
             ServiceLocator.getTimeSource().setTimeScale(1f);
-            System.out.println("paused");
             popUp.dispose();
             //resume sound
             pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
         } else {
             ServiceLocator.getTimeSource().setTimeScale(0f);
+            if (popUp != null) {
+                popUp.dispose();
+            }
+            System.out.println("paused");
             popUp = new Entity();
             popUp.addComponent(new UIPop("Pause Menu", this));
             ServiceLocator.getEntityService().register(popUp);
@@ -62,5 +66,32 @@ public class MainGameActions extends Component {
         }
         game.paused = !game.paused;
         pauseSound.play();
+    }
+
+    /**
+     * Pauses the game -- the trigger function for the event.
+     */
+    private void showScore() {
+
+        Sound scoreScreenSound;
+
+        if (game.scoreShown) {
+            popUp.dispose();
+            //score screen removed sound
+            scoreScreenSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+            game.scoreShown = false;
+        } else {
+            if (popUp != null) {
+                popUp.dispose();
+            }
+            popUp = new Entity();
+            System.out.println("score showing");
+            popUp.addComponent(new UIPop("Score Screen"));
+            ServiceLocator.getEntityService().register(popUp);
+            //score screen sound
+            scoreScreenSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+            game.scoreShown = true;
+        }
+        scoreScreenSound.play();
     }
 }
