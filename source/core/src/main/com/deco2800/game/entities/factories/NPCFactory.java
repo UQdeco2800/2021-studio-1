@@ -118,32 +118,6 @@ public class NPCFactory {
     return wallOfDeath;
   }
 
-  //add comments
-  public static Entity createStaticWallOfDeath(Entity target) {
-    Entity wallOfDeath = createWallNPC(target);
-    BaseEntityConfig config = configs.wallOfDeath;
-
-//    AnimationRenderComponent animator =
-//            new AnimationRenderComponent(
-//                    ServiceLocator.getResourceService()
-//                            .getAsset("images/ghost.atlas", TextureAtlas.class));
-//        animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-
-    wallOfDeath
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
-            // .addComponent(animator)
-            .addComponent(new TextureRenderComponent("images/ghost_1.png"));
-    // .addComponent(new GhostAnimationController());
-    //.addComponent(new DeathGiantAnimationController());
-
-    //wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
-    wallOfDeath.setScale(10.5f,10.5f);
-
-    //PhysicsUtils.setScaledCollider(wallOfDeath, 5.9f, 5.4f);
-
-    return wallOfDeath;
-  }
-
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    *
