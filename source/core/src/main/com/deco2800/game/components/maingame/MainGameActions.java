@@ -86,7 +86,7 @@ public class MainGameActions extends Component {
             }
             popUp = new Entity();
             System.out.println("score showing");
-            popUp.addComponent(new UIPop("Score Screen"));
+            popUp.addComponent(new UIPop("Score Screen", this));
             ServiceLocator.getEntityService().register(popUp);
             //score screen sound
             scoreScreenSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);

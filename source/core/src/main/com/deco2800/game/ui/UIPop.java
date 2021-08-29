@@ -48,7 +48,6 @@ public class UIPop extends UIComponent {
     private TextButton closeButton;
     // the texture for the popup background
     private Texture popUpBackGround;
-<<<<<<< HEAD
     // texture for button image - Setting
     private Texture popUpSettingImage;
     // texture for button image - Resume
@@ -67,11 +66,8 @@ public class UIPop extends UIComponent {
     private Label settingTitle;
     //Back button
     private Button backButton;
-=======
     // the skin for the popup
     private Skin popUpSkin;
->>>>>>> bc1fbcb6c719541b136c04b380cdd2e7b0c8acfb
-
     /*
      * UIPop constructor
      */
@@ -147,11 +143,6 @@ public class UIPop extends UIComponent {
         popUp.setZIndex(0);
     }
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> bc1fbcb6c719541b136c04b380cdd2e7b0c8acfb
     @Override
     public void create() {
         super.create();
@@ -208,13 +199,6 @@ public class UIPop extends UIComponent {
             setting.row().padTop(20f);
         }
 
-<<<<<<< HEAD
-=======
-        popUp.row().padTop(20f);
-        popUp.add(new Label("Volume :", popUpSkin)).left();
-        popUp.add(ScreenSpecialElement(screenName)).right();
->>>>>>> bc1fbcb6c719541b136c04b380cdd2e7b0c8acfb
-
         setting.row().padTop(20f);
         setting.add(new Label("Volume :", skin)).left();
         setting.add(ScreenSpecialElement(screenName)).right();
@@ -236,11 +220,8 @@ public class UIPop extends UIComponent {
         Widget element = null;
 
         if (screenName.equals("Pause Menu")) {
-<<<<<<< HEAD
             element = new Slider(0f, 1f, 0.1f, false, skin);
-=======
             element = new Slider(0.2f, 2f, 0.1f, false, popUpSkin);
->>>>>>> bc1fbcb6c719541b136c04b380cdd2e7b0c8acfb
         } else if (screenName.equals("Score Screen")) {
             element = new SelectBox<>(popUpSkin);
         }

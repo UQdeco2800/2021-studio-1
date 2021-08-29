@@ -2,6 +2,7 @@ package com.deco2800.game.components.mainmenu;
 
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -70,7 +71,7 @@ public class MainMenuActions extends Component {
     logger.info("Launching help popUp");
     if (mainMenuPop == null) {
         mainMenuPop = new Entity();
-        mainMenuPop.addComponent(new UIPop("Default Pop"));
+        mainMenuPop.addComponent(new UIPop("Default Pop", new MainGameActions(this.game)));
         ServiceLocator.getEntityService().register(mainMenuPop);
     } else {
         mainMenuPop.dispose();
