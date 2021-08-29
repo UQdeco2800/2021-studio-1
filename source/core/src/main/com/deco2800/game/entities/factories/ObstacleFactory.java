@@ -35,7 +35,7 @@ public class ObstacleFactory {
     rock.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     rock.getComponent(ColliderComponent.class).setDensity(1.0f);
     rock.setScale(1.1f, 0.6f);
-    PhysicsUtils.setScaledCollider(rock, 1f, 1f);
+    PhysicsUtils.setScaledCollider(rock, .9f, .9f);
     return rock;
   }
 
@@ -57,7 +57,7 @@ public class ObstacleFactory {
     spikes.getComponent(TextureRenderComponent.class).scaleEntity();
     spikes.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     spikes.getComponent(ColliderComponent.class).setDensity(1.0f);
-    spikes.setScale(1f, 0.5f);
+    spikes.setScale(1.1f, 0.5f);
     PhysicsUtils.setScaledCollider(spikes, 0.9f, 0.9f);
     return spikes;
   }
@@ -69,7 +69,7 @@ public class ObstacleFactory {
   public static Entity createPlatform() {
     Entity platform =
             new Entity()
-            .addComponent(new TextureRenderComponent("images/platform.png"))
+            .addComponent(new TextureRenderComponent("images/platform_no_gradient.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
@@ -79,6 +79,25 @@ public class ObstacleFactory {
     // difficult.
     platform.scaleHeight(0.5f);
     return platform;
+  }
+
+  /**
+   * Creates platform entity with shadow.
+   * @return entity
+   */
+  public static Entity createPlatformWithGradient() {
+    Entity platformGradient =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/platform_gradient.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+
+    platformGradient.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    platformGradient.getComponent(TextureRenderComponent.class).scaleEntity();
+    // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
+    // difficult.
+    platformGradient.scaleHeight(0.5f);
+    return platformGradient;
   }
 
   /**
