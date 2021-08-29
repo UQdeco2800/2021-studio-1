@@ -44,6 +44,8 @@ public class UIPop extends UIComponent {
     private TextButton closeButton;
     // the texture for the popup background
     private Texture popUpBackGround;
+    // the skin for the popup
+    private Skin popUpSkin;
 
     /*
      * UIPop constructor
@@ -62,7 +64,9 @@ public class UIPop extends UIComponent {
 
         popUp.setBackground(new TextureRegionDrawable(popUpBackGround));
 
-        closeButton = new TextButton("Close", skin);
+        this.popUpSkin = skin;
+
+        closeButton = new TextButton("Close", popUpSkin);
         closeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -76,7 +80,6 @@ public class UIPop extends UIComponent {
         root.setZIndex(0);
         popUp.setZIndex(0);
     }
-
 
     @Override
     public void create() {
@@ -97,15 +100,15 @@ public class UIPop extends UIComponent {
 
         root.add(popUp).expandX().expandY();
 
-        title = new Label(screeName, skin);
+        title = new Label(screeName, popUpSkin);
         title.setFontScale(2.5f);
 
         popUp.add(title).top();
         popUp.row().padTop(30f);
 
         for (int i = 0; i < 3; i++) {
-            Label infoTitle = new Label(getInformation(screenName, i), skin);
-            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin);
+            Label infoTitle = new Label(getInformation(screenName, i), popUpSkin);
+            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), popUpSkin);
             infoTitle.setFontScale(1.5f);
             info.setFontScale(1.5f);
             popUp.add(infoTitle).left();
@@ -114,7 +117,7 @@ public class UIPop extends UIComponent {
         }
 
         popUp.row().padTop(20f);
-        popUp.add(new Label("Volume :", skin)).left();
+        popUp.add(new Label("Volume :", popUpSkin)).left();
         popUp.add(ScreenSpecialElement(screenName)).right();
 
         popUp.row().padTop(20f);
@@ -133,9 +136,9 @@ public class UIPop extends UIComponent {
         Widget element = null;
 
         if (screenName.equals("Pause Menu")) {
-            element = new Slider(0.2f, 2f, 0.1f, false, skin);
+            element = new Slider(0.2f, 2f, 0.1f, false, popUpSkin);
         } else if (screenName.equals("Score Screen")) {
-            element = new SelectBox<>(skin);
+            element = new SelectBox<>(popUpSkin);
         }
         return element;
 
@@ -232,6 +235,4 @@ public class UIPop extends UIComponent {
         s = screenName;
         return s;
     }
-
-
 }
