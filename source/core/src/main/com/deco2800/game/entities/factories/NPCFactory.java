@@ -96,7 +96,7 @@ public class NPCFactory {
     skeleton
             .addComponent(new TextureRenderComponent("images/skeleton.png"))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-    skeleton.setScale(1f, 1.5f);
+    skeleton.setScale(1f, 1.2f);
     return skeleton;
   }
 

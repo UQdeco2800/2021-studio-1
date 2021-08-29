@@ -90,7 +90,7 @@ public class RacerArea extends GameArea {
         spawnSpikes();
         spawnSkeletons();
         spawnWolf();
-        spawnSpear();
+        //spawnSpear();
 
         player = spawnPlayer();
         playMusic();
@@ -179,28 +179,24 @@ public class RacerArea extends GameArea {
         GridPoint2 floorMin = new GridPoint2(1, 5);
         GridPoint2 floorMax = new GridPoint2(27, 5);
 
-
-
         // Bottom right platform
         for (int i = 0; i < 1; i++) {
             GridPoint2 randomPos = RandomUtils.random(bottomRightMin, bottomRightMax);
             Entity rock = ObstacleFactory.createRock();
             spawnEntityAt(rock, randomPos, false, false);
         }
-
         // Bottom left platform
         for (int i = 0; i < 1; i++) {
             GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomLeftMax);
             Entity rock = ObstacleFactory.createRock();
             spawnEntityAt(rock, randomPos, false, false);
         }
-
         // floor
-        for (int i = 0; i < 2; i++) {
-            GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
-            Entity rock = ObstacleFactory.createRock();
-            spawnEntityAt(rock, randomPos, false, false);
-        }
+//        for (int i = 0; i < 2; i++) {
+//            GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
+//            Entity rock = ObstacleFactory.createRock();
+//            spawnEntityAt(rock, randomPos, false, false);
+//        }
     }
 
     private void spawnSpikes() {
@@ -208,14 +204,12 @@ public class RacerArea extends GameArea {
         GridPoint2 floorMax = new GridPoint2(27, 5);
         GridPoint2 middleMin = new GridPoint2(10, 16);
         GridPoint2 middleMax = new GridPoint2(20, 16);
-
         // floor
-        for (int i = 0; i < 1; i++) {
-            GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
-            Entity spikes = ObstacleFactory.createSpikes();
-            spawnEntityAt(spikes, randomPos, false, false);
-        }
-
+//        for (int i = 0; i < 1; i++) {
+//            GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
+//            Entity spikes = ObstacleFactory.createSpikes();
+//            spawnEntityAt(spikes, randomPos, false, false);
+//        }
         // middle platform
         for (int i = 0; i < 1; i++) {
             GridPoint2 randomPos = RandomUtils.random(middleMin, middleMax);
@@ -231,27 +225,50 @@ public class RacerArea extends GameArea {
     }
 
     private void spawnSkeletons() {
+        GridPoint2 bottomRightMin = new GridPoint2(21, 10);
+        GridPoint2 bottomRightMax = new GridPoint2(27, 10);
+        GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
+        GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for (int i = 0; i < NUM_SKELETONS; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//        for (int i = 0; i < NUM_SKELETONS; i++) {
+//            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//            Entity skeleton = NPCFactory.createSkeleton(player);
+//            spawnEntityAt(skeleton, randomPos, true, true);
+//        }
+        // Bottom right platform
+        for (int i = 0; i < 1; i++) {
+            GridPoint2 randomPos = RandomUtils.random(bottomRightMin, bottomRightMax);
+            Entity skeleton = NPCFactory.createSkeleton(player);
+            spawnEntityAt(skeleton, randomPos, true, true);
+        }
+        // Bottom left platform
+        for (int i = 0; i < 1; i++) {
+            GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomLeftMax);
             Entity skeleton = NPCFactory.createSkeleton(player);
             spawnEntityAt(skeleton, randomPos, true, true);
         }
     }
 
     private void spawnWolf() {
+        GridPoint2 floorMin = new GridPoint2(1, 5);
+        GridPoint2 floorMax = new GridPoint2(27, 5);
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-        for (int i = 0; i < NUM_WOLF; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//        for (int i = 0; i < NUM_WOLF; i++) {
+//            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+//            Entity wolf = NPCFactory.createWolf(player);
+//            spawnEntityAt(wolf, randomPos, true, true);
+//        }
+        for (int i = 0; i < 2; i++) {
+            GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
             Entity wolf = NPCFactory.createWolf(player);
             spawnEntityAt(wolf, randomPos, true, true);
         }
     }
 
+    /*
     private void spawnSpear() {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
@@ -262,6 +279,9 @@ public class RacerArea extends GameArea {
             spawnEntityAt(spear, randomPos, true, true);
         }
     }
+     */
+
+
     /*
     private void spawnGhosts() {
         GridPoint2 minPos = new GridPoint2(0, 0);
@@ -287,7 +307,7 @@ public class RacerArea extends GameArea {
     private void playMusic() {
         Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
         music.setLooping(true);
-        music.setVolume(0.3f);
+        music.setVolume(0.0f);
         music.play();
     }
 
