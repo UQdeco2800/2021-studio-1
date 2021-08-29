@@ -14,7 +14,7 @@ class FileLoaderTest {
 
     @Test
     void loadFromValidFile() {
-        TestStats test = FileLoader.readClass(TestStats.class, "assets/test/files/valid.json");
+        TestStats test = FileLoader.readClass(TestStats.class, "test/files/valid.json");
         assertNotNull(test);
         assertEquals( 3, test.stat1);
         assertEquals(4, test.stat2);
@@ -24,7 +24,7 @@ class FileLoaderTest {
     void loadFromEmptyFile() {
         TestStats test =
                 FileLoader.readClass(
-                  TestStats.class, "assets/test/files/empty.json");
+                  TestStats.class, "test/files/empty.json");
         assertNotNull(test);
         assertEquals(1, test.stat1);
         assertEquals(2, test.stat2);
@@ -34,7 +34,7 @@ class FileLoaderTest {
     void loadFromMissingFile() {
         TestStats test =
                 FileLoader.readClass(
-                  TestStats.class, "assets/test/files/missing.json");
+                  TestStats.class, "test/files/missing.json");
         assertNull(test);
     }
 
@@ -42,7 +42,7 @@ class FileLoaderTest {
     void loadFromInvalidFile() {
         TestStats test =
                 FileLoader.readClass(
-                  TestStats.class, "assets/test/files/invalid.json");
+                  TestStats.class, "test/files/invalid.json");
         assertNull(test);
     }
 }
