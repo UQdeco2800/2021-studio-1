@@ -3,6 +3,7 @@ package com.deco2800.game.components.maingame;
 import com.badlogic.gdx.audio.Sound;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.mainmenu.MainMenuActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIPop;
@@ -32,15 +33,16 @@ public class MainGameActions extends Component {
   /**
    * Swaps to the Main Menu screen.
    */
-  private void onExit() {
+  public void onExit() {
     logger.info("Exiting main game screen");
+    game.paused = false;
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
   /**
   * Pauses the game -- the trigger function for the event.
   */
-    private void onPause() {
+    public void onPause() {
 
         Sound pauseSound;
 
@@ -53,7 +55,7 @@ public class MainGameActions extends Component {
         } else {
             ServiceLocator.getTimeSource().setTimeScale(0f);
             popUp = new Entity();
-            popUp.addComponent(new UIPop("Pause Menu"));
+            popUp.addComponent(new UIPop("Pause Menu", this));
             ServiceLocator.getEntityService().register(popUp);
             //pause sound
             pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
