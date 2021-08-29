@@ -96,6 +96,7 @@ public class NPCFactory {
     skeleton
             .addComponent(new TextureRenderComponent("images/skeleton.png"))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+    skeleton.setScale(1f, 1.5f);
     return skeleton;
   }
 
@@ -105,6 +106,7 @@ public class NPCFactory {
     wolf
             .addComponent(new TextureRenderComponent("images/wolf_1.png"))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+    wolf.setScale(1.5f, 1f);
     return wolf;
   }
 
@@ -116,7 +118,7 @@ public class NPCFactory {
   private static Entity createBaseNPC(Entity target) {
     AITaskComponent aiComponent =
         new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(5f, 5f), 5f));
+            .addTask(new WanderTask(new Vector2(10f, 0f), 5f));
             //.addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
         new Entity()
@@ -128,7 +130,6 @@ public class NPCFactory {
             .addComponent(aiComponent);
 
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
-
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
 
     return npc;
