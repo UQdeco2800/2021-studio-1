@@ -125,7 +125,6 @@ public class NPCFactory {
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
-   *
    * @return entity
    */
   private static Entity createBaseNPC(Entity target) {
@@ -142,10 +141,8 @@ public class NPCFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
             .addComponent(aiComponent);
-
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
-
     return npc;
   }
 
