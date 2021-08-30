@@ -10,13 +10,11 @@ task run(dependsOn: classes, type: JavaExec) {
     standardInput = System.in
     workingDir = project.assetsDir
     ignoreExitValue = true
-<<<<<<< HEAD
+
     jvmArgs = ["-Djava.util.logging.config.file=../../logging.properties"]
-               //"-XstartOnFirstThread"]
-=======
-    jvmArgs = ["-Djava.util.logging.config.file=../../logging.properties", "-XstartOnFirstThread"]
->>>>>>> main
+    //"-XstartOnFirstThread"]
 }
+
 
 task debug(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName

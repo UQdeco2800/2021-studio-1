@@ -14,15 +14,14 @@ public class DeathGiantAnimationController extends Component {
   public void create() {
     super.create();
     animator = this.entity.getComponent(AnimationRenderComponent.class);
-    entity.getEvents().addListener("wanderStart", this::animateWander);
-    entity.getEvents().addListener("chaseStart", this::animateChase);
-  }
+    entity.getEvents().addListener("moveRight", this::animateWalk);
 
-  void animateWander() {
+  }
+  /**
+   * Starts the "walk" animation
+   */
+  void animateWalk() {
     animator.startAnimation("walk");
   }
 
-  void animateChase() {
-    animator.startAnimation("walk");
-  }
 }

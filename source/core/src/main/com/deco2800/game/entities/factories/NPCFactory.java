@@ -122,7 +122,12 @@ public class NPCFactory {
     return wolf;
   }
 
-//add comments
+  /**
+   * Creates a Wall of Death entity
+   *
+   * @param target entity to chase
+   * @return entity
+   */
   public static Entity createWallOfDeath(Entity target) {
     Entity wallOfDeath = createWallNPC(target);
     BaseEntityConfig config = configs.wallOfDeath;
@@ -140,8 +145,6 @@ public class NPCFactory {
 
     wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
     wallOfDeath.setScale(10.5f,10.5f);
-
-    //PhysicsUtils.setScaledCollider(wallOfDeath, 5.9f, 5.4f);
 
     return wallOfDeath;
   }
@@ -175,7 +178,7 @@ public class NPCFactory {
   private static Entity createWallNPC(Entity target) {
     AITaskComponent aiComponent =
             new AITaskComponent()
-                    //parameters don't really matter at this point
+                    //task to continuously move to the right
                     .addTask(new MoveRightTask());
     Entity npc =
             new Entity()
@@ -184,10 +187,10 @@ public class NPCFactory {
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
 
-                  //component to control collision with other obstacle
                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
                     .addComponent(aiComponent);
 
+    //set the NPC as a sensor so other object will not collide
     npc.getComponent(ColliderComponent.class).setSensor(true);
     return npc;
   }
