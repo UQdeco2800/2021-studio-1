@@ -186,8 +186,6 @@ public class RacerArea extends GameArea {
         GridPoint2 floorMin = new GridPoint2(1, 5);
         GridPoint2 floorMax = new GridPoint2(27, 5);
 
-
-
         // Bottom right platform
         for (int i = 0; i < 1; i++) {
             GridPoint2 randomPos = RandomUtils.random(bottomRightMin, bottomRightMax);
@@ -241,8 +239,10 @@ public class RacerArea extends GameArea {
     }
 
     private void spawnSkeletons() {
-        GridPoint2 floorMin = new GridPoint2(1, 5);
-        GridPoint2 floorMax = new GridPoint2(27, 5);
+        GridPoint2 bottomRightMin = new GridPoint2(21, 10);
+        GridPoint2 bottomRightMax = new GridPoint2(27, 10);
+        GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
+        GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
@@ -252,26 +252,32 @@ public class RacerArea extends GameArea {
 //            spawnEntityAt(skeleton, randomPos, true, true);
 //        }
 
-        for (int i = 0; i < 2; i++) {
-            GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
+        // Bottom right platforms
+        for (int i = 0; i < 1; i++) {
+            GridPoint2 randomPos = RandomUtils.random(bottomRightMin, bottomRightMax);
+            Entity skeleton = NPCFactory.createSkeleton(player);
+            spawnEntityAt(skeleton, randomPos, true, true);
+        }
+
+        // Bottom left platform
+        for (int i = 0; i < 1; i++) {
+            GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomLeftMax);
             Entity skeleton = NPCFactory.createSkeleton(player);
             spawnEntityAt(skeleton, randomPos, true, true);
         }
     }
 
-    private void spawnWolf() {
+        private void spawnWolf() {
         GridPoint2 floorMin = new GridPoint2(1, 5);
         GridPoint2 floorMax = new GridPoint2(27, 5);
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-        for (int i = 0; i < NUM_WOLF; i++) {
+        for (int i = 0; i < 1; i++) {
             GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity wolf = NPCFactory.createWolf(player);
             spawnEntityAt(wolf, randomPos, true, true);
         }
-
-
     }
 
     /**
