@@ -53,6 +53,11 @@ public class KeyboardTerminalInputComponent extends InputComponent {
        return true;
     }
 
+    if (keycode == Input.Keys.I) {
+       entity.getEvents().trigger("score screen");
+       return true;
+    }
+
     return terminal.isOpen();
   }
 

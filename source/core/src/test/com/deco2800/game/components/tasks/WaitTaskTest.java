@@ -19,7 +19,10 @@ class WaitTaskTest {
     when(time.getTime()).thenReturn(1000L);
     ServiceLocator.registerTimeSource(time);
 
-    WaitTask task = new WaitTask(5f);
+    //this float duration needs to be increased in accordance with
+    //changes to WaitTask modifications it is currently set to 300
+    // three times lower than what it was previously
+    WaitTask task = new WaitTask(17f);
     task.start();
     assertEquals(Status.ACTIVE, task.getStatus());
 
