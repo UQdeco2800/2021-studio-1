@@ -148,6 +148,8 @@ public class RacerArea extends GameArea {
             }
             lane = lane -1;
         }
+        br.close();
+        fr.close();
     }
 
 
