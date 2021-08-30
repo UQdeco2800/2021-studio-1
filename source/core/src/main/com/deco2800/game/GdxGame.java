@@ -21,14 +21,15 @@ public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
   //reference to whether the game is paused
   public boolean paused = false;
+  public boolean scoreShown = false;
 
-  @Override
+    @Override
   public void create() {
     logger.info("Creating game");
     loadSettings();
 
     // Sets background to light yellow
-    Gdx.gl.glClearColor(248f/255f, 249/255f, 178/255f, 1);
+    Gdx.gl.glClearColor(253f/255f, 153/255f, 47/255f, 1);
 
     setScreen(ScreenType.MAIN_MENU);
   }
