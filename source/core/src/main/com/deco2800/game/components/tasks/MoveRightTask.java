@@ -33,13 +33,13 @@ public class MoveRightTask extends DefaultTask implements PriorityTask {
     super.start();
     startPos = owner.getEntity().getPosition();
 
-    movementTask = new MovementTask(new Vector2(10000000,500));
+    movementTask = new MovementTask(new Vector2(10000000,25));
     movementTask.create(owner);
 
     movementTask.start();
     currentTask = movementTask;
 
-    this.owner.getEntity().getEvents().trigger("wanderStart");
+    this.owner.getEntity().getEvents().trigger("moveRight");
   }
 
   @Override
@@ -50,9 +50,12 @@ public class MoveRightTask extends DefaultTask implements PriorityTask {
     currentTask.update();
   }
 
+  /**
+   * Sets the target to continuously move to the right direction
+   */
   private void startMoving() {
     logger.debug("Starting moving");
-    movementTask.setTarget(new Vector2(10000000,500));
+    movementTask.setTarget(new Vector2(10000000,25));
   }
 
 }

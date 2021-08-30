@@ -393,7 +393,10 @@ public class RacerArea extends GameArea {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
     */
-    
+
+    /**
+     * This spawns the Death Giant Wall of Death
+     */
     private void spawnWallOfDeath() {
         GridPoint2 leftPos = new GridPoint2(-2,15);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(player);
