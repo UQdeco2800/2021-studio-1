@@ -97,13 +97,23 @@ public class NPCFactory {
    * @param target entity to chase
    * @return entity
    */
+
   public static Entity createSkeleton(Entity target) {
     Entity skeleton = createBaseNPC(target);
-    BaseEntityConfig config = configs.skeleton;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
+//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.4f, Animation.PlayMode.LOOP);
+
     skeleton
-            .addComponent(new TextureRenderComponent("images/skeleton.png"))
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-    skeleton.setScale(0.8f, 1f);
+//            .addComponent(new TextureRenderComponent("images/skeleton.png"))
+//            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+            .addComponent(new GhostAnimationController());
+    skeleton.getComponent(AnimationRenderComponent.class).scaleEntity();
+    skeleton.setScale(1f, 1.2f);
     return skeleton;
   }
 
@@ -113,13 +123,24 @@ public class NPCFactory {
    * @param target entity to chase
    * @return entity
    */
+
   public static Entity createWolf(Entity target) {
     Entity wolf = createBaseNPC(target);
-    BaseEntityConfig config = configs.wolf;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
+//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
     wolf
-            .addComponent(new TextureRenderComponent("images/wolf_1.png"))
-            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-    wolf.setScale(1.5f, 1f);
+//            .addComponent(new TextureRenderComponent("images/skeleton.png"))
+//            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+            .addComponent(new GhostAnimationController());
+    wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+    wolf.setScale(0.8f, 0.8f);
     return wolf;
   }
 
