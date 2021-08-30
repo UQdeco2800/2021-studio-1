@@ -9,6 +9,7 @@ import com.deco2800.game.components.npc.DeathGiantAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.MoveRightTask;
 import com.deco2800.game.components.tasks.WanderTask;
+import com.deco2800.game.components.tasks.AttackTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
@@ -37,12 +38,12 @@ public class NPCFactory {
   private static final NPCConfigs configs =
       FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
 
-  /**
-   * Creates a ghost entity.
-   *
-   * @param target entity to chase
-   * @return entity
-   */
+//  /**
+//   * Creates a ghost entity.
+//   *
+//   * @param target entity to chase
+//   * @return entity
+//   */
 
 //  public static Entity createGhost(Entity target) {
 //    Entity ghost = createBaseNPC(target);
@@ -89,16 +90,28 @@ public class NPCFactory {
 //    return ghostKing;
 //  }
 
+  /**
+   * Creates a skeleton entity.
+   *
+   * @param target entity to chase
+   * @return entity
+   */
   public static Entity createSkeleton(Entity target) {
     Entity skeleton = createBaseNPC(target);
     BaseEntityConfig config = configs.skeleton;
     skeleton
             .addComponent(new TextureRenderComponent("images/skeleton.png"))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-    skeleton.setScale(1f, 1.2f);
+    skeleton.setScale(0.8f, 1f);
     return skeleton;
   }
 
+  /**
+   * Creates a wolf entity.
+   *
+   * @param target entity to chase
+   * @return entity
+   */
   public static Entity createWolf(Entity target) {
     Entity wolf = createBaseNPC(target);
     BaseEntityConfig config = configs.wolf;
@@ -142,6 +155,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
         new AITaskComponent()
             .addTask(new WanderTask(new Vector2(10f, 0f), 5f));
+            //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
             //.addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
         new Entity()

@@ -19,14 +19,17 @@ class WaitTaskTest {
     when(time.getTime()).thenReturn(1000L);
     ServiceLocator.registerTimeSource(time);
 
+    // Create a 5s wait task
     WaitTask task = new WaitTask(5f);
     task.start();
     assertEquals(Status.ACTIVE, task.getStatus());
 
-    when(time.getTime()).thenReturn(5000L);
+    // The task should still be active when 4000ms have elapsed
+    when(time.getTime()).thenReturn(4000L);
     task.update();
     assertEquals(Status.ACTIVE, task.getStatus());
 
+    // Once 6100ms have elapsed, the task should be finished
     when(time.getTime()).thenReturn(6100L);
     task.update();
     assertEquals(Status.FINISHED, task.getStatus());

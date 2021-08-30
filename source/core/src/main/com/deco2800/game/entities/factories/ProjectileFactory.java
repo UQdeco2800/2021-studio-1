@@ -22,7 +22,7 @@ public class ProjectileFactory {
     public static Entity createSpearLane_1() {
 
         Entity spearLane_1 = createBaseProjectile();
-        spearLane_1.getComponent(PhysicsMovementComponent.class).setTarget(new Vector2(0, 5.75f));
+        spearLane_1.getComponent(PhysicsMovementComponent.class).setTarget(new Vector2(0, 6f));
         return spearLane_1;
     }
 
