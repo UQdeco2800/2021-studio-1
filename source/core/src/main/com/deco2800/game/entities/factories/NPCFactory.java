@@ -5,16 +5,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
-import com.deco2800.game.components.WallAttackComponent;
 import com.deco2800.game.components.npc.DeathGiantAnimationController;
-import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.tasks.ChaseTask;
 import com.deco2800.game.components.tasks.MoveRightTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
-import com.deco2800.game.entities.configs.GhostKingConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
 import com.deco2800.game.files.FileLoader;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -26,7 +22,6 @@ import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.rendering.TextureRenderComponent;
 
 /**
  * Factory to create non-playable character (NPC) entities with predefined components.
@@ -128,7 +123,6 @@ public class NPCFactory {
     wallOfDeath
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
-           // .addComponent(new GhostAnimationController());
             .addComponent(new DeathGiantAnimationController());
 
     wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
@@ -168,19 +162,19 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     //parameters don't really matter at this point
-                    .addTask(new MoveRightTask(new Vector2(100f, 100f), 0));
-    //.addTask(new ChaseTask(target, 10, 3f, 4f));
+                    .addTask(new MoveRightTask());
     Entity npc =
             new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                    //component to control collision with other obstacle
-                    .addComponent(new WallAttackComponent(PhysicsLayer.OBSTACLE, 1.5f))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
+
+                  //component to control collision with other obstacle
+                   .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
                     .addComponent(aiComponent);
 
+    npc.getComponent(ColliderComponent.class).setSensor(true);
     return npc;
   }
 
