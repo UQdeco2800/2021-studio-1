@@ -272,7 +272,7 @@ public class RacerArea extends GameArea {
      * This spawns a wolf on the base floor.
      */
         private void spawnWolf() {
-        GridPoint2 floor  new GridPoint2(27, 8);
+        GridPoint2 floor = new GridPoint2(27, 8);
 
         for (int i = 0; i < 1; i++) {
             Entity wolf = NPCFactory.createWolf(player);
