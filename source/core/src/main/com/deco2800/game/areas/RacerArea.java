@@ -238,7 +238,6 @@ public class RacerArea extends GameArea {
     private Entity spawnPlayer() {
         Entity newPlayer = PlayerFactory.createPlayer();
         spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-        newPlayer.getComponent(AnimationRenderComponent.class).startAnimation("still-right");
         return newPlayer;
     }
 

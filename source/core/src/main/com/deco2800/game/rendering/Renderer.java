@@ -91,6 +91,11 @@ public class Renderer implements Disposable {
     return camera;
   }
 
+  public void updateCameraPosition(Entity player) {
+    camera.getEntity().setPosition(player.getPosition().x,
+            camera.getEntity().getPosition().y);
+  }
+
   /** Render everything to the render service. */
   public void render() {
     Matrix4 projMatrix = camera.getProjectionMatrix();
@@ -101,6 +106,7 @@ public class Renderer implements Disposable {
     renderService.render(batch);
     batch.end();
     debugRenderer.render(projMatrix);
+
 
     stage.act();
     stage.draw();

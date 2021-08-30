@@ -41,6 +41,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
+  private final RacerArea racerGameArea;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -67,7 +68,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    RacerArea racerGameArea = new RacerArea(terrainFactory);
+    racerGameArea = new RacerArea(terrainFactory);
     racerGameArea.create();
   }
 
@@ -75,6 +76,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+    renderer.updateCameraPosition(racerGameArea.getPlayer());
     renderer.render();
   }
 
