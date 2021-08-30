@@ -100,16 +100,17 @@ public class NPCFactory {
 
   public static Entity createSkeleton(Entity target) {
     Entity skeleton = createBaseNPC(target);
+    BaseEntityConfig config = configs.skeleton;
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
-                    ServiceLocator.getResourceService().getAsset("images/ghost.atlas", TextureAtlas.class));
+                    ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
 //    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("float", 0.4f, Animation.PlayMode.LOOP);
 
     skeleton
 //            .addComponent(new TextureRenderComponent("images/skeleton.png"))
-//            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
             .addComponent(new GhostAnimationController());
     skeleton.getComponent(AnimationRenderComponent.class).scaleEntity();
@@ -126,6 +127,7 @@ public class NPCFactory {
 
   public static Entity createWolf(Entity target) {
     Entity wolf = createBaseNPC(target);
+    BaseEntityConfig config = configs.wolf;
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
@@ -135,7 +137,7 @@ public class NPCFactory {
 
     wolf
 //            .addComponent(new TextureRenderComponent("images/skeleton.png"))
-//            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
             .addComponent(new GhostAnimationController());
     wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
