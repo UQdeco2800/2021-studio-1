@@ -268,15 +268,11 @@ public class RacerArea extends GameArea {
     }
 
         private void spawnWolf() {
-        GridPoint2 floorMin = new GridPoint2(1, 5);
-        GridPoint2 floorMax = new GridPoint2(27, 5);
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
+        GridPoint2 floor = new GridPoint2(27, 8);
 
         for (int i = 0; i < 1; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
             Entity wolf = NPCFactory.createWolf(player);
-            spawnEntityAt(wolf, randomPos, true, true);
+            spawnEntityAt(wolf, floor, true, true);
         }
     }
 
