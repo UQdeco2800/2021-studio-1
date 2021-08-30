@@ -54,4 +54,12 @@ public class EntityService {
       entity.dispose();
     }
   }
+
+  /**
+   * Gets array of all entities.
+   * @return Array containing all entities in the Service
+   */
+  public Array<Entity> getEntityArray() {
+    return entities;
+  }
 }
