@@ -91,11 +91,6 @@ public class Renderer implements Disposable {
     return camera;
   }
 
-  public void updateCameraPosition(Entity player) {
-    camera.getEntity().setPosition(player.getPosition().x,
-            player.getPosition().y);
-  }
-
   /** Render everything to the render service. */
   public void render() {
     Matrix4 projMatrix = camera.getProjectionMatrix();
