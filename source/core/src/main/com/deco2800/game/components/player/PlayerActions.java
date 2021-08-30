@@ -70,8 +70,6 @@ public class PlayerActions extends Component {
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
-
-    System.out.println("X velocity: "+body.getLinearVelocity().x);
   }
 
   /**
@@ -82,10 +80,10 @@ public class PlayerActions extends Component {
 
     if (moving) { //Checks if the player is moving and applies respective force
       if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        body.applyLinearImpulse(new Vector2(6f,  40f).scl(body.getMass()), body.getPosition(),
+        body.applyLinearImpulse(new Vector2(10f,  40f).scl(body.getMass()), body.getPosition(),
                 true);
       } else {
-        body.applyLinearImpulse(new Vector2(-6f,  40f).scl(body.getMass()), body.getPosition(),
+        body.applyLinearImpulse(new Vector2(-10f,  40f).scl(body.getMass()), body.getPosition(),
                 true);
       }
     } else { //Applies force when player is not moving
@@ -93,7 +91,6 @@ public class PlayerActions extends Component {
     }
     falling = true;
     jumping = false;
-    System.out.println("X jump velocity: "+body.getLinearVelocity().x);
   }
 
   /**
