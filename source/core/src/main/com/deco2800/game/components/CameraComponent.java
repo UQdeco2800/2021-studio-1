@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.entities.Entity;
+import com.deco2800.game.components.player.PlayerActions;
+import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 
 public class CameraComponent extends Component {
   private final Camera camera;
@@ -26,6 +29,30 @@ public class CameraComponent extends Component {
       camera.position.set(position.x, position.y, 0f);
       lastPosition = position;
       camera.update();
+    }
+     /* Determine whether current player is moving and which direction
+      */
+    if (PlayerActions.moving == true ){
+      if(KeyboardPlayerInputComponent.isDirection == 1){
+        position.y = position.y + 3f;
+        camera.position.set(position.x, position.y,0f);
+        camera.update();
+      }
+      if(KeyboardPlayerInputComponent.isDirection == 2){
+        position.x = position.x + 3f;
+        camera.position.set(position.x, position.y,0f);
+        camera.update();
+      }
+      if(KeyboardPlayerInputComponent.isDirection == 3){
+        position.y = position.y - 3f;
+        camera.position.set(position.x, position.y,0f);
+        camera.update();
+      }
+      if(KeyboardPlayerInputComponent.isDirection == 4){
+        position.x = position.x - 3f;
+        camera.position.set(position.x, position.y,0f);
+        camera.update();
+      }
     }
   }
 
