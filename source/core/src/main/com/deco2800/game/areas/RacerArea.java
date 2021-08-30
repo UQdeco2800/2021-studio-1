@@ -238,6 +238,9 @@ public class RacerArea extends GameArea {
         return newPlayer;
     }
 
+    /**
+     * This spawns skeleton enemies on the platforms.
+     */
     private void spawnSkeletons() {
         GridPoint2 bottomRightMin = new GridPoint2(21, 10);
         GridPoint2 bottomRightMax = new GridPoint2(27, 10);
@@ -251,14 +254,12 @@ public class RacerArea extends GameArea {
 //            Entity skeleton = NPCFactory.createSkeleton(player);
 //            spawnEntityAt(skeleton, randomPos, true, true);
 //        }
-
         // Bottom right platforms
         for (int i = 0; i < 1; i++) {
             GridPoint2 randomPos = RandomUtils.random(bottomRightMin, bottomRightMax);
             Entity skeleton = NPCFactory.createSkeleton(player);
             spawnEntityAt(skeleton, randomPos, true, true);
         }
-
         // Bottom left platform
         for (int i = 0; i < 1; i++) {
             GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomLeftMax);
@@ -267,8 +268,11 @@ public class RacerArea extends GameArea {
         }
     }
 
+    /**
+     * This spawns a wolf on the base floor.
+     */
         private void spawnWolf() {
-        GridPoint2 floor = new GridPoint2(27, 8);
+        GridPoint2 floor  new GridPoint2(27, 8);
 
         for (int i = 0; i < 1; i++) {
             Entity wolf = NPCFactory.createWolf(player);
