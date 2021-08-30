@@ -31,7 +31,6 @@ public class CameraComponent extends Component {
       camera.update();
     }
      /* Determine whether current player is moving and which direction
-      */
     if (PlayerActions.moving == true ){
       if(KeyboardPlayerInputComponent.isDirection == 1){
         position.y = position.y + 3f;
@@ -54,6 +53,7 @@ public class CameraComponent extends Component {
         camera.update();
       }
     }
+      */
   }
 
   public Matrix4 getProjectionMatrix() {
