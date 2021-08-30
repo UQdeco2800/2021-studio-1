@@ -12,7 +12,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
  */
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 runDirection = Vector2.Zero.cpy();
-
+  public static int isDirection = 0;
   public KeyboardPlayerInputComponent() {
     super(5);
   }
@@ -28,17 +28,21 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     switch (keycode) {
       case Keys.W:
         triggerJumpEvent();
+        isDirection = 1;
         return true;
       case Keys.A:
         runDirection.add(Vector2Utils.LEFT);
         triggerRunEvent();
+        isDirection = 2;
         return true;
       case Keys.S:
         triggerCrouchEvent();
+        isDirection = 3;
         return true;
       case Keys.D:
         runDirection.add(Vector2Utils.RIGHT);
         triggerRunEvent();
+        isDirection = 4;
         return true;
       case Keys.SPACE:
         entity.getEvents().trigger("attack");
@@ -58,17 +62,21 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyUp(int keycode) {
     switch (keycode) {
       case Keys.W:
+        isDirection = 1;
         return true;
       case Keys.A:
         runDirection.sub(Vector2Utils.LEFT);
         triggerRunEvent();
+        isDirection = 2;
         return true;
       case Keys.S:
         triggerStopCrouchEvent();
+        isDirection = 3;
         return true;
       case Keys.D:
         runDirection.sub(Vector2Utils.RIGHT);
         triggerRunEvent();
+        isDirection = 4;
         return true;
       default:
         return false;

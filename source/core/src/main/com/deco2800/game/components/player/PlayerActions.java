@@ -25,7 +25,7 @@ public class PlayerActions extends Component {
 
   private Vector2 runDirection = Vector2.Zero.cpy();
 
-  private boolean moving = false;
+  public static boolean moving = false;
   private boolean jumping = false;
   private boolean falling = false;
   private boolean crouching = false;
