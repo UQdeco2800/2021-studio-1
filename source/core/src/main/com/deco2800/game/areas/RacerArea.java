@@ -89,8 +89,8 @@ public class RacerArea extends GameArea {
             app.exit();
         }
         spawnWallOfDeath();
-        spawnRocks();
-        spawnSpikes();
+        // spawnRocks();
+        // spawnSpikes();
         spawnSkeletons();
         spawnWolf();
         spawnSpears();
@@ -134,6 +134,14 @@ public class RacerArea extends GameArea {
                     case 'A':
                         //A for Avatar :)
                         player = spawnPlayer(LANES[Math.round(lane/2)]+1, (i*3)+1);
+                        break;
+                    case 'S':
+                        //SPIKE
+                        spawnSpike(LANES[Math.round(lane/2)]+1, (i*3)+1);
+                        break;
+                    case 'R':
+                        //ROCK
+                        spawnRock(LANES[Math.round(lane/2)]+1, (i*3)+1); 
                     default:
                         break;
                 }
@@ -219,6 +227,19 @@ public class RacerArea extends GameArea {
             GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * floor.getScale().x) * 2), Math.round(lane - floor.getScale().y));
             spawnEntityAt(floor, pos, false, false);
         }
+    }
+
+    private void spawnRock(int lane, int xCord) {
+        Entity rock = ObstacleFactory.createRock();
+        // GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - rock.getScale().y));
+        GridPoint2 pos = new GridPoint2(xCord, Math.round(lane));
+        spawnEntityAt(rock, pos, true, false);
+    }
+
+    private void spawnSpike(int lane, int xCord) {
+        Entity spike = ObstacleFactory.createSpikes();
+        GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - spike.getScale().y));
+        spawnEntityAt(spike, pos, true, false);
     }
 
     /**
