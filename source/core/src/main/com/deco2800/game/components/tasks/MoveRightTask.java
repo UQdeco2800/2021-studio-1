@@ -14,21 +14,13 @@ import org.slf4j.LoggerFactory;
 public class MoveRightTask extends DefaultTask implements PriorityTask {
   private static final Logger logger = LoggerFactory.getLogger(MoveRightTask.class);
 
-  private final Vector2 wanderRange;
-  private final float waitTime;
   private Vector2 startPos;
   private MovementTask movementTask;
   private WaitTask waitTask;
   private Task currentTask;
 
-  /**
-   * @param wanderRange Distance in X and Y the entity can move from its position when start() is
-   *     called.
-   * @param waitTime How long in seconds to wait between wandering.
-   */
-  public MoveRightTask(Vector2 wanderRange, float waitTime) {
-    this.wanderRange = wanderRange;
-    this.waitTime = waitTime;
+
+  public MoveRightTask() {
   }
 
   @Override
@@ -41,9 +33,7 @@ public class MoveRightTask extends DefaultTask implements PriorityTask {
     super.start();
     startPos = owner.getEntity().getPosition();
 
-    waitTask = new WaitTask(waitTime);
-    waitTask.create(owner);
-    movementTask = new MovementTask(getRandomPosInRange());
+    movementTask = new MovementTask(new Vector2(10000000,500));
     movementTask.create(owner);
 
     movementTask.start();
@@ -55,39 +45,14 @@ public class MoveRightTask extends DefaultTask implements PriorityTask {
   @Override
   public void update() {
     if (currentTask.getStatus() != Status.ACTIVE) {
-
         startMoving();
-
     }
     currentTask.update();
   }
 
-  private void startWaiting() {
-    logger.debug("Starting waiting");
-    swapTask(waitTask);
-  }
-
   private void startMoving() {
     logger.debug("Starting moving");
-    movementTask.setTarget(getRandomPosInRange());
-    swapTask(movementTask);
+    movementTask.setTarget(new Vector2(10000000,500));
   }
 
-  private void swapTask(Task newTask) {
-    if (currentTask != null) {
-      currentTask.stop();
-    }
-    currentTask = newTask;
-    currentTask.start();
-  }
-
-  private Vector2 getRandomPosInRange() {
-    Vector2 halfRange = wanderRange.cpy().scl(3f);
-    Vector2 min = startPos.cpy().sub(halfRange);
-
-    Vector2 max = startPos.cpy().add(halfRange);
-    Vector2 right = new Vector2(10000000,500);
-    //return RandomUtils.random(min, max);
-    return right;
-  }
 }
