@@ -5,9 +5,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.ai.tasks.Task;
+import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
+import com.deco2800.game.entities.factories.GeneratorComponent;
+import com.deco2800.game.physics.components.AbstractPlayerMovementComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 
@@ -20,7 +25,7 @@ public class GameAreaDisplay extends UIComponent {
 
   private Label debug;
 
-  private boolean isDebug = false;  // SET THIS TO TRUE FOR DEBUG SCREEN
+  private boolean isDebug = true;  // SET THIS TO TRUE FOR DEBUG SCREEN
                                     // CURRENTLY VERY MESSY, ASK @NEO-TAKE-LUCY IF YOU WANT MORE
                                     // I CAN ALSO IMPLEMENT THIS BEING SET BY TERMINAL, if ya dig
 
@@ -66,9 +71,11 @@ public class GameAreaDisplay extends UIComponent {
 
   private String makeDebugString() {
 
+    boolean isDetailed = false; //detailed mode describes "other" objects aswell
+
     StringBuilder debugString = new StringBuilder("DE_BUG:\n");
 
-    //firstly just gets player
+    debugString.append(this.gameAreaName + "\n");
 
     Array<Entity> sortedArray = new Array<>(ServiceLocator.getEntityService().getEntityArray());
 
@@ -84,17 +91,51 @@ public class GameAreaDisplay extends UIComponent {
         debugString.append("\n");
         sortedArray.removeValue(e, true);
 
-      } //
+      }
+
+      if (e.getComponent(AbstractPlayerMovementComponent.class) != null) {
+        debugString.append("Abstract Player :: ");
+        debugString.append(String.format("id: %d, x: %f, y: %f", e.getId(),
+                e.getCenterPosition().x, e.getCenterPosition().y));
+        debugString.append("\n");
+        sortedArray.removeValue(e, true);
+      }
+
+      if (e.getComponent(AITaskComponent.class) != null) {
+        debugString.append("AI Entity :: ");
+        debugString.append(String.format("id: %d, x: %f, y: %f", e.getId(),
+                e.getCenterPosition().x, e.getCenterPosition().y));
+
+        /*Task currentTask = e.getComponent(AITaskComponent.class).getCurrentTask();
+        //debugString.append("\n  Current Task Status : " + currentTask.toString());
+        debugString.append("\n");*/
+
+        // ^ causes some bugs if task is undefined, can completed break game (teehee)
+
+        sortedArray.removeValue(e, true);
+      }
+
+      if (e.getComponent(GeneratorComponent.class) != null) {
+        debugString.append(" *** GENERATOR *** ");
+        debugString.append("State: ").append(e.getComponent(GeneratorComponent.class).getState());
+        debugString.append("\nDifficulty: ").append(e.getComponent(GeneratorComponent.class).getCurrentDifficulty());
+        debugString.append("\n");
+        sortedArray.removeValue(e, true);
+      }
 
     }
-    for (Entity e : sortedArray) {
 
-      debugString.append("Other :: ");
-      debugString.append(String.format("id: %d, x: %f, y: %f", e.getId(),
-              e.getCenterPosition().x, e.getCenterPosition().y));
-      debugString.append("\n");
+    if (isDetailed) {
+      for (Entity e : sortedArray) {
 
+        debugString.append("Other :: ");
+        debugString.append(String.format("id: %d, x: %f, y: %f", e.getId(),
+                e.getCenterPosition().x, e.getCenterPosition().y));
+        debugString.append("\n");
+
+      }
     }
+
 
     /*for (Entity e : ServiceLocator.getEntityService().getEntityArray()) {
 

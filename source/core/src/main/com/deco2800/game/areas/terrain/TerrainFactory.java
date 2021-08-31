@@ -56,6 +56,14 @@ public class TerrainFactory {
   public TerrainComponent createTerrain(TerrainType terrainType) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
+      case RAGNAROK_MAIN:
+        TextureRegion ragGrass =
+                new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
+        TextureRegion ragTuft =
+                new TextureRegion(resourceService.getAsset("images/grass_2.png", Texture.class));
+        TextureRegion ragRocks =
+                new TextureRegion(resourceService.getAsset("images/grass_3.png", Texture.class));
+        return createForestDemoTerrain(0.5f, ragGrass, ragTuft, ragRocks);
       case FOREST_DEMO:
         TextureRegion orthoGrass =
             new TextureRegion(resourceService.getAsset("images/grass_1.png", Texture.class));
@@ -155,6 +163,7 @@ public class TerrainFactory {
   public enum TerrainType {
     FOREST_DEMO,
     FOREST_DEMO_ISO,
-    FOREST_DEMO_HEX
+    FOREST_DEMO_HEX,
+    RAGNAROK_MAIN
   }
 }
