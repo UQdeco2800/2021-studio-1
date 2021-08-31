@@ -61,7 +61,7 @@ public class GeneratorComponent extends Component {
         if (abstractPlayer.getPosition().x > nextSpawn) {
            //generateIn.spawnWolf()
 
-            generateIn.spawnPlatform(1, Lanes.LANE1.getLaneHeight(), 20); // these move rly slow
+            //generateIn.spawnPlatform(1, Lanes.LANE1.getLaneHeight(), 20); // these move rly slow
 
             lastSpawn = abstractPlayer.getPosition().x;
             nextSpawn = lastSpawn + spaceBetween;
