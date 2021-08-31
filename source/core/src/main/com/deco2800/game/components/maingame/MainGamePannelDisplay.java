@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Displays a button to exit the Main Game screen to the Main Menu screen.
  */
-public class MainGameExitDisplay extends UIComponent {
-  private static final Logger logger = LoggerFactory.getLogger(MainGameExitDisplay.class);
+public class MainGamePannelDisplay extends UIComponent {
+  private static final Logger logger = LoggerFactory.getLogger(MainGamePannelDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table table;
 
@@ -29,6 +29,9 @@ public class MainGameExitDisplay extends UIComponent {
     table.setFillParent(true);
 
     TextButton mainMenuBtn = new TextButton("Exit", skin);
+    TextButton mainScoreBtn = new TextButton("Score", skin);
+    TextButton mainPauseBtn = new TextButton("Pause", skin);
+
 
     // Triggers an event when the button is pressed.
     mainMenuBtn.addListener(
@@ -40,7 +43,30 @@ public class MainGameExitDisplay extends UIComponent {
         }
       });
 
-    table.add(mainMenuBtn).padTop(10f).padRight(10f);
+      // Triggers an event when the button is pressed.
+    mainScoreBtn.addListener(
+          new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                  logger.debug("Score button clicked");
+                  entity.getEvents().trigger("score screen");
+              }
+          });
+
+      // Triggers an event when the button is pressed.
+    mainPauseBtn.addListener(
+          new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                  logger.debug("Pause button clicked");
+                  entity.getEvents().trigger("pause");
+              }
+          });
+
+
+    table.add(mainMenuBtn).padTop(10f).row();
+    table.add(mainScoreBtn).padTop(10f).padRight(20f).row();
+    table.add(mainPauseBtn).padTop(10f).padRight(20f).row();
 
     stage.addActor(table);
   }

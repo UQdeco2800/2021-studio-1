@@ -4,10 +4,10 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
-import com.deco2800.game.areas.ForestGameArea;
 import com.deco2800.game.areas.ObstacleArea;
 import com.deco2800.game.areas.RacerArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
+import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
@@ -24,7 +24,7 @@ import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
-import com.deco2800.game.components.maingame.MainGameExitDisplay;
+import com.deco2800.game.components.maingame.MainGamePannelDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,8 +42,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-
-  private int abstractPlayerId = -1;
+  private final RacerArea racerGameArea;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -71,14 +70,13 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
-    boolean isObstacle = true;
+    boolean isObstacle = false;
     if (isObstacle) {
       ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
       obstacleArea.create();
-      abstractPlayerId = obstacleArea.getAbstractPlayerId();
     } else if (!isObstacle) {
-      RacerArea racerGameArea = new RacerArea(terrainFactory);
-    racerGameArea.create();
+      racerGameArea = new RacerArea(terrainFactory);
+      racerGameArea.create();
     }
   }
 
@@ -86,6 +84,7 @@ public class MainGameScreen extends ScreenAdapter {
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
+    renderer.updateCameraPosition(racerGameArea.getPlayer());
     renderer.render();
   }
 
@@ -146,7 +145,7 @@ public class MainGameScreen extends ScreenAdapter {
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
-        .addComponent(new MainGameExitDisplay())
+        .addComponent(new MainGamePannelDisplay())
         .addComponent(new Terminal())
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay());

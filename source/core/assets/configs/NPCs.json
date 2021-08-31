@@ -8,6 +8,10 @@
     "baseAttack": 100,
     "spookyFactor": 7
   },
+  "wallOfDeath": {
+    "health": 100,
+    "baseAttack": 1000
+  },
   "skeleton": {
     "health": 40,
     "baseAttack": 10
