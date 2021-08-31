@@ -2,3 +2,5 @@
 
 ### Gradle ###
 .gradle/
+.vscode/
+source/desktop/build.gradle
