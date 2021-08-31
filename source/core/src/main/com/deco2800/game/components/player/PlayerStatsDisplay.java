@@ -40,7 +40,10 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   private void addActors() {
     table = new Table();
+
    // tableTwo = new Table();
+
+
     table.top().left();
     table.setFillParent(true);
     table.padTop(45f).padLeft(5f);

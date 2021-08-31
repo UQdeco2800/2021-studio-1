@@ -52,6 +52,8 @@ public class UIPop extends UIComponent {
     //Back button
     private Button backButton;
 
+    // the skin for the popup
+    private Skin popUpSkin;
 
     /*
      * Constructs a new instance of the screenName parsed
