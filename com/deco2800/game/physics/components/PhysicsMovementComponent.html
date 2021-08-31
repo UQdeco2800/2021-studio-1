@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -62,7 +62,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -101,6 +101,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="../../ai/movement/MovementController.html" title="interface in com.deco2800.game.ai.movement">MovementController</a></code></dd>
 </dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><code><a href="AbstractPlayerMovementComponent.html" title="class in com.deco2800.game.physics.components">AbstractPlayerMovementComponent</a></code></dd>
+</dl>
 <hr>
 <pre>public class <span class="typeNameLabel">PhysicsMovementComponent</span>
 extends <a href="../../components/Component.html" title="class in com.deco2800.game.components">Component</a>
@@ -115,6 +119,35 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 <!--   -->
 </a>
 <h2>Field Summary</h2>
+<div class="memberSummary">
+<table>
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<thead>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#movementEnabled">movementEnabled</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected <a href="PhysicsComponent.html" title="class in com.deco2800.game.physics.components">PhysicsComponent</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#physicsComponent">physicsComponent</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#targetPosition">targetPosition</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="inheritedList">
 <h3>Fields inherited from class&nbsp;com.deco2800.game.components.<a href="../../components/Component.html" title="class in com.deco2800.game.components">Component</a></h3>
 <a id="fields.inherited.from.class.com.deco2800.game.components.Component">
@@ -203,6 +236,11 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 <div class="block">Called once per frame of the game, and should be used for most component logic.</div>
 </td>
 </tr>
+<tr class="altColor" id="i6">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateDirection(com.badlogic.gdx.physics.box2d.Body)">updateDirection</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/physics/box2d/Body.html?is-external=true" title="class or interface in com.badlogic.gdx.physics.box2d" class="externalLink">Body</a>&nbsp;body)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -223,6 +261,34 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 </section>
 <section class="details">
 <ul class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<li class="blockList">
+<section class="fieldDetails"><a id="field.detail">
+<!--   -->
+</a>
+<h2>Field Details</h2>
+<ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="physicsComponent">physicsComponent</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType"><a href="PhysicsComponent.html" title="class in com.deco2800.game.physics.components">PhysicsComponent</a></span>&nbsp;<span class="memberName">physicsComponent</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="targetPosition">targetPosition</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a></span>&nbsp;<span class="memberName">targetPosition</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="movementEnabled">movementEnabled</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">movementEnabled</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li class="blockList">
 <section class="constructorDetails"><a id="constructor.detail">
@@ -323,6 +389,12 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 </dl>
 </section>
 </li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="updateDirection(com.badlogic.gdx.physics.box2d.Body)">updateDirection</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">updateDirection</span>&#8203;(<span class="arguments"><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/physics/box2d/Body.html?is-external=true" title="class or interface in com.badlogic.gdx.physics.box2d" class="externalLink">Body</a>&nbsp;body)</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -362,7 +434,7 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
