@@ -1,9 +1,12 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.tasks.ObstacleTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -15,7 +18,9 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * Factory to create all obstacles that are associated with the GeneratorComponent class.
@@ -54,20 +59,39 @@ public class GeneratorFactory {
     public static Entity createSkeleton() {
         Entity skeleton = createNPC();
         BaseEntityConfig config = NPC_CONFIGS.skeleton;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
+//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("float", 0.4f, Animation.PlayMode.LOOP);
+
         skeleton
-                .addComponent(new TextureRenderComponent("images/skeleton.png"))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-        skeleton.setScale(0.8f, 1f);
+//            .addComponent(new TextureRenderComponent("images/skeleton.png"))
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
+        skeleton.getComponent(AnimationRenderComponent.class).scaleEntity();
+        skeleton.setScale(1f, 1.2f);
         return skeleton;
     }
 
     public static Entity createWolf() {
         Entity wolf = createNPC();
         BaseEntityConfig config = NPC_CONFIGS.wolf;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
+        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
         wolf
-                .addComponent(new TextureRenderComponent("images/wolf_1.png"))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-        wolf.setScale(1.5f, 1f);
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
+        wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+        wolf.setScale(0.8f, 0.8f);
         return wolf;
     }
 

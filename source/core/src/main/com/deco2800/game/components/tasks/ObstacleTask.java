@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.ai.tasks.Task;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
@@ -52,7 +53,9 @@ public class ObstacleTask extends DefaultTask implements PriorityTask {
 
         owner.getEntity().getEvents().addListener("offScreen", owner.getEntity()::flagDelete);
 
-        //this.owner.getEntity().getEvents().trigger("obstacleStart");
+        if (this.owner.getEntity().getComponent(AnimationRenderComponent.class) != null) {
+            this.owner.getEntity().getEvents().trigger("wanderStart");
+        }
     }
 
     private void disableEntity() {

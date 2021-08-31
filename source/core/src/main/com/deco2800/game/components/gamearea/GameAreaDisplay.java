@@ -103,7 +103,7 @@ public class GameAreaDisplay extends UIComponent {
 
       if (e.getComponent(AITaskComponent.class) != null) {
         debugString.append("AI Entity :: ");
-        debugString.append(String.format("id: %d, x: %f, y: %f", e.getId(),
+        debugString.append(String.format("id: %d, x: %f, y: %f\n", e.getId(),
                 e.getCenterPosition().x, e.getCenterPosition().y));
 
         /*Task currentTask = e.getComponent(AITaskComponent.class).getCurrentTask();

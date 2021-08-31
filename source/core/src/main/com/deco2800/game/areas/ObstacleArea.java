@@ -39,31 +39,32 @@ public class ObstacleArea extends GameArea {
     private int abstractPlayerId;
 
     private static final String[] forestTextures = {
-        "images/box_boy_leaf.png",
-        "images/floor.png",
-        "images/platform_gradient.png",
-        "images/platform_no_gradient.png",
-        "images/tree.png",
+            "images/box_boy_leaf.png",
+            "images/floor.png",
+            "images/platform_gradient.png",
+            "images/platform_no_gradient.png",
+            "images/tree.png",
             "images/skeleton.png",
             "images/wolf_1.png",
             "images/Spear_1.png",
             "images/Rock_1.png",
             "images/Spike_1.png",
-        "images/ghost_king.png",
-        "images/ghost_1.png",
-        "images/grass_1.png",
-        "images/grass_2.png",
-        "images/grass_3.png",
-        "images/hex_grass_1.png",
-        "images/hex_grass_2.png",
-        "images/hex_grass_3.png",
-        "images/iso_grass_1.png",
-        "images/iso_grass_2.png",
-        "images/iso_grass_3.png"
+            "images/ghost_king.png",
+            "images/ghost_1.png",
+            "images/grass_1.png",
+            "images/grass_2.png",
+            "images/grass_3.png",
+            "images/hex_grass_1.png",
+            "images/hex_grass_2.png",
+            "images/hex_grass_3.png",
+            "images/iso_grass_1.png",
+            "images/iso_grass_2.png",
+            "images/iso_grass_3.png",
+            "images/death_giant.png"
     };
     private static final String[] forestTextureAtlases = {
-        "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing" +
-        ".atlas", "images/odin.atlas"
+            "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing" +
+            ".atlas", "images/odin.atlas", "images/wall.atlas", "images/skeleton.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/bobjob.mp3";
@@ -89,25 +90,17 @@ public class ObstacleArea extends GameArea {
         loadAssets();
 
         spawnTerrain();
-        //spawnTrees();
-        //spawnPlatforms();
 
         spawnFloor();
-
-        /*spawnRocks();
-        spawnSpikes();
-        spawnSkeletons();
-        spawnWolf();
-        spawnSpears();*/
 
         player = spawnPlayer();
         abstractPlayer = spawnAbstractPlayer();
         abstractPlayerId = abstractPlayer.getId();
 
         displayUI(); // done after all stuff cause it gets added, jafeel?
+
         makeGenerator();
 
-        //player.update();
         playMusic();
     }
 
@@ -407,7 +400,9 @@ public class ObstacleArea extends GameArea {
 
     private void loadAssets() {
         logger.debug("Loading assets");
+
         ResourceService resourceService = ServiceLocator.getResourceService();
+
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
         resourceService.loadSounds(forestSounds);

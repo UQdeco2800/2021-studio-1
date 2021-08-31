@@ -42,7 +42,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-  private final RacerArea racerGameArea;
+  private RacerArea racerGameArea = null;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -70,7 +70,7 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
-    boolean isObstacle = false;
+    boolean isObstacle = true;
     if (isObstacle) {
       ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
       obstacleArea.create();
@@ -84,7 +84,11 @@ public class MainGameScreen extends ScreenAdapter {
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
-    renderer.updateCameraPosition(racerGameArea.getPlayer());
+
+    if (racerGameArea != null) {
+      renderer.updateCameraPosition(racerGameArea.getPlayer());
+    }
+
     renderer.render();
   }
 
