@@ -15,6 +15,14 @@
   "wolf": {
     "health": 40,
     "baseAttack": 20
+  },
+  "rock": {
+    "health": 40,
+    "baseAttack": 0
+  },
+  "spikes": {
+    "health": 40,
+    "baseAttack": 10
   }
 }
 
