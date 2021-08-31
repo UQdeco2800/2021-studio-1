@@ -68,6 +68,7 @@ public class UIPop extends UIComponent {
     private Button backButton;
     // the skin for the popup
     private Skin popUpSkin;
+
     /*
      * UIPop constructor
      */
@@ -76,7 +77,7 @@ public class UIPop extends UIComponent {
 
         if (!backGroundImages.containsKey(screenName)){
             throw new NoSuchElementException("Wrong Screen Name");
-            };
+        };
 
         this.screenName = screenName;
         this.popUpBackGround = new Texture(backGroundImages.get(screenName));
