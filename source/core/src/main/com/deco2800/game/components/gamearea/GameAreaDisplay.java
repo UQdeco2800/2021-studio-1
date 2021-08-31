@@ -25,7 +25,7 @@ public class GameAreaDisplay extends UIComponent {
 
   private Label debug;
 
-  private boolean isDebug = true;  // SET THIS TO TRUE FOR DEBUG SCREEN
+  private boolean isDebug = false;  // SET THIS TO TRUE FOR DEBUG SCREEN
                                     // CURRENTLY VERY MESSY, ASK @NEO-TAKE-LUCY IF YOU WANT MORE
                                     // I CAN ALSO IMPLEMENT THIS BEING SET BY TERMINAL, if ya dig
 
