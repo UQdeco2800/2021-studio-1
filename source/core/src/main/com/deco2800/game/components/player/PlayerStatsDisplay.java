@@ -19,7 +19,6 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image heartImage;
   private Label healthLabel;
   private Label scoreLabel;
-
   gameScore scoring = new gameScore();
 
 
@@ -31,9 +30,8 @@ public class PlayerStatsDisplay extends UIComponent {
   public void create() {
     super.create();
     addActors();
-
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
-    entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
+    entity.getEvents().addListener("updateScore", this::updatePlayerScoreUI);
   }
 
   /**
@@ -42,16 +40,22 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   private void addActors() {
     table = new Table();
+   // tableTwo = new Table();
     table.top().left();
     table.setFillParent(true);
     table.padTop(45f).padLeft(5f);
 
+    tableTwo = new Table();
+    tableTwo.top().left();
+    tableTwo.setFillParent(true);
+    tableTwo.padTop(75f).padLeft(5f);
     // Heart image
     float heartSideLength = 30f;
     heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
 
     // Health text
     int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+    //int health = 100;
     CharSequence healthText = String.format("Health: %d", health);
     healthLabel = new Label(healthText, skin, "large");
 
@@ -104,5 +108,9 @@ public class PlayerStatsDisplay extends UIComponent {
     super.dispose();
     heartImage.remove();
     healthLabel.remove();
+    scoreLabel.remove();
+
+
+
   }
 }
