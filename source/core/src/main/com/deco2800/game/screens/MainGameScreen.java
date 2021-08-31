@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.ForestGameArea;
+import com.deco2800.game.areas.ObstacleArea;
 import com.deco2800.game.areas.RacerArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
@@ -42,6 +43,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
 
+  private int abstractPlayerId = -1;
+
   public MainGameScreen(GdxGame game) {
     this.game = game;
 
@@ -67,8 +70,16 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    RacerArea racerGameArea = new RacerArea(terrainFactory);
+
+    boolean isObstacle = true;
+    if (isObstacle) {
+      ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
+      obstacleArea.create();
+      abstractPlayerId = obstacleArea.getAbstractPlayerId();
+    } else if (!isObstacle) {
+      RacerArea racerGameArea = new RacerArea(terrainFactory);
     racerGameArea.create();
+    }
   }
 
   @Override
