@@ -3,14 +3,14 @@ size: 1780, 1538
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-default
+frame_00_delay-0.15s
   rotate: false
   xy: 1, 1
   size: 888, 1536
   orig: 888, 1536
   offset: 0, 0
   index: -1
-walk
+frame_01_delay-0.15s
   rotate: false
   xy: 891, 1
   size: 888, 1536
@@ -23,14 +23,14 @@ size: 1780, 1538
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-walk
+frame_02_delay-0.15s
   rotate: false
   xy: 1, 1
   size: 888, 1536
   orig: 888, 1536
   offset: 0, 0
   index: -1
-walk
+frame_03_delay-0.15s
   rotate: false
   xy: 891, 1
   size: 888, 1536
@@ -43,14 +43,14 @@ size: 1780, 1538
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-walk
+frame_04_delay-0.15s
   rotate: false
   xy: 1, 1
   size: 888, 1536
   orig: 888, 1536
   offset: 0, 0
   index: -1
-walk
+frame_05_delay-0.15s
   rotate: false
   xy: 891, 1
   size: 888, 1536
@@ -63,14 +63,14 @@ size: 1780, 1538
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-walk
+frame_06_delay-0.15s
   rotate: false
   xy: 1, 1
   size: 888, 1536
   orig: 888, 1536
   offset: 0, 0
   index: -1
-walk
+frame_07_delay-0.15s
   rotate: false
   xy: 891, 1
   size: 888, 1536
@@ -83,14 +83,14 @@ size: 1780, 1538
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-walk
+frame_08_delay-0.15s
   rotate: false
   xy: 1, 1
   size: 888, 1536
   orig: 888, 1536
   offset: 0, 0
   index: -1
-walk
+frame_09_delay-0.15s
   rotate: false
   xy: 891, 1
   size: 888, 1536
@@ -103,14 +103,14 @@ size: 1780, 1538
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-walk
+frame_10_delay-0.15s
   rotate: false
   xy: 1, 1
   size: 888, 1536
   orig: 888, 1536
   offset: 0, 0
   index: -1
-walk
+frame_11_delay-0.15s
   rotate: false
   xy: 891, 1
   size: 888, 1536
