@@ -360,9 +360,12 @@ public class RacerArea extends GameArea {
      * This spawns the spears in each of the three different lanes.
      */
     private void spawnSpears() {
-        spawnSpear(ProjectileFactory.createSpearLane_1(), new GridPoint2(27, 12));
-        spawnSpear(ProjectileFactory.createSpearLane_2(), new GridPoint2(27, 17));
-        spawnSpear(ProjectileFactory.createSpearLane_3(), new GridPoint2(27, 23));
+        spawnSpear(ProjectileFactory.createSpearLane_1(), new GridPoint2(60, 12));
+        spawnSpear(ProjectileFactory.createSpearLane_2(), new GridPoint2(40, 17));
+        spawnSpear(ProjectileFactory.createSpearLane_3(), new GridPoint2(80, 23));
+        spawnSpear(ProjectileFactory.createSpearLane_1(), new GridPoint2(100, 12));
+        spawnSpear(ProjectileFactory.createSpearLane_2(), new GridPoint2(120, 17));
+        spawnSpear(ProjectileFactory.createSpearLane_3(), new GridPoint2(100, 23));
     }
 
     /**
