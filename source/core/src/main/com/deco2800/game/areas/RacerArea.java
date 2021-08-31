@@ -9,11 +9,12 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.entities.factories.ProjectileFactory;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import java.io.*;
+import java.util.Random;
+
 import static com.badlogic.gdx.Gdx.app;
 
 import com.deco2800.game.services.ResourceService;
@@ -63,8 +64,10 @@ public class RacerArea extends GameArea {
         ".atlas", "images/odin.atlas", "images/wall.atlas", "images/skeleton.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-    private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
-    private static final String[] forestMusic = {backgroundMusic};
+    private static final String mainMusic = "sounds/main.mp3";
+    private static final String townMusic = "sounds/town.mp3";
+    private static final String raiderMusic = "sounds/raider.mp3";
+    private static final String[] forestMusic = {mainMusic, townMusic, raiderMusic};
 
     private Entity player;
 
@@ -86,17 +89,23 @@ public class RacerArea extends GameArea {
         try {
             spawnWorld();
         } catch (IOException ex) {
-            System.out.println("File Not Found Quitting");
+            System.out.println("File Not Found Quitting"); // BRUUUUUUUUUUUUUUUH
+            // ^ WHOEVER DID THIS, THIS IS THE POINT OF THE LOOOOOOGER
+            // ALSO SYSTEM.OUT??? NOT EVEN THE ERROR FILE
+            // BRUUUUUUUUUH
             app.exit();
         }
         spawnWallOfDeath();
+
         // spawnRocks();
         // spawnSpikes();
+
         spawnSkeletons();
         spawnWolf();
         spawnSpears();
 
         //player = spawnPlayer();
+
         playMusic();
     }
 
@@ -409,7 +418,22 @@ public class RacerArea extends GameArea {
 
 
     private void playMusic() {
-        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+
+        String witchMusic;
+
+        Random rand = new Random();
+        switch(rand.nextInt(3)) {
+            case 1:
+                witchMusic = townMusic;
+                break;
+            case 2:
+                witchMusic = raiderMusic;
+                break;
+            default:
+                witchMusic = mainMusic;
+        }
+
+        Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
         music.setLooping(true);
         music.setVolume(0.3f);
         music.play();
@@ -441,7 +465,7 @@ public class RacerArea extends GameArea {
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+        ServiceLocator.getResourceService().getAsset(mainMusic, Music.class).stop();
         this.unloadAssets();
     }
 }
