@@ -10,7 +10,7 @@ import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.MoveRightTask;
 import com.deco2800.game.components.tasks.WanderTask;
-import com.deco2800.game.components.tasks.AttackTask;
+import com.deco2800.game.components.tasks.MoveLeftTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
@@ -181,6 +181,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
         new AITaskComponent()
             .addTask(new WanderTask(new Vector2(10f, 0f), 5f));
+            //.addTask(new MoveLeftTask());
             //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
             //.addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
