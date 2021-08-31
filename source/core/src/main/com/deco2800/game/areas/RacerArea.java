@@ -60,7 +60,7 @@ public class RacerArea extends GameArea {
     };
     private static final String[] forestTextureAtlases = {
         "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing" +
-        ".atlas", "images/odin.atlas"
+        ".atlas", "images/odin.atlas", "images/wall.atlas", "images/skeleton.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String backgroundMusic = "sounds/BGM_03_mp3.mp3";
@@ -96,7 +96,7 @@ public class RacerArea extends GameArea {
         spawnWolf();
         spawnSpears();
 
-        player = spawnPlayer();
+        //player = spawnPlayer();
         playMusic();
     }
 
