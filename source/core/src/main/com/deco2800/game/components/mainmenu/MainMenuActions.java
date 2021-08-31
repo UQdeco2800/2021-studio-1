@@ -71,7 +71,9 @@ public class MainMenuActions extends Component {
     logger.info("Launching help popUp");
     if (mainMenuPop == null) {
         mainMenuPop = new Entity();
-        mainMenuPop.addComponent(new UIPop("Default Pop", new MainGameActions(game)));
+
+        mainMenuPop.addComponent(new UIPop("Default Pop", entity));
+
         ServiceLocator.getEntityService().register(mainMenuPop);
     } else {
         mainMenuPop.dispose();

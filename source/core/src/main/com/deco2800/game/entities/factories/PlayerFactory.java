@@ -74,8 +74,8 @@ public class PlayerFactory {
             Animation.PlayMode.LOOP);
 
     player.addComponent(animator);
-    PhysicsUtils.setScaledCollider(player, 0.6f, 0.3f);
-    player.getComponent(ColliderComponent.class).setDensity(1.5f);
+    PhysicsUtils.setScaledCircleCollider(player, 0.3f);
+    player.getComponent(ColliderComponent.class).setDensity(1.0f);
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     //gravity scalar used to multiply gravity from physics engine, used 5 for
     // base character

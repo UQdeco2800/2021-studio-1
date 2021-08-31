@@ -3,7 +3,6 @@ package com.deco2800.game.components.maingame;
 import com.badlogic.gdx.audio.Sound;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.mainmenu.MainMenuActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIPop;
@@ -29,13 +28,13 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("pause", this::onPause);
   }
 
-
   /**
    * Swaps to the Main Menu screen.
    */
   public void onExit() {
     logger.info("Exiting main game screen");
     game.paused = false;
+    game.scoreShown = false;
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
 
@@ -54,8 +53,13 @@ public class MainGameActions extends Component {
             pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
         } else {
             ServiceLocator.getTimeSource().setTimeScale(0f);
+
+            if (popUp != null) {
+                popUp.dispose();
+            }
+
             popUp = new Entity();
-            popUp.addComponent(new UIPop("Pause Menu", this));
+            popUp.addComponent(new UIPop("Pause Menu", entity));
             ServiceLocator.getEntityService().register(popUp);
             //pause sound
             pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
@@ -63,4 +67,32 @@ public class MainGameActions extends Component {
         game.paused = !game.paused;
         pauseSound.play();
     }
+
+
+    /**
+     * Pauses the game -- the trigger function for the event.
+     */
+    private void showScore() {
+
+        Sound scoreScreenSound;
+
+        if (game.scoreShown) {
+            popUp.dispose();
+            //score screen removed sound
+            scoreScreenSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+            game.scoreShown = false;
+        } else {
+            if (popUp != null) {
+                popUp.dispose();
+            }
+            popUp = new Entity();
+            popUp.addComponent(new UIPop("Score Screen", entity));
+            ServiceLocator.getEntityService().register(popUp);
+            //score screen sound
+            scoreScreenSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+            game.scoreShown = true;
+        }
+        scoreScreenSound.play();
+    }
+
 }
