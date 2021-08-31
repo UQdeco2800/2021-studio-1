@@ -70,7 +70,7 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
-    boolean isObstacle = true;
+    boolean isObstacle = false;
     if (isObstacle) {
       ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
       obstacleArea.create();
