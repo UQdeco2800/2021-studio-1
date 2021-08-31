@@ -41,6 +41,10 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("crouch", this::crouch);
     entity.getEvents().addListener("stop crouch", this::stopCrouching);
     entity.getEvents().addListener("attack", this::attack);
+
+    entity.getComponent(AnimationRenderComponent.class)
+            .startAnimation("still-right");
+
   }
 
   @Override

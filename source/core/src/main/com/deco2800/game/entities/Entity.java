@@ -38,6 +38,8 @@ public class Entity {
   private Vector2 scale = new Vector2(1, 1);
   private Array<Component> createdComponents;
 
+  private boolean nextDelete = false;
+
   public Entity() {
     id = nextId;
     nextId++;
@@ -249,6 +251,9 @@ public class Entity {
     for (Component component : createdComponents) {
       component.triggerUpdate();
     }
+    if (nextDelete) {
+      dispose();
+    }
   }
 
   /**
@@ -268,6 +273,13 @@ public class Entity {
    */
   public EventHandler getEvents() {
     return eventHandler;
+  }
+
+  /** Called whenever to delete/dispose an Entity
+   *  Happens after update: disposing an enemy directly results in indexing issues
+   */
+  public void flagDelete() {
+    nextDelete = true;
   }
 
   @Override

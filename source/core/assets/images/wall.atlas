@@ -1,0 +1,89 @@
+wallOfDeath.png
+size: 1872, 258
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+walk
+  rotate: false
+  xy: 1, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 157, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 313, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 469, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 625, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 781, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 937, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1093, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+default
+  rotate: false
+  xy: 1249, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1405, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1561, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1717, 1
+  size: 154, 256
+  orig: 154, 256
+  offset: 0, 0
+  index: -1
