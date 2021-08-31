@@ -91,7 +91,7 @@ public class ObstacleArea extends GameArea {
 
         spawnTerrain();
 
-        spawnFloor();
+        spawnFloor(40, 4, 0);
 
         player = spawnPlayer();
         abstractPlayer = spawnAbstractPlayer();
@@ -185,99 +185,23 @@ public class ObstacleArea extends GameArea {
 
   }
 
-  private void spawnPlatforms() {
-    spawnPlatform(2, LANE_1, 0);
-    spawnPlatform(3, LANE_1, 21);
-    spawnPlatform(4, LANE_2, 10);
-    spawnPlatform(1, LANE_3, 20);
-    spawnPlatform(2, LANE_3, 5);
-  }
-
     /**
-     * Spawn a platform that is length long with height given by lane and x coordinate given by xCord.
+     * Spawn a floor that is length long with height given by lane and x coordinate given by xCord.
      *
-     * @param length the length of the platform to be made
-     * @param lane   the y coordinate of the platform in the game area. It is preferable but not
-     *               required to use the variables LANE_1, LANE_2, ... for this value
-     * @param xCord  the x coordinate of this platform in the game area's grid system
+     * @param length the length of the floor to be made
+     * @param lane   the y coordinate of the floor in the game area. It is preferable but not
+     *               required to use the variables LANE_0, LANE_1, LANE_2, ... for this value
+     * @param xCord  the x coordinate of this floor in the game area's grid system
      */
-    public void spawnPlatform(int length, int lane, int xCord) {
-        // In later implementations, length should create a platform that is (length * platform unit
-        // length) long. But at the moment it just creates multiple platforms stacked next to each
-        // other.
-        /*Entity platformGradient = ObstacleFactory.createPlatformWithGradient();
-        lane = Math.round(lane - platformGradient.getScale().y);
-        GridPoint2 platformPos1 = new GridPoint2(Math.round(xCord + (0 * platformGradient.getScale().x) * 2), lane);
-        spawnEntityAt(platformGradient, platformPos1, false, false);*/
+    private void spawnFloor(int length, int lane, int xCord) {
 
         for (int i = 0; i < length; i++) {
-            Entity platform = ObstacleFactory.createPlatform();
-
             // Make the  lane refer to the height of the top of the platform, not the bottom. This breaks
             // when the scale height is set to 1 for some reason, as the scale height does not correlate
             // to actual height.
-            lane = Math.round(lane - platform.getScale().y);
-            GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * platform.getScale().x) * 2), lane);
-            spawnEntityAt(platform, pos, false, false);
-        }
-    }
-
-    private void spawnFloor() {
-        for (int i = 0; i < 15; i++) {
-            Entity newFloor = ObstacleFactory.createFloor();
-            GridPoint2 position = new GridPoint2(i * 2, 3);
-            spawnEntityAt(newFloor, position, false, false);
-        }
-    }
-
-    /**
-     * Spawns the rocks for the game, they can only spawn in lane 1 and the floor.
-     */
-    private void spawnRocks() {
-        GridPoint2 bottomRightMin = new GridPoint2(21, 10);
-        GridPoint2 bottomRightMax = new GridPoint2(27, 10);
-        GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
-        GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
-        GridPoint2 floorMin = new GridPoint2(1, 5);
-        GridPoint2 floorMax = new GridPoint2(27, 5);
-
-        // Bottom right platform
-        for (int i = 0; i < 1; i++) {
-            GridPoint2 randomPos = RandomUtils.random(bottomRightMin, bottomRightMax);
-            Entity rock = ObstacleFactory.createRock();
-            spawnEntityAt(rock, randomPos, false, false);
-        }
-
-        // Bottom left platform
-        for (int i = 0; i < 1; i++) {
-            GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomLeftMax);
-            Entity rock = ObstacleFactory.createRock();
-            spawnEntityAt(rock, randomPos, false, false);
-        }
-
-    }
-
-    /**
-     * Spawns the spikes for the game, they can only spawn on the floor or in lane 2.
-     */
-    private void spawnSpikes() {
-        GridPoint2 floorMin = new GridPoint2(1, 5);
-        GridPoint2 floorMax = new GridPoint2(27, 5);
-        GridPoint2 middleMin = new GridPoint2(10, 16);
-        GridPoint2 middleMax = new GridPoint2(20, 16);
-
-//        // floor
-//        for (int i = 0; i < 1; i++) {
-//            GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
-//            Entity spikes = ObstacleFactory.createSpikes();
-//            spawnEntityAt(spikes, randomPos, false, false);
-//        }
-
-        // middle platform
-        for (int i = 0; i < 1; i++) {
-            GridPoint2 randomPos = RandomUtils.random(middleMin, middleMax);
-            Entity spikes = ObstacleFactory.createSpikes();
-            spawnEntityAt(spikes, randomPos, false, false);
+            Entity floor = ObstacleFactory.createFloor();
+            GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * floor.getScale().x) * 2), Math.round(lane - floor.getScale().y));
+            spawnEntityAt(floor, pos, false, false);
         }
     }
 
@@ -291,104 +215,6 @@ public class ObstacleArea extends GameArea {
         Entity abstractPlayer = PlayerFactory.createAbstractPlayer();
         spawnEntityAt(abstractPlayer, new GridPoint2(0, 0), true, true);
         return abstractPlayer;
-    }
-
-    /**
-     * This spawns skeleton enemies on the platforms.
-     */
-    private void spawnSkeletons() {
-        GridPoint2 bottomRightMin = new GridPoint2(21, 10);
-        GridPoint2 bottomRightMax = new GridPoint2(27, 10);
-        GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
-        GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-//        for (int i = 0; i < NUM_SKELETONS; i++) {
-//            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//            Entity skeleton = NPCFactory.createSkeleton(player);
-//            spawnEntityAt(skeleton, randomPos, true, true);
-//        }
-        // Bottom right platforms
-        for (int i = 0; i < 1; i++) {
-            GridPoint2 randomPos = RandomUtils.random(bottomRightMin, bottomRightMax);
-            Entity skeleton = NPCFactory.createSkeleton(player);
-            spawnEntityAt(skeleton, randomPos, true, true);
-        }
-        // Bottom left platform
-        for (int i = 0; i < 1; i++) {
-            GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomLeftMax);
-            Entity skeleton = NPCFactory.createSkeleton(player);
-            spawnEntityAt(skeleton, randomPos, true, true);
-        }
-    }
-
-    /**
-     * This spawns a wolf on the base floor.
-     */
-    public void spawnWolf() {
-        GridPoint2 floor = new GridPoint2(27, 6);
-
-        for (int i = 0; i < 1; i++) {
-            Entity wolf = NPCFactory.createWolf(player);
-            spawnEntityAt(wolf, floor, true, true);
-        }
-    }
-
-    /**
-     * This spawns the spears in each of the three different lanes.
-     */
-    private void spawnSpears() {
-        spawnSpear(ProjectileFactory.createSpearLane_1(), new GridPoint2(27, 13));
-        spawnSpear(ProjectileFactory.createSpearLane_2(), new GridPoint2(27, 17));
-        spawnSpear(ProjectileFactory.createSpearLane_3(), new GridPoint2(27, 23));
-    }
-
-    /**
-     * This creates the spears to be spawned in their respective lanes
-     * @param spearLane the lane the spear is assigned to
-     * @param startLocation the starting location for the spear
-     */
-    private void spawnSpear(Entity spearLane, GridPoint2 startLocation) {
-
-        for (int i = 0; i < NUM_SPEARS; i++) {
-
-            spawnEntityAt(spearLane, startLocation, true, true);
-
-        }
-    }
-    /*
-    private void spawnGhosts() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for (int i = 0; i < NUM_GHOSTS; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity ghost = NPCFactory.createGhost(player);
-            spawnEntityAt(ghost, randomPos, true, true);
-        }
-    }
-
-    private void spawnGhostKing() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-        Entity ghostKing = NPCFactory.createGhostKing(player);
-        spawnEntityAt(ghostKing, randomPos, true, true);
-    }
-     */
-
-
-    /**
-     * Returns the abstractPlayerId
-     * NEEDS abstract player to be instantiated, if not, will just return null
-     * and you likely will get frustated
-     */
-    public int getAbstractPlayerId() {
-
-        return abstractPlayerId;
-
     }
 
     private void playMusic() {
