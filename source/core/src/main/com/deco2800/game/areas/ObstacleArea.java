@@ -34,11 +34,9 @@ public class ObstacleArea extends GameArea {
             "images/platform_no_gradient.png",
             "images/tree.png",
             "images/skeleton.png",
-            "images/wolf_1.png",
             "images/Spear_1.png",
             "images/Rock_1.png",
             "images/Spike_1.png",
-            "images/ghost_king.png",
             "images/ghost_1.png",
             "images/grass_1.png",
             "images/grass_2.png",
@@ -52,7 +50,7 @@ public class ObstacleArea extends GameArea {
             "images/death_giant.png"
     };
     private static final String[] forestTextureAtlases = {
-            "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing" +
+            "images/terrain_iso_grass.atlas", "images/ghostKing" +
             ".atlas", "images/odin.atlas", "images/wall.atlas", "images/skeleton.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
