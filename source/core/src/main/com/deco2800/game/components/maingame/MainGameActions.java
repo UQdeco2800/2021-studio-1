@@ -26,6 +26,7 @@ public class MainGameActions extends Component {
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("pause", this::onPause);
+    entity.getEvents().addListener("score screen", this::showScore);
   }
 
   /**
