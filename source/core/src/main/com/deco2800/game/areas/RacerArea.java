@@ -28,7 +28,7 @@ public class RacerArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(RacerArea.class);
     private static final int NUM_SKELETONS = 2;
     private static final int NUM_WOLF = 2;
-    private static final int NUM_SPEARS = 3;
+    private static final int NUM_SPEARS = 1;
     private static final int LANE_0 = 4;
     private static final int LANE_1 = 9;
     private static final int LANE_2 = 15;
@@ -119,7 +119,6 @@ public class RacerArea extends GameArea {
         // spawnPlatform(1, LANE_0, 3);
         // spawnPlatform(1, LANE_1, 4);
         // spawnPlatform(1, LANE_2, 5);
-
 
         File levelFile = new File("configs/LVL1.txt");
         FileReader fr = new FileReader(levelFile);
@@ -367,43 +366,43 @@ public class RacerArea extends GameArea {
      * This spawns the spears in each of the three different lanes.
      */
     private void spawnSpears() {
-        spawnSpear(ProjectileFactory.createSpearLane_1(), new GridPoint2(60, 12));
-        spawnSpear(ProjectileFactory.createSpearLane_2(), new GridPoint2(40, 17));
-        spawnSpear(ProjectileFactory.createSpearLane_3(), new GridPoint2(80, 23));
-        spawnSpear(ProjectileFactory.createSpearLane_1(), new GridPoint2(100, 12));
-        spawnSpear(ProjectileFactory.createSpearLane_2(), new GridPoint2(120, 17));
-        spawnSpear(ProjectileFactory.createSpearLane_3(), new GridPoint2(100, 23));
+        spawnSpear(1, new GridPoint2(60, 12));
+        spawnSpear(2, new GridPoint2(40, 17));
+        spawnSpear(3, new GridPoint2(80, 23));
+        spawnSpear(1, new GridPoint2(100, 12));
+        spawnSpear(2, new GridPoint2(120, 17));
+        spawnSpear(3, new GridPoint2(100, 23));
     }
 
     /**
-     * This creates the spears to be spawned in their respective lanes
-     * @param spearLane the lane the spear is assigned to
+     * This creates spears to be spawned in their respective lanes. The number of spears spawned
+     * is given by NUM_SPEARS.
+     *
+     * @param spearLane the lane the spear is assigned to, must be in range [1, 3]
      * @param startLocation the starting location for the spear
      */
-    private void spawnSpear(Entity spearLane, GridPoint2 startLocation) {
-
+    private void spawnSpear(int spearLane, GridPoint2 startLocation) {
+        float lane;
+        switch (spearLane) {
+            case 1:
+                lane = 6f;
+                break;
+            case 2:
+                lane = 8.5f;
+                break;
+            case 3:
+                lane = 11.5f;
+                break;
+            default:
+                logger.error("Attempt at spawning spear in unknown lane {}, will be ignored",
+                        spearLane);
+                return;
+        }
         for (int i = 0; i < NUM_SPEARS; i++) {
-
-            spawnEntityAt(spearLane, startLocation, true, true);
-
+            Entity spear = ProjectileFactory.createSpearAtHeight(lane);
+            spawnEntityAt(spear, startLocation, true, true);
         }
     }
-    /*
-    private void spawnGhosts() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for (int i = 0; i < NUM_GHOSTS; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity ghost = NPCFactory.createGhost(player);
-            spawnEntityAt(ghost, randomPos, true, true);
-        }
-    }
-
-    private void spawnGhostKing() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-    */
 
     /**
      * This spawns the Death Giant Wall of Death
