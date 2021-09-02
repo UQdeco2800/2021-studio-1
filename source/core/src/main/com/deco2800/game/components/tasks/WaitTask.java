@@ -27,8 +27,7 @@ public class WaitTask extends DefaultTask {
   @Override
   public void start() {
     super.start();
-    //endTime = timeSource.getTime() + (int)(duration * 1000);
-    endTime = timeSource.getTime() + (int)(duration * 300);
+    endTime = timeSource.getTime() + (int)(duration * 1000);
   }
 
   @Override

@@ -6,7 +6,11 @@ package com.deco2800.game.entities.configs;
 public class NPCConfigs {
   public BaseEntityConfig ghost = new BaseEntityConfig();
   public GhostKingConfig ghostKing = new GhostKingConfig();
+  //creates a config class for the wall of death.
+  public BaseEntityConfig wallOfDeath = new BaseEntityConfig();
 
   public BaseEntityConfig skeleton = new BaseEntityConfig();
   public BaseEntityConfig wolf = new BaseEntityConfig();
+  public BaseEntityConfig rock = new BaseEntityConfig();
+  public BaseEntityConfig spikes = new BaseEntityConfig();
 }

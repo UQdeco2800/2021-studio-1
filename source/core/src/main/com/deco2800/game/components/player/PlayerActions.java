@@ -16,7 +16,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
  * class.
  */
 public class PlayerActions extends Component {
-  private static final Vector2 MAX_SPEED = new Vector2(3f, 3f); // Metres
+  private static final Vector2 MAX_SPEED = new Vector2(5f, 1f); // Metres
   // per second
   private static final Vector2 CROUCH_SPEED = new Vector2(1f, 1f);
   // Metres per second
@@ -25,7 +25,7 @@ public class PlayerActions extends Component {
 
   private Vector2 runDirection = Vector2.Zero.cpy();
 
-  private boolean moving = false;
+  public static boolean moving = false;
   private boolean jumping = false;
   private boolean falling = false;
   private boolean crouching = false;
@@ -38,9 +38,12 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("stop run", this::stopRunning);
     entity.getEvents().addListener("jump", this::jump);
     entity.getEvents().addListener("crouch", this::crouch);
-    entity.getEvents().addListener("stop crouch",
-            this::stopCrouching);
+    entity.getEvents().addListener("stop crouch", this::stopCrouching);
     entity.getEvents().addListener("attack", this::attack);
+
+    entity.getComponent(AnimationRenderComponent.class)
+            .startAnimation("still-right");
+
   }
 
   @Override
@@ -56,6 +59,9 @@ public class PlayerActions extends Component {
 
   private void updateRunningSpeed() {
     Body body = physicsComponent.getBody();
+    if (physicsComponent.getBody().getLinearVelocity().y != 0) {
+      falling = true;
+    }
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity;
     if (crouching) { //Determine speed based on whether crouching or not
@@ -69,32 +75,44 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Applies an upwards force to the player for 100ms, then removes the force
+   * Applies an upwards force to the player
    */
   private void applyJumpForce() {
     Body body = physicsComponent.getBody();
-      if (moving) { //Checks if the player is moving and applies respective
-        // force
-        if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          body.applyLinearImpulse(new Vector2(4f, 12f), body.getPosition(),
-                  true);
-        } else {
-          body.applyLinearImpulse(new Vector2(-4f, 12f), body.getPosition(),
-                  true);
-        }
-      } else { //Applies force when player is not moving
-        body.applyLinearImpulse(new Vector2(0, 12f), body.getPosition(),
+    /*
+    if (moving) { //Checks if the player is moving and applies respective force
+      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        body.applyLinearImpulse(new Vector2(15f,  45f).scl(body.getMass()),
+                body.getPosition(),
+                true);
+      } else {
+        body.applyLinearImpulse(new Vector2(-15f,  45f).scl(body.getMass()),
+                body.getPosition(),
                 true);
       }
-      falling = true;
-      jumping = false;
+    } else { //Applies force when player is not moving
 
+    }
+     */
+
+    body.applyLinearImpulse(new Vector2(0f,  40f).scl(body.getMass()), body.getWorldCenter(), true);
+    falling = true;
+    jumping = false;
   }
 
   /**
    * Checks if the player is still falling by checking their y velocity
    */
   private void checkFalling() {
+    Body body = physicsComponent.getBody();
+    entity.getComponent(AnimationRenderComponent.class).stopAnimation();
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("jump-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("jump-left");
+    }
     if (physicsComponent.getBody().getLinearVelocity().y == 0) {
       falling = false;
       //Determine which animation to play
@@ -120,6 +138,21 @@ public class PlayerActions extends Component {
           entity.getComponent(AnimationRenderComponent.class)
                   .startAnimation("still-left");
         }
+      }
+    } else {
+      if (moving) { //Checks if the player is moving and applies respective force
+        if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+          body.applyLinearImpulse(new Vector2(1f,  0f).scl(body.getMass()),
+                  body.getPosition(),
+                  true);
+        } else {
+          body.applyLinearImpulse(new Vector2(-1f,  0f).scl(body.getMass()),
+                  body.getPosition(),
+                  true);
+        }
+      } else { //Applies force when player is not moving
+        body.applyLinearImpulse(new Vector2(0f,  0f).scl(body.getMass()),
+                body.getWorldCenter(), true);
       }
     }
   }
@@ -187,7 +220,9 @@ public class PlayerActions extends Component {
   }
 
   void jump() {
-    jumping = true;
+    if (entity.getComponent(PhysicsComponent.class).getBody().getLinearVelocity().y == 0) {
+      jumping = true;
+    }
     //Determine which animation to play
     entity.getComponent(AnimationRenderComponent.class).stopAnimation();
     if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
@@ -201,6 +236,8 @@ public class PlayerActions extends Component {
 
   void crouch() {
     crouching = true;
+    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
+            .scl(0.5F));
     //Determine which animation to play
     entity.getComponent(AnimationRenderComponent.class).stopAnimation();
     if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
@@ -215,6 +252,8 @@ public class PlayerActions extends Component {
 
   void stopCrouching() {
     crouching = false;
+    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
+            .scl(2F));
     update();
     //Determine which animation to play
     entity.getComponent(AnimationRenderComponent.class)

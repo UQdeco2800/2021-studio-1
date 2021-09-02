@@ -52,6 +52,10 @@ public class AITaskComponent extends Component implements TaskRunner {
     currentTask.update();
   }
 
+  public Task getCurrentTask() {
+    return currentTask;
+  }
+
   @Override
   public void dispose() {
     if (currentTask != null) {
