@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -153,26 +153,10 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSpearLane_1()">createSpearLane_1</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSpearAtHeight(float)">createSpearAtHeight</a></span>&#8203;(float&nbsp;height)</code></th>
 <td class="colLast">
-<div class="block">Creates a spear for lane 1, it moves across the screen from right to left finishing
- in lane 1</div>
-</td>
-</tr>
-<tr class="altColor" id="i2">
-<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSpearLane_2()">createSpearLane_2</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates a spear for lane 2, it moves across the screen from right to left finishing
- in lane 2</div>
-</td>
-</tr>
-<tr class="rowColor" id="i3">
-<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSpearLane_3()">createSpearLane_3</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates a spear for lane 2, it moves across the screen from right to left finishing
- in lane 2</div>
+<div class="block">Creates a spear that moves across the screen from right to left finishing at the given
+ height.</div>
 </td>
 </tr>
 </tbody>
@@ -215,37 +199,15 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="createSpearLane_1()">createSpearLane_1</a></h3>
-<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createSpearLane_1</span>()</div>
-<div class="block">Creates a spear for lane 1, it moves across the screen from right to left finishing
- in lane 1</div>
+<h3><a id="createSpearAtHeight(float)">createSpearAtHeight</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createSpearAtHeight</span>&#8203;(<span class="arguments">float&nbsp;height)</span></div>
+<div class="block">Creates a spear that moves across the screen from right to left finishing at the given
+ height.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>height</code> - The height the spear should travel along</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a spear entity</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="createSpearLane_2()">createSpearLane_2</a></h3>
-<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createSpearLane_2</span>()</div>
-<div class="block">Creates a spear for lane 2, it moves across the screen from right to left finishing
- in lane 2</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a spear entity</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="createSpearLane_3()">createSpearLane_3</a></h3>
-<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createSpearLane_3</span>()</div>
-<div class="block">Creates a spear for lane 2, it moves across the screen from right to left finishing
- in lane 2</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a spear entity</dd>
+<dd>spear entity</dd>
 </dl>
 </section>
 </li>
