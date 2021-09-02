@@ -30,6 +30,9 @@ public class DebugCommand implements Command {
       case "off":
         ServiceLocator.getRenderService().getDebug().setActive(false);
         return true;
+      case "id":
+        ServiceLocator.getRenderService().getDebug().toggleId();
+        return true;
       default:
         logger.debug("Unrecognised argument received for 'debug' command: {}", args);
         return false;

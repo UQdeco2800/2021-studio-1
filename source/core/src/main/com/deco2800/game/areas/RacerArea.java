@@ -123,7 +123,10 @@ public class RacerArea extends GameArea {
         // spawnPlatform(1, LANE_2, 5);
 
 
-        File levelFile = new File("configs/LVL1.txt");
+        File levelFile = new File("configs/rags/LVL2.rag");
+        //TODO make test mode by loading save file of map into here ^
+
+
         FileReader fr = new FileReader(levelFile);
         BufferedReader br = new BufferedReader(fr);
         String line;
@@ -242,14 +245,14 @@ public class RacerArea extends GameArea {
         }
     }
 
-    private void spawnRock(int lane, int xCord) {
+    public void spawnRock(int lane, int xCord) {
         Entity rock = ObstacleFactory.createRock();
         // GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - rock.getScale().y));
         GridPoint2 pos = new GridPoint2(xCord, Math.round(lane));
         spawnEntityAt(rock, pos, true, false);
     }
 
-    private void spawnSpike(int lane, int xCord) {
+    public void spawnSpike(int lane, int xCord) {
         Entity spike = ObstacleFactory.createSpikes();
         GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - spike.getScale().y));
         spawnEntityAt(spike, pos, true, false);
@@ -258,7 +261,7 @@ public class RacerArea extends GameArea {
     /**
      * Spawns the rocks for the game, they can only spawn in lane 1 and the floor.
      */
-    private void spawnRocks() {
+    public void spawnRocks() {
         GridPoint2 bottomRightMin = new GridPoint2(21, 10);
         GridPoint2 bottomRightMax = new GridPoint2(27, 10);
         GridPoint2 bottomLeftMin = new GridPoint2(1, 10);

@@ -19,17 +19,6 @@ import org.slf4j.LoggerFactory;
 public class ObstacleArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ObstacleArea.class);
 
-    private static final int NUM_TREES = 2;
-    private static final int NUM_GHOSTS = 2;
-    private static final int NUM_SKELETONS = 2;
-    private static final int NUM_WOLF = 2;
-    private static final int NUM_SPEARS = 3;
-    private static final int NUM_ROCKS = 1;
-    private static final int NUM_SPIKES = 3;
-    private static final int LANE_1 = 9;
-    private static final int LANE_2 = 15;
-    private static final int LANE_3 = 21;
-
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
 
     private static final GridPoint2 FLOOR = new GridPoint2(10, 5);

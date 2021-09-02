@@ -4,10 +4,10 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.areas.AreaService;
 import com.deco2800.game.areas.ObstacleArea;
 import com.deco2800.game.areas.RacerArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
-import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
@@ -59,6 +59,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerAreaService(new AreaService());
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -75,7 +76,16 @@ public class MainGameScreen extends ScreenAdapter {
       ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
       obstacleArea.create();
     } else if (!isObstacle) {
+
+      //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
+      //obstacleArea.create();
+
       racerGameArea = new RacerArea(terrainFactory);
+
+      //TODO: abstract commands from RacerArea to GameArea
+      //TODO: so that they can be called from any GameArea
+      ServiceLocator.getAreaService().setMainRacerArea(racerGameArea);
+
       racerGameArea.create();
     }
   }
