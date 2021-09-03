@@ -4,6 +4,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.areas.ObstacleArea;
 import com.deco2800.game.areas.RacerArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.CameraComponent;
@@ -41,7 +42,7 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-  private final RacerArea racerGameArea;
+  private RacerArea racerGameArea = null;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -68,15 +69,26 @@ public class MainGameScreen extends ScreenAdapter {
 
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
-    racerGameArea = new RacerArea(terrainFactory);
-    racerGameArea.create();
+
+    boolean isObstacle = false;
+    if (isObstacle) {
+      ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
+      obstacleArea.create();
+    } else if (!isObstacle) {
+      racerGameArea = new RacerArea(terrainFactory);
+      racerGameArea.create();
+    }
   }
 
   @Override
   public void render(float delta) {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
-    renderer.updateCameraPosition(racerGameArea.getPlayer());
+
+    if (racerGameArea != null) {
+      renderer.updateCameraPosition(racerGameArea.getPlayer());
+    }
+
     renderer.render();
   }
 
