@@ -65,7 +65,9 @@ public class RacerArea extends GameArea {
     private static final String mainMusic = "sounds/main.mp3";
     private static final String townMusic = "sounds/town.mp3";
     private static final String raiderMusic = "sounds/raider.mp3";
-    private static final String[] forestMusic = {mainMusic, townMusic, raiderMusic};
+    private static final String fireMusic = "sounds/fire.mp3";
+//    private static final String raiderMusic = "sounds/walk.mp3";
+    private static final String[] forestMusic = {mainMusic, townMusic, raiderMusic, fireMusic};
 
     private Entity player;
 
@@ -413,6 +415,9 @@ public class RacerArea extends GameArea {
         spawnEntityAt(wallOfDeath, leftPos, true, true);
     }
 
+    /**
+     * Play all SFX in the game.
+     */
 
     private void playMusic() {
 
@@ -429,11 +434,14 @@ public class RacerArea extends GameArea {
             default:
                 witchMusic = mainMusic;
         }
-
         Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
+        Music fire = ServiceLocator.getResourceService().getAsset(fireMusic, Music.class);
         music.setLooping(true);
+        fire.setLooping(true);
         music.setVolume(0.3f);
+        fire.setVolume(0.6f);
         music.play();
+        fire.play();
     }
 
     private void loadAssets() {
