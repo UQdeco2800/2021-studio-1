@@ -77,6 +77,15 @@ public class PlayerFactory {
     animator.addAnimation("crouch-right", 0.1f,
             Animation.PlayMode.LOOP);
 
+    animator.addAnimation("attack-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("attack-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("power-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("power-left", 1f,
+            Animation.PlayMode.LOOP);
+
     player.addComponent(animator);
     PhysicsUtils.setScaledCircleCollider(player, 0.3f);
     player.getComponent(ColliderComponent.class).setDensity(1.0f);
