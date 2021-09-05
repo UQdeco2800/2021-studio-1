@@ -10,9 +10,9 @@ import java.util.ArrayList;
 // format : spawn [x,y] (activeEntity)
 // to spawn walls/floors, use the PlaceCommand... but this one is more fun for now
 
-public class SpawnCommand implements Command {
+public class PlaceCommand implements Command {
 
-    private static final Logger logger = LoggerFactory.getLogger(SpawnCommand.class);
+    private static final Logger logger = LoggerFactory.getLogger(PlaceCommand.class);
 
     /**
      *
@@ -20,10 +20,8 @@ public class SpawnCommand implements Command {
      */
     public boolean action(ArrayList<String> args) {
 
-        //ServiceLocator.getAreaService().getManager().place(5, 5, "platform");
-
         if (!isValid(args)) {
-            logger.debug("Invalid arguments received for 'spawn' command: {}", args);
+            logger.debug("Invalid arguments received for 'place' command: {}", args);
             return false;
         }
 
@@ -38,20 +36,7 @@ public class SpawnCommand implements Command {
         int x = Integer.parseInt(coOrds[0]);
         int y = Integer.parseInt(coOrds[1]);
 
-        //ServiceLocator.getAreaService().spawn(x, y, arg1);
-        //ServiceLocator.getAreaService().getManager().place(x, y, arg1);
-
-        /*switch(arg1) {
-            case "spike":
-                ServiceLocator.getAreaService().spawn(x, y, arg1);
-                break;
-            case "rock":
-                //ServiceLocator.getAreaService().getMainRacerArea().spawnRock(y, x);
-                break;
-            default:
-                logger.debug("Unknown entity type {} for 'spawn' command: {}", arg1, args);
-                return false;
-        }*/
+        ServiceLocator.getAreaService().place(x, y, arg1);
 
         return true;
     }

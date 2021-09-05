@@ -74,25 +74,29 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
-    boolean isObstacle = false;
-    if (isObstacle) {
-      ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-      obstacleArea.create();
-    } else if (!isObstacle) {
+    ragnarokManager = new AreaManager(terrainFactory);
+    ServiceLocator.getAreaService().setManager(ragnarokManager);
+    ServiceLocator.getAreaService().run();
+
+    //ragnarokManager.create();
+
+    //boolean isObstacle = false;
+    //if (isObstacle) {
+      //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
+      //obstacleArea.create();
+    //} else if (!isObstacle) {
 
       //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
       //obstacleArea.create();
 
       //ragnarokArea = new RagnarokArea("the og", terrainFactory);
-      ragnarokManager = new AreaManager(terrainFactory);
-      ragnarokManager.create();
 
       //TODO: abstract commands from RacerArea to GameArea
       //TODO: so that they can be called from any GameArea
       //ServiceLocator.getAreaService().setMainRacerArea(ragnarokArea);
 
       //ragnarokArea.create();
-    }
+    //}
   }
 
   @Override

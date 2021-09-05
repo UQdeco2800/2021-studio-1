@@ -1,5 +1,7 @@
 package com.deco2800.game.areas;
 
+import java.awt.geom.Area;
+
 /**
  * Facilitates the identitfying, changing, and modifying of areas.
  * Stores the current GameArea (the terminal thus then calls command statically on it)
@@ -28,27 +30,30 @@ current idea for implementation:
  */
 public class AreaService {
 
-    private GameArea mainArea; // gameArea is abstract so idk...
-    //private RacerArea mainRacerArea;
+    private AreaManager manager;
 
     public AreaService() {
 
     }
 
-    public void setMainArea(GameArea area) {
-        mainArea = area;
+    public void setManager(AreaManager man) {
+        manager = man;
     }
 
-    /*public void setMainRacerArea(RacerArea area) {
-        mainRacerArea = area;
-    }*/
-
-    public GameArea getMainArea() {
-        return mainArea;
+    public AreaManager getManager() {
+        return manager;
     }
 
-    /*public RacerArea getMainRacerArea() {
-        return mainRacerArea;
-    }*/
+    public void run() {
+        manager.create();
+    }
+
+    public void place(int x, int y, String type) {
+        manager.place(x, y, type);
+    }
+
+    public void spawn(int x, int y, String type) {
+        manager.spawn(x, y, type);
+    }
 
 }
