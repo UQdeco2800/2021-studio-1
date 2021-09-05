@@ -1,19 +1,13 @@
 package com.deco2800.game.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.utils.Null;
-import com.deco2800.game.entities.Entity;
-import com.deco2800.game.physics.components.ColliderComponent;
-import com.deco2800.game.physics.components.PhysicsComponent;
 
 public class PowerUpComponent extends Component{
     private boolean dispose;
-    Entity player;
 
-    public void create(Entity player) {
+    public void create() {
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
         dispose = false;
-        this.player = player;
     }
 
     @Override
