@@ -40,6 +40,11 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("crouch", this::crouch);
     entity.getEvents().addListener("stop crouch", this::stopCrouching);
     entity.getEvents().addListener("attack", this::attack);
+    entity.getEvents().addListener("stop attack",
+            this::stopAttack);
+    entity.getEvents().addListener("powerAttack", this::powerAttack);
+    entity.getEvents().addListener("stop stopPowerAttack",
+            this::stopPowerAttack);
 
     entity.getComponent(AnimationRenderComponent.class)
             .startAnimation("still-right");
@@ -274,5 +279,59 @@ public class PlayerActions extends Component {
     Sound attackSound = ServiceLocator.getResourceService().getAsset(
             "sounds/Impact4.ogg", Sound.class);
     attackSound.play();
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("attack-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("attack-left");
+    }
+  }
+  void stopAttack() {
+    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
+            .scl(2F));
+    update();
+    //Determine which animation to play
+    entity.getComponent(AnimationRenderComponent.class)
+            .stopAnimation();
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("still-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("still-left");
+    }
+  }
+  /**
+   * Player attack for powers up
+   */
+
+  void powerAttack() {
+    Sound attackSound = ServiceLocator.getResourceService().getAsset(
+            "sounds/Impact4.ogg", Sound.class);
+    attackSound.play();
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("power-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("power-left");
+    }
+  }
+
+  void stopPowerAttack() {
+    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
+            .scl(2F));
+    update();
+    //Determine which animation to play
+    entity.getComponent(AnimationRenderComponent.class)
+            .stopAnimation();
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("still-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("still-left");
+    }
   }
 }
