@@ -4,6 +4,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.areas.AreaManager;
 import com.deco2800.game.areas.AreaService;
 import com.deco2800.game.areas.ObstacleArea;
 import com.deco2800.game.areas.RagnarokArea;
@@ -43,7 +44,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-  private RagnarokArea ragnarokArea = null;
+  //private RagnarokArea ragnarokArea = null;
+  private AreaManager ragnarokManager;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -81,13 +83,15 @@ public class MainGameScreen extends ScreenAdapter {
       //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
       //obstacleArea.create();
 
-      ragnarokArea = new RagnarokArea("the og", terrainFactory);
+      //ragnarokArea = new RagnarokArea("the og", terrainFactory);
+      ragnarokManager = new AreaManager(terrainFactory);
+      ragnarokManager.create();
 
       //TODO: abstract commands from RacerArea to GameArea
       //TODO: so that they can be called from any GameArea
       //ServiceLocator.getAreaService().setMainRacerArea(ragnarokArea);
 
-      ragnarokArea.create();
+      //ragnarokArea.create();
     }
   }
 
@@ -96,8 +100,8 @@ public class MainGameScreen extends ScreenAdapter {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
 
-    if (ragnarokArea != null) {
-      renderer.updateCameraPosition(ragnarokArea.getPlayer());
+    if (ragnarokManager != null) {
+      renderer.updateCameraPosition(ragnarokManager.getPlayer());
     }
 
     renderer.render();

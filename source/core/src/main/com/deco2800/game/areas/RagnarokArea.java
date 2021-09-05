@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.services.ResourceService;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
 
+import java.awt.geom.Area;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -26,8 +28,9 @@ public class RagnarokArea extends GameArea {
 
     private static final float WALL_WIDTH = 0.1f;
     private final String name; //initiliase in the loader
+    private AreaManager manager;
 
-    private Entity player;
+    protected Entity player;
 
     //TODO: make Json
     private static final String[] racerTextures = {
@@ -88,9 +91,13 @@ public class RagnarokArea extends GameArea {
         spawnTerrain();
         //spawnWallOfDeath(); //this is dependant
 
-        player = spawnPlayer(10, 5);
+        //player = spawnPlayer(10, 5);
 
         //playMusic(); //TODO: eventual move to music
+    }
+
+    public void setManager(AreaManager manager) {
+        this.manager = manager;
     }
 
     private void displayUI() {
@@ -113,7 +120,7 @@ public class RagnarokArea extends GameArea {
         }
     }
 
-    private Entity spawnPlayer(int x, int y) {
+    protected Entity spawnPlayer(int x, int y) {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(x, y); /*Math.round(lane.y - newPlayer.getScale().y));*/
         spawnEntityAt(newPlayer, pos, true, false);
@@ -155,32 +162,62 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(
                 ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
 
-        for (int x = 0; x < 20; x++) {
-            spawnPlatform(x, 0);
-        }
     }
 
     protected void spawnPlatform(int x, int y) {
-        // In later implementations, length should create a platform that is (length * platform unit
-        // length) long. But at the moment it just creates multiple platforms stacked next to each
-        // other.
-        Entity platformGradient = ObstacleFactory.createPlatformWithGradient();
-        //lane = Math.round(y - platformGradient.getScale().y);
-        GridPoint2 platformPos1 = new GridPoint2(Math.round(x + (0 * platformGradient.getScale().x) * 2), y);
-        spawnEntityAt(platformGradient, platformPos1, false, false);
-        for (int i = 0; i < 10; i++) {
-            Entity platform = ObstacleFactory.createPlatform();
+        Entity platform = ObstacleFactory.createPlatform();
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(platform, pos, false, false);
+    }
 
-            // Make the  lane refer to the height of the top of the platform, not the bottom. This breaks
-            // when the scale height is set to 1 for some reason, as the scale height does not correlate
-            // to actual height.
-            GridPoint2 pos = new GridPoint2(Math.round(x + (i * platform.getScale().x) * 2), Math.round(y - platform.getScale().y));
-            spawnEntityAt(platform, pos, false, false);
+    protected void spawnFloor(int x, int y) {
+        for(int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                Entity floor = ObstacleFactory.createFloor();
+                GridPoint2 pos = new GridPoint2(x+i, y+j);
+                spawnEntityAt(floor, pos, false, false);
+            }
         }
+    }
+
+    protected void spawnRocks(int x, int y) {
+        Entity rocks = ObstacleFactory.createRock();
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(rocks, pos, false, false);
+    }
+
+    protected void spawnSpikes(int x, int y) {
+        Entity spikes = ObstacleFactory.createSpikes();
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(spikes, pos, false, false);
+    }
+
+    protected void spawnWolf(int x, int y) {
+        Entity wolf = NPCFactory.createWolf(player);
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(wolf, pos, false, false);
+    }
+
+    protected void spawnSkeleton(int x, int y) {
+        Entity skeleton = NPCFactory.createSkeleton(player);
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(skeleton, pos, false, false);
     }
 
     public Entity getPlayer() {
         return this.player;
+    }
+
+    public void clearPlayer() {
+        player.dispose();
+    }
+
+    public void makePlayer(int x, int y) {
+        this.player = spawnPlayer(x, y);
+    }
+
+    protected void deleteEntity() {
+
     }
 
 
