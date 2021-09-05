@@ -37,10 +37,10 @@ public class SpawnCommand implements Command {
 
         switch(arg1) {
             case "spike":
-                ServiceLocator.getAreaService().getMainRacerArea().spawnSpike(y, x);
+                //ServiceLocator.getAreaService().getMainRacerArea().spawnSpike(y, x); // this should be areaManager...
                 break;
             case "rock":
-                ServiceLocator.getAreaService().getMainRacerArea().spawnRock(y, x);
+                //ServiceLocator.getAreaService().getMainRacerArea().spawnRock(y, x);
                 break;
             default:
                 logger.debug("Unknown entity type {} for 'spawn' command: {}", arg1, args);

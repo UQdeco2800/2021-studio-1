@@ -12,6 +12,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+// TerminalService has two main functions:
+//      1. allow the static calling of strings to the terminal
+//      2. interfacing with other services/managers
+//
+// This terminal class remains, and is where commands are
+
 /**
  * State tracker for a debug terminal. Any commands to be actioned through the terminal input should
  * be added to the map of commands.
@@ -30,7 +36,7 @@ public class Terminal extends Component {
     this.commands = commands;
 
     addCommand("debug", new DebugCommand());
-    addCommand("-spawn", new SpawnCommand());
+    addCommand("-spawn", new SpawnCommand()); //TODO: make more Commands
   }
 
   /** @return message entered by user */

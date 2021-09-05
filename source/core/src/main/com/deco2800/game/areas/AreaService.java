@@ -12,10 +12,24 @@ package com.deco2800.game.areas;
  * An offest has to remain consistent though i gueeseseeses
  */
 
+/*
+ decided to make AreaService actually AreaManger so people won't call functions on it directly
+ and must interface through the terminal using only a handful of commands
+ the point of this is to avoid people shooting themselves in the foot...
+ */
+
+/*
+current idea for implementation:
+    make AreaManger which handles such with protected functions (can't be called publicly)
+    make an AreaTerminalInterface which extends AreaManger (so can call protected functions)
+    that is nested in the Terminal, is passed a reference to the static AreaService...
+    AreaService just need not have any public calls, otherwise people will change levels midupdate
+    and other fuck shit
+ */
 public class AreaService {
 
-    private GameArea mainArea;
-    private RacerArea mainRacerArea;
+    private GameArea mainArea; // gameArea is abstract so idk...
+    //private RacerArea mainRacerArea;
 
     public AreaService() {
 
@@ -25,16 +39,16 @@ public class AreaService {
         mainArea = area;
     }
 
-    public void setMainRacerArea(RacerArea area) {
+    /*public void setMainRacerArea(RacerArea area) {
         mainRacerArea = area;
-    }
+    }*/
 
     public GameArea getMainArea() {
         return mainArea;
     }
 
-    public RacerArea getMainRacerArea() {
+    /*public RacerArea getMainRacerArea() {
         return mainRacerArea;
-    }
+    }*/
 
 }

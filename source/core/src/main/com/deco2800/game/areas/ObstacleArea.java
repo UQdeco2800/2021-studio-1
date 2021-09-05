@@ -74,11 +74,15 @@ public class ObstacleArea extends GameArea {
     /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
     @Override
     public void create() {
+        create(0);
+    }
+
+    public void create(int xOffset) {
         loadAssets();
 
         spawnTerrain();
 
-        spawnFloor(40, 4, 0);
+        spawnFloor(40, 4, xOffset);
 
         player = spawnPlayer();
         abstractPlayer = spawnAbstractPlayer();

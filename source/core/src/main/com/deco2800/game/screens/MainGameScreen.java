@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.AreaService;
 import com.deco2800.game.areas.ObstacleArea;
-import com.deco2800.game.areas.RacerArea;
+import com.deco2800.game.areas.RagnarokArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
@@ -37,12 +37,13 @@ import org.slf4j.LoggerFactory;
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
-  private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
+
+  private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 3f);
 
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-  private RacerArea racerGameArea = null;
+  private RagnarokArea ragnarokArea = null;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -80,13 +81,13 @@ public class MainGameScreen extends ScreenAdapter {
       //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
       //obstacleArea.create();
 
-      racerGameArea = new RacerArea(terrainFactory);
+      ragnarokArea = new RagnarokArea("the og", terrainFactory);
 
       //TODO: abstract commands from RacerArea to GameArea
       //TODO: so that they can be called from any GameArea
-      ServiceLocator.getAreaService().setMainRacerArea(racerGameArea);
+      //ServiceLocator.getAreaService().setMainRacerArea(ragnarokArea);
 
-      racerGameArea.create();
+      ragnarokArea.create();
     }
   }
 
@@ -95,11 +96,14 @@ public class MainGameScreen extends ScreenAdapter {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
 
-    if (racerGameArea != null) {
-      renderer.updateCameraPosition(racerGameArea.getPlayer());
+    if (ragnarokArea != null) {
+      renderer.updateCameraPosition(ragnarokArea.getPlayer());
     }
 
     renderer.render();
+
+    //TODO: do terminal requests
+
   }
 
   @Override
