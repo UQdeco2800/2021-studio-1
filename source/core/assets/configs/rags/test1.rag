@@ -14,6 +14,8 @@ $....PPP............PP....
 $........SSS..R..R........
 $FFFFFFFFFFFFFFFFFFFFFFFFF
 
+
+
 $@player set 2,1
 
 @player get spear etc eventually (this line is comment as

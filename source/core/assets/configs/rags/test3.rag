@@ -15,6 +15,7 @@ $....PFSSSSSSSSSSSSSSSSSSS
 $FFFFFFFFFFFFFFFFFPPPFFFFF
 
 @player set 8,1
+@skeleton1 target player
 
 player set doesn't work so i commented it
 also add hashes to terrain lines
