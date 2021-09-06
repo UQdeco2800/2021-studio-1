@@ -38,7 +38,7 @@ public class SpawnCommand implements Command {
         int x = Integer.parseInt(coOrds[0]);
         int y = Integer.parseInt(coOrds[1]);
 
-        //ServiceLocator.getAreaService().spawn(x, y, arg1);
+        ServiceLocator.getAreaService().spawn(x, y, arg1);
         //ServiceLocator.getAreaService().getManager().place(x, y, arg1);
 
         /*switch(arg1) {

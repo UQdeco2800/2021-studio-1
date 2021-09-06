@@ -75,8 +75,9 @@ public class MainGameScreen extends ScreenAdapter {
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
     ragnarokManager = new AreaManager(terrainFactory);
+
     ServiceLocator.getAreaService().setManager(ragnarokManager);
-    ServiceLocator.getAreaService().run();
+    ServiceLocator.getAreaService().run(); //TODO: call run on manager from terminal line
 
     //ragnarokManager.create();
 

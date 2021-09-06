@@ -56,4 +56,8 @@ public class AreaService {
         manager.spawn(x, y, type);
     }
 
+    public void load(String ragFile) {
+        manager.load(ragFile);
+    }
+
 }

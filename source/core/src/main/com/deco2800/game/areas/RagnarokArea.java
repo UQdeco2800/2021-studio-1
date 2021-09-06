@@ -21,6 +21,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.LinkedList;
 
 public class RagnarokArea extends GameArea {
 
@@ -29,6 +33,8 @@ public class RagnarokArea extends GameArea {
     private static final float WALL_WIDTH = 0.1f;
     private final String name; //initiliase in the loader
     private AreaManager manager;
+
+    private Hashtable<GridPoint2, LinkedList<Entity>> entitySignUp;
 
     protected Entity player;
 
@@ -77,6 +83,7 @@ public class RagnarokArea extends GameArea {
         super();
         this.name = name;
         this.terrainFactory = terrainFactory;
+        this.entitySignUp = new Hashtable<>();
     }
 
     public void create() {
@@ -85,9 +92,7 @@ public class RagnarokArea extends GameArea {
 
     public void create(int xOffset) {
         loadAssets();
-
         displayUI();
-
         spawnTerrain();
         //spawnWallOfDeath(); //this is dependant
 
@@ -124,6 +129,8 @@ public class RagnarokArea extends GameArea {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(x, y); /*Math.round(lane.y - newPlayer.getScale().y));*/
         spawnEntityAt(newPlayer, pos, true, false);
+
+        //entitySignUp.
         // ^ so this will register it to entity service and the activeEntities list
         // in GameArea
 
@@ -166,8 +173,12 @@ public class RagnarokArea extends GameArea {
 
     protected void spawnPlatform(int x, int y) {
         Entity platform = ObstacleFactory.createPlatform();
-        GridPoint2 pos = new GridPoint2(x, y);
+        GridPoint2 pos = new GridPoint2(x, y+2);
         spawnEntityAt(platform, pos, false, false);
+
+        signup(pos, platform);
+
+        //entitySignUp.put(pos, platform);
     }
 
     protected void spawnFloor(int x, int y) {
@@ -176,6 +187,7 @@ public class RagnarokArea extends GameArea {
                 Entity floor = ObstacleFactory.createFloor();
                 GridPoint2 pos = new GridPoint2(x+i, y+j);
                 spawnEntityAt(floor, pos, false, false);
+                signup(pos, floor);
             }
         }
     }
@@ -184,24 +196,62 @@ public class RagnarokArea extends GameArea {
         Entity rocks = ObstacleFactory.createRock();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(rocks, pos, false, false);
+        signup(pos, rocks);
     }
 
     protected void spawnSpikes(int x, int y) {
         Entity spikes = ObstacleFactory.createSpikes();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(spikes, pos, false, false);
+        signup(pos, spikes);
     }
 
     protected void spawnWolf(int x, int y) {
         Entity wolf = NPCFactory.createWolf(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(wolf, pos, false, false);
+        //signup(pos, wolf);
     }
 
     protected void spawnSkeleton(int x, int y) {
         Entity skeleton = NPCFactory.createSkeleton(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(skeleton, pos, false, false);
+        //signup(pos, skeleton);
+    }
+
+    public void clearEntitiesAt(int x, int y) {
+        // takes the global scale x and y, so mutliply them by 3 in here
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                GridPoint2 index = new GridPoint2(x+i, y+j);
+
+                if (entitySignUp.get(index) != null) {
+                    for (Entity e : entitySignUp.get(index)) {
+                        e.flagDelete();
+                    }
+                }
+
+            }
+        }
+    }
+
+    public void clearAllEntities() {
+        for (GridPoint2 g : entitySignUp.keySet()) {
+            for (Entity e : entitySignUp.get(g)) {
+                e.flagDelete();
+            }
+        }
+    }
+
+    public void signup(GridPoint2 pos, Entity entity) {
+        if(!entitySignUp.containsKey(pos)) {
+
+            LinkedList<Entity> posList = new LinkedList<>();
+            entitySignUp.put(pos, posList);
+        }
+
+        entitySignUp.get(pos).add(entity);
     }
 
     public Entity getPlayer() {
@@ -209,11 +259,15 @@ public class RagnarokArea extends GameArea {
     }
 
     public void clearPlayer() {
-        player.dispose();
+        player.flagDelete();
     }
 
     public void makePlayer(int x, int y) {
         this.player = spawnPlayer(x, y);
+    }
+
+    public void movePlayerPos(float x, float y) {
+        this.player.setPosition(x, y);
     }
 
     protected void deleteEntity() {

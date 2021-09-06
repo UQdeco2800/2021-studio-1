@@ -1,13 +1,13 @@
 package com.deco2800.game.ui.terminal;
 
+import com.deco2800.game.areas.AreaManager;
+import com.deco2800.game.areas.RagnarokArea;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.ui.terminal.commands.Command;
-import com.deco2800.game.ui.terminal.commands.DebugCommand;
-import com.deco2800.game.ui.terminal.commands.PlaceCommand;
-import com.deco2800.game.ui.terminal.commands.SpawnCommand;
+import com.deco2800.game.ui.terminal.commands.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,9 +28,14 @@ public class Terminal extends Component {
   private final Map<String, Command> commands;
   private String enteredMessage = "";
   private boolean isOpen = false;
+  private AreaManager manager;
 
   public Terminal() {
     this(new HashMap<>());
+  }
+
+  public void setManager(AreaManager manager) {
+    this.manager = manager;
   }
 
   public Terminal(Map<String, Command> commands) {
@@ -39,6 +44,7 @@ public class Terminal extends Component {
     addCommand("debug", new DebugCommand());
     addCommand("-spawn", new SpawnCommand()); //TODO: make more Commands
     addCommand("-place", new PlaceCommand());
+    addCommand("-load", new LoadCommand());
   }
 
   /** @return message entered by user */
@@ -141,5 +147,10 @@ public class Terminal extends Component {
    */
   public void setEnteredMessage(String text) {
     enteredMessage = text;
+  }
+
+  public void sendTerminal(String text) {
+    setEnteredMessage(text);
+    processMessage();
   }
 }
