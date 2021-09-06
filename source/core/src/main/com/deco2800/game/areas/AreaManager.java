@@ -135,13 +135,15 @@ public class AreaManager extends RagnarokArea {
         //mainInstance.dispose(); // TODO: change
         //loadInstance.dispose();
 
-        RagnarokArea loadingTestArea = new RagnarokArea("load test", mainTerrainFactory);
-        loadingTestArea.setManager(this);
-        loadInstance = loadingTestArea;
+        loadInstance = new RagnarokArea("load test", mainTerrainFactory);
+        loadInstance.setManager(this);
+
+        //loadInstance = loadingTestArea;
         loadInstance.create();
 
 
         loadInstance.makePlayer(0, 0); // so setting player in Loader doesn't result in null pointer
+
         loader.createAreaFromFile(level);
         //loadInstance.makePlayer(10, 5);
 

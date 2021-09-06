@@ -14,7 +14,10 @@ $..F..F.............PP....
 $....PFSSSSSSSSSSSSSSSSSSS
 $FFFFFFFFFFFFFFFFFPPPFFFFF
 
-$@player set 8,1
+@player set 8,1
+
+player set doesn't work so i commented it
+also add hashes to terrain lines
 
 @player get spear etc eventually (this line is comment as
 it has no $ and shouldn't be loaded)
