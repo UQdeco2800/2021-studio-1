@@ -1,6 +1,7 @@
 package com.deco2800.game.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.deco2800.game.physics.PhysicsContactListener;
 
 public class PowerUpComponent extends Component{
     private boolean dispose;
