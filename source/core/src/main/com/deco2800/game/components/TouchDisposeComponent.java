@@ -10,11 +10,16 @@ import com.deco2800.game.services.ServiceLocator;
 
 /**
  * When this entity touches another component's hitbox, the other component will be disposed of
- * the next step after the contact is finished (disposed out of the physics step).
+ * if it is an object or disabled if it is an NPC.
+ * <p>
+ * If the object is disposed of, it will be done out of the physics step to avoid crashed.
+ * <p>
+ * If the other component is an NPC it is disabled to avoid the animation being disposed of and
+ * removing the animation from all other entities using it.
  *
  * <p>Requires HitboxComponent on this entity.
  */
-public class TouchDisposeComponent extends Component{
+public class TouchDisposeComponent extends Component {
     HitboxComponent hitboxComponent;
     EntityService entityService;
 
@@ -50,7 +55,7 @@ public class TouchDisposeComponent extends Component{
         }
 
         if (PhysicsLayer.contains(PhysicsLayer.NPC, other.getFilterData().categoryBits)) {
-            // This is an NPC and may contain an atlas file, which if disposed of will remove the
+            // This is an NPC and may contain an atlas file, which when disposed of will remove the
             // atlas file from use for any other entities using it. Disable it instead.
             target.setEnabled(false);
             return;
