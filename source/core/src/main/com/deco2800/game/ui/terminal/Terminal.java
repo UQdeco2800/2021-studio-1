@@ -3,6 +3,7 @@ package com.deco2800.game.ui.terminal;
 import com.deco2800.game.areas.AreaManager;
 import com.deco2800.game.areas.RagnarokArea;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.files.RagLoader;
 import com.deco2800.game.ui.terminal.commands.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,23 +29,21 @@ public class Terminal extends Component {
   private final Map<String, Command> commands;
   private String enteredMessage = "";
   private boolean isOpen = false;
-  private AreaManager manager;
+  private boolean inLoad = false;
 
   public Terminal() {
     this(new HashMap<>());
   }
 
-  public void setManager(AreaManager manager) {
-    this.manager = manager;
-  }
-
   public Terminal(Map<String, Command> commands) {
     this.commands = commands;
 
-    addCommand("debug", new DebugCommand());
+    addCommand("-debug", new DebugCommand());
     addCommand("-spawn", new SpawnCommand()); //TODO: make more Commands
     addCommand("-place", new PlaceCommand());
     addCommand("-load", new LoadCommand());
+    addCommand("-config", new ConfigCommand());
+    addCommand("-queue", new QueueCommand());
   }
 
   /** @return message entered by user */

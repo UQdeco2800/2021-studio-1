@@ -5,6 +5,7 @@ import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.rendering.RenderService;
+import com.deco2800.game.ui.terminal.Terminal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,7 @@ public class ServiceLocator {
   private static InputService inputService;
   private static ResourceService resourceService;
   private static AreaService areaService;
-
+  private static Terminal terminal;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -51,6 +52,8 @@ public class ServiceLocator {
   }
 
   public static AreaService getAreaService() { return areaService; }
+
+  public static Terminal getTerminalService() { return terminal; }
 
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
@@ -83,8 +86,13 @@ public class ServiceLocator {
   }
 
   public static void registerAreaService(AreaService source) {
-    logger.debug("Registering level service {}", source);
+    logger.debug("Registering area service {}", source);
     areaService = source;
+  }
+
+  public static void registerTerminalService(Terminal source) {
+    logger.debug("Register terminal {}", source);
+    terminal = source;
   }
 
   public static void clear() {
@@ -95,6 +103,7 @@ public class ServiceLocator {
     inputService = null;
     resourceService = null;
     areaService = null;
+    terminal = null;
   }
 
   private ServiceLocator() {

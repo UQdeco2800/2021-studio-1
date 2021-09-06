@@ -12,6 +12,7 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
+import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
@@ -168,12 +169,15 @@ public class MainGameScreen extends ScreenAdapter {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
+    Terminal theOg = new Terminal();
+    ServiceLocator.registerTerminalService(theOg);
+
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
         .addComponent(new MainGamePannelDisplay())
-        .addComponent(new Terminal())
+        .addComponent(theOg)
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay());
 

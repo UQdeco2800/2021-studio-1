@@ -18,7 +18,7 @@ public class DebugCommand implements Command {
    */
   public boolean action(ArrayList<String> args) {
     if (!isValid(args)) {
-      logger.debug("Invalid arguments received for 'debug' command: {}", args);
+      logger.debug("Invalid arguments received for '-debug' command: {}", args);
       return false;
     }
 

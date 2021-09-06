@@ -1,0 +1,149 @@
+$_title cool
+$_width 30
+$_height 8
+
+$#FFFFFFFF
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#F......F
+$#FFFFFFFF
+$#F......F
+$#.......F
+$#........
+$#........
+$#........
+$#........
+$#........
+
+$@player set [2,1]
+
+$-spawn [2,4] (skeleton)
+$-spawn [15,3] (wolf)
+$-spawn [20,5] (skeleton)
+$-spawn [3,4] (skeleton)
+$-spawn [16,3] (wolf)
+$-spawn [10,4] (skeleton)
+$-spawn [21,5] (skeleton)
+$-spawn [4,4] (skeleton)
+$-spawn [17,3] (wolf)
+$-spawn [11,4] (skeleton)
+$-spawn [5,4] (skeleton)
+$-spawn [18,3] (wolf)
+$-spawn [12,4] (skeleton)
+$-spawn [6,4] (skeleton)
+$-spawn [19,3] (wolf)
+$-spawn [13,4] (skeleton)
+$-spawn [7,4] (skeleton)
+$-spawn [1,5] (skeleton)
+$-spawn [14,4] (skeleton)
+$-spawn [8,4] (skeleton)
+$-spawn [2,5] (skeleton)
+$-spawn [15,4] (skeleton)
+$-spawn [20,6] (skeleton)
+$-spawn [9,4] (skeleton)
+$-spawn [3,5] (skeleton)
+$-spawn [16,4] (wolf)
+$-spawn [10,5] (skeleton)
+$-spawn [21,6] (skeleton)
+$-spawn [4,5] (skeleton)
+$-spawn [17,4] (wolf)
+$-spawn [11,5] (skeleton)
+$-spawn [5,5] (skeleton)
+$-spawn [18,4] (skeleton)
+$-spawn [12,5] (skeleton)
+$-spawn [6,5] (skeleton)
+$-spawn [19,4] (skeleton)
+$-spawn [13,5] (skeleton)
+$-spawn [7,5] (skeleton)
+$-spawn [1,6] (skeleton)
+$-spawn [14,5] (skeleton)
+$-spawn [8,5] (skeleton)
+$-spawn [2,6] (skeleton)
+$-spawn [15,5] (skeleton)
+$-spawn [20,7] (skeleton)
+$-spawn [9,5] (skeleton)
+$-spawn [3,6] (skeleton)
+$-spawn [16,5] (skeleton)
+$-spawn [20,1] (wolf)
+$-spawn [21,7] (skeleton)
+$-spawn [10,6] (skeleton)
+$-spawn [4,6] (skeleton)
+$-spawn [17,5] (skeleton)
+$-spawn [21,1] (wolf)
+$-spawn [11,6] (skeleton)
+$-spawn [5,6] (skeleton)
+$-spawn [18,5] (skeleton)
+$-spawn [12,6] (skeleton)
+$-spawn [6,6] (skeleton)
+$-spawn [19,5] (skeleton)
+$-spawn [13,6] (skeleton)
+$-spawn [7,6] (skeleton)
+$-spawn [1,7] (skeleton)
+$-spawn [14,6] (skeleton)
+$-spawn [8,6] (skeleton)
+$-spawn [2,7] (skeleton)
+$-spawn [15,6] (skeleton)
+$-spawn [9,6] (skeleton)
+$-spawn [3,7] (skeleton)
+$-spawn [16,6] (skeleton)
+$-spawn [20,2] (wolf)
+$-spawn [10,7] (skeleton)
+$-spawn [4,7] (skeleton)
+$-spawn [17,6] (skeleton)
+$-spawn [21,2] (wolf)
+$-spawn [11,7] (skeleton)
+$-spawn [5,7] (skeleton)
+$-spawn [18,6] (skeleton)
+$-spawn [12,7] (skeleton)
+$-spawn [6,7] (skeleton)
+$-spawn [19,6] (skeleton)
+$-spawn [13,7] (skeleton)
+$-spawn [7,7] (skeleton)
+$-spawn [13,1] (wolf)
+$-spawn [14,7] (skeleton)
+$-spawn [8,7] (skeleton)
+$-spawn [14,1] (wolf)
+$-spawn [15,7] (skeleton)
+$-spawn [9,7] (skeleton)
+$-spawn [15,1] (wolf)
+$-spawn [16,7] (skeleton)
+$-spawn [20,3] (wolf)
+$-spawn [16,1] (wolf)
+$-spawn [17,7] (skeleton)
+$-spawn [21,3] (wolf)
+$-spawn [17,1] (wolf)
+$-spawn [18,7] (skeleton)
+$-spawn [18,1] (wolf)
+$-spawn [19,7] (skeleton)
+$-spawn [19,1] (wolf)
+$-spawn [13,2] (wolf)
+$-spawn [14,2] (wolf)
+$-spawn [15,2] (wolf)
+$-spawn [20,4] (skeleton)
+$-spawn [16,2] (wolf)
+$-spawn [21,4] (skeleton)
+$-spawn [17,2] (wolf)
+$-spawn [18,2] (wolf)
+$-spawn [19,2] (wolf)
+$-spawn [13,3] (wolf)
+$-spawn [1,4] (skeleton)
+$-spawn [14,3] (wolf)
+

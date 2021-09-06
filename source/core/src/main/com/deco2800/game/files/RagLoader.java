@@ -4,6 +4,7 @@ import com.deco2800.game.areas.AreaManager;
 import com.deco2800.game.areas.RagnarokArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.ui.terminal.Terminal;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +68,6 @@ public class RagLoader {
 
         //filepath = "configs/rags/test1.rag";
         String filepath = "configs/rags/" + ragFile + ".rag";
-        System.out.println(filepath);
 
         BufferedReader br = null;
         boolean loadSuccessful = false;
@@ -128,11 +128,11 @@ public class RagLoader {
                             //System.out.printf("%d c:%c", j, line.charAt(j));
 
                             if (line.charAt(j) == '@') {
-                                System.out.println("2nd char was @");
+                                //System.out.println("2nd char was @");
                                 // run @ routine and then break out of reading the line
 
                                 String[] atArgs = line.split("@")[1].split(" ");
-                                System.out.printf("%s %s %s", atArgs[0], atArgs[1] ,atArgs[2]);
+                                //System.out.printf("%s %s %s", atArgs[0], atArgs[1] ,atArgs[2]);
 
                                 if (atArgs[0].equals("player") && atArgs[1].equals("set")) {
                                     String[] coOrdinateArgs = atArgs[2].split(",");
@@ -203,5 +203,122 @@ public class RagLoader {
         } catch (IOException e) {
             // make a logger and log the error
         }
+    }
+
+    public void newCreateFromFile(String ragFile) {
+
+        String filepath = "configs/rags/" + ragFile + ".rag";
+
+        ServiceLocator.getTerminalService().sendTerminal("-place [1,1] (platform)");
+
+        BufferedReader br = null;
+        boolean loadSuccessful = false;
+
+        try {
+            File levelFile = new File(filepath);
+            br = new BufferedReader(new FileReader(levelFile));
+            loadSuccessful = true;
+        } catch (FileNotFoundException e) {
+            String erMsg = String.format("%s || File Not Found", filepath);
+            logger.error(erMsg);
+            // do with a logger instead
+        }
+
+        try {
+
+            if (loadSuccessful) {
+
+                // SO THIS FIRST SECTION JUST DEALS WITH THE TILE MAP @ THE TOP
+
+                String line;
+                //float lane = 6.8f;
+
+                String title;
+                int width = 0;
+                int height = 0;
+
+                int i = 0;
+                int y = 0;
+
+                boolean inConfig = false;
+                boolean inTerrain = false;
+                boolean inSpawn = false;
+
+                while ((line = br.readLine()) != null) {
+
+                    if (line.length() == 0) continue;
+
+                    if (line.startsWith("$")) {
+
+                        line = line.replace("$", "");
+
+                        if (line.startsWith("_")) { // config line
+
+                            inConfig = true;
+                            String[] args = line.replace("_", "").split(" ");
+                            String config = String.format("-config %s %s", args[0], args[1]);
+
+                            //System.out.println(config);
+
+                            ServiceLocator.getTerminalService().sendTerminal(config);
+                            continue;
+
+                        } else if (line.startsWith("#")) { // terrain line
+
+                            //System.out.println("LINE STARTED WITH #");
+
+                            if (inConfig) {
+                                inConfig = false;
+                                //System.out.println("config closed init");
+                                ServiceLocator.getTerminalService().sendTerminal("-config close init");
+                            }
+                            inTerrain = true;
+
+                            String toSend = String.format("-queue %s", line.replace("\n", ""));
+
+                            //System.out.println(toSend);
+
+                            ServiceLocator.getTerminalService().sendTerminal(toSend);
+
+                        } else if (line.startsWith("@")) { // atEntity line
+
+                            String[] args = line.split(" ");
+                            String entity = args[0];
+                            String command = args[1];
+                            String argument = args[2];
+
+                            argument = argument.replace("]", "").replace("[", "");
+
+                            float px = Float.parseFloat(argument.split(",")[0]);
+                            float py = Float.parseFloat(argument.split(",")[1]);
+
+                            //TODO REMOVE THIS HACK U FRAUD
+                            if (command.equals("set")) {
+                                //ServiceLocator.getAreaService().getManager().loadSetPlayer(px, py);
+                            }
+
+                        } else if (line.startsWith("-")) { // direct command line
+
+                            if (inTerrain) {
+                                inTerrain = false;
+                                ServiceLocator.getTerminalService().sendTerminal("-config close queue");
+                            }
+
+                            inSpawn = true;
+
+                            ServiceLocator.getTerminalService().sendTerminal(line);
+                        }
+                    }
+                }
+            }
+        } /*catch (Exception e) {
+
+            System.out.println(e.toString());
+            logger.error("Load Unsuccessful");
+
+        }*/ catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

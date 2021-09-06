@@ -60,4 +60,12 @@ public class AreaService {
         manager.load(ragFile);
     }
 
+    public void config(String argument, String value) {
+        manager.config(argument, value);
+    }
+
+    public void queue(String terrainLine) {
+        manager.queue(terrainLine);
+    }
+
 }

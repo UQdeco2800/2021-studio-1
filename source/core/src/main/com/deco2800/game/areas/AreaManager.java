@@ -2,10 +2,11 @@ package com.deco2800.game.areas;
 
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.files.RagLoader;
-import org.slf4j.ILoggerFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 public class AreaManager extends RagnarokArea {
@@ -17,17 +18,30 @@ public class AreaManager extends RagnarokArea {
     private RagnarokArea mainInstance;
     private RagnarokArea loadInstance;
 
-    private RagLoader loader;
+    private boolean loadFlag;
+
+    private String[][] bufferedPlaces;
+    private int bPWidth; //this determines the first dimension of bufferedPlaces array (the columns)
+    private int bPHeight; //this determines the second dimension of bufferedPlaces array (the chars)
+    private int bPIndex;
+
+    private Hashtable<String, String> bufferedSpawns;
+
+    private RagLoader loader; // TODO: remove from this, move to AreaServce
 
     private TerrainFactory mainTerrainFactory;
 
     public AreaManager(TerrainFactory terrainFactory) {
+
         super("Manager", terrainFactory);
         this.mainTerrainFactory = terrainFactory;
         this.mainType = LevelType.SLICE;
         this.areaInstances = new LinkedList<>();
 
+        bufferedSpawns = new Hashtable<>();
+
         this.loader = new RagLoader(this); //eventually moved to terminal?
+        // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
 
         //spawn(10, 5, "avatar");
     }
@@ -38,10 +52,10 @@ public class AreaManager extends RagnarokArea {
 
         int mainArea = 0;
 
-        load("test1");
-        //mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
+        load("skel");
+        mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
         this.player = mainInstance.getPlayer();
-        //System.out.println("load in manager called");
+        // System.out.println("load in manager called");
 
         /*for(RagnarokArea r : areaInstances) {
             r.create();
@@ -135,16 +149,20 @@ public class AreaManager extends RagnarokArea {
         //mainInstance.dispose(); // TODO: change
         //loadInstance.dispose();
 
-        loadInstance = new RagnarokArea("load test", mainTerrainFactory);
-        loadInstance.setManager(this);
+        mainInstance = new RagnarokArea("load test", mainTerrainFactory);
+        mainInstance.setManager(this);
 
         //loadInstance = loadingTestArea;
-        loadInstance.create();
+        mainInstance.create();
 
 
-        loadInstance.makePlayer(0, 0); // so setting player in Loader doesn't result in null pointer
+        //mainInstance.makePlayer(0, 0); // so setting player in Loader doesn't result in null pointer
 
-        loader.createAreaFromFile(level);
+        loader.newCreateFromFile(level);
+
+        areaInstances.clear();
+        areaInstances.add(mainInstance);
+
         //loadInstance.makePlayer(10, 5);
 
         //System.out.println("load create area from file called"); //TODO convert to logger
@@ -154,11 +172,8 @@ public class AreaManager extends RagnarokArea {
 
         //loadPlace(0, 0, "floor");
 
-        mainInstance = loadInstance;
-        loadInstance = null;
-
-        areaInstances.clear();
-        areaInstances.add(mainInstance);
+        //mainInstance = loadInstance;
+        //loadInstance = null;
 
         //if (mainInstance.getPlayer() != null) mainInstance.setPlayer(10f, 5f);
 
@@ -186,9 +201,97 @@ public class AreaManager extends RagnarokArea {
     }
 
     public void loadSetPlayer(float x, float y) {
-        loadInstance.movePlayerPos(x, y);
+        mainInstance.movePlayerPos(x, y);
     }
 
+    public void config(String argument, String value) {
+        switch (argument) {
+            case "title":
+                break;
+            case "width":
+                bPWidth = Integer.parseInt(value);
+                break;
+            case "height":
+                bPHeight = Integer.parseInt(value);
+                break;
+            case "close":
+                switch (value) {
+                    case "init":
+                        bufferedPlaces = new String[bPWidth][bPHeight];
+                        System.out.println(bufferedPlaces);
+                        bPIndex = 0;
+                        break;
+                    case "queue":
+                        makeBufferedPlace();
+                        break;
+                    case "make":
+                        break;
+                        //makeBufferedSpawn();
+
+                    case "load":
+                        break;
+                }
+
+        }
+    }
+
+    public void queue(String charColumn) {
+        for (int y = bPHeight; y > 0; y--) {
+            //String coOrd = String.format("[%d,%d]", bPIndex, y);
+
+            String terrainType = "null";
+            switch(charColumn.charAt(charColumn.length() - y)) {
+                case '.': // null
+                    break;
+                case 'F': // floor
+                    terrainType = "floor";
+                    break;
+                case 'S': // spikes
+                    terrainType = "spikes";
+                    break;
+                case 'P': // platform
+                    terrainType = "platform";
+                    break;
+            }
+
+            //String place = String.format("-place %s %s", coOrd, terrainType);
+            //System.out.printf("Size[] %d Size %d", bufferedPlaces.length, bufferedPlaces[0].length);
+            //System.out.printf("%d %d %s\n", bPIndex, y, terrainType);
+            bufferedPlaces[bPIndex][y - 1] = terrainType;
+
+        }
+        bPIndex++;
+    }
+
+    private void makeBufferedPlace() {
+
+        int x = 0;
+        for (String[] column : bufferedPlaces) {
+            int y = 0;
+            for (String placeType : column) {
+                place(x, y, placeType);
+                y++;
+            }
+            x++;
+        }
+    }
+
+    /*private void makeBufferedSpawn() {
+        for (String coOrds : bufferedSpawns.keySet()) {
+
+            String spawnType = bufferedSpawns.get(coOrds);
+
+            // do the same fuckn coOrd transformation, fuck my life
+            // TODO make static coOrd transform function
+
+            coOrds = coOrds.replace("[","").replace("]","");
+            String[] bleg = coOrds.split(",");
+            int x = Integer.parseInt(bleg[0]);
+            int y = Integer.parseInt(bleg[1]);
+
+            spawn(x, y, spawnType);
+        }
+    }*/
 }
 
 enum LevelType {
