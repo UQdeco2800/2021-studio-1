@@ -1,29 +1,73 @@
 package com.deco2800.game.entities.factories;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.deco2800.game.ai.tasks.AITaskComponent;
-import com.deco2800.game.components.PowerUpComponent;
-import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.tasks.WanderTask;
+import com.deco2800.game.components.powerups.SamplePowerUpComponent;
+import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
+import com.deco2800.game.components.powerups.SpearPowerUpComponent;
+
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.physics.PhysicsLayer;
+
+import com.deco2800.game.events.listeners.EventListener1;
+import com.deco2800.game.physics.PhysicsContactListener;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
-import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.physics.components.PhysicsMovementComponent;
+
 import com.deco2800.game.rendering.TextureRenderComponent;
-import com.deco2800.game.services.ServiceLocator;
 
 public class PowerUpFactory {
-    public static Entity createBasePowerUp() {
+    public static Entity createPowerUp() {
         Entity powerUp =
                 new Entity()
                         .addComponent(new TextureRenderComponent("images/powerup.png"))
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
-                        .addComponent(new PowerUpComponent());
+                        .addComponent(new SamplePowerUpComponent());
+
+        PhysicsUtils.setScaledCollider(powerUp, 0.5f, 0.4f);
+        powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+
+        return powerUp;
+    }
+
+    // Edit for lightning power up.
+    public static Entity createLightningPowerUp() {
+        Entity powerUp =
+            new Entity()
+                .addComponent(new TextureRenderComponent("images/powerup.png"))
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent())
+                .addComponent(new LightningPowerUpComponent());
+
+        PhysicsUtils.setScaledCollider(powerUp, 0.5f, 0.4f);
+        powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+
+        return powerUp;
+    }
+
+    // Edit for shield power up.
+    public static Entity createShieldPowerUp() {
+        Entity powerUp =
+            new Entity()
+                .addComponent(new TextureRenderComponent("images/powerup.png"))
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent())
+                .addComponent(new ShieldPowerUpComponent());
+
+        PhysicsUtils.setScaledCollider(powerUp, 0.5f, 0.4f);
+        powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+
+        return powerUp;
+    }
+
+    // Edit for spear power up.
+    public static Entity createSpearPowerUp() {
+        Entity powerUp =
+            new Entity()
+                .addComponent(new TextureRenderComponent("images/powerup.png"))
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent())
+                .addComponent(new SpearPowerUpComponent());
 
         PhysicsUtils.setScaledCollider(powerUp, 0.5f, 0.4f);
         powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);

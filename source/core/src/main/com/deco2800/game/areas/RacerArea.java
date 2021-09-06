@@ -52,8 +52,8 @@ public class RacerArea extends GameArea {
         "images/iso_grass_1.png",
         "images/iso_grass_2.png",
         "images/iso_grass_3.png",
-            "images/death_giant.png",
-            "images/powerup.png"
+        "images/death_giant.png",
+        "images/powerup.png"
     };
     private static final String[] forestTextureAtlases = {
         "images/terrain_iso_grass.atlas", "images/ghostKing" +
@@ -314,7 +314,7 @@ public class RacerArea extends GameArea {
         GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
         GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
         GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomRightMin);
-        Entity powerUp = PowerUpFactory.createBasePowerUp();
+        Entity powerUp = PowerUpFactory.createPowerUp();
         spawnEntityAt(powerUp, randomPos, false, false);
     }
 
