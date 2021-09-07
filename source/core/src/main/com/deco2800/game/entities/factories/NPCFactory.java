@@ -143,6 +143,7 @@ public class NPCFactory {
             .addComponent(aiComponent);
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+    npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
     return npc;
   }
 
@@ -163,6 +164,7 @@ public class NPCFactory {
 
     //set the NPC as a sensor so other object will not collide
     npc.getComponent(ColliderComponent.class).setSensor(true);
+    npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
     return npc;
   }
 

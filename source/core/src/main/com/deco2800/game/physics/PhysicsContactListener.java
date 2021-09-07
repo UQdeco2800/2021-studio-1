@@ -20,22 +20,24 @@ public class PhysicsContactListener implements ContactListener {
 
   @Override
   public void beginContact(Contact contact) {
-    Fixture fixtureA = contact.getFixtureA();
-    Fixture fixtureB = contact.getFixtureB();
+    triggerEventOn(contact.getFixtureA(), "collisionStart",
+            contact.getFixtureB());
+    triggerEventOn(contact.getFixtureB(), "collisionStart",
+            contact.getFixtureA());
+    Body bodyA = contact.getFixtureA().getBody();
+    Body bodyB = contact.getFixtureB().getBody();
+    BodyUserData powerUp;
+    powerUp = (BodyUserData) contact.getFixtureA().getBody().getUserData();
 
-    Body bodyA = fixtureA.getBody();
-    Body bodyB = fixtureB.getBody();
-
-    BodyUserData player = null;
-    BodyUserData powerUp = null;
-
-    if (bodyA.getUserData() == EntityTypes.PLAYER) {
-      player = (BodyUserData) bodyA.getUserData();
+    /*
+    if (bodyA.getUserData() == EntityTypes.SAMPLEPOWERUP) {
+      //if (bodyB.getUserData() == EntityTypes.PLAYER) {
+        powerUp = (BodyUserData) bodyB.getUserData();
+      //}
     } else {
-      player = (BodyUserData) bodyB.getUserData();
-      powerUp = (BodyUserData) bodyA.getUserData();
+        powerUp = (BodyUserData) bodyA.getUserData();
     }
-
+     */
     powerUp.entity.getEvents().trigger("disposePowerUp");
   }
 
