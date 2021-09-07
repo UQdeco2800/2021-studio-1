@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -217,26 +217,33 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaxSpeed(int)">setMaxSpeed</a></span>&#8203;(int&nbsp;speed)</code></th>
+<td class="colLast">
+<div class="block">Sets the maxSpeed</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMoving(boolean)">setMoving</a></span>&#8203;(boolean&nbsp;movementEnabled)</code></th>
 <td class="colLast">
 <div class="block">Enable/disable movement for the controller.</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTarget(com.badlogic.gdx.math.Vector2)">setTarget</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Vector2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Vector2</a>&nbsp;target)</code></th>
 <td class="colLast">
 <div class="block">Set a target to move towards.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Called once per frame of the game, and should be used for most component logic.</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateDirection(com.badlogic.gdx.physics.box2d.Body)">updateDirection</a></span>&#8203;(<a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/physics/box2d/Body.html?is-external=true" title="class or interface in com.badlogic.gdx.physics.box2d" class="externalLink">Body</a>&nbsp;body)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -322,6 +329,17 @@ implements <a href="../../ai/movement/MovementController.html" title="interface 
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../components/Component.html#create()">create</a></code>&nbsp;in class&nbsp;<code><a href="../../components/Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setMaxSpeed(int)">setMaxSpeed</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setMaxSpeed</span>&#8203;(<span class="arguments">int&nbsp;speed)</span></div>
+<div class="block">Sets the maxSpeed</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>speed</code> - </dd>
 </dl>
 </section>
 </li>
