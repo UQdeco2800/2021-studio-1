@@ -1,6 +1,7 @@
 package com.deco2800.game.physics;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.deco2800.game.entities.factories.EntityTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,8 +20,23 @@ public class PhysicsContactListener implements ContactListener {
 
   @Override
   public void beginContact(Contact contact) {
-    triggerEventOn(contact.getFixtureA(), "collisionStart", contact.getFixtureB());
-    triggerEventOn(contact.getFixtureB(), "collisionStart", contact.getFixtureA());
+    Fixture fixtureA = contact.getFixtureA();
+    Fixture fixtureB = contact.getFixtureB();
+
+    Body bodyA = fixtureA.getBody();
+    Body bodyB = fixtureB.getBody();
+
+    BodyUserData player = null;
+    BodyUserData powerUp = null;
+
+    if (bodyA.getUserData() == EntityTypes.PLAYER) {
+      player = (BodyUserData) bodyA.getUserData();
+    } else {
+      player = (BodyUserData) bodyB.getUserData();
+      powerUp = (BodyUserData) bodyA.getUserData();
+    }
+
+    powerUp.entity.getEvents().trigger("disposePowerUp");
   }
 
   @Override
@@ -40,7 +56,8 @@ public class PhysicsContactListener implements ContactListener {
   }
 
   private void triggerEventOn(Fixture fixture, String evt, Fixture otherFixture) {
-    BodyUserData userData = (BodyUserData) fixture.getBody().getUserData();
+    BodyUserData userData = (BodyUserData) fixture.getUserData();
+
     if (userData != null && userData.entity != null) {
       logger.debug("{} on entity {}", evt, userData.entity);
       userData.entity.getEvents().trigger(evt, fixture, otherFixture);
