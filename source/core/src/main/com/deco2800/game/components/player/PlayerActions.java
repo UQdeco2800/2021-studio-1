@@ -16,7 +16,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
  * class.
  */
 public class PlayerActions extends Component {
-  private static final Vector2 MAX_SPEED = new Vector2(5f, 1f); // Metres
+  private static final Vector2 MAX_SPEED = new Vector2(7f, 1f); // Metres
   // per second
   private static final Vector2 CROUCH_SPEED = new Vector2(1f, 1f);
   // Metres per second
@@ -147,11 +147,11 @@ public class PlayerActions extends Component {
     } else {
       if (moving) { //Checks if the player is moving and applies respective force
         if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          body.applyLinearImpulse(new Vector2(1f,  0f).scl(body.getMass()),
+          body.applyLinearImpulse(new Vector2(0.75f,  0f).scl(body.getMass()),
                   body.getPosition(),
                   true);
         } else {
-          body.applyLinearImpulse(new Vector2(-1f,  0f).scl(body.getMass()),
+          body.applyLinearImpulse(new Vector2(-0.75f,  0f).scl(body.getMass()),
                   body.getPosition(),
                   true);
         }
