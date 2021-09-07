@@ -1,7 +1,6 @@
 package com.deco2800.game.physics;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.deco2800.game.entities.factories.EntityTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
