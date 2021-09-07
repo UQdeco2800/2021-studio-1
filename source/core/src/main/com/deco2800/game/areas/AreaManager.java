@@ -52,7 +52,7 @@ public class AreaManager extends RagnarokArea {
 
         int mainArea = 0;
 
-        load("skel");
+        load("ragnorok");
         mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
         this.player = mainInstance.getPlayer();
         // System.out.println("load in manager called");
@@ -276,22 +276,6 @@ public class AreaManager extends RagnarokArea {
         }
     }
 
-    /*private void makeBufferedSpawn() {
-        for (String coOrds : bufferedSpawns.keySet()) {
-
-            String spawnType = bufferedSpawns.get(coOrds);
-
-            // do the same fuckn coOrd transformation, fuck my life
-            // TODO make static coOrd transform function
-
-            coOrds = coOrds.replace("[","").replace("]","");
-            String[] bleg = coOrds.split(",");
-            int x = Integer.parseInt(bleg[0]);
-            int y = Integer.parseInt(bleg[1]);
-
-            spawn(x, y, spawnType);
-        }
-    }*/
 }
 
 enum LevelType {
