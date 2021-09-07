@@ -119,6 +119,8 @@ public class NPCFactory {
     wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
     wallOfDeath.setScale(10.5f,10.5f);
 
+    wallOfDeath.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+
     return wallOfDeath;
   }
 
