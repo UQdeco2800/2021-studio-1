@@ -7,10 +7,7 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
 import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.NPCFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.entities.factories.ProjectileFactory;
+import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.events.listeners.EventListener1;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
@@ -57,7 +54,8 @@ public class RacerArea extends GameArea {
         "images/iso_grass_1.png",
         "images/iso_grass_2.png",
         "images/iso_grass_3.png",
-        "images/death_giant.png"
+        "images/death_giant.png",
+        "images/powerup.png"
     };
     private static final String[] forestTextureAtlases = {
         "images/terrain_iso_grass.atlas", "images/ghostKing" +
@@ -107,6 +105,7 @@ public class RacerArea extends GameArea {
         spawnSkeletons();
         spawnWolf();
         spawnSpears();
+        spawnPowerUp();
 
         playMusic();
     }
@@ -310,6 +309,16 @@ public class RacerArea extends GameArea {
             Entity spikes = ObstacleFactory.createSpikes();
             spawnEntityAt(spikes, randomPos, false, false);
         }
+    }
+
+    private void spawnPowerUp() {
+        GridPoint2 bottomRightMin = new GridPoint2(21, 10);
+        GridPoint2 bottomRightMax = new GridPoint2(27, 10);
+        GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
+        GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
+        GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomRightMin);
+        Entity powerUp = PowerUpFactory.createPowerUp();
+        spawnEntityAt(powerUp, randomPos, false, false);
     }
 
     private Entity spawnPlayer(int lane, int xCord) {
