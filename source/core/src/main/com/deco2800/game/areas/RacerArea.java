@@ -5,8 +5,13 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.entities.factories.NPCFactory;
+import com.deco2800.game.entities.factories.ObstacleFactory;
+import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.entities.factories.ProjectileFactory;
+import com.deco2800.game.events.listeners.EventListener1;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import java.io.*;
@@ -52,8 +57,7 @@ public class RacerArea extends GameArea {
         "images/iso_grass_1.png",
         "images/iso_grass_2.png",
         "images/iso_grass_3.png",
-        "images/death_giant.png",
-        "images/powerup.png"
+        "images/death_giant.png"
     };
     private static final String[] forestTextureAtlases = {
         "images/terrain_iso_grass.atlas", "images/ghostKing" +
@@ -63,9 +67,15 @@ public class RacerArea extends GameArea {
     private static final String mainMusic = "sounds/main.mp3";
     private static final String townMusic = "sounds/town.mp3";
     private static final String raiderMusic = "sounds/raider.mp3";
-    private static final String[] forestMusic = {mainMusic, townMusic, raiderMusic};
+    // sound effect of fire/burning behind giant *fwoom* *crackle*
+    private static final String fireMusic = "sounds/fire.mp3";
+    // sound effects of giant walking (still to be tested)
+    private static final String walkMusic = "sounds/walk.mp3";
+    private static final String[] forestMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic};
 
     private Entity player;
+
+    private Entity wallOfDeath;
 
     private final TerrainFactory terrainFactory;
 
@@ -82,6 +92,8 @@ public class RacerArea extends GameArea {
         displayUI();
 
         spawnTerrain();
+        spawnWallOfDeath();
+
         try {
             spawnWorld();
         } catch (IOException ex) {
@@ -91,17 +103,10 @@ public class RacerArea extends GameArea {
             // BRUUUUUUUUUH
             app.exit();
         }
-        spawnWallOfDeath();
-
-        // spawnRocks();
-        // spawnSpikes();
 
         spawnSkeletons();
         spawnWolf();
         spawnSpears();
-        spawnPowerUp();
-
-        //player = spawnPlayer();
 
         playMusic();
     }
@@ -188,7 +193,6 @@ public class RacerArea extends GameArea {
         // Bottom
         spawnEntityAt(
             ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
-
     }
 
 
@@ -308,16 +312,6 @@ public class RacerArea extends GameArea {
         }
     }
 
-    private void spawnPowerUp() {
-        GridPoint2 bottomRightMin = new GridPoint2(21, 10);
-        GridPoint2 bottomRightMax = new GridPoint2(27, 10);
-        GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
-        GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
-        GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomRightMin);
-        Entity powerUp = PowerUpFactory.createPowerUp();
-        spawnEntityAt(powerUp, randomPos, false, false);
-    }
-
     private Entity spawnPlayer(int lane, int xCord) {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - newPlayer.getScale().y));
@@ -418,11 +412,13 @@ public class RacerArea extends GameArea {
      */
     private void spawnWallOfDeath() {
         GridPoint2 leftPos = new GridPoint2(-2,15);
-        Entity wallOfDeath = NPCFactory.createWallOfDeath(player);
+        wallOfDeath = NPCFactory.createWallOfDeath(player);
         spawnEntityAt(wallOfDeath, leftPos, true, true);
     }
 
-
+    /**
+     * Play all SFX in the game.
+     */
     private void playMusic() {
 
         String witchMusic;
@@ -438,11 +434,18 @@ public class RacerArea extends GameArea {
             default:
                 witchMusic = mainMusic;
         }
-
         Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
+        Music fire = ServiceLocator.getResourceService().getAsset(fireMusic, Music.class);
+        Music walk = ServiceLocator.getResourceService().getAsset(walkMusic, Music.class);
         music.setLooping(true);
+        fire.setLooping(true);
+        walk.setLooping(true);
         music.setVolume(0.3f);
+        fire.setVolume(0.8f);
+        walk.setVolume(0.8f);
         music.play();
+        fire.play();
+        walk.play();
     }
 
     private void loadAssets() {
