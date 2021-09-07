@@ -67,9 +67,11 @@ public class RacerArea extends GameArea {
     private static final String mainMusic = "sounds/main.mp3";
     private static final String townMusic = "sounds/town.mp3";
     private static final String raiderMusic = "sounds/raider.mp3";
+    // sound effect of fire/burning behind giant *fwoom* *crackle*
     private static final String fireMusic = "sounds/fire.mp3";
-//    private static final String raiderMusic = "sounds/walk.mp3";
-    private static final String[] forestMusic = {mainMusic, townMusic, raiderMusic, fireMusic};
+    // sound effects of giant walking (still to be tested)
+    private static final String walkMusic = "sounds/walk.mp3";
+    private static final String[] forestMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic};
 
     private Entity player;
 
@@ -434,12 +436,16 @@ public class RacerArea extends GameArea {
         }
         Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
         Music fire = ServiceLocator.getResourceService().getAsset(fireMusic, Music.class);
+        Music walk = ServiceLocator.getResourceService().getAsset(walkMusic, Music.class);
         music.setLooping(true);
         fire.setLooping(true);
+        walk.setLooping(true);
         music.setVolume(0.3f);
-        fire.setVolume(0.6f);
+        fire.setVolume(0.8f);
+        walk.setVolume(0.8f);
         music.play();
         fire.play();
+        walk.play();
     }
 
     private void loadAssets() {
