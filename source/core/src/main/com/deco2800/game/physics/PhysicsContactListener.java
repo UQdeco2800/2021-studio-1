@@ -24,20 +24,7 @@ public class PhysicsContactListener implements ContactListener {
             contact.getFixtureB());
     triggerEventOn(contact.getFixtureB(), "collisionStart",
             contact.getFixtureA());
-    Body bodyA = contact.getFixtureA().getBody();
-    Body bodyB = contact.getFixtureB().getBody();
-    BodyUserData powerUp;
-    powerUp = (BodyUserData) contact.getFixtureA().getBody().getUserData();
-
-    /*
-    if (bodyA.getUserData() == EntityTypes.SAMPLEPOWERUP) {
-      //if (bodyB.getUserData() == EntityTypes.PLAYER) {
-        powerUp = (BodyUserData) bodyB.getUserData();
-      //}
-    } else {
-        powerUp = (BodyUserData) bodyA.getUserData();
-    }
-     */
+    BodyUserData powerUp = (BodyUserData) contact.getFixtureA().getBody().getUserData();
     powerUp.entity.getEvents().trigger("disposePowerUp");
   }
 
@@ -58,7 +45,7 @@ public class PhysicsContactListener implements ContactListener {
   }
 
   private void triggerEventOn(Fixture fixture, String evt, Fixture otherFixture) {
-    BodyUserData userData = (BodyUserData) fixture.getUserData();
+    BodyUserData userData = (BodyUserData) fixture.getBody().getUserData();
 
     if (userData != null && userData.entity != null) {
       logger.debug("{} on entity {}", evt, userData.entity);
