@@ -26,6 +26,7 @@ public class PowerUpFactory {
 
         PhysicsUtils.setScaledCollider(powerUp, 0.5f, 0.4f);
         powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+        powerUp.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.SAMPLEPOWERUP);
 
         return powerUp;
     }
