@@ -378,6 +378,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/TouchAttackComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/TouchAttackComponent.html" title="class in com.deco2800.game.components">TouchAttackComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/TouchDisposeComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/TouchDisposeComponent.html" title="class in com.deco2800.game.components">TouchDisposeComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/Entity.html#create()">create()</a></span> - Method in class com.deco2800.game.entities.<a href="com/deco2800/game/entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></dt>
 <dd>
 <div class="block">Create the entity and start running.</div>
@@ -629,6 +631,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ui/UIPop.html#dispose()">dispose()</a></span> - Method in class com.deco2800.game.ui.<a href="com/deco2800/game/ui/UIPop.html" title="class in com.deco2800.game.ui">UIPop</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/EntityService.html#disposeAfterStep(com.deco2800.game.entities.Entity)">disposeAfterStep(Entity)</a></span> - Method in class com.deco2800.game.entities.<a href="com/deco2800/game/entities/EntityService.html" title="class in com.deco2800.game.entities">EntityService</a></dt>
+<dd>
+<div class="block">Adds entity to a list of entities which will be disposed of after the physics step is
+ completed.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/utils/math/Vector2Utils.html#DOWN">DOWN</a></span> - Static variable in class com.deco2800.game.utils.math.<a href="com/deco2800/game/utils/math/Vector2Utils.html" title="class in com.deco2800.game.utils.math">Vector2Utils</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/terrain/TerrainComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw(SpriteBatch)</a></span> - Method in class com.deco2800.game.areas.terrain.<a href="com/deco2800/game/areas/terrain/TerrainComponent.html" title="class in com.deco2800.game.areas.terrain">TerrainComponent</a></dt>
@@ -2266,6 +2273,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/TouchAttackComponent.html#%3Cinit%3E(short,float)">TouchAttackComponent(short, float)</a></span> - Constructor for class com.deco2800.game.components.<a href="com/deco2800/game/components/TouchAttackComponent.html" title="class in com.deco2800.game.components">TouchAttackComponent</a></dt>
 <dd>
 <div class="block">Create a component which attacks entities on collision, with knockback.</div>
+</dd>
+<dt><a href="com/deco2800/game/components/TouchDisposeComponent.html" title="class in com.deco2800.game.components"><span class="typeNameLink">TouchDisposeComponent</span></a> - Class in <a href="com/deco2800/game/components/package-summary.html">com.deco2800.game.components</a></dt>
+<dd>
+<div class="block">When this entity touches another component's hitbox, the other component will be disposed of
+ if it is an object or disabled if it is an NPC.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/TouchDisposeComponent.html#%3Cinit%3E()">TouchDisposeComponent()</a></span> - Constructor for class com.deco2800.game.components.<a href="com/deco2800/game/components/TouchDisposeComponent.html" title="class in com.deco2800.game.components">TouchDisposeComponent</a></dt>
+<dd>
+<div class="block">Create a component which disposes entities on collision finish</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/input/InputComponent.html#touchDown(float,float,int,int)">touchDown(float, float, int, int)</a></span> - Method in class com.deco2800.game.input.<a href="com/deco2800/game/input/InputComponent.html" title="class in com.deco2800.game.input">InputComponent</a></dt>
 <dd>&nbsp;</dd>
