@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.components.npc.DeathGiantAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
@@ -112,10 +113,13 @@ public class NPCFactory {
     wallOfDeath
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
-            .addComponent(new DeathGiantAnimationController());
+            .addComponent(new DeathGiantAnimationController())
+            .addComponent(new TouchDisposeComponent());
 
     wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
     wallOfDeath.setScale(10.5f,10.5f);
+
+    wallOfDeath.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
 
     return wallOfDeath;
   }
