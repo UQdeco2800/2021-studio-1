@@ -84,6 +84,13 @@ public class RacerArea extends GameArea {
         this.terrainFactory = terrainFactory;
     }
 
+
+    @Override
+    public void create(int xOffset) {
+        create();
+    }
+
+
     /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
     @Override
     public void create() {
