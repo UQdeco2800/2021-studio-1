@@ -68,13 +68,13 @@ public class PlayerFactory {
             Animation.PlayMode.LOOP);
     animator.addAnimation("jump-right", 1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("run-left", 0.1f,
+    animator.addAnimation("run-left", 0.2f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("run-right", 0.1f,
+    animator.addAnimation("run-right", 0.2f,
               Animation.PlayMode.LOOP);
-    animator.addAnimation("crouch-left", 0.1f,
+    animator.addAnimation("crouch-left", 0.2f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("crouch-right", 0.1f,
+    animator.addAnimation("crouch-right", 0.2f,
             Animation.PlayMode.LOOP);
 
     animator.addAnimation("attack-right", 1f,
@@ -87,7 +87,7 @@ public class PlayerFactory {
             Animation.PlayMode.LOOP);
 
     player.addComponent(animator);
-    PhysicsUtils.setScaledCircleCollider(player, 0.3f);
+    PhysicsUtils.setScaledCollider(player, 0.5f, 0.9f);
     player.getComponent(ColliderComponent.class).setDensity(1.0f);
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     //gravity scalar used to multiply gravity from physics engine, used 5 for

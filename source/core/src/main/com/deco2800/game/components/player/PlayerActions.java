@@ -84,22 +84,6 @@ public class PlayerActions extends Component {
    */
   private void applyJumpForce() {
     Body body = physicsComponent.getBody();
-    /*
-    if (moving) { //Checks if the player is moving and applies respective force
-      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        body.applyLinearImpulse(new Vector2(15f,  45f).scl(body.getMass()),
-                body.getPosition(),
-                true);
-      } else {
-        body.applyLinearImpulse(new Vector2(-15f,  45f).scl(body.getMass()),
-                body.getPosition(),
-                true);
-      }
-    } else { //Applies force when player is not moving
-
-    }
-     */
-
     body.applyLinearImpulse(new Vector2(0f,  40f).scl(body.getMass()), body.getWorldCenter(), true);
     falling = true;
     jumping = false;
@@ -111,39 +95,12 @@ public class PlayerActions extends Component {
   private void checkFalling() {
     Body body = physicsComponent.getBody();
     entity.getComponent(AnimationRenderComponent.class).stopAnimation();
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("jump-right");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("jump-left");
-    }
+    whichAnimation();
     if (physicsComponent.getBody().getLinearVelocity().y == 0) {
       falling = false;
       //Determine which animation to play
       entity.getComponent(AnimationRenderComponent.class).stopAnimation();
-      if (moving) {
-        entity.getComponent(AnimationRenderComponent.class)
-                .stopAnimation();
-        if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("run-right");
-        } else {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("run-left");
-        }
-        previousDirection = this.runDirection;
-      } else {
-        entity.getComponent(AnimationRenderComponent.class)
-                .stopAnimation();
-        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("still-right");
-        } else {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("still-left");
-        }
-      }
+      whichAnimation();
     } else {
       if (moving) { //Checks if the player is moving and applies respective force
         if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
@@ -175,23 +132,7 @@ public class PlayerActions extends Component {
     //Determine which animation to play
     entity.getComponent(AnimationRenderComponent.class)
             .stopAnimation();
-    if (!crouching) {
-      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("run-right");
-      } else {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("run-left");
-      }
-    } else {
-      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("crouch-right");
-      } else {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("crouch-left");
-      }
-    }
+    whichAnimation();
     previousDirection = this.runDirection.cpy();
   }
 
@@ -205,23 +146,7 @@ public class PlayerActions extends Component {
     //Determine which animation to play
     entity.getComponent(AnimationRenderComponent.class)
             .stopAnimation();
-    if (!crouching) {
-      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("still-right");
-      } else {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("still-left");
-      }
-    } else {
-      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("crouch-still-right");
-      } else {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("crouch-still-left");
-      }
-    }
+    whichAnimation();
   }
 
   void jump() {
@@ -230,13 +155,7 @@ public class PlayerActions extends Component {
     }
     //Determine which animation to play
     entity.getComponent(AnimationRenderComponent.class).stopAnimation();
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-          .startAnimation("jump-right");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-          .startAnimation("jump-left");
-    }
+    whichAnimation();
   }
 
   void crouch() {
@@ -245,14 +164,7 @@ public class PlayerActions extends Component {
             .scl(0.5F));
     //Determine which animation to play
     entity.getComponent(AnimationRenderComponent.class).stopAnimation();
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("crouch-still-right");
-
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("crouch-still-left");
-    }
+    whichAnimation();
   }
 
   void stopCrouching() {
@@ -263,13 +175,7 @@ public class PlayerActions extends Component {
     //Determine which animation to play
     entity.getComponent(AnimationRenderComponent.class)
             .stopAnimation();
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("still-right");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("still-left");
-    }
+    whichAnimation();
   }
 
   /**
@@ -287,6 +193,7 @@ public class PlayerActions extends Component {
               .startAnimation("attack-left");
     }
   }
+
   void stopAttack() {
     entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
             .scl(2F));
@@ -332,6 +239,54 @@ public class PlayerActions extends Component {
     } else {
       entity.getComponent(AnimationRenderComponent.class)
               .startAnimation("still-left");
+    }
+  }
+
+  void whichAnimation() {
+    if (jumping || falling) {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("jump-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("jump-left");
+      }
+    } else if (moving) {
+      if (crouching) {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+          entity.getComponent(AnimationRenderComponent.class)
+                  .startAnimation("crouch-right");
+        } else {
+          entity.getComponent(AnimationRenderComponent.class)
+                  .startAnimation("crouch-left");
+        }
+      } else {
+        if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+          entity.getComponent(AnimationRenderComponent.class)
+                  .startAnimation("run-right");
+        } else {
+          entity.getComponent(AnimationRenderComponent.class)
+                  .startAnimation("run-left");
+        }
+      }
+    } else {
+      if (crouching) {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+          entity.getComponent(AnimationRenderComponent.class)
+                  .startAnimation("crouch-still-right");
+        } else {
+          entity.getComponent(AnimationRenderComponent.class)
+                  .startAnimation("crouch-still-left");
+        }
+      } else {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+          entity.getComponent(AnimationRenderComponent.class)
+                  .startAnimation("still-right");
+        } else {
+          entity.getComponent(AnimationRenderComponent.class)
+                  .startAnimation("still-left");
+        }
+      }
     }
   }
 }
