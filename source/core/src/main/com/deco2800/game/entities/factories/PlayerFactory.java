@@ -94,8 +94,7 @@ public class PlayerFactory {
     // base character
     //vary based on how heavy we want characters to look
     player.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
-
-    player.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.PLAYER);
+    player.setType(EntityTypes.PLAYER);
 
     return player;
   }

@@ -143,9 +143,9 @@ public class NPCFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
             .addComponent(aiComponent);
-    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    PhysicsUtils.setScaledCollider(npc, 0.5f, 0.7f);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
-    npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
+    npc.setType(EntityTypes.ENEMY);
     return npc;
   }
 
@@ -166,7 +166,7 @@ public class NPCFactory {
 
     //set the NPC as a sensor so other object will not collide
     npc.getComponent(ColliderComponent.class).setSensor(true);
-    npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
+    npc.setType(EntityTypes.ENEMY);
     return npc;
   }
 

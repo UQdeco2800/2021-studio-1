@@ -1,6 +1,7 @@
 package com.deco2800.game.physics;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.deco2800.game.entities.factories.EntityTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +24,19 @@ public class PhysicsContactListener implements ContactListener {
             contact.getFixtureB());
     triggerEventOn(contact.getFixtureB(), "collisionStart",
             contact.getFixtureA());
-    BodyUserData powerUp = (BodyUserData) contact.getFixtureA().getBody().getUserData();
-    powerUp.entity.getEvents().trigger("disposePowerUp");
+
+    BodyUserData bodyA = (BodyUserData) contact.getFixtureA().getBody().getUserData();
+    BodyUserData bodyB = (BodyUserData) contact.getFixtureB().getBody().getUserData();
+
+    if(bodyA.entity.getType() == EntityTypes.SAMPLEPOWERUP) {
+      if (bodyB.entity.getType() == EntityTypes.PLAYER) {
+        bodyA.entity.getEvents().trigger("disposePowerUp");
+      }
+    } else if (bodyB.entity.getType() == EntityTypes.SAMPLEPOWERUP) {
+      if (bodyA.entity.getType() == EntityTypes.PLAYER) {
+        bodyB.entity.getEvents().trigger("disposePowerUp");
+      }
+    }
   }
 
   @Override
@@ -44,7 +56,7 @@ public class PhysicsContactListener implements ContactListener {
   }
 
   private void triggerEventOn(Fixture fixture, String evt, Fixture otherFixture) {
-    BodyUserData userData = (BodyUserData) fixture.getBody().getUserData();
+    BodyUserData userData = (BodyUserData) fixture.getUserData();
 
     if (userData != null && userData.entity != null) {
       logger.debug("{} on entity {}", evt, userData.entity);
