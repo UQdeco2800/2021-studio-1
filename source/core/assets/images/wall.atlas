@@ -1,89 +1,89 @@
-wallOfDeath.png
-size: 1872, 258
+death_giant.png
+size: 1920, 48
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-walk
-  rotate: false
-  xy: 1, 1
-  size: 154, 256
-  orig: 154, 256
-  offset: 0, 0
-  index: -1
-walk
-  rotate: false
-  xy: 157, 1
-  size: 154, 256
-  orig: 154, 256
-  offset: 0, 0
-  index: -1
-walk
-  rotate: false
-  xy: 313, 1
-  size: 154, 256
-  orig: 154, 256
-  offset: 0, 0
-  index: -1
-walk
-  rotate: false
-  xy: 469, 1
-  size: 154, 256
-  orig: 154, 256
-  offset: 0, 0
-  index: -1
-walk
-  rotate: false
-  xy: 625, 1
-  size: 154, 256
-  orig: 154, 256
-  offset: 0, 0
-  index: -1
-walk
-  rotate: false
-  xy: 781, 1
-  size: 154, 256
-  orig: 154, 256
-  offset: 0, 0
-  index: -1
-walk
-  rotate: false
-  xy: 937, 1
-  size: 154, 256
-  orig: 154, 256
-  offset: 0, 0
-  index: -1
-walk
-  rotate: false
-  xy: 1093, 1
-  size: 154, 256
-  orig: 154, 256
-  offset: 0, 0
-  index: -1
 default
   rotate: false
-  xy: 1249, 1
-  size: 154, 256
-  orig: 154, 256
+  xy: 0, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 1405, 1
-  size: 154, 256
-  orig: 154, 256
+  xy: 160, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 1561, 1
-  size: 154, 256
-  orig: 154, 256
+  xy: 320, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 1717, 1
-  size: 154, 256
-  orig: 154, 256
+  xy: 480, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 640, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 800, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 960, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1120, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1280, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1440, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1600, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1760, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1
