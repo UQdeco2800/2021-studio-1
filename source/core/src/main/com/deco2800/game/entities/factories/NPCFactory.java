@@ -127,6 +127,29 @@ public class NPCFactory {
     return wallOfDeath;
   }
 
+  public static Entity createDeathGiant(Entity target) {
+        Entity deathGiant = createWallNPC(target);
+        BaseEntityConfig config = configs.deathGiant;
+    
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/deathGiant.atlas", TextureAtlas.class));
+            animator.addAnimation("walk", 0.1f, Animation.PlayMode.LOOP);
+    
+            deathGiant
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new DeathGiantAnimationController());
+    
+        deathGiant.getComponent(AnimationRenderComponent.class).scaleEntity();
+        deathGiant.setScale(11f,11f);
+    
+        deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+    
+        return deathGiant;
+      }
+
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    * @return entity

@@ -54,12 +54,12 @@ public class RacerArea extends GameArea {
         "images/iso_grass_1.png",
         "images/iso_grass_2.png",
         "images/iso_grass_3.png",
-        "images/death_giant.png",
+        "images/deathGiant.png",
         "images/powerup.png"
     };
     private static final String[] forestTextureAtlases = {
         "images/terrain_iso_grass.atlas", "images/ghostKing" +
-        ".atlas", "images/odin.atlas", "images/wall.atlas", "images/skeleton.atlas"
+        ".atlas", "images/odin.atlas", "images/deathGiant.atlas", "images/wall.atlas", "images/skeleton.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String mainMusic = "sounds/main.mp3";
@@ -74,6 +74,8 @@ public class RacerArea extends GameArea {
     private Entity player;
 
     private Entity wallOfDeath;
+
+    private Entity deathGiant;
 
     private final TerrainFactory terrainFactory;
 
@@ -93,6 +95,9 @@ public class RacerArea extends GameArea {
         displayUI();
 
         spawnTerrain();
+
+        spawnDeathGiant();
+        
         spawnWallOfDeath();
 
         try {
@@ -434,6 +439,12 @@ public class RacerArea extends GameArea {
         GridPoint2 leftPos = new GridPoint2(-40, 14);
         wallOfDeath = NPCFactory.createWallOfDeath(player);
         spawnEntityAt(wallOfDeath, leftPos, true, true);
+    }
+
+    private void spawnDeathGiant() {
+        GridPoint2 leftPos2 = new GridPoint2(-17, 15);
+        deathGiant = NPCFactory.createDeathGiant(player);
+        spawnEntityAt(deathGiant, leftPos2, true, true);
     }
 
     /**
