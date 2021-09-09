@@ -34,7 +34,6 @@ public class RacerArea extends GameArea {
     private static final int LANE_3 = 21;
     private static final int[] LANES = new int[] { LANE_0, LANE_1, LANE_2, LANE_3 };
     private static final float WALL_WIDTH = 0.1f;
-
     private static final String[] forestTextures = {
         "images/box_boy_leaf.png",
         "images/floor.png",
