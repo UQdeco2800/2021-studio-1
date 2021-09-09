@@ -135,7 +135,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/deathGiant.atlas", TextureAtlas.class));
-            animator.addAnimation("walk", 0.1f, Animation.PlayMode.LOOP);
+            animator.addAnimation("walk", 0.12f, Animation.PlayMode.LOOP);
     
             deathGiant
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))

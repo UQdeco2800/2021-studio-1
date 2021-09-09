@@ -36,6 +36,7 @@ public class RacerArea extends GameArea {
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
         "images/box_boy_leaf.png",
+        "images/deathGiant.png",
         "images/floor.png",
         "images/platform_gradient.png",
         "images/platform_no_gradient.png",
@@ -54,12 +55,12 @@ public class RacerArea extends GameArea {
         "images/iso_grass_1.png",
         "images/iso_grass_2.png",
         "images/iso_grass_3.png",
-        "images/deathGiant.png",
+        "images/wallOfDeath.png",
         "images/powerup.png"
     };
     private static final String[] forestTextureAtlases = {
         "images/terrain_iso_grass.atlas", "images/ghostKing" +
-        ".atlas", "images/odin.atlas", "images/deathGiant.atlas", "images/wall.atlas", "images/skeleton.atlas"
+        ".atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String mainMusic = "sounds/main.mp3";
@@ -73,9 +74,9 @@ public class RacerArea extends GameArea {
 
     private Entity player;
 
-    private Entity wallOfDeath;
-
     private Entity deathGiant;
+
+    private Entity wallOfDeath;
 
     private final TerrainFactory terrainFactory;
 
@@ -445,7 +446,7 @@ public class RacerArea extends GameArea {
      * This spawns the Death Giant in front of the Wall of Death
      */
     private void spawnDeathGiant() {
-        GridPoint2 leftPos2 = new GridPoint2(-17, 15);
+        GridPoint2 leftPos2 = new GridPoint2(-15, 15);
         deathGiant = NPCFactory.createDeathGiant(player);
         spawnEntityAt(deathGiant, leftPos2, true, true);
     }
