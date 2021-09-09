@@ -97,7 +97,7 @@ public class RacerArea extends GameArea {
         spawnTerrain();
 
         spawnDeathGiant();
-        
+
         spawnWallOfDeath();
 
         try {
@@ -433,7 +433,7 @@ public class RacerArea extends GameArea {
     }
 
     /**
-     * This spawns the Death Giant Wall of Death
+     * This spawns the Wall of Death
      */
     private void spawnWallOfDeath() {
         GridPoint2 leftPos = new GridPoint2(-40, 14);
@@ -441,6 +441,9 @@ public class RacerArea extends GameArea {
         spawnEntityAt(wallOfDeath, leftPos, true, true);
     }
 
+    /**
+     * This spawns the Death Giant in front of the Wall of Death
+     */
     private void spawnDeathGiant() {
         GridPoint2 leftPos2 = new GridPoint2(-17, 15);
         deathGiant = NPCFactory.createDeathGiant(player);
