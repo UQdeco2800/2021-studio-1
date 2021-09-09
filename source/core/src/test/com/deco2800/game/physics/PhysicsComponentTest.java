@@ -63,4 +63,17 @@ class PhysicsComponentTest {
     entity.setPosition(newPos);
     verify(body).setTransform(eq(newPos), anyFloat());
   }
+
+  @Test
+  void shouldSetGravityScaler(){
+    Entity entity = new Entity();
+    PhysicsComponent component = new PhysicsComponent();
+    entity.addComponent(component);
+    entity.create();
+
+    entity.getComponent(PhysicsComponent.class).setGravityScale(5f);
+    verify(body).setGravityScale(5f);
+    when(body.getGravityScale()).thenReturn(5f);
+    assertEquals(5f,entity.getComponent(PhysicsComponent.class).getGravityScale());
+  }
 }
