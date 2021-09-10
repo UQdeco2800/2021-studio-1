@@ -27,16 +27,8 @@ public class PhysicsContactListener implements ContactListener {
 
     BodyUserData bodyA = (BodyUserData) contact.getFixtureA().getBody().getUserData();
     BodyUserData bodyB = (BodyUserData) contact.getFixtureB().getBody().getUserData();
-
-    if(bodyA.entity.getType() == EntityTypes.SAMPLEPOWERUP) {
-      if (bodyB.entity.getType() == EntityTypes.PLAYER) {
-        bodyA.entity.getEvents().trigger("disposePowerUp");
-      }
-    } else if (bodyB.entity.getType() == EntityTypes.SAMPLEPOWERUP) {
-      if (bodyA.entity.getType() == EntityTypes.PLAYER) {
-        bodyB.entity.getEvents().trigger("disposePowerUp");
-      }
-    }
+    checkPowerUpCollision(bodyA, bodyB);
+    checkProjectileCollision(bodyA, bodyB);
   }
 
   @Override
@@ -61,6 +53,30 @@ public class PhysicsContactListener implements ContactListener {
     if (userData != null && userData.entity != null) {
       logger.debug("{} on entity {}", evt, userData.entity);
       userData.entity.getEvents().trigger(evt, fixture, otherFixture);
+    }
+  }
+
+  private void checkPowerUpCollision(BodyUserData bodyA, BodyUserData bodyB) {
+    if(bodyA.entity.getType() == EntityTypes.SAMPLEPOWERUP) {
+      if (bodyB.entity.getType() == EntityTypes.PLAYER) {
+        bodyA.entity.getEvents().trigger("disposePowerUp");
+      }
+    } else if (bodyB.entity.getType() == EntityTypes.SAMPLEPOWERUP) {
+      if (bodyA.entity.getType() == EntityTypes.PLAYER) {
+        bodyB.entity.getEvents().trigger("disposePowerUp");
+      }
+    }
+  }
+
+  private void checkProjectileCollision(BodyUserData bodyA, BodyUserData bodyB) {
+    if(bodyA.entity.getType() == EntityTypes.PROJECTILE) {
+      if (bodyB.entity.getType() == EntityTypes.PLAYER) {
+        bodyA.entity.flagDelete();
+      }
+    } else if (bodyB.entity.getType() == EntityTypes.PROJECTILE) {
+      if (bodyA.entity.getType() == EntityTypes.PLAYER) {
+        bodyB.entity.flagDelete();
+      }
     }
   }
 }
