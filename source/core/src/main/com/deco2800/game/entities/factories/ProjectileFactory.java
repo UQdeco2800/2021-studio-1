@@ -13,42 +13,17 @@ import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
 public class ProjectileFactory {
-
     /**
-     * Creates a spear for lane 1, it moves across the screen from right to left finishing
-     * in lane 1
-     * @return a spear entity
+     * Creates a spear that moves across the screen from right to left finishing at the given
+     * height.
+     *
+     * @param height The height the spear should travel along
+     * @return spear entity
      */
-    public static Entity createSpearLane_1() {
-
-        Entity spearLane_1 = createBaseProjectile();
-        spearLane_1.getComponent(PhysicsMovementComponent.class).setTarget(new Vector2(0, 6f));
-        return spearLane_1;
-    }
-
-    /**
-     * Creates a spear for lane 2, it moves across the screen from right to left finishing
-     * in lane 2
-     * @return a spear entity
-     */
-    public static Entity createSpearLane_2() {
-
-        Entity spearLane_2 = createBaseProjectile();
-        spearLane_2.getComponent(PhysicsMovementComponent.class).setTarget(new Vector2(0, 8.5f));
-        return spearLane_2;
-    }
-
-    /**
-     * Creates a spear for lane 2, it moves across the screen from right to left finishing
-     * in lane 2
-     * @return a spear entity
-     */
-    public static Entity createSpearLane_3() {
-
-        Entity spearLane_3 = createBaseProjectile();
-
-        spearLane_3.getComponent(PhysicsMovementComponent.class).setTarget(new Vector2(0, 11.5f));
-        return spearLane_3;
+    public static Entity createSpearAtHeight(float height) {
+        Entity spear = createBaseProjectile();
+        spear.getComponent(PhysicsMovementComponent.class).setTarget(new Vector2(0, height));
+        return spear;
     }
 
     /**
@@ -69,6 +44,7 @@ public class ProjectileFactory {
         baseProjectile.getComponent(TextureRenderComponent.class).scaleEntity();
         baseProjectile.setScale(1f, 0.5f);
         PhysicsUtils.setScaledCollider(baseProjectile, 1f, 1f);
+        baseProjectile.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.PROJECTILE);
         return baseProjectile;
     }
 }

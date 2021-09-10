@@ -5,11 +5,10 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.areas.terrain.TerrainFactory.TerrainType;
+import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.NPCFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
-import com.deco2800.game.entities.factories.ProjectileFactory;
+import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.events.listeners.EventListener1;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import java.io.*;
@@ -28,25 +27,24 @@ public class RacerArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(RacerArea.class);
     private static final int NUM_SKELETONS = 2;
     private static final int NUM_WOLF = 2;
-    private static final int NUM_SPEARS = 3;
+    private static final int NUM_SPEARS = 1;
     private static final int LANE_0 = 4;
     private static final int LANE_1 = 9;
     private static final int LANE_2 = 15;
     private static final int LANE_3 = 21;
-    private static final int[] LANES = new int[]{LANE_0, LANE_1, LANE_2, LANE_3};
+    private static final int[] LANES = new int[] { LANE_0, LANE_1, LANE_2, LANE_3 };
     private static final float WALL_WIDTH = 0.1f;
     private static final String[] forestTextures = {
         "images/box_boy_leaf.png",
+        "images/deathGiant.png",
         "images/floor.png",
         "images/platform_gradient.png",
         "images/platform_no_gradient.png",
         "images/tree.png",
         "images/skeleton.png",
-        "images/wolf_1.png",
         "images/Spear_1.png",
         "images/Rock_1.png",
         "images/Spike_1.png",
-        "images/ghost_king.png",
         "images/ghost_1.png",
         "images/grass_1.png",
         "images/grass_2.png",
@@ -57,19 +55,28 @@ public class RacerArea extends GameArea {
         "images/iso_grass_1.png",
         "images/iso_grass_2.png",
         "images/iso_grass_3.png",
-            "images/death_giant.png"
+        "images/wallOfDeath.png",
+        "images/powerup.png"
     };
     private static final String[] forestTextureAtlases = {
-        "images/terrain_iso_grass.atlas", "images/ghost.atlas", "images/ghostKing" +
-        ".atlas", "images/odin.atlas", "images/wall.atlas", "images/skeleton.atlas"
+        "images/terrain_iso_grass.atlas", "images/ghostKing" +
+        ".atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String mainMusic = "sounds/main.mp3";
     private static final String townMusic = "sounds/town.mp3";
     private static final String raiderMusic = "sounds/raider.mp3";
-    private static final String[] forestMusic = {mainMusic, townMusic, raiderMusic};
+    // sound effect of fire/burning behind giant *fwoom* *crackle*
+    private static final String fireMusic = "sounds/fire.mp3";
+    // sound effects of giant walking (still to be tested)
+    private static final String walkMusic = "sounds/walk.mp3";
+    private static final String[] forestMusic = { mainMusic, townMusic, raiderMusic, fireMusic, walkMusic };
 
     private Entity player;
+
+    private Entity deathGiant;
+
+    private Entity wallOfDeath;
 
     private final TerrainFactory terrainFactory;
 
@@ -78,7 +85,10 @@ public class RacerArea extends GameArea {
         this.terrainFactory = terrainFactory;
     }
 
-    /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
+    /**
+     * Create the game area, including terrain, static entities (trees), dynamic
+     * entities (player)
+     */
     @Override
     public void create() {
         loadAssets();
@@ -86,6 +96,11 @@ public class RacerArea extends GameArea {
         displayUI();
 
         spawnTerrain();
+
+        spawnDeathGiant();
+
+        spawnWallOfDeath();
+
         try {
             spawnWorld();
         } catch (IOException ex) {
@@ -95,16 +110,11 @@ public class RacerArea extends GameArea {
             // BRUUUUUUUUUH
             app.exit();
         }
-        spawnWallOfDeath();
-
-        // spawnRocks();
-        // spawnSpikes();
 
         spawnSkeletons();
         spawnWolf();
         spawnSpears();
-
-        //player = spawnPlayer();
+        spawnPowerUp();
 
         playMusic();
     }
@@ -115,13 +125,12 @@ public class RacerArea extends GameArea {
         spawnEntity(ui);
     }
 
-
-    private void spawnWorld() throws IOException{
-        // URL url = getClass().getResource("com/deco2800/game/entities/configs/LVL1.txt");
+    private void spawnWorld() throws IOException {
+        // URL url =
+        // getClass().getResource("com/deco2800/game/entities/configs/LVL1.txt");
         // spawnPlatform(1, LANE_0, 3);
         // spawnPlatform(1, LANE_1, 4);
         // spawnPlatform(1, LANE_2, 5);
-
 
         File levelFile = new File("configs/LVL1.txt");
         FileReader fr = new FileReader(levelFile);
@@ -134,36 +143,34 @@ public class RacerArea extends GameArea {
                 switch ((line.charAt(i))) {
                     case 'P':
                         // PLATFORM
-                        spawnPlatform(1, LANES[Math.round(lane/2)], (i*3));
+                        spawnPlatform(1, LANES[Math.round(lane / 2)], (i * 3));
                         break;
                     case 'F':
                         // FLOOR
-                        spawnFloor(1, LANES[Math.round(lane/2)], (i*3));
-                        spawnFloor(1, LANES[Math.round(lane/2)], (i*3)+1);
-                        spawnFloor(1, LANES[Math.round(lane/2)], (i*3)+2);
+                        spawnFloor(1, LANES[Math.round(lane / 2)], (i * 3));
+                        spawnFloor(1, LANES[Math.round(lane / 2)], (i * 3) + 1);
+                        spawnFloor(1, LANES[Math.round(lane / 2)], (i * 3) + 2);
                         break;
                     case 'A':
-                        //A for Avatar :)
-                        player = spawnPlayer(LANES[Math.round(lane/2)]+1, (i*3)+1);
+                        // A for Avatar :)
+                        player = spawnPlayer(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
                         break;
                     case 'S':
-                        //SPIKE
-                        spawnSpike(LANES[Math.round(lane/2)]+1, (i*3)+1);
+                        // SPIKE
+                        spawnSpike(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
                         break;
                     case 'R':
-                        //ROCK
-                        spawnRock(LANES[Math.round(lane/2)]+1, (i*3)+1);
+                        // ROCK
+                        spawnRock(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
                     default:
                         break;
                 }
             }
-            lane = lane -1;
+            lane = lane - 1;
         }
         br.close();
         fr.close();
     }
-
-
 
     private void spawnTerrain() {
         // Background terrain
@@ -176,37 +183,37 @@ public class RacerArea extends GameArea {
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
         // Left
         // spawnEntityAt(
-        //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
+        // ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO,
+        // false, false);
         // Right
         // spawnEntityAt(
-        //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        //     new GridPoint2(tileBounds.x, 0),
-        //     false,
-        //     false);
+        // ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
+        // new GridPoint2(tileBounds.x, 0),
+        // false,
+        // false);
         // Top
-        spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
-            new GridPoint2(0, tileBounds.y),
-            false,
-            false);
+        spawnEntityAt(ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), new GridPoint2(0, tileBounds.y), false,
+                false);
         // Bottom
-        spawnEntityAt(
-            ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
-
+        spawnEntityAt(ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
     }
 
-
     /**
-     * Spawn a platform that is length long with height given by lane and x coordinate given by xCord.
+     * Spawn a platform that is length long with height given by lane and x
+     * coordinate given by xCord.
      *
      * @param length the length of the platform to be made
-     * @param lane   the y coordinate of the platform in the game area. It is preferable but not
-     *               required to use the variables LANE_0, LANE_1, LANE_2, ... for this value
-     * @param xCord  the x coordinate of this platform in the game area's grid system
+     * @param lane   the y coordinate of the platform in the game area. It is
+     *               preferable but not required to use the variables LANE_0,
+     *               LANE_1, LANE_2, ... for this value
+     * @param xCord  the x coordinate of this platform in the game area's grid
+     *               system
      */
     private void spawnPlatform(int length, int lane, int xCord) {
-        // In later implementations, length should create a platform that is (length * platform unit
-        // length) long. But at the moment it just creates multiple platforms stacked next to each
+        // In later implementations, length should create a platform that is (length *
+        // platform unit
+        // length) long. But at the moment it just creates multiple platforms stacked
+        // next to each
         // other.
         Entity platformGradient = ObstacleFactory.createPlatformWithGradient();
         lane = Math.round(lane - platformGradient.getScale().y);
@@ -214,30 +221,38 @@ public class RacerArea extends GameArea {
         spawnEntityAt(platformGradient, platformPos1, false, false);
         for (int i = 0; i < length; i++) {
             Entity platform = ObstacleFactory.createPlatform();
-            // Make the  lane refer to the height of the top of the platform, not the bottom. This breaks
-            // when the scale height is set to 1 for some reason, as the scale height does not correlate
+            // Make the lane refer to the height of the top of the platform, not the bottom.
+            // This breaks
+            // when the scale height is set to 1 for some reason, as the scale height does
+            // not correlate
             // to actual height.
-            GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * platform.getScale().x) * 2), Math.round(lane - platform.getScale().y));
+            GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * platform.getScale().x) * 2),
+                    Math.round(lane - platform.getScale().y));
             spawnEntityAt(platform, pos, false, false);
         }
     }
 
     /**
-     * Spawn a floor that is length long with height given by lane and x coordinate given by xCord.
+     * Spawn a floor that is length long with height given by lane and x coordinate
+     * given by xCord.
      *
      * @param length the length of the floor to be made
-     * @param lane   the y coordinate of the floor in the game area. It is preferable but not
-     *               required to use the variables LANE_0, LANE_1, LANE_2, ... for this value
+     * @param lane   the y coordinate of the floor in the game area. It is
+     *               preferable but not required to use the variables LANE_0,
+     *               LANE_1, LANE_2, ... for this value
      * @param xCord  the x coordinate of this floor in the game area's grid system
      */
     private void spawnFloor(int length, int lane, int xCord) {
 
         for (int i = 0; i < length; i++) {
-            // Make the  lane refer to the height of the top of the platform, not the bottom. This breaks
-            // when the scale height is set to 1 for some reason, as the scale height does not correlate
+            // Make the lane refer to the height of the top of the platform, not the bottom.
+            // This breaks
+            // when the scale height is set to 1 for some reason, as the scale height does
+            // not correlate
             // to actual height.
             Entity floor = ObstacleFactory.createFloor();
-            GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * floor.getScale().x) * 2), Math.round(lane - floor.getScale().y));
+            GridPoint2 pos = new GridPoint2(Math.round(xCord + (i * floor.getScale().x) * 2),
+                    Math.round(lane - floor.getScale().y));
             spawnEntityAt(floor, pos, false, false);
         }
     }
@@ -280,16 +295,17 @@ public class RacerArea extends GameArea {
             spawnEntityAt(rock, randomPos, false, false);
         }
 
-//        // floor
-//        for (int i = 0; i < 2; i++) {
-//            GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
-//            Entity rock = ObstacleFactory.createRock();
-//            spawnEntityAt(rock, randomPos, false, false);
-//        }
+        // // floor
+        // for (int i = 0; i < 2; i++) {
+        // GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
+        // Entity rock = ObstacleFactory.createRock();
+        // spawnEntityAt(rock, randomPos, false, false);
+        // }
     }
 
     /**
-     * Spawns the spikes for the game, they can only spawn on the floor or in lane 2.
+     * Spawns the spikes for the game, they can only spawn on the floor or in lane
+     * 2.
      */
     private void spawnSpikes() {
         GridPoint2 floorMin = new GridPoint2(1, 5);
@@ -297,12 +313,12 @@ public class RacerArea extends GameArea {
         GridPoint2 middleMin = new GridPoint2(10, 16);
         GridPoint2 middleMax = new GridPoint2(20, 16);
 
-//        // floor
-//        for (int i = 0; i < 1; i++) {
-//            GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
-//            Entity spikes = ObstacleFactory.createSpikes();
-//            spawnEntityAt(spikes, randomPos, false, false);
-//        }
+        // // floor
+        // for (int i = 0; i < 1; i++) {
+        // GridPoint2 randomPos = RandomUtils.random(floorMin, floorMax);
+        // Entity spikes = ObstacleFactory.createSpikes();
+        // spawnEntityAt(spikes, randomPos, false, false);
+        // }
 
         // middle platform
         for (int i = 0; i < 1; i++) {
@@ -310,6 +326,16 @@ public class RacerArea extends GameArea {
             Entity spikes = ObstacleFactory.createSpikes();
             spawnEntityAt(spikes, randomPos, false, false);
         }
+    }
+
+    private void spawnPowerUp() {
+        GridPoint2 bottomRightMin = new GridPoint2(21, 10);
+        GridPoint2 bottomRightMax = new GridPoint2(27, 10);
+        GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
+        GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
+        GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomRightMin);
+        Entity powerUp = PowerUpFactory.createPowerUp();
+        spawnEntityAt(powerUp, randomPos, false, false);
     }
 
     private Entity spawnPlayer(int lane, int xCord) {
@@ -334,11 +360,11 @@ public class RacerArea extends GameArea {
         GridPoint2 minPos = new GridPoint2(0, 0);
         GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
 
-//        for (int i = 0; i < NUM_SKELETONS; i++) {
-//            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-//            Entity skeleton = NPCFactory.createSkeleton(player);
-//            spawnEntityAt(skeleton, randomPos, true, true);
-//        }
+        // for (int i = 0; i < NUM_SKELETONS; i++) {
+        // GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
+        // Entity skeleton = NPCFactory.createSkeleton(player);
+        // spawnEntityAt(skeleton, randomPos, true, true);
+        // }
         // Bottom right platforms
         for (int i = 0; i < 1; i++) {
             GridPoint2 randomPos = RandomUtils.random(bottomRightMin, bottomRightMax);
@@ -356,7 +382,7 @@ public class RacerArea extends GameArea {
     /**
      * This spawns a wolf on the base floor.
      */
-        private void spawnWolf() {
+    private void spawnWolf() {
         GridPoint2 floor = new GridPoint2(27, 8);
 
         for (int i = 0; i < 1; i++) {
@@ -369,60 +395,71 @@ public class RacerArea extends GameArea {
      * This spawns the spears in each of the three different lanes.
      */
     private void spawnSpears() {
-        spawnSpear(ProjectileFactory.createSpearLane_1(), new GridPoint2(60, 12));
-        spawnSpear(ProjectileFactory.createSpearLane_2(), new GridPoint2(40, 17));
-        spawnSpear(ProjectileFactory.createSpearLane_3(), new GridPoint2(80, 23));
-        spawnSpear(ProjectileFactory.createSpearLane_1(), new GridPoint2(100, 12));
-        spawnSpear(ProjectileFactory.createSpearLane_2(), new GridPoint2(120, 17));
-        spawnSpear(ProjectileFactory.createSpearLane_3(), new GridPoint2(100, 23));
+        spawnSpear(1, new GridPoint2(60, 12));
+        spawnSpear(2, new GridPoint2(40, 17));
+        spawnSpear(3, new GridPoint2(80, 23));
+        spawnSpear(1, new GridPoint2(100, 12));
+        spawnSpear(2, new GridPoint2(120, 17));
+        spawnSpear(3, new GridPoint2(100, 23));
     }
 
     /**
-     * This creates the spears to be spawned in their respective lanes
-     * @param spearLane the lane the spear is assigned to
+     * This creates spears to be spawned in their respective lanes. The number of
+     * spears spawned is given by NUM_SPEARS.
+     *
+     * @param spearLane     the lane the spear is assigned to, must be in range [1,
+     *                      3]
      * @param startLocation the starting location for the spear
      */
-    private void spawnSpear(Entity spearLane, GridPoint2 startLocation) {
-
+    private void spawnSpear(int spearLane, GridPoint2 startLocation) {
+        float lane;
+        switch (spearLane) {
+            case 1:
+                lane = 6f;
+                break;
+            case 2:
+                lane = 8.5f;
+                break;
+            case 3:
+                lane = 11.5f;
+                break;
+            default:
+                logger.error("Attempt at spawning spear in unknown lane {}, will be ignored", spearLane);
+                return;
+        }
         for (int i = 0; i < NUM_SPEARS; i++) {
-
-            spawnEntityAt(spearLane, startLocation, true, true);
-
+            Entity spear = ProjectileFactory.createSpearAtHeight(lane);
+            spawnEntityAt(spear, startLocation, true, true);
         }
     }
-    /*
-    private void spawnGhosts() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-
-        for (int i = 0; i < NUM_GHOSTS; i++) {
-            GridPoint2 randomPos = RandomUtils.random(minPos, maxPos);
-            Entity ghost = NPCFactory.createGhost(player);
-            spawnEntityAt(ghost, randomPos, true, true);
-        }
-    }
-
-    private void spawnGhostKing() {
-        GridPoint2 minPos = new GridPoint2(0, 0);
-        GridPoint2 maxPos = terrain.getMapBounds(0).sub(2, 2);
-    */
 
     /**
-     * This spawns the Death Giant Wall of Death
+     * This spawns the Wall of Death
      */
     private void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-2,15);
-        Entity wallOfDeath = NPCFactory.createWallOfDeath(player);
+        GridPoint2 leftPos = new GridPoint2(-40, 14);
+        wallOfDeath = NPCFactory.createWallOfDeath(player);
         spawnEntityAt(wallOfDeath, leftPos, true, true);
     }
 
+    /**
+     * This spawns the Death Giant in front of the Wall of Death
+     */
+    private void spawnDeathGiant() {
+        GridPoint2 leftPos2 = new GridPoint2(-15, 15);
+        deathGiant = NPCFactory.createDeathGiant(player);
+        spawnEntityAt(deathGiant, leftPos2, true, true);
+    }
 
+    /**
+     * Play all SFX in the game.
+     */
     private void playMusic() {
 
         String witchMusic;
 
         Random rand = new Random();
-        switch(rand.nextInt(3)) {
+        switch (rand.nextInt(3)) {
             case 1:
                 witchMusic = townMusic;
                 break;
@@ -432,11 +469,18 @@ public class RacerArea extends GameArea {
             default:
                 witchMusic = mainMusic;
         }
-
         Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
+        Music fire = ServiceLocator.getResourceService().getAsset(fireMusic, Music.class);
+        Music walk = ServiceLocator.getResourceService().getAsset(walkMusic, Music.class);
         music.setLooping(true);
+        fire.setLooping(true);
+        walk.setLooping(true);
         music.setVolume(0.3f);
+        fire.setVolume(0.8f);
+        walk.setVolume(0.8f);
         music.play();
+        fire.play();
+        walk.play();
     }
 
     private void loadAssets() {

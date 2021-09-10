@@ -1,6 +1,7 @@
 package com.deco2800.game.components.maingame;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
@@ -45,6 +46,9 @@ public class MainGameActions extends Component {
     public void onPause() {
 
         Sound pauseSound;
+        Music walkSound = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
+        walkSound.setLooping(true);
+        walkSound.setVolume(0.8f);
 
         if (game.paused) {
             ServiceLocator.getTimeSource().setTimeScale(1f);
@@ -52,6 +56,7 @@ public class MainGameActions extends Component {
             popUp.dispose();
             //resume sound
             pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+            walkSound.play();
         } else {
             ServiceLocator.getTimeSource().setTimeScale(0f);
 
@@ -64,6 +69,7 @@ public class MainGameActions extends Component {
             ServiceLocator.getEntityService().register(popUp);
             //pause sound
             pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+            walkSound.pause();
         }
         game.paused = !game.paused;
         pauseSound.play();

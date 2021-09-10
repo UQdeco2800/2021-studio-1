@@ -45,6 +45,7 @@ public class MoveRightTask extends DefaultTask implements PriorityTask {
   @Override
   public void update() {
     if (currentTask.getStatus() != Status.ACTIVE) {
+        currentTask.start();
         startMoving();
     }
     currentTask.update();
