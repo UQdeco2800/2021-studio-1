@@ -26,8 +26,8 @@ public class MainGameActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
-    entity.getEvents().addListener("pause", this::onPause);
-    entity.getEvents().addListener("score screen", this::showScore);
+    entity.getEvents().addListener("Pause Menu", this::onPause);
+    entity.getEvents().addListener("Score Screen", this::showScore);
   }
 
   /**
@@ -52,7 +52,6 @@ public class MainGameActions extends Component {
 
         if (game.paused) {
             ServiceLocator.getTimeSource().setTimeScale(1f);
-            System.out.println("paused");
             popUp.dispose();
             //resume sound
             pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
