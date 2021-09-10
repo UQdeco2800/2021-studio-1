@@ -323,7 +323,7 @@ public class RacerArea extends GameArea {
 
     private Entity spawnPlayer(int lane, int xCord) {
         Entity newPlayer = PlayerFactory.createPlayer();
-        GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - newPlayer.getScale().y));
+        GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - newPlayer.getScale().y) + 1);
         spawnEntityAt(newPlayer, pos, true, false);
         return newPlayer;
     }
