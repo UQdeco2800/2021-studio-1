@@ -2,7 +2,10 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.CombatStatsComponent;
@@ -21,6 +24,8 @@ import com.deco2800.game.physics.components.*;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
+
+import java.awt.*;
 
 /**
  * Factory to create a player entity.
@@ -87,7 +92,8 @@ public class PlayerFactory {
             Animation.PlayMode.LOOP);
 
     player.addComponent(animator);
-    PhysicsUtils.setScaledCollider(player, 0.5f, 0.9f);
+    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.3f, 0.9f));
+    //player.getComponent(ColliderComponent.class).setShape(new PolygonShape());
     player.getComponent(ColliderComponent.class).setDensity(1.0f);
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     //gravity scalar used to multiply gravity from physics engine, used 5 for

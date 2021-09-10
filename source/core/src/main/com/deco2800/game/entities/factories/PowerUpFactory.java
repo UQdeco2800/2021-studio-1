@@ -7,8 +7,6 @@ import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 
 import com.deco2800.game.entities.Entity;
 
-import com.deco2800.game.events.listeners.EventListener1;
-import com.deco2800.game.physics.PhysicsContactListener;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
