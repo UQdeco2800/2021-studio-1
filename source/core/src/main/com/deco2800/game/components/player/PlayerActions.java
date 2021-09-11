@@ -27,6 +27,9 @@ public class PlayerActions extends Component {
 
   private Vector2 runDirection = Vector2.Zero.cpy();
 
+  //private final float runAnimationlength = 0.5f;
+  private float lastRunAnimationTime;
+
   public static boolean moving = false;
   private boolean jumping = false;
   private boolean falling = false;
@@ -72,7 +75,8 @@ public class PlayerActions extends Component {
 
   private void updateRunningSpeed() {
     Body body = physicsComponent.getBody();
-    if (physicsComponent.getBody().getLinearVelocity().y != 0) {
+    float currentYVelocity = physicsComponent.getBody().getLinearVelocity().y;
+    if (currentYVelocity > 0.01f || currentYVelocity < -0.01f) {
       falling = true;
     }
     Vector2 velocity = body.getLinearVelocity();
@@ -126,7 +130,8 @@ public class PlayerActions extends Component {
       entity.getComponent(AnimationRenderComponent.class)
               .startAnimation("jump-left");
     }
-    if (physicsComponent.getBody().getLinearVelocity().y == 0) {
+    float currentYVelocity = physicsComponent.getBody().getLinearVelocity().y;
+    if (currentYVelocity >= -0.01f  && currentYVelocity <= 0.01f ) {
       falling = false;
       //Determine which animation to play
       entity.getComponent(AnimationRenderComponent.class).stopAnimation();
@@ -184,13 +189,13 @@ public class PlayerActions extends Component {
     entity.getComponent(AnimationRenderComponent.class)
             .stopAnimation();
     if (!crouching) {
-      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("run-right");
-      } else {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("run-left");
-      }
+        if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("run-right");
+        } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("run-left");
+        }
     } else {
       if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
         entity.getComponent(AnimationRenderComponent.class)
