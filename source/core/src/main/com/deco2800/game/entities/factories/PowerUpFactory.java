@@ -13,63 +13,65 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
 public class PowerUpFactory {
-    // Edit for lightning power up.
+    /**
+     * Create a lightning power up
+     *
+     * @return lightning power up
+     */
     public static Entity createLightningPowerUp() {
-        Entity powerUp =
-            new Entity()
-                .addComponent(new TextureRenderComponent("images/powerup-lightning.png"))
-                .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent())
-                .addComponent(new LightningPowerUpComponent());
+        Entity powerUp = createBasePowerUp();
+        powerUp.addComponent(new TextureRenderComponent(
+                        "images/powerup-lightning.png"));
 
-        PhysicsUtils.setScaledCollider(powerUp, 0.5f, 0.4f);
-
-        powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
         powerUp.setType(EntityTypes.LIGHTNINGPOWERUP);
-        powerUp.getEvents().addListener("dispose",
-            powerUp::flagDelete);
-        powerUp.getComponent(LightningPowerUpComponent.class).setEnabled(true);
 
         return powerUp;
     }
 
-    // Edit for shield power up.
+    /**
+     * Create a shield power up
+     *
+     * @return shield power up
+     */
     public static Entity createShieldPowerUp() {
-        Entity powerUp =
-            new Entity()
-                .addComponent(new TextureRenderComponent("images/powerup-shield.png"))
-                .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent())
-                .addComponent(new ShieldPowerUpComponent());
+        Entity powerUp = createBasePowerUp();
+        powerUp.addComponent(new TextureRenderComponent(
+                "images/powerup-shield.png"));
 
-        PhysicsUtils.setScaledCollider(powerUp, 0.5f, 0.4f);
-
-        powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
         powerUp.setType(EntityTypes.SHIELDPOWERUP);
-        powerUp.getEvents().addListener("dispose",
-            powerUp::flagDelete);
-        powerUp.getComponent(ShieldPowerUpComponent.class).setEnabled(true);
 
         return powerUp;
     }
 
-    // Edit for spear power up.
+    /**
+     * Creates a spear power up
+     *
+     * @return spear power up
+     */
     public static Entity createSpearPowerUp() {
-        Entity powerUp =
-            new Entity()
-                .addComponent(new TextureRenderComponent("images/powerup-spear.png"))
-                .addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent())
-                .addComponent(new SpearPowerUpComponent());
+        Entity powerUp = createBasePowerUp();
+        powerUp.addComponent(new TextureRenderComponent(
+                "images/powerup-spear" + ".png"));
 
-        PhysicsUtils.setScaledCollider(powerUp, 0.5f, 0.4f);
-
-        powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
         powerUp.setType(EntityTypes.SPEARPOWERUP);
-        powerUp.getEvents().addListener("dispose",
-            powerUp::flagDelete);
-        powerUp.getComponent(SpearPowerUpComponent.class).setEnabled(true);
 
+        return powerUp;
+    }
+
+    /**
+     * Creates a base power up that other power ups can be built off of
+     *
+     * @return base power up
+     */
+    public static Entity createBasePowerUp() {
+        Entity powerUp =
+                new Entity()
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent());
+        PhysicsUtils.setScaledCollider(powerUp, 0.5f, 0.4f);
+        powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+        powerUp.getEvents().addListener("dispose",
+                powerUp::flagDelete);
         return powerUp;
     }
 

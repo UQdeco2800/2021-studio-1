@@ -89,6 +89,27 @@ public class PlayerFactory {
     animator.addAnimation("crouch-right", 0.2f,
             Animation.PlayMode.LOOP);
 
+    animator.addAnimation("shield-still-right", 1f,
+                    Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-crouch-still-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-crouch-still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-jump-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-jump-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-run-left", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-run-right", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-crouch-left", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-crouch-right", 0.2f,
+            Animation.PlayMode.LOOP);
+
     animator.addAnimation("attack-right", 1f,
             Animation.PlayMode.LOOP);
     animator.addAnimation("attack-left", 1f,
@@ -125,9 +146,9 @@ public class PlayerFactory {
 
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     //gravity scalar used to multiply gravity from physics engine, used 5 for
-    // base character
-    //vary based on how heavy we want characters to look
+    //base character vary based on how heavy we want characters to look
     player.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+    player.getComponent(ShieldPowerUpComponent.class).setEnabled(false);
     player.setType(EntityTypes.PLAYER);
 
     return player;
