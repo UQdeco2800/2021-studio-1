@@ -103,13 +103,13 @@ public class PlayerFactory {
     //create head collision box
     PolygonShape head = new PolygonShape();
     Vector2 headOffset = new Vector2(player.getCenterPosition().x,
-            player.getCenterPosition().y+0.35f);
+            player.getCenterPosition().y + 0.35f);
     head.setAsBox(0.1f,0.15f,headOffset,0f);
     player.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
 
     //create body collision box set using the collider component
     Vector2 boxOffset = new Vector2(player.getCenterPosition().x,
-            player.getCenterPosition().y+0.04f);
+            player.getCenterPosition().y + 0.04f);
     Vector2 boxSize = new Vector2(0.35f,0.35f);
     player.getComponent(ColliderComponent.class).setAsBox(boxSize,boxOffset);
     player.getComponent(ColliderComponent.class).setDensity(1.0f);
@@ -118,11 +118,10 @@ public class PlayerFactory {
     CircleShape legs = new CircleShape();
     legs.setRadius(0.2f);
     Vector2 circleOffset = new Vector2(player.getCenterPosition().x,
-            player.getCenterPosition().y-0.3f);
+            player.getCenterPosition().y - 0.3f);
     legs.setPosition(circleOffset);
     player.getComponent(PhysicsComponent.class).getBody().createFixture(legs,1.0f);
     player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.3f, 0.9f));
-
 
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     //gravity scalar used to multiply gravity from physics engine, used 5 for
