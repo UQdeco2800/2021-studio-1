@@ -280,6 +280,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/files/package-summary.html">com.deco2800.game.files</a> - package com.deco2800.game.files</dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/gameScore/package-summary.html">com.deco2800.game.gameScore</a> - package com.deco2800.game.gameScore</dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/input/package-summary.html">com.deco2800.game.input</a> - package com.deco2800.game.input</dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/physics/package-summary.html">com.deco2800.game.physics</a> - package com.deco2800.game.physics</dt>
@@ -853,6 +855,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/gamearea/GameAreaDisplay.html#%3Cinit%3E(java.lang.String)">GameAreaDisplay(String)</a></span> - Constructor for class com.deco2800.game.components.gamearea.<a href="com/deco2800/game/components/gamearea/GameAreaDisplay.html" title="class in com.deco2800.game.components.gamearea">GameAreaDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/gameScore/gameScore.html" title="class in com.deco2800.game.gameScore"><span class="typeNameLink">gameScore</span></a> - Class in <a href="com/deco2800/game/gameScore/package-summary.html">com.deco2800.game.gameScore</a></dt>
+<dd>
+<div class="block">The class handles the scoring of the player the score is increased linearly on the basis of time
+ elapsed since the beginning of the start.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/gameScore/gameScore.html#%3Cinit%3E()">gameScore()</a></span> - Constructor for class com.deco2800.game.gameScore.<a href="com/deco2800/game/gameScore/gameScore.html" title="class in com.deco2800.game.gameScore">gameScore</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/services/GameTime.html" title="class in com.deco2800.game.services"><span class="typeNameLink">GameTime</span></a> - Class in <a href="com/deco2800/game/services/package-summary.html">com.deco2800.game.services</a></dt>
 <dd>
 <div class="block">Controls the game time</div>
@@ -919,7 +928,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/GeneratorComponent.html#getCurrentDifficulty()">getCurrentDifficulty()</a></span> - Method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/GeneratorComponent.html" title="class in com.deco2800.game.entities.factories">GeneratorComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/gameScore/gameScore.html#getCurrentScore()">getCurrentScore()</a></span> - Method in class com.deco2800.game.gameScore.<a href="com/deco2800/game/gameScore/gameScore.html" title="class in com.deco2800.game.gameScore">gameScore</a></dt>
+<dd>
+<div class="block">Returns the current score to anywhere in the game</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ai/tasks/AITaskComponent.html#getCurrentTask()">getCurrentTask()</a></span> - Method in class com.deco2800.game.ai.tasks.<a href="com/deco2800/game/ai/tasks/AITaskComponent.html" title="class in com.deco2800.game.ai.tasks">AITaskComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/gameScore/gameScore.html#getCurrentTime()">getCurrentTime()</a></span> - Method in class com.deco2800.game.gameScore.<a href="com/deco2800/game/gameScore/gameScore.html" title="class in com.deco2800.game.gameScore">gameScore</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/Renderer.html#getDebug()">getDebug()</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/Renderer.html" title="class in com.deco2800.game.rendering">Renderer</a></dt>
 <dd>&nbsp;</dd>
@@ -1243,6 +1258,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/Terminal.html#isOpen()">isOpen()</a></span> - Method in class com.deco2800.game.ui.terminal.<a href="com/deco2800/game/ui/terminal/Terminal.html" title="class in com.deco2800.game.ui.terminal">Terminal</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/KeyboardPlayerInputComponent.html#isPlayerInputEnabled()">isPlayerInputEnabled()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/KeyboardPlayerInputComponent.html" title="class in com.deco2800.game.components.player">KeyboardPlayerInputComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/utils/SortedIntMap.html#iterator()">iterator()</a></span> - Method in class com.deco2800.game.utils.<a href="com/deco2800/game/utils/SortedIntMap.html" title="class in com.deco2800.game.utils">SortedIntMap</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -1545,12 +1562,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Factory to create obstacle entities.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/gameScore/gameScore.html#obstacleOneHit()">obstacleOneHit()</a></span> - Method in class com.deco2800.game.gameScore.<a href="com/deco2800/game/gameScore/gameScore.html" title="class in com.deco2800.game.gameScore">gameScore</a></dt>
+<dd>
+<div class="block">Score depletion on the basis of object being hit</div>
+</dd>
 <dt><a href="com/deco2800/game/components/tasks/ObstacleTask.html" title="class in com.deco2800.game.components.tasks"><span class="typeNameLink">ObstacleTask</span></a> - Class in <a href="com/deco2800/game/components/tasks/package-summary.html">com.deco2800.game.components.tasks</a></dt>
 <dd>
 <div class="block">Wander around by moving a random position within a range of the starting position.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/ObstacleTask.html#%3Cinit%3E()">ObstacleTask()</a></span> - Constructor for class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/ObstacleTask.html" title="class in com.deco2800.game.components.tasks">ObstacleTask</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/gameScore/gameScore.html#obstacleTwoHit()">obstacleTwoHit()</a></span> - Method in class com.deco2800.game.gameScore.<a href="com/deco2800/game/gameScore/gameScore.html" title="class in com.deco2800.game.gameScore">gameScore</a></dt>
+<dd>
+<div class="block">Score depletion on the basis of object being hit</div>
+</dd>
 <dt><a href="com/deco2800/game/entities/factories/ObstacleTypes.html" title="enum in com.deco2800.game.entities.factories"><span class="typeNameLink">ObstacleTypes</span></a> - Enum in <a href="com/deco2800/game/entities/factories/package-summary.html">com.deco2800.game.entities.factories</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/utils/math/Vector2Utils.html#ONE">ONE</a></span> - Static variable in class com.deco2800.game.utils.math.<a href="com/deco2800/game/utils/math/Vector2Utils.html" title="class in com.deco2800.game.utils.math">Vector2Utils</a></dt>
@@ -2089,6 +2114,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/PhysicsUtils.html#setScaledCollider(com.deco2800.game.entities.Entity,float,float)">setScaledCollider(Entity, float, float)</a></span> - Static method in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsUtils.html" title="class in com.deco2800.game.physics">PhysicsUtils</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/gameScore/gameScore.html#setScore()">setScore()</a></span> - Method in class com.deco2800.game.gameScore.<a href="com/deco2800/game/gameScore/gameScore.html" title="class in com.deco2800.game.gameScore">gameScore</a></dt>
+<dd>
+<div class="block">Sets the current score on the basis of timeelapsed since the start of the game</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/GdxGame.html#setScreen(com.deco2800.game.GdxGame.ScreenType)">setScreen(GdxGame.ScreenType)</a></span> - Method in class com.deco2800.game.<a href="com/deco2800/game/GdxGame.html" title="class in com.deco2800.game">GdxGame</a></dt>
 <dd>
 <div class="block">Sets the game's screen to a new screen of the provided type.</div>
@@ -2486,6 +2515,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#update()">update()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerStatsDisplay.html#update()">update()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerStatsDisplay.html" title="class in com.deco2800.game.components.player">PlayerStatsDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/SamplePowerUpComponent.html#update()">update()</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/SamplePowerUpComponent.html" title="class in com.deco2800.game.components.powerups">SamplePowerUpComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/settingsmenu/SettingsMenuDisplay.html#update()">update()</a></span> - Method in class com.deco2800.game.components.settingsmenu.<a href="com/deco2800/game/components/settingsmenu/SettingsMenuDisplay.html" title="class in com.deco2800.game.components.settingsmenu">SettingsMenuDisplay</a></dt>
@@ -2528,6 +2559,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Updates the player's health on the ui.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerStatsDisplay.html#updatePlayerScoreUI(long)">updatePlayerScoreUI(long)</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerStatsDisplay.html" title="class in com.deco2800.game.components.player">PlayerStatsDisplay</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/files/UserSettings.html" title="class in com.deco2800.game.files"><span class="typeNameLink">UserSettings</span></a> - Class in <a href="com/deco2800/game/files/package-summary.html">com.deco2800.game.files</a></dt>
 <dd>
 <div class="block">Reading, Writing, and applying user settings in the game.</div>

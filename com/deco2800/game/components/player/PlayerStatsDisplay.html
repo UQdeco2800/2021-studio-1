@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -196,10 +196,22 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Called once per frame of the game, and should be used for most component logic.</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updatePlayerHealthUI(int)">updatePlayerHealthUI</a></span>&#8203;(int&nbsp;health)</code></th>
 <td class="colLast">
 <div class="block">Updates the player's health on the ui.</div>
 </td>
+</tr>
+<tr class="rowColor" id="i5">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updatePlayerScoreUI(long)">updatePlayerScoreUI</a></span>&#8203;(long&nbsp;score)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -219,7 +231,7 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 <h3>Methods inherited from class&nbsp;com.deco2800.game.components.<a href="../Component.html" title="class in com.deco2800.game.components">Component</a></h3>
 <a id="methods.inherited.from.class.com.deco2800.game.components.Component">
 <!--   -->
-</a><code><a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.deco2800.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a>, <a href="../Component.html#update()">update</a></code></div>
+</a><code><a href="../Component.html#earlyUpdate()">earlyUpdate</a>, <a href="../Component.html#getEntity()">getEntity</a>, <a href="../Component.html#setEnabled(boolean)">setEnabled</a>, <a href="../Component.html#setEntity(com.deco2800.game.entities.Entity)">setEntity</a>, <a href="../Component.html#toString()">toString</a>, <a href="../Component.html#triggerEarlyUpdate()">triggerEarlyUpdate</a>, <a href="../Component.html#triggerUpdate()">triggerUpdate</a></code></div>
 <div class="inheritedList">
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <a id="methods.inherited.from.class.java.lang.Object">
@@ -291,6 +303,19 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 </li>
 <li class="blockList">
 <section class="detail">
+<h3><a id="update()">update</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">update</span>()</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../Component.html#update()">Component</a></code></span></div>
+<div class="block">Called once per frame of the game, and should be used for most component logic. Not called if
+ component is disabled.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="../Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
 <h3><a id="updatePlayerHealthUI(int)">updatePlayerHealthUI</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">updatePlayerHealthUI</span>&#8203;(<span class="arguments">int&nbsp;health)</span></div>
 <div class="block">Updates the player's health on the ui.</div>
@@ -298,6 +323,12 @@ extends <a href="../../ui/UIComponent.html" title="class in com.deco2800.game.ui
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>health</code> - player health</dd>
 </dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="updatePlayerScoreUI(long)">updatePlayerScoreUI</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">updatePlayerScoreUI</span>&#8203;(<span class="arguments">long&nbsp;score)</span></div>
 </section>
 </li>
 <li class="blockList">
