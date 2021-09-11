@@ -13,6 +13,9 @@ import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.player.InventoryComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
+import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
+import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.PlayerConfig;
@@ -55,7 +58,10 @@ public class PlayerFactory {
             .addComponent(new InventoryComponent(stats.gold))
             .addComponent(inputComponent)
             .addComponent(new PlayerStatsDisplay())
-            .addComponent(new CameraComponent());
+            .addComponent(new CameraComponent())
+            .addComponent(new LightningPowerUpComponent())
+            .addComponent(new ShieldPowerUpComponent())
+            .addComponent(new SpearPowerUpComponent());
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(ServiceLocator.getResourceService()

@@ -55,7 +55,9 @@ public class RacerArea extends GameArea {
         "images/iso_grass_2.png",
         "images/iso_grass_3.png",
         "images/death_giant.png",
-        "images/powerup.png"
+        "images/powerup-lightning.png",
+        "images/powerup-spear.png",
+        "images/powerup-shield.png"
     };
     private static final String[] forestTextureAtlases = {
         "images/terrain_iso_grass.atlas", "images/ghostKing" +
@@ -105,7 +107,7 @@ public class RacerArea extends GameArea {
         spawnSkeletons();
         spawnWolf();
         spawnSpears();
-        spawnPowerUp();
+        spawnPowerUps();
 
         playMusic();
     }
@@ -311,14 +313,23 @@ public class RacerArea extends GameArea {
         }
     }
 
-    private void spawnPowerUp() {
+    private void spawnPowerUps() {
         GridPoint2 bottomRightMin = new GridPoint2(21, 10);
         GridPoint2 bottomRightMax = new GridPoint2(27, 10);
         GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
         GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
-        GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomRightMin);
-        Entity powerUp = PowerUpFactory.createPowerUp();
-        spawnEntityAt(powerUp, randomPos, false, false);
+
+        GridPoint2 randomPos1 = RandomUtils.random(bottomLeftMin, bottomRightMin);
+        GridPoint2 randomPos2 = RandomUtils.random(bottomLeftMin, bottomRightMin);
+        GridPoint2 randomPos3 = RandomUtils.random(bottomLeftMin, bottomRightMin);
+
+        Entity lightningPowerUp = PowerUpFactory.createLightningPowerUp();
+        Entity shieldPowerUp = PowerUpFactory.createShieldPowerUp();
+        Entity spearPowerUp = PowerUpFactory.createSpearPowerUp();
+
+        spawnEntityAt(lightningPowerUp, randomPos1, false, false);
+        spawnEntityAt(shieldPowerUp, randomPos2, false, false);
+        spawnEntityAt(spearPowerUp, randomPos3, false, false);
     }
 
     private Entity spawnPlayer(int lane, int xCord) {

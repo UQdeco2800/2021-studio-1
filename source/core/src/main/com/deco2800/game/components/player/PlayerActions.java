@@ -3,7 +3,13 @@ package com.deco2800.game.components.player;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
+import com.deco2800.game.components.powerups.SpearPowerUpComponent;
+
+import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
@@ -24,12 +30,12 @@ public class PlayerActions extends Component {
   private PhysicsComponent physicsComponent;
 
   private Vector2 runDirection = Vector2.Zero.cpy();
+  private Vector2 previousDirection = Vector2.Zero.cpy();
 
   public static boolean moving = false;
   private boolean jumping = false;
   private boolean falling = false;
   private boolean crouching = false;
-  private Vector2 previousDirection = Vector2.Zero.cpy();
 
   @Override
   public void create() {
@@ -45,10 +51,11 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("powerAttack", this::powerAttack);
     entity.getEvents().addListener("stop stopPowerAttack",
             this::stopPowerAttack);
+    entity.getEvents().addListener("obtainPowerUp", this::obtainPowerUp);
+    entity.getEvents().addListener("usePowerUp", this::usePowerUp);
 
     entity.getComponent(AnimationRenderComponent.class)
             .startAnimation("still-right");
-
   }
 
   @Override
@@ -60,6 +67,8 @@ public class PlayerActions extends Component {
     } else if (moving) {
       updateRunningSpeed();
     }
+
+
   }
 
   private void updateRunningSpeed() {
@@ -239,6 +248,53 @@ public class PlayerActions extends Component {
     } else {
       entity.getComponent(AnimationRenderComponent.class)
               .startAnimation("still-left");
+    }
+  }
+
+  public void obtainPowerUp(EntityTypes powerUp) {
+    switch (powerUp) {
+      case LIGHTNINGPOWERUP:
+        entity.getComponent(LightningPowerUpComponent.class).setEnabled(true);
+        break;
+
+      case SPEARPOWERUP:
+        entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
+        break;
+
+      case SHIELDPOWERUP:
+        entity.getComponent(ShieldPowerUpComponent.class).setEnabled(true);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  public void usePowerUp(EntityTypes powerUp) {
+    switch (powerUp) {
+      case LIGHTNINGPOWERUP:
+        if (entity.getComponent(LightningPowerUpComponent.class).getEnabled()) {
+          entity.getComponent(LightningPowerUpComponent.class).activate();
+          entity.getComponent(LightningPowerUpComponent.class).setEnabled(false);
+        }
+        break;
+
+      case SPEARPOWERUP:
+        if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
+          entity.getComponent(SpearPowerUpComponent.class).activate();
+          entity.getComponent(SpearPowerUpComponent.class).setEnabled(false);
+        }
+        break;
+
+      case SHIELDPOWERUP:
+        if (entity.getComponent(ShieldPowerUpComponent.class).getEnabled()) {
+          entity.getComponent(ShieldPowerUpComponent.class).activate();
+          entity.getComponent(ShieldPowerUpComponent.class).setEnabled(false);
+        }
+        break;
+
+      default:
+        break;
     }
   }
 

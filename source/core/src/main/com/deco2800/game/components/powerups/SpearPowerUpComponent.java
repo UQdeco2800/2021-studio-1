@@ -1,7 +1,5 @@
 package com.deco2800.game.components.powerups;
 
-import com.deco2800.game.components.Component;
-
-public class SpearPowerUpComponent extends Component {
+public class SpearPowerUpComponent extends PowerUpComponent {
     // Spear power up behaviour.
 }

@@ -63,6 +63,8 @@ public class NPCFactory {
             .addComponent(new GhostAnimationController());
     skeleton.getComponent(AnimationRenderComponent.class).scaleEntity();
     skeleton.setScale(1f, 1.2f);
+
+    skeleton.setType(EntityTypes.SKELETON);
     return skeleton;
   }
 
@@ -91,6 +93,9 @@ public class NPCFactory {
     wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     wolf.setScale(0.8f, 0.8f);
+
+    wolf.setType(EntityTypes.WOLF);
+
     return wolf;
   }
 
