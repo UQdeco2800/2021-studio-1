@@ -128,7 +128,10 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
             .addComponent(new DeathGiantAnimationController())
-            .addComponent(new TouchDisposeComponent());
+            .addComponent(new TouchDisposeComponent())
+            .addComponent(new PhysicsComponent())
+            .addComponent(new ColliderComponent())
+            .addComponent(new HitboxComponent());
 
     wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
     wallOfDeath.setScale(25f,12f);
@@ -155,6 +158,10 @@ public class NPCFactory {
     
         deathGiant.getComponent(AnimationRenderComponent.class).scaleEntity();
         deathGiant.setScale(11f,11f);
+
+        deathGiant.getComponent(ColliderComponent.class).setAsBoxAligned(
+            new Vector2(5f, 30f), PhysicsComponent.AlignX.RIGHT,
+            PhysicsComponent.AlignY.BOTTOM);
     
         deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
     
