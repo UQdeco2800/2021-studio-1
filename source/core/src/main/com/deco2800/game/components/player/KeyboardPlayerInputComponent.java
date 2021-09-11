@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.input.InputService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
@@ -27,8 +28,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
-
-    if (!playerInputEnabled()) {return false;}
 
     switch (keycode) {
       case Keys.W:
@@ -69,8 +68,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
-
-    if (!playerInputEnabled()) {return false;}
 
     switch (keycode) {
       case Keys.W:
@@ -115,12 +112,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    *    @returns - true if player input is being handled
    *               false otherwise
    */
-  private boolean playerInputEnabled () {
-
-      // Player input enabled defined as game time incrementing
-      // feel free to redefine or add conditionals
-      // current purpose is to not handle player input when paused
-      return ServiceLocator.getTimeSource().getDeltaTime() > 0;
+  public boolean isPlayerInputEnabled () {
+      // current condition for input enabled is that the game is incrementing in time
+      // feel free to add / change conditions
+      return ServiceLocator.getTimeSource().getDeltaTime() != 0;
   }
 
   private void triggerJumpEvent() {

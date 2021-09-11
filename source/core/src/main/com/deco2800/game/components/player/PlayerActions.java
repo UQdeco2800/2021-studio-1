@@ -23,6 +23,8 @@ public class PlayerActions extends Component {
 
   private PhysicsComponent physicsComponent;
 
+  private KeyboardPlayerInputComponent playerInputComponent;
+
   private Vector2 runDirection = Vector2.Zero.cpy();
 
   public static boolean moving = false;
@@ -34,6 +36,7 @@ public class PlayerActions extends Component {
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
+    playerInputComponent = entity.getComponent(KeyboardPlayerInputComponent.class);
     entity.getEvents().addListener("run", this::run);
     entity.getEvents().addListener("stop run", this::stopRunning);
     entity.getEvents().addListener("jump", this::jump);
@@ -53,6 +56,11 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
+
+    // for pause condition
+    if (!playerInputComponent.isPlayerInputEnabled()) {
+        return;}
+
     if (falling) {
       checkFalling();
     } else if (jumping) {
@@ -287,6 +295,7 @@ public class PlayerActions extends Component {
               .startAnimation("attack-left");
     }
   }
+
   void stopAttack() {
     entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
             .scl(2F));
