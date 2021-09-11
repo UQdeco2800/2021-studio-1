@@ -99,11 +99,11 @@ public class PhysicsContactListener implements ContactListener {
   private void checkProjectileCollision(BodyUserData bodyA, BodyUserData bodyB) {
     if(bodyA.entity.getType() == EntityTypes.PROJECTILE) {
       if (bodyB.entity.getType() == EntityTypes.PLAYER) {
-        bodyA.entity.flagDelete();
+        bodyA.entity.getEvents().trigger("dispose");
       }
     } else if (bodyB.entity.getType() == EntityTypes.PROJECTILE) {
       if (bodyA.entity.getType() == EntityTypes.PLAYER) {
-        bodyB.entity.flagDelete();
+        bodyB.entity.getEvents().trigger("dispose");
       }
     }
   }

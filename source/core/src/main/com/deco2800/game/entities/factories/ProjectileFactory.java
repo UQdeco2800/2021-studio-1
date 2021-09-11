@@ -45,6 +45,8 @@ public class ProjectileFactory {
         baseProjectile.setScale(1f, 0.5f);
         PhysicsUtils.setScaledCollider(baseProjectile, 1f, 1f);
         baseProjectile.setType(EntityTypes.PROJECTILE);
+        baseProjectile.getEvents().addListener("dispose",
+                baseProjectile::flagDelete);
         return baseProjectile;
     }
 }
