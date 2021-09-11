@@ -2,6 +2,8 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.entities.Entity;
@@ -37,7 +39,21 @@ public class ObstacleFactory {
     rock.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     rock.getComponent(ColliderComponent.class).setDensity(1.0f);
     rock.setScale(1.1f, 0.6f);
-    PhysicsUtils.setScaledCollider(rock, 1f, 0.7f);
+
+    //Rock hitbox -  each vector in rockPoints is a vertex of the hitbox
+    Vector2[] rockPoints = new Vector2[8];
+    rockPoints[0] = new Vector2(0.2f, 0f);
+    rockPoints[1] = new Vector2(0.2f, 0.2f);
+    rockPoints[2] = new Vector2(0.4f, 0.5f);
+    rockPoints[3] = new Vector2(0.6f, 0.5f);
+    rockPoints[4] = new Vector2(0.7f, 0.5f);
+    rockPoints[5] = new Vector2(0.9f, 0.5f);
+    rockPoints[6] = new Vector2(1f, 0.2f);
+    rockPoints[7] = new Vector2(1f, 0f);
+    PolygonShape rockShape = new PolygonShape();
+    rockShape.set(rockPoints);
+    rock.getComponent(ColliderComponent.class).setShape(rockShape);
+
     rock.setType(EntityTypes.OBSTACLE);
     return rock;
   }

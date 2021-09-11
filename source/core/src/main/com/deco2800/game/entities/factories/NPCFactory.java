@@ -67,6 +67,8 @@ public class NPCFactory {
     skeleton.getComponent(AnimationRenderComponent.class).scaleEntity();
     skeleton.setScale(1f, 1.2f);
 
+    skeleton.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.6f,
+            1f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
     skeleton.setType(EntityTypes.SKELETON);
     return skeleton;
   }
@@ -96,6 +98,10 @@ public class NPCFactory {
     wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
 
     wolf.setScale(0.8f, 0.8f);
+
+    wolf.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.8f,
+            0.7f), PhysicsComponent.AlignX.CENTER,
+            PhysicsComponent.AlignY.BOTTOM);
 
     wolf.setType(EntityTypes.WOLF);
 
