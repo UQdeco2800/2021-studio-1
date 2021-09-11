@@ -27,14 +27,17 @@ import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
- * Factory to create non-playable character (NPC) entities with predefined components.
+ * Factory to create non-playable character (NPC) entities with predefined
+ * components.
  *
- * <p>Each NPC entity type should have a creation method that returns a corresponding entity.
- * Predefined entity properties can be loaded from configs stored as json files which are defined in
- * "NPCConfigs".
+ * <p>
+ * Each NPC entity type should have a creation method that returns a
+ * corresponding entity. Predefined entity properties can be loaded from configs
+ * stored as json files which are defined in "NPCConfigs".
  *
- * <p>If needed, this factory can be separated into more specific factories for entities with
- * similar characteristics.
+ * <p>
+ * If needed, this factory can be separated into more specific factories for
+ * entities with similar characteristics.
  */
 public class NPCFactory {
   private static final NPCConfigs configs =
@@ -122,12 +125,35 @@ public class NPCFactory {
             .addComponent(new TouchDisposeComponent());
 
     wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
-    wallOfDeath.setScale(10.5f,10.5f);
+    wallOfDeath.setScale(25f,12f);
 
     wallOfDeath.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
 
     return wallOfDeath;
   }
+
+  public static Entity createDeathGiant(Entity target) {
+        Entity deathGiant = createWallNPC(target);
+        BaseEntityConfig config = configs.deathGiant;
+    
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/deathGiant.atlas", TextureAtlas.class));
+            animator.addAnimation("walk", 0.12f, Animation.PlayMode.LOOP);
+    
+            deathGiant
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new DeathGiantAnimationController());
+    
+        deathGiant.getComponent(AnimationRenderComponent.class).scaleEntity();
+        deathGiant.setScale(11f,11f);
+    
+        deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+    
+        return deathGiant;
+      }
 
   /**
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
