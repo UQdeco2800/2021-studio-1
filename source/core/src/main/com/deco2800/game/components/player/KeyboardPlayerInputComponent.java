@@ -1,11 +1,14 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.input.InputComponent;
+import com.deco2800.game.input.InputService;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
 /**
@@ -27,6 +30,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyDown(int keycode) {
+
     switch (keycode) {
       case Keys.W:
         triggerJumpEvent();
@@ -72,6 +76,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
    */
   @Override
   public boolean keyUp(int keycode) {
+
     switch (keycode) {
       case Keys.W:
         isDirection = 1;
@@ -108,6 +113,17 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     } else {
       entity.getEvents().trigger("run", runDirection);
     }
+  }
+
+  /*
+   * Returns a boolean representing player input as active and inactive
+   *    @returns - true if player input is being handled
+   *               false otherwise
+   */
+  public boolean isPlayerInputEnabled () {
+      // current condition for input enabled is that the game is incrementing in time
+      // feel free to add / change conditions
+      return ServiceLocator.getTimeSource().getDeltaTime() != 0;
   }
 
   private void triggerJumpEvent() {
