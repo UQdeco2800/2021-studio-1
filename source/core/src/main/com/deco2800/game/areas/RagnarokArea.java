@@ -94,9 +94,6 @@ public class RagnarokArea extends GameArea {
         loadAssets();
         displayUI();
         spawnTerrain();
-        //spawnWallOfDeath(); //this is dependant
-
-        //player = spawnPlayer(10, 5);
 
         //playMusic(); //TODO: eventual move to music
     }
@@ -136,6 +133,13 @@ public class RagnarokArea extends GameArea {
 
         return newPlayer;
     }
+
+    protected void spawnWallOfDeath() {
+        GridPoint2 leftPos = new GridPoint2(-10,6);
+        Entity wallOfDeath = NPCFactory.createWallOfDeath(this.player);
+        spawnEntityAt(wallOfDeath, leftPos, true, true);
+    }
+
 
     //TODO: KEEP
     private void spawnTerrain() {

@@ -52,9 +52,15 @@ public class AreaManager extends RagnarokArea {
 
         int mainArea = 0;
 
-        load("skel");
+        //TODO: Implement a basic starter level for all starting
         mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
         this.player = mainInstance.getPlayer();
+
+        mainInstance.spawnWallOfDeath();
+        
+        
+        load("skel1");
+        
         // System.out.println("load in manager called");
 
         /*for(RagnarokArea r : areaInstances) {
@@ -193,7 +199,7 @@ public class AreaManager extends RagnarokArea {
     }
 
     public void loadSpawn(int x, int y, String placeType) {
-        spawn(loadInstance, x, y, placeType);
+        spawn(loadInstance, x, y, placeTypse);
     }
 
     public void loadPlayer(int x, int y) {
