@@ -74,7 +74,7 @@ public class AreaManager extends RagnarokArea {
         persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
         persistentInstance.setManager(this);
         persistentInstance.create();
-
+        persistentInstance.spawnWallOfDeath();
         persistentInstance.makePlayer(10, 5);
         this.player = persistentInstance.getPlayer();
 

@@ -152,16 +152,6 @@ public class RagnarokArea extends GameArea {
         GridPoint2 tileBounds = terrain.getMapBounds(0);
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
 
-        // Left
-        // spawnEntityAt(
-        //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
-        // Right
-        // spawnEntityAt(
-        //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        //     new GridPoint2(tileBounds.x, 0),
-        //     false,
-        //     false);
-
         // Top
         spawnEntityAt(
                 ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),

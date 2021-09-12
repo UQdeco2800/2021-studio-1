@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
@@ -11,6 +12,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.components.LevelLoadTriggerComponent;
 
 /**
  * Factory to create obstacle entities.
@@ -38,6 +40,23 @@ public class ObstacleFactory {
     PhysicsUtils.setScaledCollider(rock, .9f, .9f);
     return rock;
   }
+
+  /**
+   * Creates a level load Trigger Entity
+   * This is an invisible entity that commands the loading of more levels to the right when touched for the first time by the player
+   *
+   * @param target entity to chase
+   * @return entity
+   */
+  public static Entity createLevelLoadTrigger(Entity target) {
+    Entity levelLoadTrigger = new Entity();
+    levelLoadTrigger.addComponent(new HitboxComponent().setAsBox(new Vector2(1,50)));
+    levelLoadTrigger.addComponent(new LevelLoadTriggerComponent());
+    
+    return levelLoadTrigger;
+}
+
+
 
   /**
    * Creates a spike entity.
