@@ -13,7 +13,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
 public class PowerUpFactory {
-    // Edit for lightning power up.
+
     public static Entity createLightningPowerUp() {
         Entity powerUp =
             new Entity()
@@ -33,7 +33,6 @@ public class PowerUpFactory {
         return powerUp;
     }
 
-    // Edit for shield power up.
     public static Entity createShieldPowerUp() {
         Entity powerUp =
             new Entity()
@@ -53,7 +52,6 @@ public class PowerUpFactory {
         return powerUp;
     }
 
-    // Edit for spear power up.
     public static Entity createSpearPowerUp() {
         Entity powerUp =
             new Entity()

@@ -56,6 +56,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       case Keys.L:
         triggerLightningEvent();
         return true;
+      case Keys.K:
+        triggerSpearEvent();
+        return true;
       default:
         return false;
     }
@@ -132,7 +135,10 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   private void triggerLightningEvent() {
-    entity.getEvents().trigger("usePowerUp",
-        EntityTypes.LIGHTNINGPOWERUP);
+    entity.getEvents().trigger("usePowerUp", EntityTypes.LIGHTNINGPOWERUP);
+  }
+
+  private void triggerSpearEvent() {
+    entity.getEvents().trigger("usePowerUp", EntityTypes.SPEARPOWERUP);
   }
 }
