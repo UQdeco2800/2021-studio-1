@@ -16,14 +16,19 @@ import com.deco2800.game.utils.math.Vector2Utils;
  * class.
  */
 public class PlayerActions extends Component {
-  private static final Vector2 MAX_SPEED = new Vector2(5f, 1f); // Metres
+  private static final Vector2 MAX_SPEED = new Vector2(7f, 1f); // Metres
   // per second
   private static final Vector2 CROUCH_SPEED = new Vector2(1f, 1f);
   // Metres per second
 
   private PhysicsComponent physicsComponent;
 
+  private KeyboardPlayerInputComponent playerInputComponent;
+
   private Vector2 runDirection = Vector2.Zero.cpy();
+
+  //private final float runAnimationlength = 0.5f;
+  private float lastRunAnimationTime;
 
   public static boolean moving = false;
   private boolean jumping = false;
@@ -34,12 +39,18 @@ public class PlayerActions extends Component {
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
+    playerInputComponent = entity.getComponent(KeyboardPlayerInputComponent.class);
     entity.getEvents().addListener("run", this::run);
     entity.getEvents().addListener("stop run", this::stopRunning);
     entity.getEvents().addListener("jump", this::jump);
     entity.getEvents().addListener("crouch", this::crouch);
     entity.getEvents().addListener("stop crouch", this::stopCrouching);
     entity.getEvents().addListener("attack", this::attack);
+    entity.getEvents().addListener("stop attack",
+            this::stopAttack);
+    entity.getEvents().addListener("powerAttack", this::powerAttack);
+    entity.getEvents().addListener("stop stopPowerAttack",
+            this::stopPowerAttack);
 
     entity.getComponent(AnimationRenderComponent.class)
             .startAnimation("still-right");
@@ -48,6 +59,11 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
+
+    // for pause condition
+    if (!playerInputComponent.isPlayerInputEnabled()) {
+        return;}
+
     if (falling) {
       checkFalling();
     } else if (jumping) {
@@ -59,7 +75,8 @@ public class PlayerActions extends Component {
 
   private void updateRunningSpeed() {
     Body body = physicsComponent.getBody();
-    if (physicsComponent.getBody().getLinearVelocity().y != 0) {
+    float currentYVelocity = physicsComponent.getBody().getLinearVelocity().y;
+    if (currentYVelocity > 0.01f || currentYVelocity < -0.01f) {
       falling = true;
     }
     Vector2 velocity = body.getLinearVelocity();
@@ -113,7 +130,8 @@ public class PlayerActions extends Component {
       entity.getComponent(AnimationRenderComponent.class)
               .startAnimation("jump-left");
     }
-    if (physicsComponent.getBody().getLinearVelocity().y == 0) {
+    float currentYVelocity = physicsComponent.getBody().getLinearVelocity().y;
+    if (currentYVelocity >= -0.01f  && currentYVelocity <= 0.01f ) {
       falling = false;
       //Determine which animation to play
       entity.getComponent(AnimationRenderComponent.class).stopAnimation();
@@ -142,11 +160,11 @@ public class PlayerActions extends Component {
     } else {
       if (moving) { //Checks if the player is moving and applies respective force
         if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          body.applyLinearImpulse(new Vector2(1f,  0f).scl(body.getMass()),
+          body.applyLinearImpulse(new Vector2(0.75f,  0f).scl(body.getMass()),
                   body.getPosition(),
                   true);
         } else {
-          body.applyLinearImpulse(new Vector2(-1f,  0f).scl(body.getMass()),
+          body.applyLinearImpulse(new Vector2(-0.75f,  0f).scl(body.getMass()),
                   body.getPosition(),
                   true);
         }
@@ -171,13 +189,13 @@ public class PlayerActions extends Component {
     entity.getComponent(AnimationRenderComponent.class)
             .stopAnimation();
     if (!crouching) {
-      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("run-right");
-      } else {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("run-left");
-      }
+        if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("run-right");
+        } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("run-left");
+        }
     } else {
       if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
         entity.getComponent(AnimationRenderComponent.class)
@@ -274,5 +292,60 @@ public class PlayerActions extends Component {
     Sound attackSound = ServiceLocator.getResourceService().getAsset(
             "sounds/Impact4.ogg", Sound.class);
     attackSound.play();
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("attack-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("attack-left");
+    }
+  }
+
+  void stopAttack() {
+    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
+            .scl(2F));
+    update();
+    //Determine which animation to play
+    entity.getComponent(AnimationRenderComponent.class)
+            .stopAnimation();
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("still-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("still-left");
+    }
+  }
+  /**
+   * Player attack for powers up
+   */
+
+  void powerAttack() {
+    Sound attackSound = ServiceLocator.getResourceService().getAsset(
+            "sounds/Impact4.ogg", Sound.class);
+    attackSound.play();
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("power-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("power-left");
+    }
+  }
+
+  void stopPowerAttack() {
+    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
+            .scl(2F));
+    update();
+    //Determine which animation to play
+    entity.getComponent(AnimationRenderComponent.class)
+            .stopAnimation();
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("still-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("still-left");
+    }
   }
 }
