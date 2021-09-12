@@ -12,10 +12,10 @@ import java.util.LinkedList;
 public class AreaManager extends RagnarokArea {
 
     private static final Logger logger = LoggerFactory.getLogger(AreaManager.class);
-    
+
     private final int GRID_SCALE = 3;   // each block/tile in the world is actually 3x the game's geometry.
-                                        // dont change this unless you want the *entire* "bricking" of the game  
-                                        // to be altered. 
+                                        // dont change this unless you want the *entire* "bricking" of the game
+                                        // to be altered.
 
     private LinkedList<RagnarokArea> areaInstances; // this contains a list of GameAreas inside the manager,
                                                     // thought it is currently underutilised. (BackgoundArea, MainArea?
@@ -41,6 +41,12 @@ public class AreaManager extends RagnarokArea {
                                                     // it's actually i
 
     /**
+     * Holds the ragGrid coordinate of the first column of the next area to be loaded. This is
+     * given by the bPWidth of each level, which is added to this value after each load().
+     */
+    private int startNextArea;
+
+    /**
      * The AreaManager class models the persistant aspects of the game, such as the player and the wall of death.
      * It is a subclass of GameArea, so methods called to GameArea (to spawn) may be called to the AreaManager
      * ( this is considered bad practice, as one should call place() or spawn() either within the mainInstance,
@@ -55,6 +61,7 @@ public class AreaManager extends RagnarokArea {
         this.areaInstances = new LinkedList<>();
 
         bufferedSpawns = new Hashtable<>();
+        this.startNextArea = 0;
 
         this.loader = new RagLoader(this); //eventually moved to terminal?
         // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
@@ -87,7 +94,7 @@ public class AreaManager extends RagnarokArea {
 
     /**
      * Convenience method in case place is called to the Manager. See place(RagnarokArea, int, int, String)
-     * for details. 
+     * for details.
      * @param x ragGrid x coOrdinate
      * @param y ragGrid y coOrdinate
      * @param placeType what terrain type to place. Is a string, so check the switch statement or
@@ -110,10 +117,10 @@ public class AreaManager extends RagnarokArea {
      * @param placeType type of terrain to place
      */
     public void place(RagnarokArea area, int x, int y, String placeType) {
-        
+
         int gx = x * GRID_SCALE;
         int gy = y * GRID_SCALE;
-        
+
         switch (placeType) {
             case "floor":
                 area.spawnFloor(gx, gy);
@@ -157,12 +164,16 @@ public class AreaManager extends RagnarokArea {
      * @param spawnType type to spawn
      */
     public void spawn(RagnarokArea area, int x, int y, String spawnType) {
+
+        int gx = (startNextArea + x) * GRID_SCALE;
+        int gy = y * GRID_SCALE;
+
         switch (spawnType) {
             case "skeleton":
-                area.spawnSkeleton(x*3, y*3);
+                area.spawnSkeleton(gx, gy);
                 break;
             case "wolf":
-                area.spawnWolf(x*3, y*3);
+                area.spawnWolf(gx, gy);
                 break;
             case "default":
                 logger.error("spawn() called in AreaManger without valid spawnType");
@@ -174,14 +185,14 @@ public class AreaManager extends RagnarokArea {
      * @param level level to load
      */
     public void load(String level) {
-        if (terrainInstance != null) {
-            terrainInstance.clearAllEntities();
-        } else {
+        // This has been changed to stop the removal of all entities after calling load.
+        if (terrainInstance == null) {
             terrainInstance = new RagnarokArea("load test", mainTerrainFactory);
             terrainInstance.setManager(this);
             terrainInstance.create();
         }
         loader.newCreateFromFile(level);
+        startNextArea += bPWidth; // Set this value to reflect the start of the next area.
     }
 
     /**
@@ -259,7 +270,7 @@ public class AreaManager extends RagnarokArea {
      */
     private void makeBufferedPlace() {
 
-        int x = 0;
+        int x = startNextArea;
         for (String[] column : bufferedPlaces) {
             int y = 0;
             for (String placeType : column) {
@@ -277,5 +288,5 @@ public class AreaManager extends RagnarokArea {
  */
 enum LevelType {
     SLICE,          // as in a single level
-    ENDLESS;        // as in the final, continous game
+    ENDLESS         // as in the final, continous game
 }
