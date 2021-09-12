@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":6,"i1":10,"i2":10,"i3":10};
+<script type="text/javascript">var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -101,7 +101,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="ForestGameArea.html" title="class in com.deco2800.game.areas">ForestGameArea</a></code>, <code><a href="ObstacleArea.html" title="class in com.deco2800.game.areas">ObstacleArea</a></code>, <code><a href="RacerArea.html" title="class in com.deco2800.game.areas">RacerArea</a></code></dd>
+<dd><code><a href="ObstacleArea.html" title="class in com.deco2800.game.areas">ObstacleArea</a></code>, <code><a href="RacerArea.html" title="class in com.deco2800.game.areas">RacerArea</a></code>, <code><a href="RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">GameArea</span>
@@ -192,27 +192,32 @@ implements <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/b
 </thead>
 <tbody>
 <tr class="altColor" id="i0">
-<td class="colFirst"><code>abstract void</code></td>
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Create the game area in the world.</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
+<td class="colFirst"><code>abstract void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(int)">create</a></span>&#8203;(int&nbsp;xOffset)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i2">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dispose()">dispose</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Dispose of all internal entities in the area</div>
 </td>
 </tr>
-<tr class="altColor" id="i2">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnEntity(com.deco2800.game.entities.Entity)">spawnEntity</a></span>&#8203;(<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity)</code></th>
 <td class="colLast">
 <div class="block">Spawn entity at its current position</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnEntityAt(com.deco2800.game.entities.Entity,com.badlogic.gdx.math.GridPoint2,boolean,boolean)">spawnEntityAt</a></span>&#8203;(<a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;entity,
 <a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/GridPoint2.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">GridPoint2</a>&nbsp;tilePos,
@@ -285,8 +290,14 @@ boolean&nbsp;centerY)</code></th>
 <li class="blockList">
 <section class="detail">
 <h3><a id="create()">create</a></h3>
-<div class="memberSignature"><span class="modifiers">public abstract</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">create</span>()</div>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">create</span>()</div>
 <div class="block">Create the game area in the world.</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="create(int)">create</a></h3>
+<div class="memberSignature"><span class="modifiers">public abstract</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">create</span>&#8203;(<span class="arguments">int&nbsp;xOffset)</span></div>
 </section>
 </li>
 <li class="blockList">
