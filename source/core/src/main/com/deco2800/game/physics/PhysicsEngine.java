@@ -70,7 +70,7 @@ public class PhysicsEngine implements Disposable {
     return world.createJoint(jointDef);
   }
 
-  public void destroyJoint(Joint joint) {
+  public void destroyJoint(Joint joint) { // DON'T DESTROY MY JOINT!!! WHAT AM I GONNA SMOKE NOW
     logger.debug("Destroying physics joint {}", joint);
     world.destroyJoint(joint);
   }

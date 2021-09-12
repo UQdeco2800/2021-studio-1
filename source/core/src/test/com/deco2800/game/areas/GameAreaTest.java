@@ -21,7 +21,7 @@ class GameAreaTest {
     GameArea gameArea =
         new GameArea() {
           @Override
-          public void create() {}
+          public void create(int xOffset) {}
         };
 
     ServiceLocator.registerEntityService(new EntityService());

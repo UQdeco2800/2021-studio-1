@@ -4,12 +4,15 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.areas.AreaManager;
+import com.deco2800.game.areas.AreaService;
 import com.deco2800.game.areas.ObstacleArea;
-import com.deco2800.game.areas.RacerArea;
+import com.deco2800.game.areas.RagnarokArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
+import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
@@ -36,12 +39,14 @@ import org.slf4j.LoggerFactory;
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
-  private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 7.5f);
+
+  private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-  private RacerArea racerGameArea = null;
+  //private RagnarokArea ragnarokArea = null;
+  private AreaManager ragnarokManager;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -58,6 +63,7 @@ public class MainGameScreen extends ScreenAdapter {
 
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerAreaService(new AreaService());
 
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -69,14 +75,30 @@ public class MainGameScreen extends ScreenAdapter {
     logger.debug("Initialising main game screen entities");
     TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
-    boolean isObstacle = false;
-    if (isObstacle) {
-      ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-      obstacleArea.create();
-    } else if (!isObstacle) {
-      racerGameArea = new RacerArea(terrainFactory);
-      racerGameArea.create();
-    }
+    ragnarokManager = new AreaManager(terrainFactory);
+
+    ServiceLocator.getAreaService().setManager(ragnarokManager);
+    ServiceLocator.getAreaService().run(); //TODO: call run on manager from terminal line
+
+    //ragnarokManager.create();
+
+    //boolean isObstacle = false;
+    //if (isObstacle) {
+      //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
+      //obstacleArea.create();
+    //} else if (!isObstacle) {
+
+      //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
+      //obstacleArea.create();
+
+      //ragnarokArea = new RagnarokArea("the og", terrainFactory);
+
+      //TODO: abstract commands from RacerArea to GameArea
+      //TODO: so that they can be called from any GameArea
+      //ServiceLocator.getAreaService().setMainRacerArea(ragnarokArea);
+
+      //ragnarokArea.create();
+    //}
   }
 
   @Override
@@ -84,11 +106,14 @@ public class MainGameScreen extends ScreenAdapter {
     physicsEngine.update();
     ServiceLocator.getEntityService().update();
 
-    if (racerGameArea != null) {
-      renderer.updateCameraPosition(racerGameArea.getPlayer());
+    if (ragnarokManager != null) {
+      renderer.updateCameraPosition(ragnarokManager.getPlayer());
     }
 
     renderer.render();
+
+    //TODO: do terminal requests
+
   }
 
   @Override
@@ -144,12 +169,15 @@ public class MainGameScreen extends ScreenAdapter {
     InputComponent inputComponent =
         ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
+    Terminal theOg = new Terminal();
+    ServiceLocator.registerTerminalService(theOg);
+
     Entity ui = new Entity();
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
         .addComponent(new MainGamePannelDisplay())
-        .addComponent(new Terminal())
+        .addComponent(theOg)
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay());
 
