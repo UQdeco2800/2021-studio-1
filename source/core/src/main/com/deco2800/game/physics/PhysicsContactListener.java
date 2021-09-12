@@ -64,6 +64,13 @@ public class PhysicsContactListener implements ContactListener {
     }
   }
 
+  /**
+   * Checks if two bodies involved in a collision are a player and a power up
+   * and activates the power up
+   *
+   * @param bodyA - first body involved in the collision
+   * @param bodyB - second body involved in the collision
+   */
   private void checkPowerUpCollision(BodyUserData bodyA, BodyUserData bodyB) {
     ArrayList<Entity> playerPower = getPlayerPower(bodyA, bodyB);
 
@@ -76,6 +83,14 @@ public class PhysicsContactListener implements ContactListener {
     }
   }
 
+  /**
+   * Checks if two bodies involved in a collision are a player and a power up
+   * and add them to an array as player and power up respectively
+   *
+   * @param bodyA - first body involved in the collision
+   * @param bodyB - second body involved in the collision
+   * @return array with player and power up respectively
+   */
   private ArrayList<Entity> getPlayerPower(BodyUserData bodyA, BodyUserData bodyB) {
     ArrayList<Entity> playerPower = new ArrayList<>();
 
@@ -96,15 +111,17 @@ public class PhysicsContactListener implements ContactListener {
     return playerPower;
   }
 
+  /**
+   * Checks if out of two bodies involved in a collision, one is a projectile
+   *
+   * @param bodyA - first body involved in the collision
+   * @param bodyB - second body involved in the collision
+   */
   private void checkProjectileCollision(BodyUserData bodyA, BodyUserData bodyB) {
     if(bodyA.entity.getType() == EntityTypes.PROJECTILE) {
-      if (bodyB.entity.getType() == EntityTypes.PLAYER) {
-        bodyA.entity.flagDelete();
-      }
+      bodyA.entity.getEvents().trigger("dispose");
     } else if (bodyB.entity.getType() == EntityTypes.PROJECTILE) {
-      if (bodyA.entity.getType() == EntityTypes.PLAYER) {
-        bodyB.entity.flagDelete();
-      }
+      bodyB.entity.getEvents().trigger("dispose");
     }
   }
 }

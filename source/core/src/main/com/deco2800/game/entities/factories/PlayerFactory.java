@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
@@ -88,6 +89,27 @@ public class PlayerFactory {
     animator.addAnimation("crouch-right", 0.2f,
             Animation.PlayMode.LOOP);
 
+    animator.addAnimation("shield-still-right", 1f,
+                    Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-crouch-still-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-crouch-still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-jump-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-jump-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-run-left", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-run-right", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-crouch-left", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("shield-crouch-right", 0.2f,
+            Animation.PlayMode.LOOP);
+
     animator.addAnimation("attack-right", 1f,
             Animation.PlayMode.LOOP);
     animator.addAnimation("attack-left", 1f,
@@ -98,14 +120,35 @@ public class PlayerFactory {
             Animation.PlayMode.LOOP);
 
     player.addComponent(animator);
-    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.3f, 0.9f));
-    //player.getComponent(ColliderComponent.class).setShape(new PolygonShape());
+    //Custom player collision boxes
+    //create head collision box
+    PolygonShape head = new PolygonShape();
+    Vector2 headOffset = new Vector2(player.getCenterPosition().x,
+            player.getCenterPosition().y + 0.35f);
+    head.setAsBox(0.1f,0.15f,headOffset,0f);
+    player.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+
+    //create body collision box set using the collider component
+    Vector2 boxOffset = new Vector2(player.getCenterPosition().x,
+            player.getCenterPosition().y + 0.04f);
+    Vector2 boxSize = new Vector2(0.35f,0.35f);
+    player.getComponent(ColliderComponent.class).setAsBox(boxSize,boxOffset);
     player.getComponent(ColliderComponent.class).setDensity(1.0f);
+
+    //create leg circle collision box
+    CircleShape legs = new CircleShape();
+    legs.setRadius(0.2f);
+    Vector2 circleOffset = new Vector2(player.getCenterPosition().x,
+            player.getCenterPosition().y - 0.3f);
+    legs.setPosition(circleOffset);
+    player.getComponent(PhysicsComponent.class).getBody().createFixture(legs,1.0f);
+    player.getComponent(ColliderComponent.class).setAsBox(new Vector2(0.3f, 0.9f));
+
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
     //gravity scalar used to multiply gravity from physics engine, used 5 for
-    // base character
-    //vary based on how heavy we want characters to look
+    //base character vary based on how heavy we want characters to look
     player.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+    player.getComponent(ShieldPowerUpComponent.class).setEnabled(false);
     player.setType(EntityTypes.PLAYER);
 
     return player;

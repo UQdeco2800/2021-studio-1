@@ -67,8 +67,6 @@ public class PlayerActions extends Component {
     } else if (moving) {
       updateRunningSpeed();
     }
-
-
   }
 
   private void updateRunningSpeed() {
@@ -298,49 +296,100 @@ public class PlayerActions extends Component {
     }
   }
 
+  /**
+   * Determine which animation to play based off of which triggers are active
+   */
   void whichAnimation() {
-    if (jumping || falling) {
-      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("jump-right");
-      } else {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("jump-left");
-      }
-    } else if (moving) {
-      if (crouching) {
+    if (entity.getComponent(ShieldPowerUpComponent.class).getActive()) {
+      if (jumping || falling) {
         if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
           entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("crouch-right");
+                  .startAnimation("shield-jump-right");
         } else {
           entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("crouch-left");
+                  .startAnimation("shield-jump-left");
+        }
+      } else if (moving) {
+        if (crouching) {
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("shield-crouch-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("shield-crouch-left");
+          }
+        } else {
+          if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("shield-run-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("shield-run-left");
+          }
         }
       } else {
-        if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("run-right");
+        if (crouching) {
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("shield-crouch-still-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("shield-crouch-still-left");
+          }
         } else {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("run-left");
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("shield-still-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("shield-still-left");
+          }
         }
       }
     } else {
-      if (crouching) {
+      if (jumping || falling) {
         if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
           entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("crouch-still-right");
+                  .startAnimation("jump-right");
         } else {
           entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("crouch-still-left");
+                  .startAnimation("jump-left");
+        }
+      } else if (moving) {
+        if (crouching) {
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("crouch-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("crouch-left");
+          }
+        } else {
+          if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("run-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("run-left");
+          }
         }
       } else {
-        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("still-right");
+        if (crouching) {
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("crouch-still-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("crouch-still-left");
+          }
         } else {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("still-left");
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("still-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("still-left");
+          }
         }
       }
     }
