@@ -40,7 +40,7 @@ public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {"images/heart.png"};
 
-  private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 3f);
+  private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
   private final GdxGame game;
   private final Renderer renderer;
