@@ -12,30 +12,46 @@ import java.util.LinkedList;
 public class AreaManager extends RagnarokArea {
 
     private static final Logger logger = LoggerFactory.getLogger(AreaManager.class);
+    
+    private final int GRID_SCALE = 3;   // each block/tile in the world is actually 3x the game's geometry.
+                                        // dont change this unless you want the *entire* "bricking" of the game  
+                                        // to be altered. 
 
-    private LevelType mainType;
-    private LinkedList<RagnarokArea> areaInstances;
-    private RagnarokArea mainInstance;
-    private RagnarokArea loadInstance;
+    private LinkedList<RagnarokArea> areaInstances; // this contains a list of GameAreas inside the manager,
+                                                    // thought it is currently underutilised. (BackgoundArea, MainArea?
+    private RagnarokArea terrainInstance;  // the main instance of the game is where the terrain and enemies are
+                                        // spawned into. where is the player, or wall of death?
+                                        // they are members of the persistentInstance class, the AreaManager
+    private RagnarokArea persistentInstance;
 
-    private boolean loadFlag;
-
+    //TODO: make this *far* less volatile. currently if either the height/width value loaded
+    //      by the loader doesn't equal the amount of lines/colums this thing will go bananas
+    //      [unequivolcally crash the game]
     private String[][] bufferedPlaces;
     private int bPWidth; //this determines the first dimension of bufferedPlaces array (the columns)
     private int bPHeight; //this determines the second dimension of bufferedPlaces array (the chars)
     private int bPIndex;
 
-    private Hashtable<String, String> bufferedSpawns;
+    private Hashtable<String, String> bufferedSpawns; // buffered "spawns" will eventually store a list
+                                                        // of coords and the entity to spawn them @
 
     private RagLoader loader; // TODO: remove from this, move to AreaServce
 
-    private TerrainFactory mainTerrainFactory;
+    private TerrainFactory mainTerrainFactory;      // this is passed to all areas inside... I think
+                                                    // it's actually i
 
+    /**
+     * The AreaManager class models the persistant aspects of the game, such as the player and the wall of death.
+     * It is a subclass of GameArea, so methods called to GameArea (to spawn) may be called to the AreaManager
+     * ( this is considered bad practice, as one should call place() or spawn() either within the mainInstance,
+     * or globally, (and they will be handled within this class).
+     * @param terrainFactory the terrainFactory to be initilaised in the GameArea class. It is passed the
+     *                       mainInstace.
+     */
     public AreaManager(TerrainFactory terrainFactory) {
 
         super("Manager", terrainFactory);
         this.mainTerrainFactory = terrainFactory;
-        this.mainType = LevelType.SLICE;
         this.areaInstances = new LinkedList<>();
 
         bufferedSpawns = new Hashtable<>();
@@ -43,66 +59,76 @@ public class AreaManager extends RagnarokArea {
         this.loader = new RagLoader(this); //eventually moved to terminal?
         // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
 
+        //terrain = terrainFactory.createTerrain(TerrainFactory.TerrainType.FOREST_DEMO);
+
         //spawn(10, 5, "avatar");
     }
 
+    /**
+     * This method is called from outside the class in the MainGameScreen class. The constructor initiliases the real
+     * *RAW* stuff of the class. This function is used for clarity.
+     * Calls to load and other "set up" functions for the manager should be called here.
+     */
     public void create() {
 
-        //load("LVL1");
+        persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
+        persistentInstance.setManager(this);
+        persistentInstance.create();
 
-        int mainArea = 0;
+        persistentInstance.makePlayer(10, 5);
+        this.player = persistentInstance.getPlayer();
 
         load("ragnorok");
-        mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
-        this.player = mainInstance.getPlayer();
-        // System.out.println("load in manager called");
 
-        /*for(RagnarokArea r : areaInstances) {
-            r.create();
-            mainArea++;
-            //r.clearPlayer();
-            //this.player = r.getPlayer();
-        }*/
+        //mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
+        //this.player = mainInstance.getPlayer();
 
-        //this.mainInstance = areaInstances.get(mainArea);
-
-        /*for(int x = 0; x < 20; x++) {
-            place(x, 0, "floor");
-        }
-
-        place(3, 1, "floor");
-        place(4, 1, "floor");
-        place(4, 2, "floor");
-
-        place(6, 1, "spikes");
-        place(7, 1, "rocks");
-
-        spawn(12, 1, "skeleton");
-        spawn(13, 1, "wolf");*/
     }
 
+    /**
+     * Convenience method in case place is called to the Manager. See place(RagnarokArea, int, int, String)
+     * for details. 
+     * @param x ragGrid x coOrdinate
+     * @param y ragGrid y coOrdinate
+     * @param placeType what terrain type to place. Is a string, so check the switch statement or
+     *                  as we document further, some dics. But there are no docs rn.
+     */
     public void place(int x, int y, String placeType) {
 
-        place(mainInstance, x, y, placeType);
+        place(terrainInstance, x, y, placeType);
 
     }
 
+    /**
+     * YEWOOOOWOOWOOWOWOWOWOWOWOW
+     * place command calls a spawn method on the specified area. Check RagnarokArea.spawn methods for details
+     * As of 12/9/21 these are undocumented, but are the same as the spawn methods in the RacerArea from the previous
+     * build.
+     * @param area which area to call the spawn method on
+     * @param x ragGrid x coOrdinate
+     * @param y ragGrdi y coOrdinate
+     * @param placeType type of terrain to place
+     */
     public void place(RagnarokArea area, int x, int y, String placeType) {
+        
+        int gx = x * GRID_SCALE;
+        int gy = y * GRID_SCALE;
+        
         switch (placeType) {
             case "floor":
-                area.spawnFloor(x*3, y*3);
+                area.spawnFloor(gx, gy);
                 break;
             case "platform":
-                area.spawnPlatform(x*3,y*3);
+                area.spawnPlatform(gx,gy);
                 break;
             case "rocks":
-                area.spawnRocks(x*3, y*3);
+                area.spawnRocks(gx, gy);
                 break;
             case "spikes":
-                area.spawnSpikes(x*3, y*3);
+                area.spawnSpikes(gx, gy);
                 break;
             case "null":
-                area.clearEntitiesAt(x*3, y*3);
+                area.clearEntitiesAt(gx, gy);
                 break;
             default:
                 logger.error("place() called in AreaManager without valid placeType");
@@ -111,15 +137,27 @@ public class AreaManager extends RagnarokArea {
         }
     }
 
+    /**
+     * This method is a convenience method in case spawn is called on the manager. See spawn(RagnarokArea,
+     * int, int, String)
+     * @param x ragGrid x coOrdinate
+     * @param y ragGrid y coOrdinate
+     * @param spawnType type to spawn
+     */
     public void spawn(int x, int y, String spawnType) {
-        spawn(mainInstance, x, y, spawnType);
+        spawn(terrainInstance, x, y, spawnType);
     }
 
+    /**
+     * Spawn is for "Active Entities" i.e. ones that move around or smt.
+     * The definition is somewhat loose, nut won't parse arguments for terrain types.
+     * @param area specified area to spawn in
+     * @param x ragGrid x coOrdinate
+     * @param y ragGrid y coOrdinate
+     * @param spawnType type to spawn
+     */
     public void spawn(RagnarokArea area, int x, int y, String spawnType) {
         switch (spawnType) {
-            case "avatar":
-                player = spawnPlayer(x, y);
-                break;
             case "skeleton":
                 area.spawnSkeleton(x*3, y*3);
                 break;
@@ -131,79 +169,29 @@ public class AreaManager extends RagnarokArea {
         }
     }
 
-    //
+    /**
+     * Loads the specified level, the argument is in format [level].rag. ** DO NOT TYPE THE .rag**
+     * @param level level to load
+     */
     public void load(String level) {
-
-        /*RagnarokArea testArea = new RagnarokArea("test", mainTerrainFactory);
-        testArea.setManager(this); //must do this
-        areaInstances.add(testArea);*/
-
-        // currently overrides everyyything
-
-        if (mainInstance != null) {
-            mainInstance.clearAllEntities();
+        if (terrainInstance != null) {
+            terrainInstance.clearAllEntities();
+        } else {
+            terrainInstance = new RagnarokArea("load test", mainTerrainFactory);
+            terrainInstance.setManager(this);
+            terrainInstance.create();
         }
-        //if (loadInstance != null) loadInstance.clearAllEntities() {
-        //    load
-        //};
-        //mainInstance.dispose(); // TODO: change
-        //loadInstance.dispose();
-
-        mainInstance = new RagnarokArea("load test", mainTerrainFactory);
-        mainInstance.setManager(this);
-
-        //loadInstance = loadingTestArea;
-        mainInstance.create();
-
-
-        //mainInstance.makePlayer(0, 0); // so setting player in Loader doesn't result in null pointer
-
         loader.newCreateFromFile(level);
-
-        areaInstances.clear();
-        areaInstances.add(mainInstance);
-
-        //loadInstance.makePlayer(10, 5);
-
-        //System.out.println("load create area from file called"); //TODO convert to logger
-
-        //loadInstance.spawnPlatform(0, 0);
-        //loadPlace(1, 0, "floor");
-
-        //loadPlace(0, 0, "floor");
-
-        //mainInstance = loadInstance;
-        //loadInstance = null;
-
-        //if (mainInstance.getPlayer() != null) mainInstance.setPlayer(10f, 5f);
-
-
-
-        //testArea.create();
-        //areaInstances.add(testArea);
-
-        //assert areaInstances.peekLast() != null;
-        //areaInstances.peekLast().create();
-
-        // add to areaInstances, but if slice, then enforce only 1, so clear the list first
     }
 
-    public void loadPlace(int x, int y, String placeType) {
-        place(loadInstance, x, y, placeType);
-    }
-
-    public void loadSpawn(int x, int y, String placeType) {
-        spawn(loadInstance, x, y, placeType);
-    }
-
-    public void loadPlayer(int x, int y) {
-        loadInstance.makePlayer(x, y);
-    }
-
-    public void loadSetPlayer(float x, float y) {
-        mainInstance.movePlayerPos(x, y);
-    }
-
+    /**
+     * Config arguments that are sent to the manager via the terminal. This stuff is pretty dry,
+     * and likely you won't need to extend functionality further **UNLESS** there are widespread,
+     * SEISMIC changes you'd like to enact on the AreaManager at runtime. (which is not altogether
+     * unreasonable).
+     * @param argument which config argument is being parsed
+     * @param value the value of said argument.
+     */
     public void config(String argument, String value) {
         switch (argument) {
             case "title":
@@ -218,10 +206,11 @@ public class AreaManager extends RagnarokArea {
                 switch (value) {
                     case "init":
                         bufferedPlaces = new String[bPWidth][bPHeight];
-                        System.out.println(bufferedPlaces);
+                        //System.out.println(bufferedPlaces);
                         bPIndex = 0;
                         break;
                     case "queue":
+                        System.out.println("closed queue");
                         makeBufferedPlace();
                         break;
                     case "make":
@@ -235,10 +224,14 @@ public class AreaManager extends RagnarokArea {
         }
     }
 
+    /**
+     * Queue is called in the loader to create a column of x terrain.
+     * This will be further exploited in the procedural generation,
+     * as columns of chunked levels are called individually.
+     * @param charColumn a String of chars to convert to place calls
+     */
     public void queue(String charColumn) {
         for (int y = bPHeight; y > 0; y--) {
-            //String coOrd = String.format("[%d,%d]", bPIndex, y);
-
             String terrainType = "null";
             switch(charColumn.charAt(charColumn.length() - y)) {
                 case '.': // null
@@ -254,15 +247,16 @@ public class AreaManager extends RagnarokArea {
                     break;
             }
 
-            //String place = String.format("-place %s %s", coOrd, terrainType);
-            //System.out.printf("Size[] %d Size %d", bufferedPlaces.length, bufferedPlaces[0].length);
-            //System.out.printf("%d %d %s\n", bPIndex, y, terrainType);
-            bufferedPlaces[bPIndex][y - 1] = terrainType;
+            bufferedPlaces[bPIndex][y - 1] = terrainType; // this is fraud
 
         }
-        bPIndex++;
+        bPIndex++; // yeh this is fraud
     }
 
+    /**
+     * Unspoodles the bufferedPlaces. This is called immediately after the player is set in the loader,
+     * But will be intercepted as functionality is developed.
+     */
     private void makeBufferedPlace() {
 
         int x = 0;
@@ -278,6 +272,9 @@ public class AreaManager extends RagnarokArea {
 
 }
 
+/**
+ * as my italian grandfather would say, DUNNNN  WORRY ABOUT IT
+ */
 enum LevelType {
     SLICE,          // as in a single level
     ENDLESS;        // as in the final, continous game
