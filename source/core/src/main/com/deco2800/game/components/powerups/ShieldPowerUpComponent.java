@@ -2,7 +2,6 @@ package com.deco2800.game.components.powerups;
 
 public class ShieldPowerUpComponent extends PowerUpComponent {
     private int blocks;
-    private boolean active;
 
     /**
      * Create the shield component - creates a listener that activates when
@@ -10,16 +9,10 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
      */
     public void create() {
         blocks = 0;
-        active = false;
         entity.getEvents().addListener("block", this::activate);
+        entity.getEvents().addListener("pickUpShield", this::pickedUpShield);
     }
 
-
-    public void update() {
-        if (enabled) {
-            pickedUpShield();
-        }
-    }
 
     /**
      * Activated when the player picks up a shield - gives the player 3
@@ -27,8 +20,6 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
      */
     public void pickedUpShield() {
         blocks = 3;
-        enabled = false;
-        active = true;
     }
 
     /**
@@ -39,7 +30,7 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
     public void activate() {
         blocks -= 1;
         if (blocks == 0) {
-            active = false;
+            enabled = false;
         }
     }
 
@@ -50,6 +41,6 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
      * otherwise
      */
     public boolean getActive() {
-        return active;
+        return enabled;
     }
 }

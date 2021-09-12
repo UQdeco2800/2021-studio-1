@@ -270,6 +270,7 @@ public class PlayerActions extends Component {
 
       case SPEARPOWERUP:
         entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
+        entity.getEvents().trigger("pickUpShield");
         break;
 
       case SHIELDPOWERUP:
