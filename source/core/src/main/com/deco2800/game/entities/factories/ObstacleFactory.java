@@ -38,6 +38,7 @@ public class ObstacleFactory {
     rock.getComponent(ColliderComponent.class).setDensity(1.0f);
     rock.setScale(1.1f, 0.6f);
     PhysicsUtils.setScaledCollider(rock, .9f, .9f);
+    rock.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
     return rock;
   }
 
@@ -78,6 +79,7 @@ public class ObstacleFactory {
     spikes.getComponent(ColliderComponent.class).setDensity(1.0f);
     spikes.setScale(1.1f, 0.5f);
     PhysicsUtils.setScaledCollider(spikes, 0.9f, 0.9f);
+    spikes.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
     return spikes;
   }
 
@@ -97,6 +99,7 @@ public class ObstacleFactory {
     // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
     // difficult.
     platform.scaleHeight(0.5f);
+    platform.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
     return platform;
   }
 
@@ -116,6 +119,7 @@ public class ObstacleFactory {
     // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
     // difficult.
     platformGradient.scaleHeight(0.5f);
+    platformGradient.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
     return platformGradient;
   }
 
@@ -133,6 +137,7 @@ public class ObstacleFactory {
     floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     floor.getComponent(TextureRenderComponent.class).scaleEntity();
     floor.scaleHeight(0.5f);
+    floor.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
     return floor;
   }
 
@@ -147,6 +152,7 @@ public class ObstacleFactory {
         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     wall.setScale(width, height);
+    wall.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
     return wall;
   }
 

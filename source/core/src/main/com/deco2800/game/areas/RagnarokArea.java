@@ -59,7 +59,7 @@ public class RagnarokArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
-            "images/death_giant.png"
+            "images/deathGiant.png"
     };
 
     //TODO: make Json,
@@ -281,6 +281,6 @@ enum Lanes {
     public int y;
 
     Lanes(int y_value) {
-        this.y = y;
-    };
+        this.y = y_value;
+    }
 }

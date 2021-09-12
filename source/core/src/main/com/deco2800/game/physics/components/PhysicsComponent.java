@@ -66,6 +66,15 @@ public class PhysicsComponent extends Component {
   }
 
   /**
+   * Gets gravity scale
+   *
+   * @return int gravity scale
+   */
+  public float getGravityScale() {
+    return body.getGravityScale();
+  }
+
+  /**
    * Get the physics body.
    *
    * @return physics body if entity has been created, null otherwise.
