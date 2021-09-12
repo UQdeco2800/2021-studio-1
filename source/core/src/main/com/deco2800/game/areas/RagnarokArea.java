@@ -287,6 +287,6 @@ enum Lanes {
     public int y;
 
     Lanes(int y_value) {
-        this.y = y;
+        this.y = y_value;
     }
 }
