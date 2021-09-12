@@ -29,8 +29,13 @@ public class PlayerActions extends Component {
 
   private PhysicsComponent physicsComponent;
 
+  private KeyboardPlayerInputComponent playerInputComponent;
+
   private Vector2 runDirection = Vector2.Zero.cpy();
   private Vector2 previousDirection = Vector2.Zero.cpy();
+
+  //private final float runAnimationlength = 0.5f;
+  private float lastRunAnimationTime;
 
   public static boolean moving = false;
   private boolean jumping = false;
@@ -40,6 +45,7 @@ public class PlayerActions extends Component {
   @Override
   public void create() {
     physicsComponent = entity.getComponent(PhysicsComponent.class);
+    playerInputComponent = entity.getComponent(KeyboardPlayerInputComponent.class);
     entity.getEvents().addListener("run", this::run);
     entity.getEvents().addListener("stop run", this::stopRunning);
     entity.getEvents().addListener("jump", this::jump);
@@ -60,6 +66,11 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
+
+    // for pause condition
+    if (!playerInputComponent.isPlayerInputEnabled()) {
+        return;}
+
     if (falling) {
       checkFalling();
     } else if (jumping) {
@@ -71,7 +82,8 @@ public class PlayerActions extends Component {
 
   private void updateRunningSpeed() {
     Body body = physicsComponent.getBody();
-    if (physicsComponent.getBody().getLinearVelocity().y != 0) {
+    float currentYVelocity = physicsComponent.getBody().getLinearVelocity().y;
+    if (currentYVelocity > 0.01f || currentYVelocity < -0.01f) {
       falling = true;
     }
     Vector2 velocity = body.getLinearVelocity();
@@ -103,7 +115,8 @@ public class PlayerActions extends Component {
     Body body = physicsComponent.getBody();
     entity.getComponent(AnimationRenderComponent.class).stopAnimation();
     whichAnimation();
-    if (physicsComponent.getBody().getLinearVelocity().y == 0) {
+    float currentYVelocity = physicsComponent.getBody().getLinearVelocity().y;
+    if (currentYVelocity >= -0.01f  && currentYVelocity <= 0.01f ) {
       falling = false;
       //Determine which animation to play
       entity.getComponent(AnimationRenderComponent.class).stopAnimation();

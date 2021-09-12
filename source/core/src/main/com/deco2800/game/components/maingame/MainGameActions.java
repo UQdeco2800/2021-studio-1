@@ -26,8 +26,8 @@ public class MainGameActions extends Component {
   @Override
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
-    entity.getEvents().addListener("pause", this::onPause);
-    entity.getEvents().addListener("score screen", this::showScore);
+    entity.getEvents().addListener("Pause Menu", this::onPause);
+    entity.getEvents().addListener("Score Screen", this::showScore);
   }
 
   /**
@@ -58,9 +58,11 @@ public class MainGameActions extends Component {
             walkSound.play();
         } else {
             ServiceLocator.getTimeSource().setTimeScale(0f);
+
             if (popUp != null) {
                 popUp.dispose();
             }
+
             popUp = new Entity();
             popUp.addComponent(new UIPop("Pause Menu", entity));
             ServiceLocator.getEntityService().register(popUp);
@@ -71,6 +73,7 @@ public class MainGameActions extends Component {
         game.paused = !game.paused;
         pauseSound.play();
     }
+
 
     /**
      * Pauses the game -- the trigger function for the event.
@@ -97,4 +100,5 @@ public class MainGameActions extends Component {
         }
         scoreScreenSound.play();
     }
+
 }
