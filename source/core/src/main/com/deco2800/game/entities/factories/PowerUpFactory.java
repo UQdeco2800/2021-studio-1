@@ -1,9 +1,5 @@
 package com.deco2800.game.entities.factories;
 
-import com.deco2800.game.components.powerups.LightningPowerUpComponent;
-import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
-import com.deco2800.game.components.powerups.SpearPowerUpComponent;
-
 import com.deco2800.game.entities.Entity;
 
 import com.deco2800.game.physics.PhysicsUtils;
@@ -13,6 +9,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 
 public class PowerUpFactory {
+
     /**
      * Create a lightning power up
      *

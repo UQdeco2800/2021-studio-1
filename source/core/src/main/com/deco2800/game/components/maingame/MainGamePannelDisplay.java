@@ -49,7 +49,7 @@ public class MainGamePannelDisplay extends UIComponent {
               @Override
               public void changed(ChangeEvent changeEvent, Actor actor) {
                   logger.debug("Score button clicked");
-                  entity.getEvents().trigger("score screen");
+                  entity.getEvents().trigger("Score Screen");
               }
           });
 
@@ -59,7 +59,7 @@ public class MainGamePannelDisplay extends UIComponent {
               @Override
               public void changed(ChangeEvent changeEvent, Actor actor) {
                   logger.debug("Pause button clicked");
-                  entity.getEvents().trigger("pause");
+                  entity.getEvents().trigger("Pause Menu");
               }
           });
 

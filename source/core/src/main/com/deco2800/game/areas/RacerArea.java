@@ -63,8 +63,13 @@ public class RacerArea extends GameArea {
         "images/powerup.png"
     };
     private static final String[] forestTextureAtlases = {
-        "images/terrain_iso_grass.atlas", "images/ghostKing" +
-        ".atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas"
+        "images/terrain_iso_grass.atlas",
+        "images/ghostKing.atlas",
+        "images/odin.atlas",
+        "images/wall.atlas",
+        "images/deathGiant.atlas",
+        "images/skeleton.atlas",
+        "images/playerspear.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String mainMusic = "sounds/main.mp3";

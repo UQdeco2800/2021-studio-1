@@ -26,12 +26,17 @@ class TouchAttackComponentTest {
     short targetLayer = (1 << 3);
     Entity entity = createAttacker(targetLayer);
     Entity target = createTarget(targetLayer);
+    target.addComponent(new ShieldPowerUpComponent());
 
     Fixture entityFixture = entity.getComponent(HitboxComponent.class).getFixture();
     Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();
     entity.getEvents().trigger("collisionStart", entityFixture, targetFixture);
 
-    assertEquals(0, target.getComponent(CombatStatsComponent.class).getHealth());
+    if (target.getComponent(ShieldPowerUpComponent.class).getActive()) {
+      assertEquals(10, target.getComponent(CombatStatsComponent.class).getHealth());
+    } else {
+      assertEquals(0, target.getComponent(CombatStatsComponent.class).getHealth());
+    }
   }
 
   @Test

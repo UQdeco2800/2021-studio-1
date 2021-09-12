@@ -52,6 +52,8 @@ public class UIPop extends UIComponent {
     //Back button
     private Button backButton;
 
+    // the skin for the popup
+    private Skin popUpSkin;
 
     /*
      * Constructs a new instance of the screenName parsed
@@ -84,9 +86,8 @@ public class UIPop extends UIComponent {
         closeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                if (screenName.equals("Pause Menu")) {
-                    game.getEvents().trigger("pause");
-                }
+                //there should be an associated trigger event in main game actions
+                game.getEvents().trigger(screenName);
                 entity.dispose();
             }
         });
@@ -214,7 +215,7 @@ public class UIPop extends UIComponent {
             resumeButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    game.getEvents().trigger("pause");
+                    game.getEvents().trigger("Pause Menu");
                 }
             });
 
@@ -248,15 +249,6 @@ public class UIPop extends UIComponent {
      */
     private Table formatScoreScreen() {
 
-        /*for (int i = 0; i < 3; i++) {
-            Label infoTitle = new Label(getInformation(screenName, i), skin, "popUpFont");
-            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin, "popUpFont");
-            infoTitle.setFontScale(1.5f);
-            info.setFontScale(1.5f);
-            popUp.add(infoTitle).left();
-            popUp.add(info).right();
-            popUp.row().padTop(20f);
-        }*/
         return popUp;
     }
 

@@ -53,6 +53,7 @@ public class TerrainFactory {
    * @param terrainType Terrain to create
    * @return Terrain component which renders the terrain
    */
+
   public TerrainComponent createTerrain(TerrainType terrainType) {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
