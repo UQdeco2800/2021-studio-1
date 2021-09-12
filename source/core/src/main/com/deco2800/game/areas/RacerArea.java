@@ -90,7 +90,7 @@ public class RacerArea extends GameArea {
      * entities (player)
      */
     @Override
-    public void create() {
+    public void create(int xOffset) {
         loadAssets();
 
         displayUI();
