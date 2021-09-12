@@ -9,6 +9,7 @@ import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.events.listeners.EventListener1;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import java.io.*;
@@ -345,15 +346,22 @@ public class RacerArea extends GameArea {
 
         GridPoint2 randomPos1 = RandomUtils.random(bottomLeftMin, bottomRightMin);
         GridPoint2 randomPos2 = RandomUtils.random(bottomLeftMin, bottomRightMin);
-        GridPoint2 randomPos3 = RandomUtils.random(bottomLeftMin, bottomRightMin);
+        GridPoint2 randomPos3 = new GridPoint2(30, 5);
+        GridPoint2 playerPos = new GridPoint2(12,5);
 
         Entity lightningPowerUp = PowerUpFactory.createLightningPowerUp();
         Entity shieldPowerUp = PowerUpFactory.createShieldPowerUp();
-        Entity spearPowerUp = PowerUpFactory.createSpearPowerUp();
+
+        Entity spearPowerUp1 = PowerUpFactory.createSpearPowerUp();
+        spearPowerUp1.getComponent(AnimationRenderComponent.class).startAnimation("static");
+
+        Entity spearPowerUp2 = PowerUpFactory.createSpearPowerUp();
+        spearPowerUp2.getComponent(AnimationRenderComponent.class).startAnimation("static");
 
         spawnEntityAt(lightningPowerUp, randomPos1, false, false);
         spawnEntityAt(shieldPowerUp, randomPos2, false, false);
-        spawnEntityAt(spearPowerUp, randomPos3, false, false);
+        spawnEntityAt(spearPowerUp1, playerPos, false, false);
+        spawnEntityAt(spearPowerUp2, randomPos3, false, false);
     }
 
     private Entity spawnPlayer(int lane, int xCord) {

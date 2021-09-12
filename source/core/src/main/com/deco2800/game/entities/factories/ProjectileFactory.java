@@ -30,30 +30,6 @@ public class ProjectileFactory {
         return spear;
     }
 
-    public static Entity createPlayerSpear(Vector2 location) {
-
-        Entity playerSpear = new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.PLAYERSPEAR))
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYERSPEAR))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.ALL, 0f))
-            .addComponent(new CombatStatsComponent(1, 100));
-
-        playerSpear.setScale(1f, 0.5f);
-        PhysicsUtils.setScaledCollider(playerSpear, 1f, 1f);
-
-        AnimationRenderComponent animator =
-            new AnimationRenderComponent(ServiceLocator.getResourceService()
-                .getAsset("images/playerspear.atlas", TextureAtlas.class));
-
-        animator.addAnimation("fly", 0.2f, Animation.PlayMode.LOOP);
-
-        playerSpear.setType(EntityTypes.PROJECTILE);
-
-        return playerSpear;
-    }
-
     /**
      * Creates the base entity of a projectile
      * @return a base projectile entity

@@ -9,6 +9,7 @@ import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
 import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
@@ -249,14 +250,15 @@ public class PlayerActions extends Component {
     }
   }
 
-  public void obtainPowerUp(EntityTypes powerUp) {
-    switch (powerUp) {
+  public void obtainPowerUp(Entity powerUp) {
+    switch (powerUp.getType()) {
       case LIGHTNINGPOWERUP:
         entity.getComponent(LightningPowerUpComponent.class).setEnabled(true);
         break;
 
       case SPEARPOWERUP:
         entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
+        entity.getComponent(SpearPowerUpComponent.class).obtainSpear(powerUp);
         break;
 
       case SHIELDPOWERUP:
@@ -280,20 +282,38 @@ public class PlayerActions extends Component {
       case SPEARPOWERUP:
         if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
           entity.getComponent(SpearPowerUpComponent.class).activate();
-          entity.getComponent(SpearPowerUpComponent.class).setEnabled(false);
         }
         break;
 
       case SHIELDPOWERUP:
         if (entity.getComponent(ShieldPowerUpComponent.class).getEnabled()) {
           entity.getComponent(ShieldPowerUpComponent.class).activate();
-          entity.getComponent(ShieldPowerUpComponent.class).setEnabled(false);
         }
         break;
 
       default:
         break;
     }
+  }
+
+  public Vector2 getRunDirection() {
+    return runDirection.cpy();
+  }
+
+  public Vector2 getPreviousDirection() {
+    return previousDirection.cpy();
+  }
+
+  public boolean isMoving() {
+    return moving;
+  }
+
+  public boolean isJumping() {
+    return (jumping || falling);
+  }
+
+  public boolean isCrouching() {
+    return crouching;
   }
 
   /**

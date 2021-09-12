@@ -35,6 +35,7 @@ public class PhysicsContactListener implements ContactListener {
 
     BodyUserData bodyA = (BodyUserData) contact.getFixtureA().getBody().getUserData();
     BodyUserData bodyB = (BodyUserData) contact.getFixtureB().getBody().getUserData();
+
     checkPowerUpCollision(bodyA, bodyB);
     checkProjectileCollision(bodyA, bodyB);
   }
@@ -78,8 +79,11 @@ public class PhysicsContactListener implements ContactListener {
       Entity player = getPlayerPower(bodyA, bodyB).get(0);
       Entity powerUp = getPlayerPower(bodyA, bodyB).get(1);
 
-      player.getEvents().trigger("obtainPowerUp", powerUp.getType());
-      powerUp.getEvents().trigger("dispose");
+      player.getEvents().trigger("obtainPowerUp", powerUp);
+
+      if (!(powerUp.getType() == EntityTypes.SPEARPOWERUP)) {
+        powerUp.getEvents().trigger("dispose");
+      }
     }
   }
 
@@ -98,14 +102,10 @@ public class PhysicsContactListener implements ContactListener {
         && (powerUps.contains(bodyB.entity.getType()))) {
       playerPower.add(bodyA.entity);
       playerPower.add(bodyB.entity);
-
-      return playerPower;
     } else if (bodyB.entity.getType() == EntityTypes.PLAYER
         && (powerUps.contains(bodyA.entity.getType()))) {
       playerPower.add(bodyB.entity);
       playerPower.add(bodyA.entity);
-
-      return playerPower;
     }
 
     return playerPower;

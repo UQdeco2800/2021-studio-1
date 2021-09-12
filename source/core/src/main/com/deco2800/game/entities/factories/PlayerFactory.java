@@ -148,7 +148,10 @@ public class PlayerFactory {
     //gravity scalar used to multiply gravity from physics engine, used 5 for
     //base character vary based on how heavy we want characters to look
     player.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+
     player.getComponent(ShieldPowerUpComponent.class).setEnabled(false);
+    player.getComponent(LightningPowerUpComponent.class).setEnabled(false);
+
     player.setType(EntityTypes.PLAYER);
 
     return player;
