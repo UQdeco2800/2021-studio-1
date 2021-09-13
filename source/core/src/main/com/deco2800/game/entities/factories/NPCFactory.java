@@ -150,6 +150,7 @@ public class NPCFactory {
                     ServiceLocator.getResourceService()
                             .getAsset("images/wall.atlas", TextureAtlas.class));
         animator.addAnimation("walk", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("walkAngry", 0.1f, Animation.PlayMode.LOOP);
 
     wallOfDeath
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -174,6 +175,7 @@ public class NPCFactory {
                         ServiceLocator.getResourceService()
                                 .getAsset("images/deathGiant.atlas", TextureAtlas.class));
             animator.addAnimation("walk", 0.12f, Animation.PlayMode.LOOP);
+            animator.addAnimation("walkAngry", 0.12f, Animation.PlayMode.LOOP);
     
             deathGiant
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -188,7 +190,6 @@ public class NPCFactory {
             PhysicsComponent.AlignY.BOTTOM);
 
         deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
-
         return deathGiant;
       }
 

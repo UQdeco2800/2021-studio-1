@@ -34,11 +34,29 @@ public class CameraComponent extends Component {
     }
 
   }
-  public void set_offset(float offset) {
+
+  /**
+   * Sets the offset
+   * @param offset
+   */
+  public void setOffset(float offset) {
     this.offset = offset;
   }
-  public float get_offset() {
+
+  /**
+   * Gets the offset
+   * @return offset
+   */
+  public float getOffset() {
     return this.offset;
+  }
+
+  /**
+   *  Resets the last position
+   *
+   */
+  public void resetLastPosition() {
+    lastPosition = Vector2.Zero.cpy();
   }
 
 

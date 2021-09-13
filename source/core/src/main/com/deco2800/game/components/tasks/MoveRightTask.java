@@ -43,7 +43,6 @@ public class MoveRightTask extends DefaultTask implements PriorityTask {
     currentTask = movementTask;
 
     this.owner.getEntity().getEvents().trigger("moveRight");
-    distanceToTarget();
   }
 
   @Override
@@ -53,11 +52,6 @@ public class MoveRightTask extends DefaultTask implements PriorityTask {
         startMoving();
     }
     currentTask.update();
-  }
-
-  private void distanceToTarget() {
-   float dis = owner.getEntity().getPosition().dst(target.getPosition());
-   //System.out.print(dis);
   }
 
   /**
