@@ -70,7 +70,7 @@ public class NPCFactory {
 
     //set body collision box
     skeleton.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.6f,
-            0.5f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
+            0.45f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
     //create head circle collision box
     CircleShape head = new CircleShape();
     head.setRadius(0.2f);
@@ -111,6 +111,7 @@ public class NPCFactory {
 
     wolf.setScale(0.8f, 0.8f);
 
+    //create body collision box using collider component
     wolf.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.8f,
             0.5f), PhysicsComponent.AlignX.CENTER,
             PhysicsComponent.AlignY.BOTTOM);
@@ -123,7 +124,7 @@ public class NPCFactory {
     head.setPosition(circleOffset);
     wolf.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
 
-    //create head circle collision box
+    //create neck circle collision box
     CircleShape neck = new CircleShape();
     neck.setRadius(0.15f);
     Vector2 neckOffset = new Vector2(wolf.getCenterPosition().x ,
@@ -193,7 +194,7 @@ public class NPCFactory {
             PhysicsComponent.AlignY.BOTTOM);
     
         deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
-    
+
         return deathGiant;
       }
 
