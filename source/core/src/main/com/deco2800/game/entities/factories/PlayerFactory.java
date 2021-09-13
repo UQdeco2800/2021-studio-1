@@ -120,8 +120,8 @@ public class PlayerFactory {
             Animation.PlayMode.LOOP);
 
     player.addComponent(animator);
-    //Custom player collision boxes
 
+    //Custom player collision boxes
     //create head collision box
     PolygonShape head = new PolygonShape();
     Vector2 headOffset = new Vector2(player.getCenterPosition().x,
