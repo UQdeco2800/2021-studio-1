@@ -57,7 +57,7 @@ public class NPCFactory {
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
 //    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.4f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
     skeleton
 //            .addComponent(new TextureRenderComponent("images/skeleton.png"))
