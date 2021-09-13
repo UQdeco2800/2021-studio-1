@@ -69,8 +69,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         Vector2 impulse;
         Body spearBod = spear.getComponent(PhysicsComponent.class).getBody();
 
-        System.out.println(spearBod.getWorldCenter());
-
         Vector2 offset;
         Vector2 extraVert = Vector2.Zero.cpy(); // Offset vector for crouching
 

@@ -23,39 +23,39 @@ float
   size: 300,175
   orig: 300,175
   offset: 0, 0
-  index: 1
+  index: 0
 float
   rotate: false
   xy: 364,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
-  index: 2
+  index: 1
 float
   rotate: false
   xy: 664,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
-  index: 3
+  index: 2
 float
   rotate: false
   xy: 964,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
-  index: 4
+  index: 3
 float
   rotate: false
   xy: 1264,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
-  index: 5
+  index: 4
 float
   rotate: false
   xy: 1564,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
-  index: 6
+  index: 5
