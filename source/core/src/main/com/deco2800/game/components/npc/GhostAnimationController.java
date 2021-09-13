@@ -16,7 +16,7 @@ public class GhostAnimationController extends Component {
     animator = this.entity.getComponent(AnimationRenderComponent.class);
     entity.getEvents().addListener("wanderStart", this::animateWander);
     entity.getEvents().addListener("chaseStart", this::animateChase);
-    //entity.getEvents().addListener("moveLeft", this::animateWalk);
+    entity.getEvents().addListener("moveLeft", this::animateWander);
   }
 
   /**

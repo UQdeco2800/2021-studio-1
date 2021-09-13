@@ -110,13 +110,13 @@ public class RacerArea extends GameArea {
             app.exit();
         }
 
-        spawnDeathGiant();
+        //spawnDeathGiant();
 
-        spawnWallOfDeath();
+        //spawnWallOfDeath();
 
-        spawnSkeletons();
+        //spawnSkeletons();
         spawnWolf();
-        spawnSpears();
+        //spawnSpears();
         spawnPowerUp();
 
         playMusic();
@@ -164,7 +164,7 @@ public class RacerArea extends GameArea {
                         break;
                     case 'R':
                         // ROCK
-                        spawnRock(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
+                        //spawnRock(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
                     default:
                         break;
                 }

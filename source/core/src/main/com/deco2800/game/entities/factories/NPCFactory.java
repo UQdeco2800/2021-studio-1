@@ -160,8 +160,8 @@ public class NPCFactory {
   private static Entity createBaseNPC(Entity target) {
     AITaskComponent aiComponent =
         new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(10f, 0f), 5f));
-            //.addTask(new MoveLeftTask());
+            //.addTask(new WanderTask(new Vector2(10f, 0f), 5f));
+            .addTask(new MoveLeftTask());
             //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
             //.addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
@@ -182,7 +182,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     //task to continuously move to the right
-                    .addTask(new MoveRightTask(target));
+                    .addTask(new MoveLeftTask());
     Entity npc =
             new Entity()
                     .addComponent(new PhysicsComponent())
