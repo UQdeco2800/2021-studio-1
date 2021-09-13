@@ -15,6 +15,7 @@ public class DeathGiantAnimationController extends Component {
     super.create();
     animator = this.entity.getComponent(AnimationRenderComponent.class);
     entity.getEvents().addListener("moveRight", this::animateWalk);
+    entity.getEvents().addListener("moveRightAngry", this::animateWalkAngry);
 
   }
   /**
@@ -22,6 +23,10 @@ public class DeathGiantAnimationController extends Component {
    */
   void animateWalk() {
     animator.startAnimation("walk");
+  }
+
+  void animateWalkAngry() {
+    animator.startAnimation("walkAngry");
   }
 
 }

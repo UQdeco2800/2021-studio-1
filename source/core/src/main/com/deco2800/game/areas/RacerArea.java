@@ -14,6 +14,7 @@ import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import java.io.*;
 import java.util.Random;
+import com.deco2800.game.components.CameraShakeComponent;
 
 import static com.badlogic.gdx.Gdx.app;
 
@@ -107,9 +108,7 @@ public class RacerArea extends GameArea {
 
         spawnTerrain();
 
-        spawnDeathGiant();
 
-        spawnWallOfDeath();
 
         try {
             spawnWorld();
@@ -124,6 +123,10 @@ public class RacerArea extends GameArea {
 
         // spawnRocks();
         // spawnSpikes();
+
+        spawnDeathGiant();
+
+        spawnWallOfDeath();
 
         spawnSkeletons();
         spawnWolf();
@@ -371,7 +374,9 @@ public class RacerArea extends GameArea {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - newPlayer.getScale().y) + 1);
         spawnEntityAt(newPlayer, pos, true, false);
+
         return newPlayer;
+
     }
 
     public Entity getPlayer() {
@@ -468,6 +473,7 @@ public class RacerArea extends GameArea {
     private void spawnWallOfDeath() {
         GridPoint2 leftPos = new GridPoint2(-40, 14);
         wallOfDeath = NPCFactory.createWallOfDeath(player);
+        wallOfDeath.addComponent(new CameraShakeComponent(player,terrainFactory.getCameraComponent()));
         spawnEntityAt(wallOfDeath, leftPos, true, true);
     }
 
@@ -476,9 +482,13 @@ public class RacerArea extends GameArea {
      */
     private void spawnDeathGiant() {
         GridPoint2 leftPos2 = new GridPoint2(-15, 15);
-        deathGiant = NPCFactory.createDeathGiant(player);
+        deathGiant = NPCFactory.createDeathGiant(getPlayer());
         spawnEntityAt(deathGiant, leftPos2, true, true);
+
     }
+
+
+
 
     /**
      * Play all SFX in the game.

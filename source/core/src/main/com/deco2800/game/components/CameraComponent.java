@@ -12,6 +12,7 @@ public class CameraComponent extends Component {
   private final Camera camera;
   private Vector2 lastPosition;
   private Vector2 targetCenterPosition;
+  private float offset = 0;
 
   public CameraComponent() {
     this(new OrthographicCamera());
@@ -26,10 +27,39 @@ public class CameraComponent extends Component {
   public void update() {
     Vector2 position = entity.getPosition();
     if (!lastPosition.epsilonEquals(entity.getPosition())) {
-      camera.position.set(position.x, position.y, 0f);
+      camera.position.set(position.x + offset, position.y + offset, 0f);
       lastPosition = position;
       camera.update();
+
     }
+
+  }
+
+  /**
+   * Sets the offset
+   * @param offset
+   */
+  public void setOffset(float offset) {
+    this.offset = offset;
+  }
+
+  /**
+   * Gets the offset
+   * @return offset
+   */
+  public float getOffset() {
+    return this.offset;
+  }
+
+  /**
+   *  Resets the last position
+   *
+   */
+  public void resetLastPosition() {
+    lastPosition = Vector2.Zero.cpy();
+  }
+
+
      /* Determine whether current player is moving and which direction
     if (PlayerActions.moving == true ){
       if(KeyboardPlayerInputComponent.isDirection == 1){
@@ -54,7 +84,6 @@ public class CameraComponent extends Component {
       }
     }
       */
-  }
 
   public Matrix4 getProjectionMatrix() {
     return camera.combined;
