@@ -76,8 +76,8 @@ public class PowerUpFactory {
     public static Entity createSpearPowerUp() {
         Entity powerUp = ProjectileFactory.createSpearEntity();
 
-        powerUp.getComponent(TouchAttackComponent.class).setEnabled(false);
-        powerUp.getComponent(CombatStatsComponent.class).setEnabled(false);
+
+
 
         powerUp.getComponent(HitboxComponent.class).setAsBox(new Vector2(0.1f, 1f), powerUp.getCenterPosition());
 
