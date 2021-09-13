@@ -26,6 +26,7 @@ class TouchAttackComponentTest {
     short targetLayer = (1 << 3);
     Entity entity = createAttacker(targetLayer);
     Entity target = createTarget(targetLayer);
+    target.getComponent(ShieldPowerUpComponent.class).setEnabled(false);
 
     Fixture entityFixture = entity.getComponent(HitboxComponent.class).getFixture();
     Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();
@@ -40,6 +41,7 @@ class TouchAttackComponentTest {
     Entity entity = createAttacker(targetLayer);
     Entity target = createTarget(targetLayer);
 
+    target.getComponent(ShieldPowerUpComponent.class).setEnabled(true);
     target.getComponent(ShieldPowerUpComponent.class).pickedUpShield();
     Fixture entityFixture = entity.getComponent(HitboxComponent.class).getFixture();
     Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();

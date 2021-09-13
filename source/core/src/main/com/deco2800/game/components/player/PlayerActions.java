@@ -53,11 +53,9 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("crouch", this::crouch);
     entity.getEvents().addListener("stop crouch", this::stopCrouching);
     entity.getEvents().addListener("attack", this::attack);
-    entity.getEvents().addListener("stop attack",
-            this::stopAttack);
+    entity.getEvents().addListener("stop attack", this::stopAttack);
     entity.getEvents().addListener("powerAttack", this::powerAttack);
-    entity.getEvents().addListener("stop stopPowerAttack",
-            this::stopPowerAttack);
+    entity.getEvents().addListener("stop stopPowerAttack", this::stopPowerAttack);
     entity.getEvents().addListener("obtainPowerUp", this::obtainPowerUp);
     entity.getEvents().addListener("usePowerUp", this::usePowerUp);
 

@@ -10,8 +10,14 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.utils.math.Vector2Utils;
 
+/**
+ * Controls the behaviour for the spear.
+ * The spear may be thrown three times and replenishes on pick up.
+ */
 public class SpearPowerUpComponent extends PowerUpComponent {
     private Entity spear;
+
+    // Update flags to check
     private boolean active;
     private boolean flown;
     private int thrown;
@@ -30,16 +36,19 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     public void create() {
         setEnabled(false);
         spear = null;
+        reset();
     }
 
     @Override
     public void earlyUpdate() {
         Body spearBod = spear.getComponent(PhysicsComponent.class).getBody();
 
-        if (flown && active && spearBod.getLinearVelocity().isZero()) {
+        // If after flying, the spear stops or goes below y = 0, deactivate and reset
+        if ((flown && active && spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0) {
             active = false;
             flown = false;
 
+            // Disposes the spear after three throws
             if (thrown == 3) {
                 reset();
                 setEnabled(false);
@@ -48,6 +57,9 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         }
     }
 
+    /**
+     * Checks the state of the spear and tracks the player's movement.
+     */
     @Override
     public void update() {
         PlayerActions playerActions = entity.getComponent(PlayerActions.class);
@@ -57,18 +69,22 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         Vector2 impulse;
         Body spearBod = spear.getComponent(PhysicsComponent.class).getBody();
 
+        System.out.println(spearBod.getWorldCenter());
+
         Vector2 offset;
-        Vector2 extraVert = Vector2.Zero.cpy();
+        Vector2 extraVert = Vector2.Zero.cpy(); // Offset vector for crouching
 
         Vector2 spearPos;
+
         StringBuilder anim = new StringBuilder();
 
-        if (playerActions.isJumping() || playerActions.isCrouching()) {
+        // Determines which animation to play with precedence
+        if (active) {
+            anim.append("fly-");
+        } else if (playerActions.isJumping() || playerActions.isCrouching()) {
             anim.append("flat-");
         } else if (playerActions.isMoving()) {
             anim.append("swing-");
-        } else if (active) {
-            anim.append("fly-");
         } else {
             anim.append("stand-");
         }
@@ -77,6 +93,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             playerDir = playerActions.getPreviousDirection();
         }
 
+        // Determines which direction for the animation needs to play
         if (playerDir.hasSameDirection(Vector2Utils.LEFT)) {
             offset = new Vector2(1.3f, 0.5f);
             spearPos = playerPos.sub(offset);
@@ -93,6 +110,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             extraVert.sub(new Vector2(0f, 0.3f));
         }
 
+        // If the player throws the spear and hasn't yet flown, apply impulse and increment throws
         if (active && !flown) {
             spear.getComponent(AnimationRenderComponent.class).stopAnimation();
 
@@ -103,6 +121,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             thrown++;
         }
 
+        // Default animations while spear is in hand
         if (!active) {
             spear.setPosition(spearPos.add(extraVert));
             spear.getComponent(AnimationRenderComponent.class).stopAnimation();

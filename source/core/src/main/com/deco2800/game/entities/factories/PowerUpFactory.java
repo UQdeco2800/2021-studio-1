@@ -2,6 +2,7 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.entities.Entity;
@@ -21,9 +22,9 @@ import net.dermetfan.gdx.physics.box2d.PositionController;
 public class PowerUpFactory {
 
     /**
-     * Create a lightning power up
+     * Create a lightning power up entity.
      *
-     * @return lightning power up
+     * @return lightning power up entity
      */
     public static Entity createLightningPowerUp() {
         Entity powerUp = createBasePowerUp();
@@ -36,9 +37,9 @@ public class PowerUpFactory {
     }
 
     /**
-     * Create a shield power up
+     * Create a shield power up entity.
      *
-     * @return shield power up
+     * @return shield power up entity.
      */
     public static Entity createShieldPowerUp() {
         Entity powerUp = createBasePowerUp();
@@ -51,9 +52,9 @@ public class PowerUpFactory {
     }
 
     /**
-     * Creates a spear power up
+     * Creates a spear power up entity.
      *
-     * @return spear power up
+     * @return spear power up entity.
      */
     public static Entity createSpearPowerUp() {
         Entity powerUp = createBasePowerUp();
@@ -65,6 +66,8 @@ public class PowerUpFactory {
 
         powerUp.getComponent(TouchAttackComponent.class).setEnabled(false);
         powerUp.getComponent(CombatStatsComponent.class).setEnabled(false);
+
+        powerUp.getComponent(HitboxComponent.class).setAsBox(new Vector2(0.1f, 1f), powerUp.getCenterPosition());
 
         powerUp.setScale(1f, 1f);
         PhysicsUtils.setScaledCollider(powerUp, 1f, 1f);
@@ -91,7 +94,7 @@ public class PowerUpFactory {
     }
 
     /**
-     * Creates a base power up that other power ups can be built off of
+     * Creates a base power up to be extended by more specific power ups.
      *
      * @return base power up
      */

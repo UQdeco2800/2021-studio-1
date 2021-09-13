@@ -70,7 +70,8 @@ public class RacerArea extends GameArea {
         "images/wall.atlas",
         "images/deathGiant.atlas",
         "images/skeleton.atlas",
-        "images/playerspear.atlas"
+        "images/playerspear.atlas",
+        "images/powerup-lightning-animation.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String mainMusic = "sounds/main.mp3";
