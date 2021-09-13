@@ -99,7 +99,7 @@ public class NPCFactory {
   }
 
   public static Entity createFireSpirit(Entity target) {
-    Entity fireSpirit = createBaseNPC(target);
+    Entity fireSpirit = createFireSpiritNPC(target);
     BaseEntityConfig config = configs.wolf;
 
     AnimationRenderComponent animator =
@@ -201,6 +201,28 @@ public class NPCFactory {
     //.addTask(new MoveLeftTask());
     //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
     //.addTask(new ChaseTask(target, 10, 3f, 4f));
+    Entity npc =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(aiComponent);
+    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+    npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
+    return npc;
+  }
+
+  /**
+   * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
+   * @return entity
+   */
+  private static Entity createFireSpiritNPC(Entity target) {
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(0f, 0f), 0f));
     Entity npc =
             new Entity()
                     .addComponent(new PhysicsComponent())
