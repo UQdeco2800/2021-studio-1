@@ -87,80 +87,80 @@ float
   orig: 245, 320
   offset: 0, 0
   index: 10
-skeleton_new_back2
+float_back
   rotate: false
   xy: 2, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
-skeleton_new_back3
+  index: 1
+float_back
   rotate: false
   xy: 990, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
-skeleton_new_back4
+  index: 2
+float_back
   rotate: false
   xy: 249, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
-skeleton_new_back5
+  index: 3
+float_back
   rotate: false
   xy: 1237, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
-skeleton_new_back6
+  index: 4
+float_back
   rotate: false
   xy: 743, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
-skeleton_new_back7
+  index: 5
+float_back
   rotate: false
   xy: 249, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
-skeleton_new_back1
+  index: 6
+float_back
   rotate: false
   xy: 249, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
-skeleton_new_back8
+  index: 0
+float_back
   rotate: false
   xy: 1237, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
-skeleton_new_back9
+  index: 7
+float_back
   rotate: false
   xy: 743, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
-skeleton_new_back99
+  index: 8
+float_back
   rotate: false
   xy: 2, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
-skeleton_new_back999
+  index: 9
+float_back
   rotate: false
   xy: 990, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: -1
+  index: 10
