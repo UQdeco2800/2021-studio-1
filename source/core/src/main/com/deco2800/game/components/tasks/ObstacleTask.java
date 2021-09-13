@@ -85,6 +85,4 @@ public class ObstacleTask extends DefaultTask implements PriorityTask {
             owner.getEntity().getEvents().trigger("offScreen");
         }
     }
-
-
 }
