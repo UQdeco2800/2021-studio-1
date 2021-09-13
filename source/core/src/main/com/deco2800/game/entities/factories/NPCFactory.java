@@ -197,8 +197,8 @@ public class NPCFactory {
   private static Entity createWolfNPC(Entity target) {
     AITaskComponent aiComponent =
             new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(10f, 0f), 5f));
-    //.addTask(new MoveLeftTask());
+                    //.addTask(new WanderTask(new Vector2(10f, 0f), 5f));
+                    .addTask(new MoveLeftTask());
     //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
     //.addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
