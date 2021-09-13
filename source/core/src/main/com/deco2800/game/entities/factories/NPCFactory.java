@@ -50,14 +50,15 @@ public class NPCFactory {
    * @return entity
    */
   public static Entity createSkeleton(Entity target) {
-    Entity skeleton = createBaseNPC(target);
+    Entity skeleton = createSkeletonNPC(target);
     BaseEntityConfig config = configs.skeleton;
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
 //    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-    animator.addAnimation("float", 0.4f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float_back", 0.1f, Animation.PlayMode.LOOP);
 
     skeleton
 //            .addComponent(new TextureRenderComponent("images/skeleton.png"))
@@ -77,7 +78,7 @@ public class NPCFactory {
    */
 
   public static Entity createWolf(Entity target) {
-    Entity wolf = createBaseNPC(target);
+    Entity wolf = createWolfNPC(target);
     BaseEntityConfig config = configs.wolf;
 
     AnimationRenderComponent animator =
@@ -93,7 +94,7 @@ public class NPCFactory {
             .addComponent(new GhostAnimationController());
     wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
 
-    wolf.setScale(0.8f, 0.8f);
+    wolf.setScale(1.3f, 1f);
     return wolf;
   }
 
@@ -175,13 +176,10 @@ public class NPCFactory {
    * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
    * @return entity
    */
-  private static Entity createBaseNPC(Entity target) {
+  private static Entity createSkeletonNPC(Entity target) {
     AITaskComponent aiComponent =
         new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(10f, 0f), 5f));
-            //.addTask(new MoveLeftTask());
-            //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
-            //.addTask(new ChaseTask(target, 10, 3f, 4f));
+            .addTask(new WanderTask(new Vector2(50f, 0f), 0f));
     Entity npc =
         new Entity()
             .addComponent(new PhysicsComponent())
@@ -190,6 +188,27 @@ public class NPCFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
             .addComponent(aiComponent);
+    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+    npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
+    return npc;
+  }
+
+  private static Entity createWolfNPC(Entity target) {
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(10f, 0f), 5f));
+    //.addTask(new MoveLeftTask());
+    //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
+    //.addTask(new ChaseTask(target, 10, 3f, 4f));
+    Entity npc =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(aiComponent);
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
