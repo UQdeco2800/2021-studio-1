@@ -26,6 +26,12 @@ public class ProjectileFactory {
         return spear;
     }
 
+    public static Entity fireSpiritShot() {
+        Entity fireSpiritShot = createBaseProjectile();
+        fireSpiritShot.getComponent(PhysicsMovementComponent.class);
+        return fireSpiritShot;
+    }
+
     /**
      * Creates the base entity of a projectile
      * @return a base projectile entity
