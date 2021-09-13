@@ -100,7 +100,7 @@ public class RacerArea extends GameArea {
      * entities (player)
      */
     @Override
-    public void create() {
+    public void create(int xOffset) {
         loadAssets();
 
         displayUI();
@@ -142,44 +142,43 @@ public class RacerArea extends GameArea {
         // spawnPlatform(1, LANE_1, 4);
         // spawnPlatform(1, LANE_2, 5);
 
-        File levelFile = new File("configs/LVL1.txt");
-        FileReader fr = new FileReader(levelFile);
-        BufferedReader br = new BufferedReader(fr);
-        String line;
-        float lane = 6.8f;
-        while ((line = br.readLine()) != null) {
-            // TODO: PERFORM INPUT CHECKING ON LVL FILE
-            for (int i = 0; i < line.length(); i++) {
-                switch ((line.charAt(i))) {
-                    case 'P':
-                        // PLATFORM
-                        spawnPlatform(1, LANES[Math.round(lane / 2)], (i * 3));
-                        break;
-                    case 'F':
-                        // FLOOR
-                        spawnFloor(1, LANES[Math.round(lane / 2)], (i * 3));
-                        spawnFloor(1, LANES[Math.round(lane / 2)], (i * 3) + 1);
-                        spawnFloor(1, LANES[Math.round(lane / 2)], (i * 3) + 2);
-                        break;
-                    case 'A':
-                        // A for Avatar :)
-                        player = spawnPlayer(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
-                        break;
-                    case 'S':
-                        // SPIKE
-                        spawnSpike(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
-                        break;
-                    case 'R':
-                        // ROCK
-                        spawnRock(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
-                    default:
-                        break;
+        try (BufferedReader br = new BufferedReader(new FileReader("configs/LVL1.txt"))) {
+            String line;
+            float lane = 6.8f;
+            while ((line = br.readLine()) != null) {
+                // TODO: PERFORM INPUT CHECKING ON LVL FILE
+                for (int i = 0; i < line.length(); i++) {
+                    switch ((line.charAt(i))) {
+                        case 'P':
+                            // PLATFORM
+                            spawnPlatform(1, LANES[Math.round(lane / 2)], (i * 3));
+                            break;
+                        case 'F':
+                            // FLOOR
+                            spawnFloor(1, LANES[Math.round(lane / 2)], (i * 3));
+                            spawnFloor(1, LANES[Math.round(lane / 2)], (i * 3) + 1);
+                            spawnFloor(1, LANES[Math.round(lane / 2)], (i * 3) + 2);
+                            break;
+                        case 'A':
+                            // A for Avatar :)
+                            player = spawnPlayer(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
+                            break;
+                        case 'S':
+                            // SPIKE
+                            spawnSpike(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
+                            break;
+                        case 'R':
+                            // ROCK
+                            spawnRock(LANES[Math.round(lane / 2)] + 1, (i * 3) + 1);
+                        default:
+                            break;
+                    }
                 }
+                lane = lane - 1;
             }
-            lane = lane - 1;
+        } catch (IOException ioe) {
+            throw new IOException("Level could not be loaded.");
         }
-        br.close();
-        fr.close();
     }
 
     private void spawnTerrain() {

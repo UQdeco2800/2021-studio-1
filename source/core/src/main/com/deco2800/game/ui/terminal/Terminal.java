@@ -1,15 +1,24 @@
 package com.deco2800.game.ui.terminal;
 
+import com.deco2800.game.areas.AreaManager;
+import com.deco2800.game.areas.RagnarokArea;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.ui.terminal.commands.Command;
-import com.deco2800.game.ui.terminal.commands.DebugCommand;
+import com.deco2800.game.files.RagLoader;
+import com.deco2800.game.ui.terminal.commands.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+// TerminalService has two main functions:
+//      1. allow the static calling of strings to the terminal
+//      2. interfacing with other services/managers
+//
+// This terminal class remains, and is where commands are
 
 /**
  * State tracker for a debug terminal. Any commands to be actioned through the terminal input should
@@ -20,6 +29,7 @@ public class Terminal extends Component {
   private final Map<String, Command> commands;
   private String enteredMessage = "";
   private boolean isOpen = false;
+  private boolean inLoad = false;
 
   public Terminal() {
     this(new HashMap<>());
@@ -28,7 +38,12 @@ public class Terminal extends Component {
   public Terminal(Map<String, Command> commands) {
     this.commands = commands;
 
-    addCommand("debug", new DebugCommand());
+    addCommand("-debug", new DebugCommand());
+    addCommand("-spawn", new SpawnCommand()); //TODO: make more Commands
+    addCommand("-place", new PlaceCommand());
+    addCommand("-load", new LoadCommand());
+    addCommand("-config", new ConfigCommand());
+    addCommand("-queue", new QueueCommand());
   }
 
   /** @return message entered by user */
@@ -131,5 +146,10 @@ public class Terminal extends Component {
    */
   public void setEnteredMessage(String text) {
     enteredMessage = text;
+  }
+
+  public void sendTerminal(String text) {
+    setEnteredMessage(text);
+    processMessage();
   }
 }

@@ -1,14 +1,10 @@
 package com.deco2800.game.entities;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
-import com.deco2800.game.GdxGame;
+import com.deco2800.game.components.Component;
 import com.deco2800.game.extensions.GameExtension;
-import com.deco2800.game.rendering.RenderService;
-import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.ui.UIPop;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,85 +18,99 @@ import java.util.Set;
 @ExtendWith(MockitoExtension.class)
 public class UIPopTest {
 
-    /*RenderService service;
-    EntityService entityService;
-    Entity mockGameEntity = new Entity();
+    private Entity mockGameEntity = new Entity();
 
     @Test
     void UIPopIsEntityTest() {
 
-        ServiceLocator.registerEntityService(entityService);
-        ServiceLocator.registerRenderService(service);
+        Entity entity = mock(Entity.class);
+        UIPop pop = new UIPop("Pause Menu", mockGameEntity);
+        entity.addComponent(pop);
 
-        Entity ent = new Entity();
-        ent.addComponent(new UIPop("Default Pop", mockGameEntity));
-
-        assertTrue(ent.getId() >= 0);
+        assertTrue(entity.getId() >= 0);
+        verify(entity).getId();
     }
 
     @Test
-    void UIPopAttatchesToEntityTest() {
+    void UIPopAttachesToEntityTest() {
 
-        ServiceLocator.registerEntityService(entityService);
-        ServiceLocator.registerRenderService(service);
-
-        Entity ent = new Entity();
-        ent.addComponent(new UIPop("Default Pop", mockGameEntity));
-
-        assertNotNull(ent.getComponent(UIPop.class));
-    }
-
-    @Test
-    void UIPopIsNotEmpty() {
-        Entity ent = new Entity();
-        Entity ent2 = new Entity();
-        ent2.addComponent(new UIPop("Default Pop", mockGameEntity));
-        assertNull(ent.getComponent(UIPop.class));
-        assertNotNull(ent2.getComponent(UIPop.class));
+        Entity ent = mock(Entity.class);
+        UIPop p = new UIPop("Help Screen", mockGameEntity);
+        ent.addComponent(p);
+        verify(ent).addComponent(p);
     }
 
     @Test
     void UIPopIsUnique() {
-        Entity ent1 = new Entity();
-        ent1.addComponent(new UIPop("Pause Menu", mockGameEntity));
-        Entity ent2 = new Entity();
-        ent2.addComponent(new UIPop("Default Pop", mockGameEntity));
 
-        assertTrue(!ent1.equals(ent2));
+        Entity ent1 = mock(Entity.class);
+        ent1.addComponent(new UIPop("Pause Menu", mockGameEntity));
+        Entity ent2 = mock(Entity.class);
+        ent2.addComponent(new UIPop("Pause Menu", mockGameEntity));
+
+        assertTrue(ent1 != ent2);
     }
 
     @Test
-    void UIPopHasCorrectName() {
+    void DefaultPopHasCorrectName() {
 
-        String defName = "Default Pop";
-        String scoreName = "Score Screen";
-        String pauseName = "Pause Menu";
+        UIPop popUp = mock(UIPop.class);
+        when(popUp.GetName()).thenReturn("Help Screen");
+        assertEquals(popUp.GetName(), "Help Screen");
 
-        UIPop  pop1 = new UIPop("Default Pop", mockGameEntity);
-        UIPop pop2 = new UIPop("Score Screen", mockGameEntity);
-        UIPop pop3 = new UIPop("Pause Menu", mockGameEntity);
+        UIPop pop = new UIPop("Help Screen", mockGameEntity);
+        assertEquals(pop.GetName(), "Help Screen");
 
-        assertEquals(defName, pop1.GetName());
-        assertEquals(scoreName, pop2.GetName());
-        assertEquals(pauseName, pop3.GetName());
+        assertEquals(popUp.GetName(), pop.GetName());
+    }
+
+    @Test
+    void ScoreScreenPopHasCorrectName() {
+
+        UIPop popUp = mock(UIPop.class);
+        when(popUp.GetName()).thenReturn("Score Screen");
+        assertEquals(popUp.GetName(), "Score Screen");
+
+        UIPop pop = new UIPop("Score Screen", mockGameEntity);
+        assertEquals(pop.GetName(), "Score Screen");
+
+        assertEquals(popUp.GetName(), pop.GetName());
+    }
+
+    @Test
+    void PauseMenuPopHasCorrectName() {
+
+        UIPop popUp = mock(UIPop.class);
+        when(popUp.GetName()).thenReturn("Pause Menu");
+        assertEquals(popUp.GetName(), "Pause Menu");
+
+        UIPop pop = new UIPop("Pause Menu", mockGameEntity);
+        assertEquals(pop.GetName(), "Pause Menu");
+
+        assertEquals(popUp.GetName(), pop.GetName());
     }
 
     @Test
     void UIPopNamesTest() {
 
+        UIPop pop = mock(UIPop.class);
+
         Set<String> namesSet = new HashSet<>();
-        namesSet.add("Default Pop");
+        namesSet.add("Help Screen");
         namesSet.add("Score Screen");
         namesSet.add("Pause Menu");
 
         assertEquals(UIPop.GetPossibleUIScreens(), namesSet);
+        assertEquals(pop.GetPossibleUIScreens(), namesSet);
     }
 
     @Test
     void UIPopNotInScreensTest() {
 
+        UIPop pop;
+
         try {
-            UIPop pop = new UIPop("Not in screens list", mockGameEntity);
+            pop = new UIPop("Not in screens list", mockGameEntity);
         } catch (NoSuchElementException e) {
             assertTrue(true); //caught
             return;
@@ -112,13 +122,44 @@ public class UIPopTest {
     @Test
     void UnmodifiableInstanceTest() {
 
-        UIPop pop = new UIPop("Default Pop", mockGameEntity);
+        UIPop pop = new UIPop("Pause Menu", mockGameEntity);
 
         String screenName = pop.GetName();
 
-        assertEquals("Default Pop", screenName);
+        assertEquals("Pause Menu", screenName);
 
         screenName = pop.GetName() + "Trying to change";
 
-        assertEquals("Default Pop", pop.GetName());
- */}
+        assertEquals("Pause Menu", pop.GetName());
+    }
+
+    @Test
+    void shouldCreatePop() {
+
+        Entity entity = new Entity();
+        Component component1 = mock(UIPop.class);
+        entity.addComponent(component1);
+        entity.create();
+        verify(component1).create();
+
+        UIPop component2 = mock(UIPop.class);
+        component2.create();
+
+        verify(component2).create();
+    }
+
+    @Test
+    void popShouldDispose() {
+
+        EntityService entityService = new EntityService();
+        Entity entity = mock(Entity.class);
+
+        UIPop pop = mock(UIPop.class);
+        entity.addComponent(pop);
+
+        entityService.register(entity);
+        entityService.dispose();
+
+        verify(entity).dispose();
+    }
+ }

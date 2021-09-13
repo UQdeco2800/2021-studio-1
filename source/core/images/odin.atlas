@@ -1,0 +1,294 @@
+
+odin.png
+size: 1026, 324
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  rotate: false
+  xy: 530, 135
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+crouch-left
+  rotate: false
+  xy: 2, 201
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+crouch-left
+  rotate: false
+  xy: 2, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+crouch-left
+  rotate: false
+  xy: 68, 201
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+crouch-left
+  rotate: false
+  xy: 2, 69
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+crouch-right
+  rotate: false
+  xy: 68, 135
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+crouch-right
+  rotate: false
+  xy: 134, 201
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+crouch-right
+  rotate: false
+  xy: 68, 69
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+crouch-right
+  rotate: false
+  xy: 134, 135
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+jump-left
+  rotate: false
+  xy: 200, 201
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+jump-right
+  rotate: false
+  xy: 134, 69
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+run-left
+  rotate: false
+  xy: 200, 135
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+run-left
+  rotate: false
+  xy: 266, 201
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+run-left
+  rotate: false
+  xy: 200, 69
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+run-left
+  rotate: false
+  xy: 266, 135
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+run-left
+  rotate: false
+  xy: 332, 201
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+run-left
+  rotate: false
+  xy: 266, 69
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+run-left
+  rotate: false
+  xy: 332, 135
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+run-right
+  rotate: false
+  xy: 398, 201
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+run-right
+  rotate: false
+  xy: 332, 69
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+run-right
+  rotate: false
+  xy: 398, 135
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+run-right
+  rotate: false
+  xy: 464, 201
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+run-right
+  rotate: false
+  xy: 398, 69
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+run-right
+  rotate: false
+  xy: 464, 135
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+run-right
+  rotate: false
+  xy: 530, 201
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+still-left
+  rotate: false
+  xy: 464, 69
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+still-right
+  rotate: false
+  xy: 530, 135
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+crouch-still-left
+  rotate: false
+  xy: 2, 69
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+crouch-still-right
+  rotate: false
+  xy: 68, 135
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+attack-right
+  rotate: false
+  xy: 0,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+attack-right
+  rotate: false
+  xy: 64,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+attack-right
+  rotate: false
+  xy: 128,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+attack-left
+  rotate: false
+  xy: 384,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+attack-left
+  rotate: false
+  xy: 448,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+attack-left
+  rotate: false
+  xy: 512,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+power-right
+  rotate: false
+  xy: 192,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+power-right
+  rotate: false
+  xy: 256,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+power-right
+  rotate: false
+  xy: 320,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+power-left
+  rotate: false
+  xy: 576,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+power-left
+  rotate: false
+  xy: 640,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+power-left
+  rotate: false
+  xy: 704,0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+
