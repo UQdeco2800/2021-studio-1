@@ -2,6 +2,8 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.entities.Entity;
@@ -17,6 +19,7 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import net.dermetfan.gdx.physics.box2d.PositionController;
+import net.dermetfan.gdx.physics.box2d.RotationController;
 
 public class PowerUpFactory {
 
@@ -29,6 +32,9 @@ public class PowerUpFactory {
         Entity powerUp = createBasePowerUp();
         powerUp.addComponent(new TextureRenderComponent(
                         "images/powerup-lightning.png"));
+
+        powerUp.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
+                PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
 
         powerUp.setType(EntityTypes.LIGHTNINGPOWERUP);
 
@@ -45,6 +51,17 @@ public class PowerUpFactory {
         powerUp.addComponent(new TextureRenderComponent(
                 "images/powerup-shield.png"));
 
+        Vector2[] shieldPoints = new Vector2[6];
+        shieldPoints[0] = new Vector2(0.3f, 0.2f);
+        shieldPoints[1] = new Vector2(0.1f, 0.3f);
+        shieldPoints[2] = new Vector2(0.1f, 0.8f);
+        shieldPoints[3] = new Vector2(0.8f, 0.8f);
+        shieldPoints[4] = new Vector2(0.8f, 0.3f);
+        shieldPoints[5] = new Vector2(0.6f, 0.2f);
+
+        PolygonShape shield = new PolygonShape();
+        shield.set(shieldPoints);
+        powerUp.getComponent(HitboxComponent.class).setShape(shield);
         powerUp.setType(EntityTypes.SHIELDPOWERUP);
 
         return powerUp;
@@ -94,9 +111,9 @@ public class PowerUpFactory {
         Entity powerUp =
                 new Entity()
                         .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent());
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new HitboxComponent());
 
-        PhysicsUtils.setScaledCollider(powerUp, 0.5f, 0.4f);
         powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
         powerUp.getEvents().addListener("dispose",
                 powerUp::flagDelete);
