@@ -50,6 +50,7 @@ public class gameScore extends Component {
     }
     /**
      * Score depletion on the basis of object being hit
+     *
      */
 
     public void obstacleTwoHit() {
