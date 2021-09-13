@@ -46,16 +46,16 @@ public class MainGameActions extends Component {
     public void onPause() {
 
         Sound pauseSound;
-        Music walkSound = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
-        walkSound.setLooping(true);
-        walkSound.setVolume(0.8f);
+        //Music walkSound = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
+        //walkSound.setLooping(true);
+        //walkSound.setVolume(0.8f);
 
         if (game.paused) {
             ServiceLocator.getTimeSource().setTimeScale(1f);
             popUp.dispose();
             //resume sound
-            pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-            walkSound.play();
+            //pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+            //walkSound.play();
         } else {
             ServiceLocator.getTimeSource().setTimeScale(0f);
 
@@ -67,11 +67,11 @@ public class MainGameActions extends Component {
             popUp.addComponent(new UIPop("Pause Menu", entity));
             ServiceLocator.getEntityService().register(popUp);
             //pause sound
-            pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
-            walkSound.pause();
+            //pauseSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+            //walkSound.pause();
         }
         game.paused = !game.paused;
-        pauseSound.play();
+        //pauseSound.play();
     }
 
 

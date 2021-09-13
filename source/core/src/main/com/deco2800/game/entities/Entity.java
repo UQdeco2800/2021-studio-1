@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.ComponentType;
+import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.events.EventHandler;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class Entity {
   private Array<Component> createdComponents;
 
   private boolean nextDelete = false;
+  private EntityTypes entityType;
 
   public Entity() {
     id = nextId;
@@ -263,6 +265,22 @@ public class Entity {
    */
   public int getId() {
     return id;
+  }
+
+  /**
+   * Sets the type of this entity
+   * @param type - which type of entity to be set as
+   */
+  public void setType(EntityTypes type) {
+    entityType = type;
+  }
+
+  /**
+   * Gets the type of this entity
+   * @return entity type
+   */
+  public EntityTypes getType() {
+    return entityType;
   }
 
   /**

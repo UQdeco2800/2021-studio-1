@@ -13,6 +13,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.deco2800.game.components.CameraShakeComponent;
 
 import static com.badlogic.gdx.Gdx.app;
 
@@ -65,7 +66,7 @@ public class RagnarokArea extends GameArea {
     //TODO: make Json,
     private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
             "images/terrain_iso_grass.atlas", "images/ghostKing" +
-            ".atlas", "images/odin.atlas", "images/wall.atlas", "images/skeleton.atlas"
+            ".atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas"
     };
 
     // get the sounds to work and then move the music & sounds to a json
@@ -94,9 +95,6 @@ public class RagnarokArea extends GameArea {
         loadAssets();
         displayUI();
         spawnTerrain();
-        //spawnWallOfDeath(); //this is dependant
-
-        //player = spawnPlayer(10, 5);
 
         //playMusic(); //TODO: eventual move to music
     }
@@ -137,6 +135,33 @@ public class RagnarokArea extends GameArea {
         return newPlayer;
     }
 
+    /**
+     * This spawns the Wall of Death
+     */
+    protected void spawnWallOfDeath() {
+        GridPoint2 leftPos = new GridPoint2(-40,13);
+        Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
+        wallOfDeath.addComponent(new CameraShakeComponent(this.player,this.terrainFactory.getCameraComponent()));
+        spawnEntityAt(wallOfDeath, leftPos, true, true);
+    }
+
+    /**
+     * This spawns the Death Giant in front of the Wall of Death
+     */
+    protected void spawnDeathGiant() {
+        GridPoint2 leftPos2 = new GridPoint2(-15, 13);
+        Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
+        spawnEntityAt(deathGiant, leftPos2, true, true);
+    }
+
+
+    protected void spawnLevelLoadTrigger(int x) {
+        GridPoint2 centrePos = new GridPoint2(x, 6);
+        Entity levelLoadTrigger = ObstacleFactory.createLevelLoadTrigger();
+        spawnEntityAt(levelLoadTrigger, centrePos, true, true);
+    }
+
+
     //TODO: KEEP
     private void spawnTerrain() {
         // Background terrain
@@ -147,16 +172,6 @@ public class RagnarokArea extends GameArea {
         float tileSize = terrain.getTileSize();
         GridPoint2 tileBounds = terrain.getMapBounds(0);
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
-
-        // Left
-        // spawnEntityAt(
-        //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
-        // Right
-        // spawnEntityAt(
-        //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        //     new GridPoint2(tileBounds.x, 0),
-        //     false,
-        //     false);
 
         // Top
         spawnEntityAt(

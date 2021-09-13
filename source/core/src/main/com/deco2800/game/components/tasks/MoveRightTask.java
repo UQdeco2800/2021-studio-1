@@ -6,6 +6,7 @@ import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.ai.tasks.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.deco2800.game.entities.Entity;
 
 /**
  * Wander around by moving a random position within a range of the starting position. Wait a little
@@ -18,9 +19,11 @@ public class MoveRightTask extends DefaultTask implements PriorityTask {
   private MovementTask movementTask;
   private WaitTask waitTask;
   private Task currentTask;
+  private Entity target;
 
 
-  public MoveRightTask() {
+  public MoveRightTask(Entity target) {
+    this.target = target;
   }
 
   @Override

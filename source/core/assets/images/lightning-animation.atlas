@@ -1,0 +1,68 @@
+lightning-animation.png
+size: 1928, 175
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  rotate: false
+  xy: 64,0
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: 0
+blank
+  rotate: false
+  xy: 0,0
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: 0
+icon
+  rotate: false
+  xy: 64,0
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 128,0
+  size: 300,175
+  orig: 300,175
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 428,0
+  size: 300,175
+  orig: 300,175
+  offset: 0, 0
+  index: 1
+float
+  rotate: false
+  xy: 728,0
+  size: 300,175
+  orig: 300,175
+  offset: 0, 0
+  index: 2
+float
+  rotate: false
+  xy: 1028,0
+  size: 300,175
+  orig: 300,175
+  offset: 0, 0
+  index: 3
+float
+  rotate: false
+  xy: 1328,0
+  size: 300,175
+  orig: 300,175
+  offset: 0, 0
+  index: 4
+float
+  rotate: false
+  xy: 1628,0
+  size: 300,175
+  orig: 300,175
+  offset: 0, 0
+  index: 5

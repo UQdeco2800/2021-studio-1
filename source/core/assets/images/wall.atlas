@@ -1,4 +1,4 @@
-wallOfDeath.png
+wallOfDeathAngry.png
 size: 1920, 48
 format: RGBA8888
 filter: Linear,Linear
@@ -73,14 +73,14 @@ walk
   orig: 157, 48
   offset: 0, 0
   index: -1
-walk
+walkAngry
   rotate: false
   xy: 1600, 0
   size: 157, 48
   orig: 157, 48
   offset: 0, 0
   index: -1
-walk
+walkAngry
   rotate: false
   xy: 1760, 0
   size: 157, 48

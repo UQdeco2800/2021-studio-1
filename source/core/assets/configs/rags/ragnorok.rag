@@ -67,4 +67,5 @@ $-spawn [25,6] (wolf)
 $-spawn [25,4] (wolf)
 $-spawn [25,7] (wolf)
 $-spawn [22,5] (skeleton)
+$-spawn [47,5] (levelTrigger)
 

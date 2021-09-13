@@ -32,21 +32,13 @@ public class RagLoader {
 
         String filepath = "configs/rags/" + ragFile + ".rag";
 
-        ServiceLocator.getTerminalService().sendTerminal("-place [1,1] (platform)");
+        //ServiceLocator.getTerminalService().sendTerminal("-place [1,1] (platform)");
 
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
             // SO THIS FIRST SECTION JUST DEALS WITH THE TILE MAP @ THE TOP
 
             String line;
             //float lane = 6.8f;
-
-            String title;
-            int width = 0;
-            int height = 0;
-
-            int i = 0;
-            int y = 0;
-
             boolean inConfig = false;
             boolean inTerrain = false;
             boolean inSpawn = false;
@@ -105,9 +97,6 @@ public class RagLoader {
                         float py = Float.parseFloat(argument.split(",")[1]);
 
                         //TODO REMOVE THIS HACK U FRAUD
-                        if (command.equals("set")) {
-                            //ServiceLocator.getAreaService().getManager().loadSetPlayer(px, py);
-                        }
 
                     } else if (line.startsWith("-")) { // direct command line
 
