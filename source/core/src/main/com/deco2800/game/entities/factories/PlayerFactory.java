@@ -167,6 +167,8 @@ public class PlayerFactory {
     player.getComponent(ColliderComponent.class).setDensity(1.0f);
 
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
+    player.getComponent(AnimationRenderComponent.class).startAnimation("spear-still-right");
+
     //gravity scalar used to multiply gravity from physics engine, used 5 for
     //base character vary based on how heavy we want characters to look
     player.getComponent(PhysicsComponent.class).setGravityScale(5.0f);

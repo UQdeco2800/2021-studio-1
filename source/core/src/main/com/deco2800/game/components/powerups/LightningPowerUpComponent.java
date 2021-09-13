@@ -34,6 +34,7 @@ public class LightningPowerUpComponent extends PowerUpComponent {
             if (powerUp.getComponent(AnimationRenderComponent.class).getCurrentAnimation().equals("float")) {
                 if (powerUp.getComponent(AnimationRenderComponent.class).isFinished()) {
                     active = false;
+                    enabled = false;
                     powerUp.flagDelete();
                 }
             }

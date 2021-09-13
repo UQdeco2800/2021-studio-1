@@ -38,7 +38,7 @@ public class PowerUpFactory {
 
         animator.addAnimation("icon", 1f, Animation.PlayMode.LOOP);
         animator.addAnimation("blank", 1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("float", 0.2f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("float", 0.1f, Animation.PlayMode.NORMAL);
 
         powerUp.addComponent(animator);
         powerUp.getComponent(AnimationRenderComponent.class).startAnimation("icon");
@@ -95,7 +95,9 @@ public class PowerUpFactory {
 
         powerUp.getComponent(HitboxComponent.class).setAsBox(new Vector2(0.1f, 1f), powerUp.getCenterPosition());
 
-        powerUp.setScale(1f, 1f);
+        powerUp.getComponent(PhysicsComponent.class).setGravityScale(2f);
+
+        powerUp.setScale(1.1f, 1.1f);
         PhysicsUtils.setScaledCollider(powerUp, 1f, 1f);
 
         AnimationRenderComponent animator =
@@ -108,11 +110,12 @@ public class PowerUpFactory {
         animator.addAnimation("fly-right", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("stand-left", 1f, Animation.PlayMode.LOOP);
         animator.addAnimation("stand-right", 1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("swing-left", 0.09f, Animation.PlayMode.LOOP);
-        animator.addAnimation("swing-right", 0.09f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swing-left", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swing-right", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("static", 1f, Animation.PlayMode.LOOP);
 
         powerUp.addComponent(animator);
+        powerUp.getComponent(AnimationRenderComponent.class).startAnimation("static");
 
         powerUp.setType(EntityTypes.SPEARPOWERUP);
 

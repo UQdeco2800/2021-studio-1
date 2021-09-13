@@ -340,29 +340,35 @@ public class RacerArea extends GameArea {
     }
 
     private void spawnPowerUps() {
-        GridPoint2 bottomRightMin = new GridPoint2(21, 10);
-        GridPoint2 bottomRightMax = new GridPoint2(27, 10);
+        GridPoint2 bottomRightMin = new GridPoint2(100, 10);
+        GridPoint2 bottomRightMax = new GridPoint2(200, 10);
         GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
-        GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
+        GridPoint2 bottomLeftMax = new GridPoint2(100, 10);
 
-        GridPoint2 randomPos1 = RandomUtils.random(bottomLeftMin, bottomRightMin);
-        GridPoint2 randomPos2 = RandomUtils.random(bottomLeftMin, bottomRightMin);
-        GridPoint2 randomPos3 = new GridPoint2(30, 5);
         GridPoint2 playerPos = new GridPoint2(12,5);
 
-        Entity lightningPowerUp = PowerUpFactory.createLightningPowerUp();
-        Entity shieldPowerUp = PowerUpFactory.createShieldPowerUp();
+        Entity startingSpear = PowerUpFactory.createSpearPowerUp();
+        Entity spearPowerUp;
+        Entity lightningPowerUp;
+        Entity shieldPowerUp;
 
-        Entity spearPowerUp1 = PowerUpFactory.createSpearPowerUp();
-        spearPowerUp1.getComponent(AnimationRenderComponent.class).startAnimation("static");
+        spawnEntityAt(startingSpear, playerPos, false, false);
+        startingSpear.getComponent(AnimationRenderComponent.class).startAnimation("static");
 
-        Entity spearPowerUp2 = PowerUpFactory.createSpearPowerUp();
-        spearPowerUp2.getComponent(AnimationRenderComponent.class).startAnimation("static");
+        for (int i = 0; i < 3; i++) {
+            spearPowerUp = PowerUpFactory.createSpearPowerUp();
+            lightningPowerUp = PowerUpFactory.createLightningPowerUp();
+            shieldPowerUp = PowerUpFactory.createShieldPowerUp();
 
-        spawnEntityAt(lightningPowerUp, randomPos1, false, false);
-        spawnEntityAt(shieldPowerUp, randomPos2, false, false);
-        spawnEntityAt(spearPowerUp1, playerPos, false, false);
-        spawnEntityAt(spearPowerUp2, randomPos3, false, false);
+            GridPoint2 posLeft = RandomUtils.random(bottomLeftMin, bottomRightMin);
+            spawnEntityAt(spearPowerUp, posLeft, false, false);
+            posLeft = RandomUtils.random(bottomLeftMin, bottomRightMin);
+            spawnEntityAt(lightningPowerUp, posLeft, false, false);
+            posLeft = RandomUtils.random(bottomLeftMin, bottomRightMin);
+            spawnEntityAt(shieldPowerUp, posLeft, false, false);
+
+        }
+
     }
 
     private Entity spawnPlayer(int lane, int xCord) {

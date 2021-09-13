@@ -58,9 +58,6 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("stop stopPowerAttack", this::stopPowerAttack);
     entity.getEvents().addListener("obtainPowerUp", this::obtainPowerUp);
     entity.getEvents().addListener("usePowerUp", this::usePowerUp);
-
-    entity.getComponent(AnimationRenderComponent.class)
-            .startAnimation("still-right");
   }
 
   @Override
@@ -275,6 +272,7 @@ public class PlayerActions extends Component {
         break;
 
       case SPEARPOWERUP:
+        powerUp.getComponent(ColliderComponent.class).setSensor(true);
         entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
         entity.getComponent(SpearPowerUpComponent.class).obtainSpear(powerUp);
         break;
