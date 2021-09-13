@@ -70,7 +70,7 @@ public class NPCFactory {
 
     //set body collision box
     skeleton.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.6f,
-            0.5f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
+            0.45f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
     //create head circle collision box
     CircleShape head = new CircleShape();
     head.setRadius(0.2f);
