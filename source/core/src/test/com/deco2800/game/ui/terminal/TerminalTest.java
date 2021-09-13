@@ -71,6 +71,7 @@ class TerminalTest {
 
     terminal.setEnteredMessage("test1");
     terminal.processMessage();
+    terminal.processMessageBuffer();
     verify(command).action(captor.capture());
 
     assertEquals(0, captor.getValue().size());
@@ -87,6 +88,7 @@ class TerminalTest {
 
     terminal.setEnteredMessage("test1 1 2 3");
     terminal.processMessage();
+    terminal.processMessageBuffer();
     verify(command).action(captor.capture());
 
     ArrayList<String> capturedArg = captor.getValue();
