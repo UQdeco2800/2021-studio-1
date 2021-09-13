@@ -193,7 +193,7 @@ public class NPCFactory {
             PhysicsComponent.AlignY.BOTTOM);
     
         deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
-    
+
         return deathGiant;
       }
 

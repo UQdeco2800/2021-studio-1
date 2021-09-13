@@ -130,7 +130,5 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     @Override
     public void activate() {
         active = true;
-        spear.getComponent(TouchAttackComponent.class).setEnabled(true);
-        spear.getComponent(CombatStatsComponent.class).setEnabled(true);
     }
 }
