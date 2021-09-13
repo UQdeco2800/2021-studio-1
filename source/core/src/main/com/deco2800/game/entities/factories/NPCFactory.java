@@ -97,6 +97,27 @@ public class NPCFactory {
     return wolf;
   }
 
+  public static Entity createFireSpirit(Entity target) {
+    Entity fireSpirit = createBaseNPC(target);
+    BaseEntityConfig config = configs.wolf;
+
+    AnimationRenderComponent animator =
+            new AnimationRenderComponent(
+                    ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
+//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
+    fireSpirit
+//            .addComponent(new TextureRenderComponent("images/ghostKing.png"))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+            .addComponent(animator)
+            .addComponent(new GhostAnimationController());
+    fireSpirit.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+    fireSpirit.setScale(0.8f, 0.8f);
+    return fireSpirit;
+  }
+
   /**
    * Creates a Wall of Death entity
    *

@@ -44,6 +44,7 @@ public class RagnarokArea extends GameArea {
             "images/floor.png",
             "images/platform_gradient.png",
             "images/platform_no_gradient.png",
+            "images/ghostKing.png",
             "images/tree.png",
             "images/skeleton.png",
             "images/Spear_1.png",
@@ -217,6 +218,13 @@ public class RagnarokArea extends GameArea {
         Entity skeleton = NPCFactory.createSkeleton(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(skeleton, pos, false, false);
+        //signup(pos, skeleton);
+    }
+
+    protected void spawnFireSpirit(int x, int y) {
+        Entity fireSpirit = NPCFactory.createFireSpirit(player);
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(fireSpirit, pos, false, false);
         //signup(pos, skeleton);
     }
 
