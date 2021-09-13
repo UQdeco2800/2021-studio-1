@@ -187,7 +187,13 @@ int&nbsp;baseAttack)</code></th>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hit(com.deco2800.game.components.CombatStatsComponent)">hit</a></span>&#8203;(<a href="CombatStatsComponent.html" title="class in com.deco2800.game.components">CombatStatsComponent</a>&nbsp;attacker)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Makes an entity lose health based off of the amount of damage dealth by
+ the attacker
+ If the entity is a player, attack the player if they do not have any
+ blocks left
+ in their shield</div>
+</td>
 </tr>
 <tr class="altColor" id="i4">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
@@ -324,6 +330,15 @@ int&nbsp;baseAttack)</span></div>
 <section class="detail">
 <h3><a id="hit(com.deco2800.game.components.CombatStatsComponent)">hit</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">hit</span>&#8203;(<span class="arguments"><a href="CombatStatsComponent.html" title="class in com.deco2800.game.components">CombatStatsComponent</a>&nbsp;attacker)</span></div>
+<div class="block">Makes an entity lose health based off of the amount of damage dealth by
+ the attacker
+ If the entity is a player, attack the player if they do not have any
+ blocks left
+ in their shield</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>attacker</code> - - entity that is attacking</dd>
+</dl>
 </section>
 </li>
 </ul>
