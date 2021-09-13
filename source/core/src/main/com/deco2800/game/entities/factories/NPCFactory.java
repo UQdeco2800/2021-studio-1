@@ -9,6 +9,7 @@ import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.components.npc.DeathGiantAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.tasks.MoveRightTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.components.tasks.MoveLeftTask;
@@ -179,15 +180,15 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     //task to continuously move to the right
-                    .addTask(new MoveRightTask());
+                    .addTask(new MoveRightTask(target));
     Entity npc =
             new Entity()
                     .addComponent(new PhysicsComponent())
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-
                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
+                    .addComponent(new CameraShakeComponent(target))
                     .addComponent(aiComponent);
 
     //set the NPC as a sensor so other object will not collide

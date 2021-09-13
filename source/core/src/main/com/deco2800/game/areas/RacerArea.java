@@ -97,9 +97,7 @@ public class RacerArea extends GameArea {
 
         spawnTerrain();
 
-        spawnDeathGiant();
 
-        spawnWallOfDeath();
 
         try {
             spawnWorld();
@@ -110,6 +108,10 @@ public class RacerArea extends GameArea {
             // BRUUUUUUUUUH
             app.exit();
         }
+
+        spawnDeathGiant();
+
+        spawnWallOfDeath();
 
         spawnSkeletons();
         spawnWolf();
@@ -342,7 +344,9 @@ public class RacerArea extends GameArea {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - newPlayer.getScale().y));
         spawnEntityAt(newPlayer, pos, true, false);
+
         return newPlayer;
+
     }
 
     public Entity getPlayer() {
@@ -447,9 +451,13 @@ public class RacerArea extends GameArea {
      */
     private void spawnDeathGiant() {
         GridPoint2 leftPos2 = new GridPoint2(-15, 15);
-        deathGiant = NPCFactory.createDeathGiant(player);
+        deathGiant = NPCFactory.createDeathGiant(getPlayer());
         spawnEntityAt(deathGiant, leftPos2, true, true);
+
     }
+
+
+
 
     /**
      * Play all SFX in the game.
