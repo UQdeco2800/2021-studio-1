@@ -2,7 +2,7 @@ package com.deco2800.game.areas;
 
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.files.RagLoader;
-
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -173,6 +173,9 @@ public class AreaManager extends RagnarokArea {
             case "wolf":
                 area.spawnWolf(gx, gy);
                 break;
+            case "levelTrigger":
+                area.spawnLevelLoadTrigger(gx); //TODO: MAKE THiS DYNAMICALLY BASED ON SCREEN WIDTH
+                break;
             case "default":
                 logger.error("spawn() called in AreaManger without valid spawnType");
         }
@@ -191,9 +194,6 @@ public class AreaManager extends RagnarokArea {
         }
         loader.newCreateFromFile(level);
         startNextArea += bPWidth; // Set this value to reflect the start of the next area.
-        System.out.println("Callng load level trigger: " + String.valueOf(bPWidth));
-        terrainInstance.spawnLevelLoadTrigger(startNextArea*GRID_SCALE);
-        
     }
 
     /**
@@ -222,7 +222,6 @@ public class AreaManager extends RagnarokArea {
                         bPIndex = 0;
                         break;
                     case "queue":
-                        System.out.println("closed queue");
                         makeBufferedPlace();
                         break;
                     case "make":
@@ -270,7 +269,6 @@ public class AreaManager extends RagnarokArea {
      * But will be intercepted as functionality is developed.
      */
     private void makeBufferedPlace() {
-        System.out.println("MAKING BUFFERED PLACE");
         int x = startNextArea;
         for (String[] column : bufferedPlaces) {
             int y = 0;

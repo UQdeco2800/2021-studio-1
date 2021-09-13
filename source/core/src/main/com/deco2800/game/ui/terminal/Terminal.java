@@ -130,8 +130,6 @@ public class Terminal extends Component {
         return false;
       }
       commands.get(command).action(args);
-      System.out.println("Processing message buffer now");
-
     }
     return true;
   }
