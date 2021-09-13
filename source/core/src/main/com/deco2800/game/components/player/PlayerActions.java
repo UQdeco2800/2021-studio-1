@@ -264,7 +264,14 @@ public class PlayerActions extends Component {
   public void obtainPowerUp(Entity powerUp) {
     switch (powerUp.getType()) {
       case LIGHTNINGPOWERUP:
+        powerUp.getComponent(ColliderComponent.class).setEnabled(false);
+        powerUp.getComponent(PhysicsComponent.class).getBody().setGravityScale(0);
+
         entity.getComponent(LightningPowerUpComponent.class).setEnabled(true);
+        entity.getComponent(LightningPowerUpComponent.class).obtainPowerUp(powerUp);
+
+        powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
+        powerUp.getComponent(AnimationRenderComponent.class).startAnimation("blank");
         break;
 
       case SPEARPOWERUP:
@@ -287,7 +294,6 @@ public class PlayerActions extends Component {
       case LIGHTNINGPOWERUP:
         if (entity.getComponent(LightningPowerUpComponent.class).getEnabled()) {
           entity.getComponent(LightningPowerUpComponent.class).activate();
-          entity.getComponent(LightningPowerUpComponent.class).setEnabled(false);
         }
         break;
 

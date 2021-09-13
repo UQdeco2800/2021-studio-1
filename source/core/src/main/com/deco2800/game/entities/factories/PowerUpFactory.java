@@ -31,11 +31,22 @@ public class PowerUpFactory {
      */
     public static Entity createLightningPowerUp() {
         Entity powerUp = createBasePowerUp();
-        powerUp.addComponent(new TextureRenderComponent(
-                        "images/powerup-lightning.png"));
+
+        AnimationRenderComponent animator =
+            new AnimationRenderComponent(ServiceLocator.getResourceService()
+                .getAsset("images/lightning-animation.atlas", TextureAtlas.class));
+
+        animator.addAnimation("icon", 1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("blank", 1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("float", 0.2f, Animation.PlayMode.NORMAL);
+
+        powerUp.addComponent(animator);
+        powerUp.getComponent(AnimationRenderComponent.class).startAnimation("icon");
 
         powerUp.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
                 PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
+        powerUp.getComponent(ColliderComponent.class).setAsCircleAligned(0.2f,
+            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
 
         powerUp.setType(EntityTypes.LIGHTNINGPOWERUP);
 
@@ -64,6 +75,9 @@ public class PowerUpFactory {
         shield.set(shieldPoints);
         powerUp.getComponent(HitboxComponent.class).setShape(shield);
         powerUp.setType(EntityTypes.SHIELDPOWERUP);
+
+        powerUp.getEvents().addListener("dispose",
+            powerUp::flagDelete);
 
         return powerUp;
     }
@@ -118,8 +132,6 @@ public class PowerUpFactory {
                         .addComponent(new HitboxComponent());
 
         powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
-        powerUp.getEvents().addListener("dispose",
-                powerUp::flagDelete);
 
         return powerUp;
     }
