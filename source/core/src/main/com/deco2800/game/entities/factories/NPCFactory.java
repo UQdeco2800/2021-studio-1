@@ -113,6 +113,7 @@ public class NPCFactory {
                     ServiceLocator.getResourceService()
                             .getAsset("images/wall.atlas", TextureAtlas.class));
         animator.addAnimation("walk", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("walkAngry", 0.12f, Animation.PlayMode.LOOP);
 
     wallOfDeath
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -137,6 +138,7 @@ public class NPCFactory {
                         ServiceLocator.getResourceService()
                                 .getAsset("images/deathGiant.atlas", TextureAtlas.class));
             animator.addAnimation("walk", 0.12f, Animation.PlayMode.LOOP);
+            animator.addAnimation("walkAngry", 0.12f, Animation.PlayMode.LOOP);
     
             deathGiant
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -188,7 +190,7 @@ public class NPCFactory {
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
-                    .addComponent(new CameraShakeComponent(target))
+
                     .addComponent(aiComponent);
 
     //set the NPC as a sensor so other object will not collide

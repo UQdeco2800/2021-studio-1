@@ -11,19 +11,20 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.components.CameraComponent;
 import com.badlogic.gdx.graphics.Camera;
 
-
 public class CameraShakeComponent extends Component {
   private short targetLayer;
   private float knockbackForce = 0f;
   private CombatStatsComponent combatStats;
   private HitboxComponent hitboxComponent;
   private Entity target;
+  private CameraComponent cameraComponent;
+  private float toggle;
 
-
-  public CameraShakeComponent(Entity target) {
+  public CameraShakeComponent(Entity target, CameraComponent cameraComponent) {
     this.target = target;
+    this.cameraComponent = cameraComponent;
+    this.toggle = 0.1f;
   }
-
 
   @Override
   public void create() {
@@ -31,17 +32,30 @@ public class CameraShakeComponent extends Component {
   }
 
   private void onCollisionStart(Fixture me, Fixture other) {
+    float distance = entity.getPosition().dst(target.getPosition());
 
-    float dis = entity.getPosition().dst(target.getPosition());
-    //System.out.print(dis);
+    if (distance < 30f) {
 
-    if (dis < 14f) {
-      //System.out.print("mayday");
-      Vector2 position = entity.getPosition();
-      //System.out.print(target.getComponent(CameraComponent.class));
-      target.getComponent(CameraComponent.class).getCamera().position.set(position.x-10f, position.y-10f, 0f);
-      target.getComponent(CameraComponent.class).getCamera().update();
-      //camera.positionW
+      if (this.toggle == 0.1f) {
+        this.toggle = -0.1f;
+      }
+      else {
+        this.toggle = 0.1f;
+      }
+      //System.out.print(this.toggle);
+
+      entity.getEvents().trigger("moveRightAngry");
+      //System.out.print("close");
+      //System.out.print(cameraComponent);
+      cameraComponent.set_offset(this.toggle);
+      cameraComponent.update();
+
+    }
+    else {
+      entity.getEvents().trigger("moveRight");
+      //System.out.print("far");
+     cameraComponent.set_offset(0);
+      cameraComponent.update();
     }
 
   }

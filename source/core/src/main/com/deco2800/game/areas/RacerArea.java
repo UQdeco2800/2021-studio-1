@@ -13,6 +13,7 @@ import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import java.io.*;
 import java.util.Random;
+import com.deco2800.game.components.CameraShakeComponent;
 
 import static com.badlogic.gdx.Gdx.app;
 
@@ -443,6 +444,7 @@ public class RacerArea extends GameArea {
     private void spawnWallOfDeath() {
         GridPoint2 leftPos = new GridPoint2(-40, 14);
         wallOfDeath = NPCFactory.createWallOfDeath(player);
+        wallOfDeath.addComponent(new CameraShakeComponent(player,terrainFactory.getCameraComponent()));
         spawnEntityAt(wallOfDeath, leftPos, true, true);
     }
 
