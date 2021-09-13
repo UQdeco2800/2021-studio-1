@@ -3,6 +3,7 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchDisposeComponent;
@@ -67,9 +68,20 @@ public class NPCFactory {
     skeleton.getComponent(AnimationRenderComponent.class).scaleEntity();
     skeleton.setScale(1f, 1.2f);
 
+    //set body collision box
     skeleton.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.6f,
-            1f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
+            0.5f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
+    //create head circle collision box
+    CircleShape head = new CircleShape();
+    head.setRadius(0.2f);
+    Vector2 circleOffset = new Vector2(skeleton.getCenterPosition().x + 0.2f,
+            skeleton.getCenterPosition().y + 0.055f);
+    head.setPosition(circleOffset);
+    skeleton.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+
+
     skeleton.setType(EntityTypes.SKELETON);
+
     return skeleton;
   }
 
@@ -100,8 +112,24 @@ public class NPCFactory {
     wolf.setScale(0.8f, 0.8f);
 
     wolf.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.8f,
-            0.7f), PhysicsComponent.AlignX.CENTER,
+            0.5f), PhysicsComponent.AlignX.CENTER,
             PhysicsComponent.AlignY.BOTTOM);
+
+    //create head circle collision box
+    CircleShape head = new CircleShape();
+    head.setRadius(0.15f);
+    Vector2 circleOffset = new Vector2(wolf.getCenterPosition().x - 0.2f,
+            wolf.getCenterPosition().y + 0.1f);
+    head.setPosition(circleOffset);
+    wolf.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+
+    //create head circle collision box
+    CircleShape neck = new CircleShape();
+    neck.setRadius(0.15f);
+    Vector2 neckOffset = new Vector2(wolf.getCenterPosition().x ,
+            wolf.getCenterPosition().y );
+    neck.setPosition(neckOffset);
+    wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck,1.0f);
 
     wolf.setType(EntityTypes.WOLF);
 
@@ -128,10 +156,11 @@ public class NPCFactory {
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
             .addComponent(new DeathGiantAnimationController())
-            .addComponent(new TouchDisposeComponent())
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent());
+            .addComponent(new TouchDisposeComponent());
+            //.addComponent(new PhysicsComponent())
+            //.addComponent(new ColliderComponent())
+            //.addComponent(new HitboxComponent());
+    //The above components were causing severe warnings for being added twice so i commented it out
 
     wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
     wallOfDeath.setScale(25f,12f);
