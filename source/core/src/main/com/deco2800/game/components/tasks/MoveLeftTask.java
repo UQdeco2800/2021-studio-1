@@ -52,7 +52,7 @@ public class MoveLeftTask extends DefaultTask implements PriorityTask {
   }
 
   /**
-   * Sets the target to continuously move to the right direction
+   * Sets the target to continuously move to the left direction
    */
   private void startMoving() {
     logger.debug("Starting moving");

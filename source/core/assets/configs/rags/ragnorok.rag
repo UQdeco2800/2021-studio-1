@@ -59,15 +59,10 @@ $#.........F
 $@player set [2,1]
 
 $-spawn [12,5] (skeleton)
-$-spawn [25,5] (wolf)
 $-spawn [21,5] (skeleton)
 $-spawn [11,5] (skeleton)
 $-spawn [22,5] (skeleton)
-$-spawn [7,6] (wolf)
-$-spawn [25,6] (wolf)
-$-spawn [25,4] (wolf)
-$-spawn [25,7] (wolf)
-$-spawn [5,6] (fireSpirit)
-$-spawn [10,5] (fireSpirit)
-$-spawn [20,7] (fireSpirit)
+$-spawn [8,3] (fireSpirit)
+$-spawn [10,3] (fireSpirit)
+$-spawn [6,3] (fireSpirit)
 
