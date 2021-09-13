@@ -1,5 +1,5 @@
 powerup-lightning-animation.png
-size: 512, 512
+size: 1864, 175
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -10,44 +10,51 @@ default
   orig: 300,175
   offset: 0, 0
   index: 0
-float
+default-icon
   rotate: false
   xy: 0,0
+  size: 64,64
+  orig: 64,64
+  offset: 0, 0
+  index: 0
+float
+  rotate: false
+  xy: 64,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
   index: 1
 float
   rotate: false
-  xy: 300,0
+  xy: 364,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
   index: 2
 float
   rotate: false
-  xy: 600,0
+  xy: 664,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
   index: 3
 float
   rotate: false
-  xy: 900,0
+  xy: 964,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
   index: 4
 float
   rotate: false
-  xy: 1200,0
+  xy: 1264,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
   index: 5
 float
   rotate: false
-  xy: 1500,0
+  xy: 1564,0
   size: 300,175
   orig: 300,175
   offset: 0, 0
