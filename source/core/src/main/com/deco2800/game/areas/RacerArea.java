@@ -56,7 +56,6 @@ public class RacerArea extends GameArea {
         "images/iso_grass_1.png",
         "images/iso_grass_2.png",
         "images/iso_grass_3.png",
-        "images/death_giant.png",
         "images/powerup-lightning.png",
         "images/powerup-spear.png",
         "images/powerup-shield.png",
