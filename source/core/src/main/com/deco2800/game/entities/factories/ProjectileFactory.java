@@ -45,6 +45,7 @@ public class ProjectileFactory {
                 .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f))
                 .addComponent(new CombatStatsComponent(1, 100));
 
+        baseProjectile.getComponent(PhysicsComponent.class).setGravityScale(5f);
         baseProjectile.getComponent(TextureRenderComponent.class).scaleEntity();
         baseProjectile.setScale(1f, 0.5f);
         PhysicsUtils.setScaledCollider(baseProjectile, 1f, 1f);
