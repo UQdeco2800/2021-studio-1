@@ -1,0 +1,32 @@
+$_title rag
+$_width 20
+$_height 10
+
+$#PFFFFFF..F
+$#P.....P..F
+$#P.....P..F
+$#P........F
+$#P........F
+$#P.......RF
+$#P...P..PRF
+$#P...P..PRF
+$#P......PRF
+$#P......P.F
+$#P.....FFFF
+$#P.....P..F
+$#P.....P.SF
+$#P.....P.SF
+$#P.....P..F
+$#P.....P..F
+$#P........F
+$#P........F
+$#P........F
+$#FFFFFFF..F
+
+$@player set [2,1]
+
+$-spawn [12,4] (skeleton)
+$-spawn [14,4] (skeleton)
+$-spawn [10,4] (skeleton)
+$-spawn [14,5] (levelTrigger)
+

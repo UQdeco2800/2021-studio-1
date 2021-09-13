@@ -3,11 +3,13 @@ package com.deco2800.game.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.entities.Entity;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.deco2800.game.gameScore.gameScore;
 
 import java.util.*;
 
@@ -27,8 +29,8 @@ public class UIPop extends UIComponent {
             new HashMap<>();
     static {
         //background images should ideally be 800 * 500 pixels
-        backGroundImages.put("Default Pop", "images/popPauseBack.png");
-        backGroundImages.put("Score Screen", "images/run_ended.png");
+        backGroundImages.put("Help Screen", "images/popPauseBack.png");
+        backGroundImages.put("Score Screen", "images/popPauseBack.png");
         backGroundImages.put("Pause Menu", "images/popPauseBack.png");
     }
 
@@ -52,6 +54,8 @@ public class UIPop extends UIComponent {
     //Back button
     private Button backButton;
 
+    // the skin for the popup
+    private Skin popUpSkin;
 
     /*
      * Constructs a new instance of the screenName parsed
@@ -84,9 +88,8 @@ public class UIPop extends UIComponent {
         closeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                if (screenName.equals("Pause Menu")) {
-                    game.getEvents().trigger("pause");
-                }
+                //there should be an associated trigger event in main game actions
+                game.getEvents().trigger(screenName);
                 entity.dispose();
             }
         });
@@ -140,8 +143,8 @@ public class UIPop extends UIComponent {
             popUp = formatScoreScreen();
             popUp.add(closeButton);
         }
-        if (screenName.equals("Default Pop")) {
-            popUp = formatDefaultScreen();
+        if (screenName.equals("Help Screen")) {
+            popUp = formatHelpScreen();
             popUp.add(closeButton);
         }
 
@@ -214,7 +217,7 @@ public class UIPop extends UIComponent {
             resumeButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    game.getEvents().trigger("pause");
+                    game.getEvents().trigger("Pause Menu");
                 }
             });
 
@@ -242,38 +245,45 @@ public class UIPop extends UIComponent {
             return popUp;
     }
 
-
     /*
      * Formats the Score screen table
      */
     private Table formatScoreScreen() {
 
-        /*for (int i = 0; i < 3; i++) {
-            Label infoTitle = new Label(getInformation(screenName, i), skin, "popUpFont");
-            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin, "popUpFont");
-            infoTitle.setFontScale(1.5f);
-            info.setFontScale(1.5f);
-            popUp.add(infoTitle).left();
-            popUp.add(info).right();
-            popUp.row().padTop(20f);
-        }*/
         return popUp;
     }
 
     /*
      * Formats the Default screen table
      */
-    private Table formatDefaultScreen() {
-        for (int i = 0; i < 3; i++) {
-            Label infoTitle = new Label(getInformation(screenName, i), skin, "popUpFont");
-            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin, "popUpFont");
-            infoTitle.setFontScale(1.5f);
-            info.setFontScale(1.5f);
-            popUp.add(infoTitle).left();
-            popUp.add(info).right();
+    private Table formatHelpScreen() {
+
+            SelectBox<String> selections = new SelectBox<String>(skin);
+            Array<String> selectionText = new Array<String>();
+            selectionText.add("Select Here");
+            selectionText.add("Controls");
+            selectionText.add("Goal");
+            selections.setItems(selectionText);
+            Label informationText = new Label("Hi, welcome to Ragnarok Racer, \n to play the game click start", skin, "popUpFont");
+
+
+            selections.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    SetHelpLabelText(selections.getSelectedIndex(), informationText);
+                }
+
+                private void SetHelpLabelText(int selectedIndex, Label informationText) {
+                    informationText.setText(getHelpText(selectedIndex));
+                }
+            });
+
             popUp.row().padTop(20f);
-        }
-        return popUp;
+            popUp.add(selections);
+            popUp.row().padTop(20f);
+            popUp.add(informationText);
+            popUp.row().padTop(20f);
+            return popUp;
     }
 
 
@@ -312,7 +322,7 @@ public class UIPop extends UIComponent {
                             index * 25;
         }
 
-        if (screenName.equals("Default Pop")) {
+        if (screenName.equals("Help Screen")) {
             return index == 1 ? index :
                     index == 2 ? index * 2 :
                             index * 3;
@@ -335,18 +345,28 @@ public class UIPop extends UIComponent {
         }
 
         if (screenName.equals("Score Screen")) {
-            return index == 0 ? "Score info 1" :
+            return index == 0 ? entity.getComponent(gameScore.class).getCurrentScore() + "" :
                     index == 1 ? "Score info 2" :
                             "Score info 3";
         }
 
-        if (screenName.equals("Default Pop")) {
-            return index == 0 ? "Information 1" :
-                    index == 1 ? "Information 2" :
-                            "Information 3";
+        if (screenName.equals("Help Screen")) {
+            return index == 0 ? "" :
+                    index == 1 ? "Main Controls:" :
+                            "Game Goal:";
         }
 
         return "error";
+    }
+
+
+    private String getHelpText(int i) {
+
+        String text = i == 0 ? "Hi, welcome to Ragnarok Racer, \nto play the game close this window \nand click Run!" :
+                i == 1 ? " W - Jump \n S - Crouch \n A - Move left \n D - Move right \n P - Pause \n I - Score \n" :
+                        "Last as long as you can! \nDestroy as many enemies as you can! \nAvoid as many obstacles as you can! \n";
+
+        return text;
     }
 
     @Override

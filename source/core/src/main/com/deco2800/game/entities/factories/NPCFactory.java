@@ -3,6 +3,7 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchDisposeComponent;
@@ -51,7 +52,7 @@ public class NPCFactory {
    * @return entity
    */
   public static Entity createSkeleton(Entity target) {
-    Entity skeleton = createBaseNPC(target);
+    Entity skeleton = createSkeletonNPC(target);
     BaseEntityConfig config = configs.skeleton;
 
     AnimationRenderComponent animator =
@@ -67,6 +68,21 @@ public class NPCFactory {
             .addComponent(new GhostAnimationController());
     skeleton.getComponent(AnimationRenderComponent.class).scaleEntity();
     skeleton.setScale(1f, 1.2f);
+
+    //set body collision box
+    skeleton.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.6f,
+            0.45f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
+    //create head circle collision box
+    CircleShape head = new CircleShape();
+    head.setRadius(0.2f);
+    Vector2 circleOffset = new Vector2(skeleton.getCenterPosition().x + 0.2f,
+            skeleton.getCenterPosition().y + 0.055f);
+    head.setPosition(circleOffset);
+    skeleton.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+
+
+    skeleton.setType(EntityTypes.SKELETON);
+
     return skeleton;
   }
 
@@ -76,25 +92,46 @@ public class NPCFactory {
    * @param target entity to chase
    * @return entity
    */
-
   public static Entity createWolf(Entity target) {
-    Entity wolf = createBaseNPC(target);
+    Entity wolf = createWolfNPC(target);
     BaseEntityConfig config = configs.wolf;
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
-//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
     wolf
-//            .addComponent(new TextureRenderComponent("images/skeleton.png"))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
             .addComponent(new GhostAnimationController());
     wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
 
-    wolf.setScale(0.8f, 0.8f);
+    wolf.setScale(1.3f, 1f);
+
+    //create body collision box using collider component
+    wolf.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.8f,
+            0.5f), PhysicsComponent.AlignX.CENTER,
+            PhysicsComponent.AlignY.BOTTOM);
+
+    //create head circle collision box
+    CircleShape head = new CircleShape();
+    head.setRadius(0.15f);
+    Vector2 circleOffset = new Vector2(wolf.getCenterPosition().x - 0.2f,
+            wolf.getCenterPosition().y + 0.1f);
+    head.setPosition(circleOffset);
+    wolf.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+
+    //create neck circle collision box
+    CircleShape neck = new CircleShape();
+    neck.setRadius(0.15f);
+    Vector2 neckOffset = new Vector2(wolf.getCenterPosition().x ,
+            wolf.getCenterPosition().y );
+    neck.setPosition(neckOffset);
+    wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck,1.0f);
+
+    wolf.setType(EntityTypes.WOLF);
+
     return wolf;
   }
 
@@ -113,7 +150,6 @@ public class NPCFactory {
                     ServiceLocator.getResourceService()
                             .getAsset("images/wall.atlas", TextureAtlas.class));
         animator.addAnimation("walk", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("walkAngry", 0.12f, Animation.PlayMode.LOOP);
 
     wallOfDeath
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -138,7 +174,6 @@ public class NPCFactory {
                         ServiceLocator.getResourceService()
                                 .getAsset("images/deathGiant.atlas", TextureAtlas.class));
             animator.addAnimation("walk", 0.12f, Animation.PlayMode.LOOP);
-            animator.addAnimation("walkAngry", 0.12f, Animation.PlayMode.LOOP);
     
             deathGiant
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -147,34 +182,61 @@ public class NPCFactory {
     
         deathGiant.getComponent(AnimationRenderComponent.class).scaleEntity();
         deathGiant.setScale(11f,11f);
-    
+
+        deathGiant.getComponent(ColliderComponent.class).setAsBoxAligned(
+            new Vector2(5f, 30f), PhysicsComponent.AlignX.RIGHT,
+            PhysicsComponent.AlignY.BOTTOM);
+
         deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
-    
+
         return deathGiant;
       }
 
   /**
-   * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
+   * Creates a wolf NPC to be used as a base entity.
    * @return entity
    */
-  private static Entity createBaseNPC(Entity target) {
+  private static Entity createWolfNPC(Entity target) {
     AITaskComponent aiComponent =
-        new AITaskComponent()
-            .addTask(new WanderTask(new Vector2(10f, 0f), 5f));
-            //.addTask(new MoveLeftTask());
-            //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
-            //.addTask(new ChaseTask(target, 10, 3f, 4f));
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(00f, 0f), 0f));
+
     Entity npc =
-        new Entity()
-            .addComponent(new PhysicsComponent())
-            .addComponent(new PhysicsMovementComponent())
-            .addComponent(new ColliderComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
-            .addComponent(aiComponent);
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(aiComponent);
     PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
+    return npc;
+  }
+
+  /**
+   * Creates a skeleton NPC to be used as a base entity
+   * @return entity
+   */
+  private static Entity createSkeletonNPC(Entity target) {
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(50f, 0f), 1f));
+                    //.addTask(new MoveRightTask());
+                    //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
+                    //.addTask(new ChaseTask(target, 10, 3f, 4f));
+    Entity npc =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(aiComponent);
+    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+    npc.setType(EntityTypes.ENEMY);
     return npc;
   }
 
@@ -189,13 +251,14 @@ public class NPCFactory {
                     .addComponent(new PhysicsMovementComponent())
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
 
                     .addComponent(aiComponent);
 
     //set the NPC as a sensor so other object will not collide
     npc.getComponent(ColliderComponent.class).setSensor(true);
-    npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
+    npc.setType(EntityTypes.ENEMY);
     return npc;
   }
 
@@ -203,3 +266,4 @@ public class NPCFactory {
     throw new IllegalStateException("Instantiating static util class");
   }
 }
+

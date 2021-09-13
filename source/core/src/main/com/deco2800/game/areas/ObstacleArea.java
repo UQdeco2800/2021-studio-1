@@ -19,17 +19,6 @@ import org.slf4j.LoggerFactory;
 public class ObstacleArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ObstacleArea.class);
 
-    private static final int NUM_TREES = 2;
-    private static final int NUM_GHOSTS = 2;
-    private static final int NUM_SKELETONS = 2;
-    private static final int NUM_WOLF = 2;
-    private static final int NUM_SPEARS = 3;
-    private static final int NUM_ROCKS = 1;
-    private static final int NUM_SPIKES = 3;
-    private static final int LANE_1 = 9;
-    private static final int LANE_2 = 15;
-    private static final int LANE_3 = 21;
-
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
 
     private static final GridPoint2 FLOOR = new GridPoint2(10, 5);
@@ -58,7 +47,7 @@ public class ObstacleArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
-            "images/death_giant.png"
+            "images/deathGiant.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghostKing" +
@@ -85,11 +74,15 @@ public class ObstacleArea extends GameArea {
     /** Create the game area, including terrain, static entities (trees), dynamic entities (player) */
     @Override
     public void create() {
+        create(0);
+    }
+
+    public void create(int xOffset) {
         loadAssets();
 
         spawnTerrain();
 
-        spawnFloor(40, 4, 0);
+        spawnFloor(40, 4, xOffset);
 
         player = spawnPlayer();
         abstractPlayer = spawnAbstractPlayer();

@@ -58,5 +58,4 @@ public class MoveLeftTask extends DefaultTask implements PriorityTask {
     logger.debug("Starting moving");
     movementTask.setTarget(new Vector2(0,25));
   }
-
 }

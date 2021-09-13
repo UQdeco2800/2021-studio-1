@@ -13,6 +13,7 @@ import com.deco2800.game.input.InputComponent;
  */
 public class KeyboardTerminalInputComponent extends InputComponent {
   private static final int TOGGLE_OPEN_KEY = Input.Keys.F1;
+  private static final int TOGGLE_COMMAND_KEY = Input.Keys.MINUS;
   private Terminal terminal;
 
   public KeyboardTerminalInputComponent() {
@@ -48,14 +49,23 @@ public class KeyboardTerminalInputComponent extends InputComponent {
       terminal.toggleIsOpen();
       return true;
     }
-    if (keycode == Input.Keys.P) {
-       entity.getEvents().trigger("pause");
-       return true;
-    }
 
-    if (keycode == Input.Keys.I) {
-       entity.getEvents().trigger("score screen");
-       return true;
+    if(!terminal.isOpen()) {
+      if (keycode == Input.Keys.P) {
+        entity.getEvents().trigger("pause");
+        return true;
+      }
+
+      if (keycode == Input.Keys.I) {
+        entity.getEvents().trigger("score screen");
+        return true;
+      }
+
+      if (keycode == TOGGLE_COMMAND_KEY) {
+        terminal.toggleIsOpen();
+        //terminal.appendToMessage('-');
+        return true;
+      }
     }
 
     return terminal.isOpen();
@@ -87,6 +97,10 @@ public class KeyboardTerminalInputComponent extends InputComponent {
       // append character to message
       terminal.appendToMessage(character);
       return true;
+    } else if (character == '-' || character == '[' || character == ']'
+                || character == '(' || character == ')' || character == ',') {
+      // these are all command syntax in the RAGSCRIPT language
+      terminal.appendToMessage(character);
     }
     return false;
   }

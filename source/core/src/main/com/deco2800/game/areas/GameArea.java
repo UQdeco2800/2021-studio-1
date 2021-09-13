@@ -25,7 +25,12 @@ public abstract class GameArea implements Disposable {
   }
 
   /** Create the game area in the world. */
-  public abstract void create();
+  public void create() {
+    create(0);
+  };
+
+
+  public abstract void create(int xOffset);
 
   /** Dispose of all internal entities in the area */
   public void dispose() {
@@ -67,4 +72,7 @@ public abstract class GameArea implements Disposable {
     entity.setPosition(worldPos);
     spawnEntity(entity);
   }
+
+
+
 }
