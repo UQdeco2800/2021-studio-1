@@ -53,4 +53,20 @@ public class ProjectileFactory {
                 baseProjectile::flagDelete);
         return baseProjectile;
     }
+
+    public static Entity createSpearEntity() {
+        Entity powerUp =
+                new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new PhysicsMovementComponent())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f))
+                .addComponent(new CombatStatsComponent(100, 100));
+
+        powerUp.setScale(1f, 0.5f);
+        PhysicsUtils.setScaledCollider(powerUp, 1f, 1f);
+        powerUp.setType(EntityTypes.PROJECTILE);
+        return powerUp;
+    }
 }

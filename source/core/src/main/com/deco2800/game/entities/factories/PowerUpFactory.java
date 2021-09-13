@@ -56,12 +56,7 @@ public class PowerUpFactory {
      * @return spear power up
      */
     public static Entity createSpearPowerUp() {
-        Entity powerUp = createBasePowerUp();
-
-        powerUp.addComponent(new PhysicsMovementComponent())
-            .addComponent(new HitboxComponent().setLayer(PhysicsLayer.PLAYERSPEAR))
-            .addComponent(new TouchAttackComponent(PhysicsLayer.ALL, 1f))
-            .addComponent(new CombatStatsComponent(100, 100));
+        Entity powerUp = ProjectileFactory.createSpearEntity();
 
         powerUp.getComponent(TouchAttackComponent.class).setEnabled(false);
         powerUp.getComponent(CombatStatsComponent.class).setEnabled(false);
