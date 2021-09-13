@@ -1,5 +1,6 @@
 package com.deco2800.game.components;
 
+import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,8 +85,21 @@ public class CombatStatsComponent extends Component {
     }
   }
 
+  /**
+   * Makes an entity lose health based off of the amount of damage dealth by
+   * the attacker
+   * If the entity is a player, attack the player if they do not have any
+   * blocks left
+   * in their shield
+   *
+   * @param attacker - entity that is attacking
+   */
   public void hit(CombatStatsComponent attacker) {
-    int newHealth = getHealth() - attacker.getBaseAttack();
-    setHealth(newHealth);
+    if (entity.getComponent(ShieldPowerUpComponent.class).getActive()) {
+      entity.getEvents().trigger("block");
+    } else {
+      int newHealth = getHealth() - attacker.getBaseAttack();
+      setHealth(newHealth);
+    }
   }
 }

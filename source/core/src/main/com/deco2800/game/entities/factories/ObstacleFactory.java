@@ -2,6 +2,8 @@ package com.deco2800.game.entities.factories;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.entities.Entity;
@@ -13,6 +15,7 @@ import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.LevelLoadTriggerComponent;
+import com.deco2800.game.utils.math.Vector2Utils;
 
 /**
  * Factory to create obstacle entities.
@@ -23,6 +26,7 @@ public class ObstacleFactory {
 
   /**
    * Creates a rock entity.
+   *
    * @return rock entity
    */
   public static Entity createRock() {
@@ -37,8 +41,22 @@ public class ObstacleFactory {
     rock.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     rock.getComponent(ColliderComponent.class).setDensity(1.0f);
     rock.setScale(1.1f, 0.6f);
-    PhysicsUtils.setScaledCollider(rock, .9f, .9f);
-    rock.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
+
+    //Rock hitbox -  each vector in rockPoints is a vertex of the hitbox
+    Vector2[] rockPoints = new Vector2[8];
+    rockPoints[0] = new Vector2(0.2f, 0f);
+    rockPoints[1] = new Vector2(0.2f, 0.4f);
+    rockPoints[2] = new Vector2(0.4f, 0.5f);
+    rockPoints[3] = new Vector2(0.6f, 0.5f);
+    rockPoints[4] = new Vector2(0.7f, 0.5f);
+    rockPoints[5] = new Vector2(0.9f, 0.5f);
+    rockPoints[6] = new Vector2(1f, 0.4f);
+    rockPoints[7] = new Vector2(1f, 0f);
+    PolygonShape rockShape = new PolygonShape();
+    rockShape.set(rockPoints);
+    rock.getComponent(ColliderComponent.class).setShape(rockShape);
+
+    rock.setType(EntityTypes.OBSTACLE);
     return rock;
   }
 
@@ -66,6 +84,7 @@ public class ObstacleFactory {
 
   /**
    * Creates a spike entity.
+   *
    * @return spikes entity
    */
   public static Entity createSpikes() {
@@ -84,12 +103,13 @@ public class ObstacleFactory {
     spikes.getComponent(ColliderComponent.class).setDensity(1.0f);
     spikes.setScale(1.1f, 0.5f);
     PhysicsUtils.setScaledCollider(spikes, 0.9f, 0.9f);
-    spikes.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
+    spikes.setType(EntityTypes.OBSTACLE);
     return spikes;
   }
 
   /**
    * Creates a platform entity.
+   *
    * @return entity
    */
   public static Entity createPlatform() {
@@ -104,7 +124,7 @@ public class ObstacleFactory {
     // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
     // difficult.
     platform.scaleHeight(0.5f);
-    platform.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
+    platform.setType(EntityTypes.OBSTACLE);
     return platform;
   }
 
@@ -124,7 +144,7 @@ public class ObstacleFactory {
     // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
     // difficult.
     platformGradient.scaleHeight(0.5f);
-    platformGradient.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
+    platformGradient.setType(EntityTypes.OBSTACLE);
     return platformGradient;
   }
 
@@ -142,7 +162,7 @@ public class ObstacleFactory {
     floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     floor.getComponent(TextureRenderComponent.class).scaleEntity();
     floor.scaleHeight(0.5f);
-    floor.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
+    floor.setType(EntityTypes.OBSTACLE);
     return floor;
   }
 
@@ -157,7 +177,7 @@ public class ObstacleFactory {
         .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
     wall.setScale(width, height);
-    wall.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.OBSTACLE);
+    wall.setType(EntityTypes.OBSTACLE);
     return wall;
   }
 

@@ -9,6 +9,7 @@ import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.events.listeners.EventListener1;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import com.deco2800.game.utils.math.RandomUtils;
 import java.io.*;
@@ -55,12 +56,21 @@ public class RacerArea extends GameArea {
         "images/iso_grass_1.png",
         "images/iso_grass_2.png",
         "images/iso_grass_3.png",
+        "images/powerup-lightning.png",
+        "images/powerup-spear.png",
+        "images/powerup-shield.png",
         "images/wallOfDeath.png",
         "images/powerup.png"
     };
     private static final String[] forestTextureAtlases = {
-        "images/terrain_iso_grass.atlas", "images/ghostKing" +
-        ".atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas"
+        "images/terrain_iso_grass.atlas",
+        "images/ghostKing.atlas",
+        "images/odin.atlas",
+        "images/wall.atlas",
+        "images/deathGiant.atlas",
+        "images/skeleton.atlas",
+        "images/playerspear.atlas",
+        "images/lightning-animation.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String mainMusic = "sounds/main.mp3";
@@ -118,7 +128,7 @@ public class RacerArea extends GameArea {
         spawnSkeletons();
         spawnWolf();
         spawnSpears();
-        spawnPowerUp();
+        spawnPowerUps();
 
         playMusic();
     }
@@ -331,19 +341,35 @@ public class RacerArea extends GameArea {
         }
     }
 
-    private void spawnPowerUp() {
+    private void spawnPowerUps() {
         GridPoint2 bottomRightMin = new GridPoint2(21, 10);
         GridPoint2 bottomRightMax = new GridPoint2(27, 10);
         GridPoint2 bottomLeftMin = new GridPoint2(1, 10);
         GridPoint2 bottomLeftMax = new GridPoint2(4, 10);
-        GridPoint2 randomPos = RandomUtils.random(bottomLeftMin, bottomRightMin);
-        Entity powerUp = PowerUpFactory.createPowerUp();
-        spawnEntityAt(powerUp, randomPos, false, false);
+
+        GridPoint2 randomPos1 = RandomUtils.random(bottomLeftMin, bottomRightMin);
+        GridPoint2 randomPos2 = RandomUtils.random(bottomLeftMin, bottomRightMin);
+        GridPoint2 randomPos3 = new GridPoint2(30, 5);
+        GridPoint2 playerPos = new GridPoint2(12,5);
+
+        Entity lightningPowerUp = PowerUpFactory.createLightningPowerUp();
+        Entity shieldPowerUp = PowerUpFactory.createShieldPowerUp();
+
+        Entity spearPowerUp1 = PowerUpFactory.createSpearPowerUp();
+        spearPowerUp1.getComponent(AnimationRenderComponent.class).startAnimation("static");
+
+        Entity spearPowerUp2 = PowerUpFactory.createSpearPowerUp();
+        spearPowerUp2.getComponent(AnimationRenderComponent.class).startAnimation("static");
+
+        spawnEntityAt(lightningPowerUp, randomPos1, false, false);
+        spawnEntityAt(shieldPowerUp, randomPos2, false, false);
+        spawnEntityAt(spearPowerUp1, playerPos, false, false);
+        spawnEntityAt(spearPowerUp2, randomPos3, false, false);
     }
 
     private Entity spawnPlayer(int lane, int xCord) {
         Entity newPlayer = PlayerFactory.createPlayer();
-        GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - newPlayer.getScale().y));
+        GridPoint2 pos = new GridPoint2(xCord, Math.round(lane - newPlayer.getScale().y) + 1);
         spawnEntityAt(newPlayer, pos, true, false);
         return newPlayer;
     }

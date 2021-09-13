@@ -287,5 +287,5 @@ public class AreaManager extends RagnarokArea {
  */
 enum LevelType {
     SLICE,          // as in a single level
-    ENDLESS         // as in the final, continous game
+    ENDLESS        // as in the final, continous game
 }

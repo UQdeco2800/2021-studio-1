@@ -1,6 +1,6 @@
 
 odin.png
-size: 1026, 324
+size: 1120,1268
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -291,4 +291,395 @@ power-left
   orig: 64, 64
   offset: 0, 0
   index: 2
-
+spear-crouch-left
+  rotate: false
+  xy: 60, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+spear-crouch-left
+  rotate: false
+  xy: 164, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+spear-crouch-left
+  rotate: false
+  xy: 268, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+spear-crouch-left
+  rotate: false
+  xy: 372, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+spear-crouch-right
+  rotate: false
+  xy: 476, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+spear-crouch-right
+  rotate: false
+  xy: 580, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+spear-crouch-right
+  rotate: false
+  xy: 684, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+spear-crouch-right
+  rotate: false
+  xy: 788, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+spear-jump-left
+  rotate: false
+  xy: 892, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+spear-jump-right
+  rotate: false
+  xy: 996, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+spear-run-left
+  rotate: false
+  xy: 60, 528
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+spear-run-left
+  rotate: false
+  xy: 164, 528
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+spear-run-left
+  rotate: false
+  xy: 268, 528
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+spear-run-left
+  rotate: false
+  xy: 372, 528
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+spear-run-left
+  rotate: false
+  xy: 476, 528
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+spear-run-left
+  rotate: false
+  xy: 580, 528
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+spear-run-left
+  rotate: false
+  xy: 684,528
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+spear-run-right
+  rotate: false
+  xy: 788,528
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+spear-run-right
+  rotate: false
+  xy: 892,528
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+spear-run-right
+  rotate: false
+  xy: 996,528
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+spear-run-right
+  rotate: false
+  xy: 60,672
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+spear-run-right
+  rotate: false
+  xy: 164,672
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+spear-run-right
+  rotate: false
+  xy: 268,672
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+spear-run-right
+  rotate: false
+  xy: 372,672
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+spear-still-left
+  rotate: false
+  xy: 476,672
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+spear-still-right
+  rotate: false
+  xy: 580,672
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+spear-crouch-still-left
+  rotate: false
+  xy: 372, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+spear-crouch-still-right
+  rotate: false
+  xy: 476, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+shield-crouch-left
+  rotate: false
+  xy: 60, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+shield-crouch-left
+  rotate: false
+  xy: 164, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+shield-crouch-left
+  rotate: false
+  xy: 268, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+shield-crouch-left
+  rotate: false
+  xy: 372, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+shield-crouch-right
+  rotate: false
+  xy: 476, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+shield-crouch-right
+  rotate: false
+  xy: 580, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+shield-crouch-right
+  rotate: false
+  xy: 684, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+shield-crouch-right
+  rotate: false
+  xy: 788, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+shield-jump-left
+  rotate: false
+  xy: 892, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+shield-jump-right
+  rotate: false
+  xy: 996, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+shield-run-left
+  rotate: false
+  xy: 60, 1000
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+shield-run-left
+  rotate: false
+  xy: 164, 1000
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+shield-run-left
+  rotate: false
+  xy: 268, 1000
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+shield-run-left
+  rotate: false
+  xy: 372, 1000
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+shield-run-left
+  rotate: false
+  xy: 476, 1000
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+shield-run-left
+  rotate: false
+  xy: 580, 1000
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+shield-run-left
+  rotate: false
+  xy: 684, 1000
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+shield-run-right
+  rotate: false
+  xy: 788, 1000
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+shield-run-right
+  rotate: false
+  xy: 892, 1000
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+shield-run-right
+  rotate: false
+  xy: 996, 1000
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+shield-run-right
+  rotate: false
+  xy: 60, 1144
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+shield-run-right
+  rotate: false
+  xy: 164,1144
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+shield-run-right
+  rotate: false
+  xy: 268, 1144
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+shield-run-right
+  rotate: false
+  xy: 372, 1144
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+shield-still-left
+  rotate: false
+  xy: 476, 1144
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+shield-still-right
+  rotate: false
+  xy: 580,1144
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+shield-crouch-still-left
+  rotate: false
+  xy: 372, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+shield-crouch-still-right
+  rotate: false
+  xy: 476, 856
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
