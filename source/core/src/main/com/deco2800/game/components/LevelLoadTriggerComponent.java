@@ -7,17 +7,11 @@ import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.ServiceLocator;
+import java.io.*;
 
 /**
- * When this entity touches another component's hitbox, the other component will be disposed of
- * if it is an object or disabled if it is an NPC.
- * <p>
- * If the object is disposed of, it will be done out of the physics step to avoid crashed.
- * <p>
- * If the other component is an NPC it is disabled to avoid the animation being disposed of and
- * removing the animation from all other entities using it.
- *
- * <p>Requires HitboxComponent on this entity.
+ * When this entity touches the player, an additional level will be loaded at the end of the current level
+ * This entity is then disposed of.
  */
 public class LevelLoadTriggerComponent extends Component {
     HitboxComponent hitboxComponent;
@@ -46,12 +40,13 @@ public class LevelLoadTriggerComponent extends Component {
 
 
         if (PhysicsLayer.contains(PhysicsLayer.PLAYER, other.getFilterData().categoryBits)) {
-            // HAS COLLIDED WITH PLAYER
-            System.out.println("Collided with player");
-            
+            // HAS COLLIDED WITH PLAYER so load in next level
+            System.out.println("READY TO LOAD LEVEL");
+            ServiceLocator.getAreaService().load("ragnorok");
+            System.out.println("LOADED LEVEL");
             // Dispose the load trigger after the physics step
             Entity target = ((BodyUserData) me.getBody().getUserData()).entity;
-            entityService.disposeAfterStep(target);
+            // entityService.disposeAfterStep(target);
         }
 
 

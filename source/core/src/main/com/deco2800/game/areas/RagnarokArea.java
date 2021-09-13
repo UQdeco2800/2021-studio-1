@@ -135,9 +135,17 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-10,6);
+        GridPoint2 leftPos = new GridPoint2(-20,6);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(this.player);
         spawnEntityAt(wallOfDeath, leftPos, true, true);
+    }
+
+    protected void spawnLevelLoadTrigger(int areaEnd) {
+        System.out.println("Spawned in load trigger at " + String.valueOf(areaEnd));
+        // GridPoint2 centrePos = new GridPoint2(areaEnd-20, 6); //TODO: This should be dynamically offset by screen width... Also sets a minimum size on levels
+        GridPoint2 centrePos = new GridPoint2(20, 6);
+        Entity levelLoadTrigger = ObstacleFactory.createLevelLoadTrigger();
+        spawnEntityAt(levelLoadTrigger, centrePos, true, true);
     }
 
 

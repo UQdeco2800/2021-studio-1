@@ -101,7 +101,6 @@ public class AreaManager extends RagnarokArea {
      *                  as we document further, some dics. But there are no docs rn.
      */
     public void place(int x, int y, String placeType) {
-
         place(terrainInstance, x, y, placeType);
 
     }
@@ -120,7 +119,6 @@ public class AreaManager extends RagnarokArea {
 
         int gx = x * GRID_SCALE;
         int gy = y * GRID_SCALE;
-
         switch (placeType) {
             case "floor":
                 area.spawnFloor(gx, gy);
@@ -193,6 +191,9 @@ public class AreaManager extends RagnarokArea {
         }
         loader.newCreateFromFile(level);
         startNextArea += bPWidth; // Set this value to reflect the start of the next area.
+        System.out.println("Callng load level trigger: " + String.valueOf(bPWidth));
+        terrainInstance.spawnLevelLoadTrigger(startNextArea*GRID_SCALE);
+        
     }
 
     /**
@@ -269,7 +270,7 @@ public class AreaManager extends RagnarokArea {
      * But will be intercepted as functionality is developed.
      */
     private void makeBufferedPlace() {
-
+        System.out.println("MAKING BUFFERED PLACE");
         int x = startNextArea;
         for (String[] column : bufferedPlaces) {
             int y = 0;

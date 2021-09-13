@@ -32,7 +32,7 @@ public class RagLoader {
 
         String filepath = "configs/rags/" + ragFile + ".rag";
 
-        ServiceLocator.getTerminalService().sendTerminal("-place [1,1] (platform)");
+        //ServiceLocator.getTerminalService().sendTerminal("-place [1,1] (platform)");
 
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
             // SO THIS FIRST SECTION JUST DEALS WITH THE TILE MAP @ THE TOP

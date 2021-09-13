@@ -49,9 +49,14 @@ public class ObstacleFactory {
    * @param target entity to chase
    * @return entity
    */
-  public static Entity createLevelLoadTrigger(Entity target) {
+  public static Entity createLevelLoadTrigger() {
     Entity levelLoadTrigger = new Entity();
-    levelLoadTrigger.addComponent(new HitboxComponent().setAsBox(new Vector2(1,50)));
+    
+    levelLoadTrigger.addComponent(new PhysicsComponent());
+    levelLoadTrigger.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+    Vector2 size = new Vector2(1,20);
+    levelLoadTrigger.addComponent(new HitboxComponent());
+    levelLoadTrigger.getComponent(HitboxComponent.class).setAsBox(size);
     levelLoadTrigger.addComponent(new LevelLoadTriggerComponent());
     
     return levelLoadTrigger;
@@ -133,7 +138,7 @@ public class ObstacleFactory {
                     .addComponent(new TextureRenderComponent("images/floor.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
+    
     floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     floor.getComponent(TextureRenderComponent.class).scaleEntity();
     floor.scaleHeight(0.5f);
