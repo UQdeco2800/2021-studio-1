@@ -110,12 +110,11 @@ public class SpearPowerUpComponent extends PowerUpComponent {
 
         // If the player throws the spear and hasn't yet flown, apply impulse and increment throws
         if (active && !flown) {
+            flown = true;
             spear.getComponent(AnimationRenderComponent.class).stopAnimation();
 
             spearBod.applyLinearImpulse(impulse, spearBod.getWorldCenter(), true);
             spear.getComponent(AnimationRenderComponent.class).startAnimation(anim.toString());
-
-            flown = true;
             thrown++;
         }
 
@@ -123,12 +122,15 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         if (!active) {
             spear.setPosition(spearPos.add(extraVert));
             spear.getComponent(AnimationRenderComponent.class).stopAnimation();
-            spear.getComponent(AnimationRenderComponent.class).startAnimation(anim.toString());
         }
     }
 
     @Override
     public void activate() {
         active = true;
+    }
+
+    public boolean getActive() {
+        return active;
     }
 }

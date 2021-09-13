@@ -89,6 +89,27 @@ public class PlayerFactory {
     animator.addAnimation("crouch-right", 0.2f,
             Animation.PlayMode.LOOP);
 
+    animator.addAnimation("spear-still-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-crouch-still-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-crouch-still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-jump-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-jump-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-run-left", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-run-right", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-crouch-left", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-crouch-right", 0.2f,
+            Animation.PlayMode.LOOP);
+
     animator.addAnimation("shield-still-right", 1f,
                     Animation.PlayMode.LOOP);
     animator.addAnimation("shield-still-left", 1f,

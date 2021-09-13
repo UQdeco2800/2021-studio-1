@@ -300,6 +300,8 @@ public class PlayerActions extends Component {
       case SPEARPOWERUP:
         if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
           entity.getComponent(SpearPowerUpComponent.class).activate();
+          entity.getComponent(AnimationRenderComponent.class).stopAnimation();
+          whichAnimation();
         }
         break;
 
@@ -381,6 +383,52 @@ public class PlayerActions extends Component {
           } else {
             entity.getComponent(AnimationRenderComponent.class)
                     .startAnimation("shield-still-left");
+          }
+        }
+      }
+    } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled() && !entity.getComponent(SpearPowerUpComponent.class).getActive()) {
+      if (jumping || falling) {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+          entity.getComponent(AnimationRenderComponent.class)
+                  .startAnimation("spear-jump-right");
+        } else {
+          entity.getComponent(AnimationRenderComponent.class)
+                  .startAnimation("spear-jump-left");
+        }
+      } else if (moving) {
+        if (crouching) {
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("spear-crouch-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("spear-crouch-left");
+          }
+        } else {
+          if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("spear-run-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("spear-run-left");
+          }
+        }
+      } else {
+        if (crouching) {
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("spear-crouch-still-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("spear-crouch-still-left");
+          }
+        } else {
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("spear-still-right");
+          } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("spear-still-left");
           }
         }
       }
