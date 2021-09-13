@@ -59,9 +59,7 @@ public class CameraShakeComponent extends Component {
 
     entity.getEvents().trigger("moveRightAngry");
 
-    if (distance < 35f) {
-
-       System.out.print(toggle);
+    if (distance < 32f) {
 
           cameraComponent.setOffset(this.toggle);
           cameraComponent.update();
