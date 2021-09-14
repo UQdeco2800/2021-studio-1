@@ -181,7 +181,7 @@ public class AreaManager extends RagnarokArea {
                 area.spawnLevelLoadTrigger(gx); //TODO: MAKE THiS DYNAMICALLY BASED ON SCREEN WIDTH
                 break;
             case "fireSpirit":
-                area.spawnFireSpirit(x*3, y*3);
+                area.spawnFireSpirit(gx, gy);
                 break;
             case "default":
                 logger.error("spawn() called in AreaManger without valid spawnType");

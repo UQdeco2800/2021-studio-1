@@ -14,6 +14,7 @@ import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.tasks.MoveRightTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.components.tasks.MoveLeftTask;
+import com.deco2800.game.components.tasks.ShootTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
@@ -140,7 +141,7 @@ public class NPCFactory {
 
   public static Entity createFireSpirit(Entity target) {
     Entity fireSpirit = createFireSpiritNPC(target);
-    BaseEntityConfig config = configs.wolf;
+    BaseEntityConfig config = configs.fireSpirit;
 
     fireSpirit
             .addComponent(new TextureRenderComponent("images/fire_spirit.png"))
@@ -262,7 +263,8 @@ public class NPCFactory {
   private static Entity createFireSpiritNPC(Entity target) {
     AITaskComponent aiComponent =
             new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(0f, 0f), 0f));
+                    .addTask(new WanderTask(new Vector2(0f, 0f), 0f))
+                    .addTask(new ShootTask(target, 5f, ProjectileFactory.fireSpiritShot()));
     Entity npc =
             new Entity()
                     .addComponent(new PhysicsComponent())

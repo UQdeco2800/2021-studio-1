@@ -18,14 +18,19 @@ public class ShootTask extends DefaultTask implements PriorityTask {
     private static final Logger logger = LoggerFactory.getLogger(ShootTask.class);
 
     protected Entity player;
-    //protected Entity;
+    protected Entity fireball;
     private Vector2 startPos;
     private MovementTask movementTask;
+    private final float waitTime;
     private WaitTask waitTask;
+    private ShootTask shootTask;
     private Task currentTask;
 
 
-    public ShootTask() {
+    public ShootTask(Entity player, float waitTime, Entity fireball) {
+        this.player = player;
+        this.waitTime = waitTime;
+        this.fireball = fireball;
     }
 
     @Override
@@ -38,31 +43,26 @@ public class ShootTask extends DefaultTask implements PriorityTask {
         super.start();
         startPos = owner.getEntity().getPosition();
 
-        waitTask = new WaitTask(5);
-        currentTask = waitTask;
+        waitTask = new WaitTask(waitTime);
+        waitTask.create(owner);
+
+        shootTask = new ShootTask(player, waitTime, fireball);
+        shootTask.create(owner);
+
+        currentTask = shootTask;
 
         this.owner.getEntity().getEvents().trigger("Wait for player");
-    }
-
-    public void shootPlayer() {
-        startPos = owner.getEntity().getPosition();
-
-
-        movementTask = new MovementTask(player.getPosition());
-        movementTask.create(owner);
-
-        movementTask.start();
-        currentTask = movementTask;
-
-        this.owner.getEntity().getEvents().trigger("Shoot");
     }
 
 
     @Override
     public void update() {
         if (currentTask.getStatus() != Status.ACTIVE) {
-            shootPlayer();
-            fire();
+            if (currentTask == waitTask && waitTime == 0) {
+                waiting();
+            } else {
+                fire();
+            }
         }
         currentTask.update();
     }
@@ -73,6 +73,21 @@ public class ShootTask extends DefaultTask implements PriorityTask {
     private void fire() {
         logger.debug("Shot Fired");
 
+        fireball.create();
         movementTask.setTarget(new Vector2(player.getPosition()));
+        swapTask(waitTask);
+    }
+
+    private void waiting() {
+        logger.debug("Don't Fire");
+        swapTask(shootTask);
+    }
+
+    private void swapTask(Task newtask) {
+        if (currentTask != null) {
+            currentTask.stop();
+        }
+        currentTask = newtask;
+        currentTask.start();
     }
 }

@@ -8,6 +8,7 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
+import com.deco2800.game.entities.factories.ProjectileFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -250,6 +251,11 @@ public class RagnarokArea extends GameArea {
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(fireSpirit, pos, false, false);
         //signup(pos, skeleton);
+    }
+
+    protected void projectileFromEnemy(GridPoint2 enemy) {
+        Entity fireSpiritShot = ProjectileFactory.fireSpiritShot();
+        spawnEntityAt(fireSpiritShot, enemy, false, false);
     }
 
     public void clearEntitiesAt(int x, int y) {
