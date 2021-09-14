@@ -46,12 +46,12 @@ public class PlayerStatsDisplay extends UIComponent {
 
     table.top().left();
     table.setFillParent(true);
-    table.padTop(45f).padLeft(5f);
+    table.padTop(30f).padLeft(-200f);
 
     tableTwo = new Table();
     tableTwo.top().left();
     tableTwo.setFillParent(true);
-    tableTwo.padTop(75f).padLeft(200f);
+    tableTwo.padTop(60f).padLeft(20f);
     // Heart image
     float heartSideLength = 30f;
     heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));

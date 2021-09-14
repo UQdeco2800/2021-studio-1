@@ -19,39 +19,23 @@ public class gameScoretest {
     GameTime gameTime;
     gameScore gameScore;
 
-    /*  @BeforeAll
-      static void beforeAll() {
-          Gdx.graphics = mock(Graphics.class);
-          when(Gdx.graphics.getDeltaTime()).thenReturn(10f);
-      }
-      */
     @BeforeEach
     void beforeEach() {
         gameTime = new GameTime();
         gameScore = new gameScore();
-
     }
 
     @Test
     void getCurrentScoreCorrectTest(){
-        //gameScore.getCurrentScore();
         long current_score = gameScore.getCurrentScore();
         assertEquals((gameTime.getTime() + 100)/100, current_score);
     }
 
-    // @Test
-    //void setScoreCorrectTest(){
-    //  gameScore.setScore();
-
-    // assertEquals((gameTime.getTime()/100,gameScore.getCurrentScore() );
-
-
-    // }
-
-
-
-
-
-
+    @Test
+    void startTimeNotNull(){
+        gameTime = new GameTime();
+        gameTime.getTime();
+        assertEquals(gameTime.getTime(),(0));
+    }
 }
 
