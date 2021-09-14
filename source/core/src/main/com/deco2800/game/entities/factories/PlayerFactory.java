@@ -179,6 +179,11 @@ public class PlayerFactory {
 
     player.setType(EntityTypes.PLAYER);
 
+    Entity playerSpear = PowerUpFactory.createSpearPowerUp();
+    ServiceLocator.getEntityService().register(playerSpear);
+
+    playerSpear.setPosition(player.getCenterPosition().add(5f, 0f));
+
     return player;
   }
 

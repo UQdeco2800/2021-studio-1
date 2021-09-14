@@ -143,6 +143,7 @@ public class NPCFactory {
             fixture.setSensor(true);
         }
 
+        wolf.getComponent(AnimationRenderComponent.class).startAnimation("float");
         wolf.setType(EntityTypes.WOLF);
 
         wolf.setScale(1.3f, 1f);

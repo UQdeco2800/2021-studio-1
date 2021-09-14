@@ -155,13 +155,8 @@ public class RagnarokArea extends GameArea {
     }
 
     private void spawnPowerUps() {
-        GridPoint2 start = new GridPoint2(1, 10);
+        GridPoint2 start = new GridPoint2(10, 10);
         GridPoint2 end = new GridPoint2(1000, 10);
-
-        GridPoint2 playerPos = new GridPoint2(12,5);
-
-        Entity startingSpear = PowerUpFactory.createSpearPowerUp();
-        spawnEntityAt(startingSpear, playerPos, false, false);
 
         Entity powerUp;
 
@@ -296,7 +291,6 @@ public class RagnarokArea extends GameArea {
         Entity wolf = NPCFactory.createWolf(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(wolf, pos, false, false);
-        wolf.getComponent(AnimationRenderComponent.class).startAnimation("float");
         //signup(pos, wolf);
     }
 
