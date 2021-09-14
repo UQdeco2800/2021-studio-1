@@ -9,6 +9,7 @@ import com.deco2800.game.areas.AreaService;
 import com.deco2800.game.areas.ObstacleArea;
 import com.deco2800.game.areas.RagnarokArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
@@ -68,6 +69,7 @@ public class MainGameScreen extends ScreenAdapter {
     renderer = RenderFactory.createRenderer();
     renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
     renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
+    renderer.getDebug().setActive(true);
 
     loadAssets();
     createUI();
@@ -89,7 +91,7 @@ public class MainGameScreen extends ScreenAdapter {
     //} else if (!isObstacle) {
 
       //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-      //obstacleArea.create();
+      //obstacleArea.create()
 
       //ragnarokArea = new RagnarokArea("the og", terrainFactory);
 
@@ -111,6 +113,10 @@ public class MainGameScreen extends ScreenAdapter {
 
     if (ragnarokManager != null) {
       renderer.updateCameraPosition(ragnarokManager.getPlayer());
+    }
+
+    if (ragnarokManager.getPlayer().getComponent(CombatStatsComponent.class).getHealth() == 0) {
+      game.setScreen(GdxGame.ScreenType.MAIN_MENU);
     }
     
     renderer.render();
