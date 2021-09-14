@@ -70,6 +70,8 @@ public class NPCFactory {
     skeleton.getComponent(AnimationRenderComponent.class).scaleEntity();
     skeleton.setScale(1f, 1.2f);
 
+    // NEED TO CHANGE COLLISION BOXES -> RUN THROUGH ENEMIES
+    /*
     //set body collision box
     skeleton.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.6f,
             0.45f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
@@ -80,8 +82,9 @@ public class NPCFactory {
             skeleton.getCenterPosition().y + 0.055f);
     head.setPosition(circleOffset);
     skeleton.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+    skeleton.getEvents().addListener("dispose", skeleton::flagDelete);
 
-
+    */
     skeleton.setType(EntityTypes.SKELETON);
 
     return skeleton;
@@ -112,6 +115,8 @@ public class NPCFactory {
 
     wolf.setScale(1.3f, 1f);
 
+    // NEED TO CHANGE COLLISION BOXES -> RUN THROUGH ENEMIES
+    /*
     //create body collision box using collider component
     wolf.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.8f,
             0.5f), PhysicsComponent.AlignX.CENTER,
@@ -132,6 +137,8 @@ public class NPCFactory {
             wolf.getCenterPosition().y );
     neck.setPosition(neckOffset);
     wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck,1.0f);
+    wolf.getEvents().addListener("dispose", wolf::flagDelete);
+     */
 
     wolf.setType(EntityTypes.WOLF);
 
@@ -255,17 +262,20 @@ public class NPCFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
             .addComponent(aiComponent);
-    PhysicsUtils.setScaledCollider(npc, 0.5f, 0.5f);
+    PhysicsUtils.setScaledCollider(npc, 0f, 0f);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
     return npc;
   }
 
+  /**
+   * Creates a wolf NPC to be used as a base entity
+   * @return entity
+   */
   private static Entity createWolfNPC(Entity target) {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new MoveLeftTask());
-    //.addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
             new Entity()
                     .addComponent(new PhysicsComponent())
@@ -274,8 +284,7 @@ public class NPCFactory {
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                     .addComponent(aiComponent);
-
-    PhysicsUtils.setScaledCollider(npc, 0.5f, 0.5f);
+    PhysicsUtils.setScaledCollider(npc, 0f, 0f);
     npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
             PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);

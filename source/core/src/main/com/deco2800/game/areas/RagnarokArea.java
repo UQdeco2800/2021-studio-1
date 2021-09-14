@@ -71,8 +71,8 @@ public class RagnarokArea extends GameArea {
 
     //TODO: make Json,
     private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
-            "images/terrain_iso_grass.atlas", "images/ghostKing" +
-            ".atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/sfx.atlas", "images/skeleton.atlas"
+            "images/terrain_iso_grass.atlas", "images/ghostKing.atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas", "images/sfx.atlas"
+
     };
 
     // get the sounds to work and then move the music & sounds to a json
