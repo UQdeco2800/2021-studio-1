@@ -24,6 +24,10 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     private boolean flown;
     private int thrown;
 
+    public Entity getSpear(){
+        return this.spear;
+    }
+
     public void obtainSpear(Entity spear) {
         this.spear = spear;
     }
