@@ -209,7 +209,11 @@ public class NPCFactory {
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                     .addComponent(aiComponent);
-    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+
+
+    PhysicsUtils.setScaledCollider(npc, 0.5f, 0.4f);
+    npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
+            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
     return npc;
