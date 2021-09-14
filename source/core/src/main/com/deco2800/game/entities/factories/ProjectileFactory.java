@@ -49,7 +49,7 @@ public class ProjectileFactory {
 
         baseProjectile.getComponent(TextureRenderComponent.class).scaleEntity();
         baseProjectile.setScale(1f, 0.5f);
-        PhysicsUtils.setScaledCollider(baseProjectile, 1f, 1f);
+        PhysicsUtils.setScaledCollider(baseProjectile, 0f, 0f);
         baseProjectile.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.PROJECTILE);
         return baseProjectile;
     }

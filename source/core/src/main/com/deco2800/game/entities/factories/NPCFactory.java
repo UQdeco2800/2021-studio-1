@@ -102,20 +102,13 @@ public class NPCFactory {
     Entity fireSpirit = createFireSpiritNPC(target);
     BaseEntityConfig config = configs.wolf;
 
-//    AnimationRenderComponent animator =
-//            new AnimationRenderComponent(
-//                    ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
-////    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-//    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-
     fireSpirit
             .addComponent(new TextureRenderComponent("images/fire_spirit.png"))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
-//            .addComponent(animator)
-//            .addComponent(new GhostAnimationController());
+
     fireSpirit.getComponent(TextureRenderComponent.class).scaleEntity();
 
-    fireSpirit.setScale(0.8f, 0.8f);
+    fireSpirit.setScale(1f, 1f);
     return fireSpirit;
   }
 
