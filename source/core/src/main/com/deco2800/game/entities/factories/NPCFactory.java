@@ -81,6 +81,8 @@ public class NPCFactory {
             skeleton.getCenterPosition().y + 0.055f);
     head.setPosition(circleOffset);
     skeleton.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+    skeleton.getEvents().addListener("dispose", skeleton::flagDelete);
+
     */
     skeleton.setType(EntityTypes.SKELETON);
 
@@ -134,9 +136,11 @@ public class NPCFactory {
             wolf.getCenterPosition().y );
     neck.setPosition(neckOffset);
     wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck,1.0f);
+    wolf.getEvents().addListener("dispose", wolf::flagDelete);
      */
 
     wolf.setType(EntityTypes.WOLF);
+
     wolf.setScale(1.3f, 1f);
     return wolf;
   }

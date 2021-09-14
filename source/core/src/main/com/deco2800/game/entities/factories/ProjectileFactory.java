@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.SpearComponent;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -56,8 +58,7 @@ public class ProjectileFactory {
         baseProjectile.setScale(1f, 0.5f);
         PhysicsUtils.setScaledCollider(baseProjectile, 1f, 1f);
         baseProjectile.setType(EntityTypes.PROJECTILE);
-        baseProjectile.getEvents().addListener("dispose",
-                baseProjectile::flagDelete);
+        baseProjectile.getEvents().addListener("dispose", baseProjectile::flagDelete);
         return baseProjectile;
     }
 
@@ -67,7 +68,8 @@ public class ProjectileFactory {
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new SpearComponent());
 
         powerUp.setScale(1f, 0.5f);
         PhysicsUtils.setScaledCollider(powerUp, 1f, 1f);
