@@ -21,6 +21,7 @@ public class WanderTask extends DefaultTask implements PriorityTask {
   private MovementTask movementTask;
   private WaitTask waitTask;
   private Task currentTask;
+  private Vector2 newPos;
 
   /**
    * @param wanderRange Distance in X and Y the entity can move from its position when start() is
@@ -44,12 +45,17 @@ public class WanderTask extends DefaultTask implements PriorityTask {
 
     waitTask = new WaitTask(waitTime);
     waitTask.create(owner);
-    movementTask = new MovementTask(getRandomPosInRange());
+    newPos = getRandomPosInRange();
+    movementTask = new MovementTask(newPos);
     movementTask.create(owner);
 
     movementTask.start();
     currentTask = movementTask;
 
+    //change animation based on movement direction
+//    if (newPos.x < startPos.x) {
+//      this.owner.getEntity().getEvents().trigger("wanderStart");
+//    } else {this.owner.getEntity().getEvents().trigger("move_right");}
     this.owner.getEntity().getEvents().trigger("wanderStart");
   }
 
@@ -73,6 +79,16 @@ public class WanderTask extends DefaultTask implements PriorityTask {
   private void startMoving() {
     logger.debug("Starting moving");
     movementTask.setTarget(getRandomPosInRange());
+
+    newPos = getRandomPosInRange();
+    startPos = owner.getEntity().getPosition();
+
+//    //change animation based on movement direction
+//    if (newPos.x < startPos.x) {
+//      this.owner.getEntity().getEvents().trigger("wanderStart");
+//    } else {
+//      this.owner.getEntity().getEvents().trigger("move_right");}
+    this.owner.getEntity().getEvents().trigger("wanderStart");
     swapTask(movementTask);
   }
 

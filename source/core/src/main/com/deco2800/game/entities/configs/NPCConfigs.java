@@ -12,6 +12,7 @@ public class NPCConfigs {
 
   public BaseEntityConfig skeleton = new BaseEntityConfig();
   public BaseEntityConfig wolf = new BaseEntityConfig();
+  public BaseEntityConfig fireSpirit = new BaseEntityConfig();
   public BaseEntityConfig rock = new BaseEntityConfig();
   public BaseEntityConfig spikes = new BaseEntityConfig();
 }

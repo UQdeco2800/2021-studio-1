@@ -20,6 +20,10 @@
     "health": 40,
     "baseAttack": 20
   },
+  "fireSpirit": {
+    "health": 25,
+    "baseAttack": 15
+  },
   "rock": {
     "health": 40,
     "baseAttack": 0

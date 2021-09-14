@@ -79,21 +79,20 @@ public class ObstacleFactory {
         return levelLoadTrigger;
     }
 
-
-    /**
-     * Creates a spike entity.
-     *
-     * @return spikes entity
-     */
-    public static Entity createSpikes() {
-        Entity spikes =
-                new Entity()
-                        .addComponent(new TextureRenderComponent("images/Spike_1.png"))
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                        .addComponent(new CombatStatsComponent(1, 100))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f));
+  /**
+   * Creates a spike entity.
+   *
+   * @return spikes entity
+   */
+  public static Entity createSpikes() {
+    Entity spikes =
+            new Entity()
+                    .addComponent(new TextureRenderComponent("images/Spike_1.png"))
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                    .addComponent(new CombatStatsComponent(1, 100))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f));
 
         spikes.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         spikes.getComponent(TextureRenderComponent.class).scaleEntity();
