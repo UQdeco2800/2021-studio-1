@@ -47,7 +47,7 @@ public class ObstacleArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
-            "images/death_giant.png"
+            "images/deathGiant.png"
     };
     private static final String[] forestTextureAtlases = {
             "images/terrain_iso_grass.atlas", "images/ghostKing" +

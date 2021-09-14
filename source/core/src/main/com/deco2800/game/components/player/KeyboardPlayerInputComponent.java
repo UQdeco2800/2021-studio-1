@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.services.ServiceLocator;
@@ -54,6 +56,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
       /* Keys.J to test powers up attack */
       case Keys.J:
         entity.getEvents().trigger("powerAttack");
+        return true;
+      case Keys.L:
+        triggerLightningEvent();
+        return true;
+      case Keys.K:
+        triggerSpearEvent();
         return true;
       default:
         return false;
@@ -140,5 +148,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   private void triggerStopPowerAttackEvent() {
     entity.getEvents().trigger("stop stopPowerAttack");
+  }
+
+  private void triggerLightningEvent() {
+    entity.getEvents().trigger("usePowerUp", EntityTypes.LIGHTNINGPOWERUP);
+  }
+
+  private void triggerSpearEvent() {
+    entity.getEvents().trigger("usePowerUp", EntityTypes.SPEARPOWERUP);
   }
 }

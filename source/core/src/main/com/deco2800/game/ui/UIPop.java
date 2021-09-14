@@ -245,7 +245,6 @@ public class UIPop extends UIComponent {
             return popUp;
     }
 
-
     /*
      * Formats the Score screen table
      */

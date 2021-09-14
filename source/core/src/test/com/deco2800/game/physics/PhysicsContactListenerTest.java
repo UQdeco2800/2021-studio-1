@@ -9,7 +9,12 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.components.powerups.PowerUpComponent;
+import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.EntityTypes;
+import com.deco2800.game.events.listeners.EventListener1;
 import com.deco2800.game.events.listeners.EventListener2;
 import com.deco2800.game.extensions.GameExtension;
 import com.deco2800.game.physics.components.ColliderComponent;
@@ -85,6 +90,25 @@ class PhysicsContactListenerTest {
   Entity createPhysicsEntity() {
     Entity entity =
         new Entity().addComponent(new PhysicsComponent()).addComponent(new ColliderComponent());
+    entity.create();
+    return entity;
+  }
+
+
+  Entity createPlayerEntity() {
+    Entity entity =
+            new Entity().addComponent(new PhysicsComponent()).addComponent(new ColliderComponent());
+    entity.setType(EntityTypes.PLAYER);
+    entity.create();
+    return entity;
+  }
+
+  Entity createPowerUpEntity() {
+    Entity entity =
+            new Entity().addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent())
+                        .addComponent(new LightningPowerUpComponent());
+    entity.setType(EntityTypes.LIGHTNINGPOWERUP);
     entity.create();
     return entity;
   }

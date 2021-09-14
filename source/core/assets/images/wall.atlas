@@ -1,119 +1,89 @@
-wall-0.png
-size: 1780, 1538
+wallOfDeathAngry.png
+size: 1920, 48
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 default
   rotate: false
-  xy: 1, 1
-  size: 888, 1536
-  orig: 888, 1536
+  xy: 0, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 891, 1
-  size: 888, 1536
-  orig: 888, 1536
-  offset: 0, 0
-  index: -1
-
-wall-1.png
-size: 1780, 1538
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-walk
-  rotate: false
-  xy: 1, 1
-  size: 888, 1536
-  orig: 888, 1536
+  xy: 160, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 891, 1
-  size: 888, 1536
-  orig: 888, 1536
-  offset: 0, 0
-  index: -1
-
-wall-2.png
-size: 1780, 1538
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-walk
-  rotate: false
-  xy: 1, 1
-  size: 888, 1536
-  orig: 888, 1536
+  xy: 320, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 891, 1
-  size: 888, 1536
-  orig: 888, 1536
-  offset: 0, 0
-  index: -1
-
-wall-3.png
-size: 1780, 1538
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-walk
-  rotate: false
-  xy: 1, 1
-  size: 888, 1536
-  orig: 888, 1536
+  xy: 480, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 891, 1
-  size: 888, 1536
-  orig: 888, 1536
-  offset: 0, 0
-  index: -1
-
-wall-4.png
-size: 1780, 1538
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-walk
-  rotate: false
-  xy: 1, 1
-  size: 888, 1536
-  orig: 888, 1536
+  xy: 640, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 891, 1
-  size: 888, 1536
-  orig: 888, 1536
-  offset: 0, 0
-  index: -1
-
-wall-5.png
-size: 1780, 1538
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-walk
-  rotate: false
-  xy: 1, 1
-  size: 888, 1536
-  orig: 888, 1536
+  xy: 800, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1
 walk
   rotate: false
-  xy: 891, 1
-  size: 888, 1536
-  orig: 888, 1536
+  xy: 960, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1120, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1280, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1440, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walkAngry
+  rotate: false
+  xy: 1600, 0
+  size: 157, 48
+  orig: 157, 48
+  offset: 0, 0
+  index: -1
+walkAngry
+  rotate: false
+  xy: 1760, 0
+  size: 157, 48
+  orig: 157, 48
   offset: 0, 0
   index: -1

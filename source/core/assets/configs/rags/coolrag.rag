@@ -2,7 +2,7 @@ $_title rag
 $_width 20
 $_height 10
 
-$#FFFFFFFFFF
+$#PFFFFFF..F
 $#P.....P..F
 $#P.....P..F
 $#P........F
@@ -21,11 +21,12 @@ $#P.....P..F
 $#P........F
 $#P........F
 $#P........F
-$#FFFFFFFFFF
+$#FFFFFFF..F
 
 $@player set [2,1]
 
 $-spawn [12,4] (skeleton)
 $-spawn [14,4] (skeleton)
 $-spawn [10,4] (skeleton)
+$-spawn [14,5] (levelTrigger)
 
