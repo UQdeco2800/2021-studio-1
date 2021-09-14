@@ -136,13 +136,15 @@ public class PhysicsContactListener implements ContactListener {
   private void checkSpearCollision(BodyUserData bodyA, BodyUserData bodyB) {
     if(bodyA.entity.getType() == EntityTypes.SPEARPOWERUP &&
             bodyA.entity.getComponent(SpearComponent.class).isFlying()) {
-      if (bodyB.entity.getType() == EntityTypes.SKELETON || bodyB.entity.getType() == EntityTypes.WOLF) {
+      if (bodyB.entity.getType() == EntityTypes.SKELETON || bodyB.entity.getType() == EntityTypes.WOLF ||
+              bodyB.entity.getType() == EntityTypes.FIRESPIRIT) {
         bodyB.entity.getEvents().trigger("dispose");
         bodyA.entity.getComponent(SpearComponent.class).hitEnemy();
       }
     } else if (bodyB.entity.getType() == EntityTypes.SPEARPOWERUP &&
             bodyB.entity.getComponent(SpearComponent.class).isFlying()) {
-      if (bodyA.entity.getType() == EntityTypes.SKELETON || bodyA.entity.getType() == EntityTypes.WOLF) {
+      if (bodyA.entity.getType() == EntityTypes.SKELETON || bodyA.entity.getType() == EntityTypes.WOLF ||
+              bodyA.entity.getType() == EntityTypes.FIRESPIRIT) {
         bodyA.entity.getEvents().trigger("dispose");
         bodyB.entity.getComponent(SpearComponent.class).hitEnemy();
       }
