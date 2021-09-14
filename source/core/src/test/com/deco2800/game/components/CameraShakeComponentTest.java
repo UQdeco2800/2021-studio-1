@@ -86,7 +86,11 @@ class CameraShakeComponentTest {
   }
 
   Entity createTarget(short layer, Entity attacker) {
-    Entity sfx = NPCFactory.createScreenFX(attacker);
+    Entity sfx =
+          new Entity()
+            .addComponent(new CombatStatsComponent(10, 0))
+            .addComponent(new PhysicsComponent())
+            .addComponent(new HitboxComponent().setLayer(layer));
     Entity target =
         new Entity()
             .addComponent(new CombatStatsComponent(10, 0))
