@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -169,18 +169,39 @@ extends <a href="Component.html" title="class in com.deco2800.game.components">C
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor" id="i1">
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOffset()">getOffset</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Gets the offset</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
 <td class="colFirst"><code><a href="https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/math/Matrix4.html?is-external=true" title="class or interface in com.badlogic.gdx.math" class="externalLink">Matrix4</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProjectionMatrix()">getProjectionMatrix</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i2">
+<tr class="rowColor" id="i3">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resetLastPosition()">resetLastPosition</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Resets the last position</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resize(int,int,float)">resize</a></span>&#8203;(int&nbsp;screenWidth,
 int&nbsp;screenHeight,
 float&nbsp;gameWidth)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="rowColor" id="i5">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOffset(float)">setOffset</a></span>&#8203;(float&nbsp;offset)</code></th>
+<td class="colLast">
+<div class="block">Sets the offset</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
@@ -247,6 +268,35 @@ float&nbsp;gameWidth)</code></th>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="Component.html#update()">update</a></code>&nbsp;in class&nbsp;<code><a href="Component.html" title="class in com.deco2800.game.components">Component</a></code></dd>
 </dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setOffset(float)">setOffset</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setOffset</span>&#8203;(<span class="arguments">float&nbsp;offset)</span></div>
+<div class="block">Sets the offset</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>offset</code> - offset for the camera</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="getOffset()">getOffset</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getOffset</span>()</div>
+<div class="block">Gets the offset</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>offset</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="resetLastPosition()">resetLastPosition</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">resetLastPosition</span>()</div>
+<div class="block">Resets the last position</div>
 </section>
 </li>
 <li class="blockList">

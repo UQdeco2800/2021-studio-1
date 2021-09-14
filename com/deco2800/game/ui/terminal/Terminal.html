@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -201,36 +201,41 @@ extends <a href="../../components/Component.html" title="class in com.deco2800.g
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processMessage()">processMessage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Processes the completed message entered by the user.</div>
+<div class="block">Adds command to be executed by message buffer.</div>
 </td>
 </tr>
 <tr class="altColor" id="i6">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processMessageBuffer()">processMessageBuffer</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendTerminal(java.lang.String)">sendTerminal</a></span>&#8203;(java.lang.String&nbsp;text)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClosed()">setClosed</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Closes the terminal and clears the stored message.</div>
 </td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEnteredMessage(java.lang.String)">setEnteredMessage</a></span>&#8203;(java.lang.String&nbsp;text)</code></th>
 <td class="colLast">
 <div class="block">Sets the text shown on the terminal</div>
 </td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOpen()">setOpen</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Opens the terminal.</div>
 </td>
 </tr>
-<tr class="altColor" id="i10">
+<tr class="rowColor" id="i11">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toggleIsOpen()">toggleIsOpen</a></span>()</code></th>
 <td class="colLast">
@@ -344,12 +349,17 @@ extends <a href="../../components/Component.html" title="class in com.deco2800.g
 <section class="detail">
 <h3><a id="processMessage()">processMessage</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">processMessage</span>()</div>
-<div class="block">Processes the completed message entered by the user. If the message corresponds to a valid
- command, the command will be actioned.</div>
+<div class="block">Adds command to be executed by message buffer. Buffer is then processed every cycle in main game screen</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if command handled, false otherwise</dd>
+<dd>true if command added, false otherwise</dd>
 </dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="processMessageBuffer()">processMessageBuffer</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">processMessageBuffer</span>()</div>
 </section>
 </li>
 <li class="blockList">
