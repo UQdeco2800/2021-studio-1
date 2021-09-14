@@ -271,7 +271,7 @@ public class NPCFactory {
     AITaskComponent aiComponent =
             new AITaskComponent()
                     .addTask(new WanderTask(new Vector2(0f, 0f), 0f))
-                    .addTask(new ShootTask(target, 5f, ProjectileFactory.fireSpiritShot()));
+                    .addTask(new ShootTask(target, 5f, ProjectileFactory.fireBall()));
     Entity npc =
             new Entity()
                     .addComponent(new PhysicsComponent())
@@ -301,7 +301,7 @@ public class NPCFactory {
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
-                   .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
 
                     .addComponent(aiComponent);
 

@@ -253,8 +253,8 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void projectileFromEnemy(GridPoint2 enemy) {
-        Entity fireSpiritShot = ProjectileFactory.fireSpiritShot();
-        spawnEntityAt(fireSpiritShot, enemy, false, false);
+        Entity fireBall = ProjectileFactory.fireBall();
+        spawnEntityAt(fireBall, enemy, false, false);
     }
 
     public void clearEntitiesAt(int x, int y) {

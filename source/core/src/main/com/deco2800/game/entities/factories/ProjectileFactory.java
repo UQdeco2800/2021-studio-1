@@ -30,10 +30,10 @@ public class ProjectileFactory {
         return spear;
     }
 
-    public static Entity fireSpiritShot() {
-        Entity fireSpiritShot = createBaseProjectile();
-        fireSpiritShot.getComponent(PhysicsMovementComponent.class);
-        return fireSpiritShot;
+    public static Entity fireBall() {
+        Entity fireBall = createBaseProjectile();
+        fireBall.getComponent(PhysicsMovementComponent.class);
+        return fireBall;
     }
 
     /**
