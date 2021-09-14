@@ -80,8 +80,6 @@ public class ObstacleFactory {
     return levelLoadTrigger;
 }
 
-
-
   /**
    * Creates a spike entity.
    *

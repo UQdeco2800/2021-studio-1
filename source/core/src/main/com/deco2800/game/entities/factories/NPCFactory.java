@@ -236,9 +236,7 @@ public class NPCFactory {
   private static Entity createWolfNPC(Entity target) {
     AITaskComponent aiComponent =
             new AITaskComponent()
-                    //.addTask(new WanderTask(new Vector2(10f, 0f), 5f));
                     .addTask(new MoveLeftTask());
-    //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
     //.addTask(new ChaseTask(target, 10, 3f, 4f));
     Entity npc =
             new Entity()
@@ -249,12 +247,12 @@ public class NPCFactory {
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                     .addComponent(aiComponent);
 
-
     PhysicsUtils.setScaledCollider(npc, 0.5f, 0.4f);
     npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
             PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
+    npc.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
     return npc;
   }
 
@@ -274,9 +272,11 @@ public class NPCFactory {
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                     .addComponent(aiComponent);
-    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    PhysicsUtils.setScaledCollider(npc, 0.5f, 0.4f);
+    npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
+            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
-    npc.setType(EntityTypes.ENEMY);
+    npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
     return npc;
   }
 
