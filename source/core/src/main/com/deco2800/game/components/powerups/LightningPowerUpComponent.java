@@ -64,8 +64,10 @@ public class LightningPowerUpComponent extends PowerUpComponent {
 
         // If the enemy is a wolf or skeleton within 8 metres, dispose
         for (Entity enemy : ServiceLocator.getEntityService().getEntityArray()) {
-            if (enemy.getType() == EntityTypes.WOLF ||enemy.getType() == EntityTypes.SKELETON) {
-                if (enemy.getCenterPosition().x - entity.getCenterPosition().x <= 8f) {
+            if (enemy.getType() == EntityTypes.WOLF
+                    ||enemy.getType() == EntityTypes.SKELETON
+                    || enemy.getType() == EntityTypes.FIRESPIRIT) {
+                if (enemy.getCenterPosition().x - entity.getCenterPosition().x <= 15f) {
                     enemy.flagDelete();
                 }
             }
