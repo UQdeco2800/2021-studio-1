@@ -6,7 +6,7 @@ import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.ai.tasks.Task;
 import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories;
+//import com.deco2800.game.entities.factories;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class ShootTask extends DefaultTask implements PriorityTask {
     private static final Logger logger = LoggerFactory.getLogger(ShootTask.class);
 
     protected Entity player;
-    protected Entity
+    //protected Entity;
     private Vector2 startPos;
     private MovementTask movementTask;
     private WaitTask waitTask;
