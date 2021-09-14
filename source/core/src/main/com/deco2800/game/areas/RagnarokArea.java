@@ -334,6 +334,14 @@ public class RagnarokArea extends GameArea {
         repeatRandomly(1000, 5000, 100, () -> roar.play());
     }
 
+    /**
+     * Helper to execute roar randomly between 1-5 seconds apart
+     * @param timer Timer instance
+     * @param min seconds lower bound
+     * @param max seconds upper bound
+     * @param count how many times to do the task
+     * @param r runnable thread
+     */
     private void _repeatRandomly(Timer timer, int min, int max, int count, Runnable r) {
         if (count < 1) {
             timer.cancel();
@@ -352,6 +360,13 @@ public class RagnarokArea extends GameArea {
         );
     }
 
+    /**
+     * Repeat task randomly
+     * @param min seconds lower bound
+     * @param max seconds upper bound
+     * @param count how many times to do the task
+     * @param r runnable thread
+     */
     private void repeatRandomly(int min, int max, int count, Runnable r) {
         Timer timer = new Timer();
         _repeatRandomly(timer, min, max, count, r);
