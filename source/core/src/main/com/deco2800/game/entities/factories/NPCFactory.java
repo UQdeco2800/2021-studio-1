@@ -9,6 +9,7 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.components.npc.DeathGiantAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
+import com.deco2800.game.components.npc.ScreenFXAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.tasks.MoveRightTask;
@@ -165,6 +166,32 @@ public class NPCFactory {
 
     return wallOfDeath;
   }
+
+  /**
+   * Creates a screen effects entity
+   *
+   * @return Screen FX entity
+   */
+  public static Entity createScreenFX() {
+        Entity screenFX = new Entity();
+    
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService()
+                                .getAsset("images/sfx.atlas", TextureAtlas.class));
+            animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("dark", 0.1f, Animation.PlayMode.LOOP);
+    
+        screenFX
+                .addComponent(animator)
+                .addComponent(new ScreenFXAnimationController());
+    
+        screenFX.getComponent(AnimationRenderComponent.class).scaleEntity();
+        screenFX.setScale(25f,12f);
+        screenFX.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+    
+        return screenFX;
+      }
 
   public static Entity createDeathGiant(Entity target) {
         Entity deathGiant = createWallNPC(target);

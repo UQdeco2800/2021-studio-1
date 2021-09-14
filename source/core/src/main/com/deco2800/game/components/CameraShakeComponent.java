@@ -20,17 +20,20 @@ public class CameraShakeComponent extends Component {
   private CameraComponent cameraComponent;
   private float toggle;
   private int active;
+  private Entity sfx;
 
   /**
    * Class to shake the camera and start event listener for animation
    * @param target
    * @param cameraComponent
    */
-  public CameraShakeComponent(Entity target, CameraComponent cameraComponent) {
+  public CameraShakeComponent(Entity target, CameraComponent cameraComponent, Entity sfx) {
     this.target = target;
     this.cameraComponent = cameraComponent;
     this.toggle = 0.1f;
     this.active = 0;
+    this.sfx = sfx;
+
   }
 
   /**
@@ -58,15 +61,16 @@ public class CameraShakeComponent extends Component {
     }
 
     entity.getEvents().trigger("moveRightAngry");
+    this.sfx.getEvents().trigger("dark");
 
     if (distance < 32f) {
-
           cameraComponent.setOffset(this.toggle);
           cameraComponent.update();
           cameraComponent.resetLastPosition();
   }
     else {
         entity.getEvents().trigger("moveRight");
+        this.sfx.getEvents().trigger("default");
         //System.out.print("far");
         cameraComponent.setOffset(0);
         cameraComponent.update();

@@ -61,7 +61,8 @@ public class RacerArea extends GameArea {
         "images/powerup-spear.png",
         "images/powerup-shield.png",
         "images/wallOfDeath.png",
-        "images/powerup.png"
+        "images/powerup.png",
+        "images/sfx.png"
     };
     private static final String[] forestTextureAtlases = {
         "images/terrain_iso_grass.atlas",
@@ -71,7 +72,8 @@ public class RacerArea extends GameArea {
         "images/deathGiant.atlas",
         "images/skeleton.atlas",
         "images/playerspear.atlas",
-        "images/lightning-animation.atlas"
+        "images/lightning-animation.atlas",
+        "images/sfx.atlas"
     };
     private static final String[] forestSounds = {"sounds/Impact4.ogg"};
     private static final String mainMusic = "sounds/main.mp3";
@@ -471,9 +473,10 @@ public class RacerArea extends GameArea {
      * This spawns the Wall of Death
      */
     private void spawnWallOfDeath() {
+        Entity sfx = new Entity();
         GridPoint2 leftPos = new GridPoint2(-40, 14);
         wallOfDeath = NPCFactory.createWallOfDeath(player);
-        wallOfDeath.addComponent(new CameraShakeComponent(player,terrainFactory.getCameraComponent()));
+        wallOfDeath.addComponent(new CameraShakeComponent(player, terrainFactory.getCameraComponent(), sfx));
         spawnEntityAt(wallOfDeath, leftPos, true, true);
     }
 

@@ -60,13 +60,14 @@ public class RagnarokArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
-            "images/deathGiant.png"
+            "images/deathGiant.png",
+            "images/sfx.png"
     };
 
     //TODO: make Json,
     private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
             "images/terrain_iso_grass.atlas", "images/ghostKing" +
-            ".atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas"
+            ".atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/sfx.atlas", "images/skeleton.atlas"
     };
 
     // get the sounds to work and then move the music & sounds to a json
@@ -141,8 +142,10 @@ public class RagnarokArea extends GameArea {
     protected void spawnWallOfDeath() {
         GridPoint2 leftPos = new GridPoint2(-40,13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
-        wallOfDeath.addComponent(new CameraShakeComponent(this.player,this.terrainFactory.getCameraComponent()));
+        Entity sfx = NPCFactory.createScreenFX();
+        wallOfDeath.addComponent(new CameraShakeComponent(this.player,this.terrainFactory.getCameraComponent(), sfx));
         spawnEntityAt(wallOfDeath, leftPos, true, true);
+        spawnEntityAt(sfx, leftPos, true, true);
     }
 
     /**
