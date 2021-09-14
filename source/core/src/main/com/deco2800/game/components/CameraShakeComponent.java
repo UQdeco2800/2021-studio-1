@@ -70,7 +70,7 @@ public class CameraShakeComponent extends Component {
   }
     else {
         entity.getEvents().trigger("moveRight");
-        this.sfx.getEvents().trigger("default");
+        this.sfx.getEvents().trigger("normal");
         //System.out.print("far");
         cameraComponent.setOffset(0);
         cameraComponent.update();

@@ -172,22 +172,24 @@ public class NPCFactory {
    *
    * @return Screen FX entity
    */
-  public static Entity createScreenFX() {
-        Entity screenFX = new Entity();
-    
+  public static Entity createScreenFX(Entity target) {
+        Entity screenFX = createWallNPC(target);
+        BaseEntityConfig config = configs.deathGiant;
+
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService()
                                 .getAsset("images/sfx.atlas", TextureAtlas.class));
-            animator.addAnimation("default", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("normal", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("dark", 0.1f, Animation.PlayMode.LOOP);
     
         screenFX
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                 .addComponent(animator)
                 .addComponent(new ScreenFXAnimationController());
     
         screenFX.getComponent(AnimationRenderComponent.class).scaleEntity();
-        screenFX.setScale(25f,12f);
+        screenFX.setScale(30f,12f);
         screenFX.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
     
         return screenFX;

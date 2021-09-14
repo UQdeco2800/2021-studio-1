@@ -141,11 +141,12 @@ public class RagnarokArea extends GameArea {
      */
     protected void spawnWallOfDeath() {
         GridPoint2 leftPos = new GridPoint2(-40,13);
+        GridPoint2 leftPos2 = new GridPoint2(-5,13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
-        Entity sfx = NPCFactory.createScreenFX();
+        Entity sfx = NPCFactory.createScreenFX(getPlayer());
         wallOfDeath.addComponent(new CameraShakeComponent(this.player,this.terrainFactory.getCameraComponent(), sfx));
         spawnEntityAt(wallOfDeath, leftPos, true, true);
-        spawnEntityAt(sfx, leftPos, true, true);
+        spawnEntityAt(sfx, leftPos2, true, true);
     }
 
     /**

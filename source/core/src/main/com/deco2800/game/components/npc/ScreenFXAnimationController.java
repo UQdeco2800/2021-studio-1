@@ -14,7 +14,7 @@ public class ScreenFXAnimationController extends Component {
   public void create() {
     super.create();
     animator = this.entity.getComponent(AnimationRenderComponent.class);
-    entity.getEvents().addListener("default", this::animateNormal);
+    entity.getEvents().addListener("normal", this::animateNormal);
     entity.getEvents().addListener("dark", this::animateDark);
 
   }
@@ -22,7 +22,7 @@ public class ScreenFXAnimationController extends Component {
    * Starts the "walk" animation
    */
   void animateNormal() {
-    animator.startAnimation("default");
+    animator.startAnimation("normal");
   }
 
   void animateDark() {
