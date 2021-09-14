@@ -17,6 +17,7 @@ public class CameraShakeComponent extends Component {
      *
      * @param target          the target of the camera
      * @param cameraComponent current camera to shake
+     * @param sfx             screen effects entity
      */
     public CameraShakeComponent(Entity target, CameraComponent cameraComponent, Entity sfx) {
         this.target = target;
