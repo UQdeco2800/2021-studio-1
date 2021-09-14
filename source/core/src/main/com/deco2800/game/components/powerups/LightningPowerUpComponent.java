@@ -14,6 +14,18 @@ public class LightningPowerUpComponent extends PowerUpComponent {
     boolean active;
     Entity powerUp;
 
+    public Entity getPowerUp(){
+        return powerUp;
+    }
+
+    public boolean getActive(){
+        return this.active;
+    }
+
+    public void setActive(boolean active){
+        this.active = active;
+    }
+
     public void obtainPowerUp(Entity lightning) {
         powerUp = lightning;
     }

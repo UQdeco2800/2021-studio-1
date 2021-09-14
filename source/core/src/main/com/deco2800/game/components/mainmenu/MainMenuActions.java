@@ -29,7 +29,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("load", this::onLoad);
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
-    entity.getEvents().addListener("help", this::onHelp);
+    entity.getEvents().addListener("Help Screen", this::onHelp);
     entity.getEvents().addListener("mute", this::onMute);
   }
 
@@ -71,7 +71,7 @@ public class MainMenuActions extends Component {
     logger.info("Launching help popUp");
     if (mainMenuPop == null) {
         mainMenuPop = new Entity();
-        mainMenuPop.addComponent(new UIPop("Default Pop", entity));
+        mainMenuPop.addComponent(new UIPop("Help Screen", entity));
         ServiceLocator.getEntityService().register(mainMenuPop);
     } else {
         mainMenuPop.dispose();

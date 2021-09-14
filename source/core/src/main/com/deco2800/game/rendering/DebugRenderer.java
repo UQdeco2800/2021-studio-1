@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.deco2800.game.components.gamearea.EntityIDDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +17,11 @@ public class DebugRenderer {
   private static final Logger logger = LoggerFactory.getLogger(DebugRenderer.class);
   private final Box2DDebugRenderer physicsRenderer;
   private final ShapeRenderer shapeRenderer;
+  private final EntityIDDisplay entityIDDisplay;
 
   private World physicsWorld;
   private boolean active = true;
+  private int entityIDActive = 0;
   private DrawRequest[] drawRequests = new DrawRequest[10];
   private int requestCount = 0;
 
@@ -29,6 +32,7 @@ public class DebugRenderer {
   public DebugRenderer(Box2DDebugRenderer physicsRenderer, ShapeRenderer shapeRenderer) {
     this.physicsRenderer = physicsRenderer;
     this.shapeRenderer = shapeRenderer;
+    this.entityIDDisplay = new EntityIDDisplay("my life is pain - neo");
 
     for (int i = 0; i < drawRequests.length; i++) {
       drawRequests[i] = new DrawRequest();
@@ -103,6 +107,14 @@ public class DebugRenderer {
     this.active = active;
   }
 
+  public void toggleId() {
+      logger.info("Set debug, Entity IDs Active to: {}", active);
+      //this.entityIDActive = active;
+
+      this.entityIDActive = 1 - entityIDActive;
+      this.entityIDDisplay.setActive(entityIDActive);
+  }
+
   public boolean getActive() {
     return active;
   }
@@ -126,6 +138,8 @@ public class DebugRenderer {
         case RECT:
           renderRect(drawRequests[i]);
           break;
+        case TEXT:
+          renderText(drawRequests[i]);
         default:
           logger.error("Attempting to draw unsupported shape!");
           break;
@@ -145,6 +159,12 @@ public class DebugRenderer {
     Gdx.gl.glLineWidth(request.lineWidth);
     shapeRenderer.setColor(request.color);
     shapeRenderer.rect(request.pos.x, request.pos.y, request.end.x, request.end.y);
+  }
+
+  //TODO account for Vector2 pos to draw entity ID over eachother well
+  private void renderText(DrawRequest request) {
+    String text = request.text;
+    entityIDDisplay.setText(" hello hello ");
   }
 
   /**
@@ -172,12 +192,14 @@ public class DebugRenderer {
     public Vector2 pos;
     public Color color;
     public float lineWidth;
+    public String text;
 
     public Vector2 end;
   }
 
   enum DrawRequestType {
     LINE,
-    RECT
+    RECT,
+    TEXT
   }
 }

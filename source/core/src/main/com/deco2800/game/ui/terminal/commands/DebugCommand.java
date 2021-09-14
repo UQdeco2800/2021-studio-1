@@ -18,7 +18,7 @@ public class DebugCommand implements Command {
    */
   public boolean action(ArrayList<String> args) {
     if (!isValid(args)) {
-      logger.debug("Invalid arguments received for 'debug' command: {}", args);
+      logger.debug("Invalid arguments received for '-debug' command: {}", args);
       return false;
     }
 
@@ -29,6 +29,9 @@ public class DebugCommand implements Command {
         return true;
       case "off":
         ServiceLocator.getRenderService().getDebug().setActive(false);
+        return true;
+      case "id":
+        ServiceLocator.getRenderService().getDebug().toggleId();
         return true;
       default:
         logger.debug("Unrecognised argument received for 'debug' command: {}", args);

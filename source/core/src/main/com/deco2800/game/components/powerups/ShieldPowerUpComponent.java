@@ -28,9 +28,11 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
      * out of blocks
      */
     public void activate() {
-        blocks -= 1;
-        if (blocks == 0) {
-            enabled = false;
+        if (blocks > 0) {
+            blocks -= 1;
+            if (blocks == 0) {
+                enabled = false;
+            }
         }
     }
 
