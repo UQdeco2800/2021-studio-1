@@ -56,7 +56,7 @@ public class CameraShakeComponent extends Component {
             cameraComponent.setOffset(this.toggle);
             cameraComponent.update();
             cameraComponent.resetLastPosition();
-            loudWalk.setVolume(1.8f);
+            loudWalk.setVolume(2f);
             loudWalk.play();
         } else {
             entity.getEvents().trigger("moveRight");

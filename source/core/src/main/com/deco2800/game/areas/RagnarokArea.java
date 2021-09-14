@@ -337,7 +337,7 @@ public class RagnarokArea extends GameArea {
         fire.setLooping(true);
         walk.setLooping(true);
         music.setVolume(0.7f);
-        fire.setVolume(0.6f);
+        fire.setVolume(0.7f);
         walk.setVolume(0.8f);
         music.play();
         fire.play();
