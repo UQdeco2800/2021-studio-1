@@ -149,7 +149,7 @@ public class NPCFactory {
 
     fireSpirit.getComponent(TextureRenderComponent.class).scaleEntity();
 
-    fireSpirit.setScale(1f, 1f);
+    fireSpirit.setScale(1.2f, 1f);
     return fireSpirit;
   }
 
@@ -227,7 +227,7 @@ public class NPCFactory {
             .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
             .addComponent(aiComponent);
-    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    PhysicsUtils.setScaledCollider(npc, 0.5f, 0.5f);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
     return npc;
@@ -247,7 +247,7 @@ public class NPCFactory {
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                     .addComponent(aiComponent);
 
-    PhysicsUtils.setScaledCollider(npc, 0.5f, 0.4f);
+    PhysicsUtils.setScaledCollider(npc, 0.5f, 0.5f);
     npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
             PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
@@ -272,7 +272,7 @@ public class NPCFactory {
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
                     .addComponent(aiComponent);
-    PhysicsUtils.setScaledCollider(npc, 0.5f, 0.4f);
+    PhysicsUtils.setScaledCollider(npc, 0f, 0f);
     npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
             PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
