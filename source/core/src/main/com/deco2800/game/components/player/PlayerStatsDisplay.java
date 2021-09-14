@@ -54,7 +54,6 @@ public class PlayerStatsDisplay extends UIComponent {
     tableTwo.padTop(60f).padLeft(20f);
     // Heart image
     float heartSideLength = 30f;
-    heartImage = new Image(ServiceLocator.getResourceService().getAsset("images/heart.png", Texture.class));
 
     // Health text
     int health = entity.getComponent(CombatStatsComponent.class).getHealth();
@@ -72,7 +71,6 @@ public class PlayerStatsDisplay extends UIComponent {
     CharSequence scoreText = String.format("Score: %d",score);
     scoreLabel = new Label(scoreText,skin,"large");
 
-    table.add(heartImage).size(heartSideLength).pad(5);
     table.add(healthLabel);
     tableTwo.add(scoreLabel);
     stage.addActor(table);
@@ -109,7 +107,6 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void dispose() {
     super.dispose();
-    heartImage.remove();
     healthLabel.remove();
     scoreLabel.remove();
 

@@ -39,14 +39,13 @@ import org.slf4j.LoggerFactory;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {"images/heart.png"};
+  private static final String[] mainGameTextures = {};
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
-  //private RagnarokArea ragnarokArea = null;
   private AreaManager ragnarokManager;
 
   public MainGameScreen(GdxGame game) {

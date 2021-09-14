@@ -1,4 +1,4 @@
-ghostKing.png
+wolf.png
 size: 512, 512
 format: RGBA8888
 filter: Nearest, Nearest
@@ -10,35 +10,35 @@ default
   orig: 246, 156
   offset: 0, 0
   index: 0
-float
+run
   rotate: false
   xy: 2, 318
   size: 246, 156
   orig: 246, 156
   offset: 0, 0
   index: 1
-float
+run
   rotate: false
   xy: 2, 160
   size: 246, 156
   orig: 246, 156
   offset: 0, 0
   index: 3
-float
+run
   rotate: false
   xy: 250, 318
   size: 246, 156
   orig: 246, 156
   offset: 0, 0
   index: 0
-float
+run
   rotate: false
   xy: 2, 2
   size: 246, 156
   orig: 246, 156
   offset: 0, 0
   index: 2
-float
+run
   rotate: false
   xy: 250, 160
   size: 246, 156

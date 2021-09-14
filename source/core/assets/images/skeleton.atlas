@@ -3,42 +3,42 @@ skeleton.png
 size: 2048, 1024
 format: RGBA8888
 filter: Nearest, Nearest
-float
+run
   rotate: false
   xy: 1484, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 1
-float
+run
   rotate: false
   xy: 743, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 2
-float
+run
   rotate: false
   xy: 496, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 3
-float
+run
   rotate: false
   xy: 1484, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 4
-float
+run
   rotate: false
   xy: 496, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 5
-float
+run
   rotate: false
   xy: 249, 646
   size: 245, 320
@@ -52,112 +52,112 @@ default
   orig: 245, 320
   offset: 0, 0
   index: 0
-float
+run
   rotate: false
   xy: 249, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 0
-float
+run
   rotate: false
   xy: 990, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 7
-float
+run
   rotate: false
   xy: 496, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 8
-float
+run
   rotate: false
   xy: 1237, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 9
-float
+run
   rotate: false
   xy: 2, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 10
-float_back
+run_back
   rotate: false
   xy: 2, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 1
-float_back
+run_back
   rotate: false
   xy: 990, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 2
-float_back
+run_back
   rotate: false
   xy: 249, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 3
-float_back
+run_back
   rotate: false
   xy: 1237, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 4
-float_back
+run_back
   rotate: false
   xy: 743, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 5
-float_back
+run_back
   rotate: false
   xy: 249, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 6
-float_back
+run_back
   rotate: false
   xy: 249, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 0
-float_back
+run_back
   rotate: false
   xy: 1237, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 7
-float_back
+run_back
   rotate: false
   xy: 743, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 8
-float_back
+run_back
   rotate: false
   xy: 2, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 9
-float_back
+run_back
   rotate: false
   xy: 990, 646
   size: 245, 320

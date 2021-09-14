@@ -61,9 +61,8 @@ public class NPCFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
-        //animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("float_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
 
         skeleton
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -106,8 +105,8 @@ public class NPCFactory {
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
-        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+                        ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
+        animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
 
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -144,12 +143,12 @@ public class NPCFactory {
             fixture.setSensor(true);
         }
 
-        wolf.getComponent(AnimationRenderComponent.class).startAnimation("float");
+        wolf.getComponent(AnimationRenderComponent.class).startAnimation("run");
         wolf.setType(EntityTypes.WOLF);
 
         wolf.setScale(1.3f, 1f);
 
-        wolf.getComponent(AnimationRenderComponent.class).startAnimation("float");
+        wolf.getComponent(AnimationRenderComponent.class).startAnimation("run");
         return wolf;
     }
 

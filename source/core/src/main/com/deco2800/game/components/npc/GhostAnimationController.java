@@ -29,11 +29,11 @@ public class GhostAnimationController extends Component {
 //  }
 
   void animateWander() {
-    animator.startAnimation("float");
+    animator.startAnimation("run");
   }
 
   void animateWander_right() {
-    animator.startAnimation("float_back");
+    animator.startAnimation("run_back");
   } //test for NPC to face other direction when moving
 
   void animateChase() {

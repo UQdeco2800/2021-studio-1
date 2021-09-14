@@ -44,26 +44,14 @@ public class RagnarokArea extends GameArea {
 
     //TODO: make Json
     private static final String[] racerTextures = {
-            "images/box_boy_leaf.png",
             "images/floor.png",
             "images/platform_gradient.png",
             "images/platform_no_gradient.png",
             "images/fire_spirit.png",
-            "images/tree.png",
             "images/skeleton.png",
             "images/Spear_1.png",
             "images/Rock_1.png",
             "images/Spike_1.png",
-            "images/ghost_1.png",
-            "images/grass_1.png",
-            "images/grass_2.png",
-            "images/grass_3.png",
-            "images/hex_grass_1.png",
-            "images/hex_grass_2.png",
-            "images/hex_grass_3.png",
-            "images/iso_grass_1.png",
-            "images/iso_grass_2.png",
-            "images/iso_grass_3.png",
             "images/deathGiant.png",
             "images/sfx.png",
             "images/earth_1.png",
@@ -76,13 +64,13 @@ public class RagnarokArea extends GameArea {
             "images/hel_2.png",
             "images/jotunheimr_1.png",
             "images/jotunheimr_2.png",
-            "images/powerup-shield.png"
+            "images/powerup-shield.png",
+            "images/blue_bck.png"
     };
 
     //TODO: make Json,
     private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
-            "images/terrain_iso_grass.atlas",
-            "images/ghostKing.atlas",
+            "images/wolf.atlas",
             "images/odin.atlas",
             "images/wall.atlas",
             "images/deathGiant.atlas",
@@ -226,7 +214,7 @@ public class RagnarokArea extends GameArea {
     //TODO: KEEP
     private void spawnTerrain() {
         // Background terrain
-        terrain = terrainFactory.createTerrain(TerrainFactory.TerrainType.FOREST_DEMO);
+        terrain = terrainFactory.createTerrain(TerrainFactory.TerrainType.RAGNAROK_MAIN);
         spawnEntity(new Entity().addComponent(terrain));
 
         // Terrain walls
