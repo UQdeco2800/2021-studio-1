@@ -67,7 +67,17 @@ public class RagnarokArea extends GameArea {
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
             "images/deathGiant.png",
-            "images/ghostKing.png"
+            "images/earth_1.png",
+            "images/earth_2.png",
+            "images/earth_3.png",
+            "images/earth_4.png",
+            "images/asgard_1.png",
+            "images/asgard_2.png",
+            "images/hel_1.png",
+            "images/hel_2.png",
+            "images/jotunheimr_1.png",
+            "images/jotunheimr_2.png"
+
     };
 
     //TODO: make Json,
@@ -130,7 +140,7 @@ public class RagnarokArea extends GameArea {
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
-            logger.info("Loading... {}%", resourceService.getProgress());
+            // logger.info("Loading... {}%", resourceService.getProgress());
         }
     }
 
@@ -197,25 +207,30 @@ public class RagnarokArea extends GameArea {
 
     }
 
-    protected void spawnPlatform(int x, int y) {
-        Entity platform = ObstacleFactory.createPlatform();
+    protected void spawnPlatform(int x, int y, String world) {
+        Entity platform = ObstacleFactory.createPlatform(world);
         GridPoint2 pos = new GridPoint2(x, y+2);
         spawnEntityAt(platform, pos, false, false);
-
         signup(pos, platform);
-
-        //entitySignUp.put(pos, platform);
     }
 
-    protected void spawnFloor(int x, int y) {
+    protected void spawnPlatform(int x, int y) {
+        spawnPlatform(x, y, null);
+    }
+
+    protected void spawnFloor(int x, int y, String world) {
         for(int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                Entity floor = ObstacleFactory.createFloor();
+                Entity floor = ObstacleFactory.createFloor(world);
                 GridPoint2 pos = new GridPoint2(x+i, y+j);
                 spawnEntityAt(floor, pos, false, false);
                 signup(pos, floor);
             }
         }
+    }
+
+    protected void spawnFloor(int x, int y) {
+        spawnFloor(x, y, null);
     }
 
     protected void spawnRocks(int x, int y) {

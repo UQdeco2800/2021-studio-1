@@ -54,8 +54,8 @@ public class RagLoader {
                     if (line.startsWith("_")) { // config line
 
                         inConfig = true;
-                        String[] args = line.replace("_", "").split(" ");
-                        String config = String.format("-config %s %s", args[0], args[1]);
+                        String[] args = line.split(" ");
+                        String config = String.format("-config %s %s", args[0].replace("_", ""), args[1]);
 
                         //System.out.println(config);
 
