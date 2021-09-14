@@ -179,8 +179,6 @@ public class NPCFactory {
         }
 
         fireSpirit.setType(EntityTypes.FIRESPIRIT);
-
-        fireSpirit.setScale(1.2f, 1f);
         return fireSpirit;
     }
 
@@ -211,6 +209,7 @@ public class NPCFactory {
         wallOfDeath.setScale(25f, 12f);
 
         wallOfDeath.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+        wallOfDeath.setType(EntityTypes.WALL);
 
         return wallOfDeath;
     }
@@ -268,6 +267,7 @@ public class NPCFactory {
                 PhysicsComponent.AlignY.BOTTOM);
 
         deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+        deathGiant.setType(EntityTypes.GIANT);
         return deathGiant;
     }
 

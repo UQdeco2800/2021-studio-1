@@ -11,5 +11,6 @@ public enum EntityTypes {
     WALL,
     SKELETON,
     WOLF,
-    FIRESPIRIT
+    FIRESPIRIT,
+    GIANT
 }

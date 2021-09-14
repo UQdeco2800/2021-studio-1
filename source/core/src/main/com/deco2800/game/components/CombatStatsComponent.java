@@ -1,6 +1,7 @@
 package com.deco2800.game.components;
 
 import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
+import com.deco2800.game.entities.factories.EntityTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -95,7 +96,8 @@ public class CombatStatsComponent extends Component {
    * @param attacker - entity that is attacking
    */
   public void hit(CombatStatsComponent attacker) {
-    if (entity.getComponent(ShieldPowerUpComponent.class).getActive()) {
+    if (entity.getComponent(ShieldPowerUpComponent.class).getActive() &&
+            attacker.getEntity().getType() != EntityTypes.WALL) {
       entity.getEvents().trigger("block");
     } else {
       int newHealth = getHealth() - attacker.getBaseAttack();
