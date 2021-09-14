@@ -54,7 +54,7 @@ public class LevelLoadTriggerComponent extends Component {
             ServiceLocator.getAreaService().load(getNextArea());
             // Dispose the load trigger after the physics step
             Entity target = ((BodyUserData) me.getBody().getUserData()).entity;
-            // entityService.disposeAfterStep(target);
+            entityService.disposeAfterStep(target);
         }
 
 

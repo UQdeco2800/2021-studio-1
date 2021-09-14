@@ -31,6 +31,7 @@ public class AreaManager extends RagnarokArea {
     private int bPWidth; //this determines the first dimension of bufferedPlaces array (the columns)
     private int bPHeight; //this determines the second dimension of bufferedPlaces array (the chars)
     private int bPIndex;
+    private String currentWorld; //This is the current world to be loaded into the game next
 
     private Hashtable<String, String> bufferedSpawns; // buffered "spawns" will eventually store a list
                                                         // of coords and the entity to spawn them @
@@ -62,7 +63,6 @@ public class AreaManager extends RagnarokArea {
 
         bufferedSpawns = new Hashtable<>();
         this.startNextArea = 0;
-
         this.loader = new RagLoader(this); //eventually moved to terminal?
         // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
 
@@ -124,7 +124,7 @@ public class AreaManager extends RagnarokArea {
                 area.spawnFloor(gx, gy);
                 break;
             case "platform":
-                area.spawnPlatform(gx,gy);
+                area.spawnPlatform(gx,gy, this.currentWorld);
                 break;
             case "rocks":
                 area.spawnRocks(gx, gy);
@@ -213,6 +213,9 @@ public class AreaManager extends RagnarokArea {
                 break;
             case "height":
                 bPHeight = Integer.parseInt(value);
+                break;
+            case "world":
+                this.currentWorld = value;
                 break;
             case "close":
                 switch (value) {

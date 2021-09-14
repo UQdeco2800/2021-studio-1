@@ -1,6 +1,7 @@
 $_title cool
 $_width 30
 $_height 6
+$_world asgard_2
 
 $#FFF..F
 $#F....F
@@ -11,7 +12,7 @@ $#F...RF
 $#F...RF
 $#F....F
 $#F...SF
-$#FP.PSF
+$#F..PSF
 $#F.P.PF
 $#F....F
 $#.....F

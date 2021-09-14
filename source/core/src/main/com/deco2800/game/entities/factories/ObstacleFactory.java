@@ -112,13 +112,16 @@ public class ObstacleFactory {
    *
    * @return entity
    */
-  public static Entity createPlatform() {
+  public static Entity createPlatform(String world) {
     Entity platform =
             new Entity()
-            .addComponent(new TextureRenderComponent("images/platform_no_gradient.png"))
             .addComponent(new PhysicsComponent())
             .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
+    if (world == null) {
+      platform.addComponent(new TextureRenderComponent("images/platform_gradient.png"));
+    } else {
+      platform.addComponent(new TextureRenderComponent("images/"+world+".png"));
+    }
     platform.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     platform.getComponent(TextureRenderComponent.class).scaleEntity();
     // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
@@ -128,43 +131,45 @@ public class ObstacleFactory {
     return platform;
   }
 
-  /**
-   * Creates platform entity with shadow.
+   /**
+   * Creates a floor entity
    * @return entity
    */
-  public static Entity createPlatformWithGradient() {
-    Entity platformGradient =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/platform_gradient.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-
-    platformGradient.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    platformGradient.getComponent(TextureRenderComponent.class).scaleEntity();
-    // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
-    // difficult.
-    platformGradient.scaleHeight(0.5f);
-    platformGradient.setType(EntityTypes.OBSTACLE);
-    return platformGradient;
+  public static Entity createPlatform() {
+    return createPlatform(null);
   }
 
   /**
    * Creates a floor entity.
+   * @param world String for to a world name
    * @return entity
    */
-  public static Entity createFloor() {
+  public static Entity createFloor(String world) {
     Entity floor =
             new Entity()
-                    .addComponent(new TextureRenderComponent("images/floor.png"))
                     .addComponent(new PhysicsComponent())
                     .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    
+    if (world == null) {
+      floor.addComponent(new TextureRenderComponent("images/floor.png"));
+    } else {
+      floor.addComponent(new TextureRenderComponent("images/"+world+".png"));
+    }
     floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
     floor.getComponent(TextureRenderComponent.class).scaleEntity();
     floor.scaleHeight(0.5f);
     floor.setType(EntityTypes.OBSTACLE);
     return floor;
   }
+
+  /**
+   * Creates a floor entity
+   * @return entity
+   */
+  public static Entity createFloor() {
+    return createFloor(null);
+  }
+
+
 
   /**
    * Creates an invisible physics wall.
