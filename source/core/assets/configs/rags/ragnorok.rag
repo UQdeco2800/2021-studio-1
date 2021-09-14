@@ -62,8 +62,6 @@ $-spawn [12,5] (skeleton)
 $-spawn [21,5] (skeleton)
 $-spawn [11,5] (skeleton)
 $-spawn [22,5] (skeleton)
-$-spawn [8,3] (fireSpirit)
-$-spawn [10,3] (fireSpirit)
 $-spawn [6,3] (fireSpirit)
 $-spawn [15,4] (wolf)
 
