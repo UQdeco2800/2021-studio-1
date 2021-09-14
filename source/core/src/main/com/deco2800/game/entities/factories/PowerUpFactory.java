@@ -46,7 +46,7 @@ public class PowerUpFactory {
         powerUp.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
                 PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
         powerUp.getComponent(ColliderComponent.class).setAsCircleAligned(0.2f,
-            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
+                PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
 
         powerUp.setType(EntityTypes.LIGHTNINGPOWERUP);
 
@@ -89,12 +89,7 @@ public class PowerUpFactory {
      */
     public static Entity createSpearPowerUp() {
         Entity powerUp = ProjectileFactory.createSpearEntity();
-
-
-
-
         powerUp.getComponent(HitboxComponent.class).setAsBox(new Vector2(0.1f, 1f), powerUp.getCenterPosition());
-
         powerUp.getComponent(PhysicsComponent.class).setGravityScale(2f);
 
         powerUp.setScale(1.1f, 1.1f);

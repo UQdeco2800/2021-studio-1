@@ -3,6 +3,7 @@ package com.deco2800.game.components.powerups;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.SpearComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
@@ -44,9 +45,11 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     public void earlyUpdate() {
         Body spearBod = spear.getComponent(PhysicsComponent.class).getBody();
         // If after flying, the spear stops or goes below y = 0, deactivate and reset
-        if ((flown && active && spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0) {
+        if ((flown && active && spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0 ||
+                spear.getComponent(SpearComponent.class).hasHit()) {
             active = false;
             flown = false;
+            spear.getComponent(SpearComponent.class).resetSpear();
 
             // Disposes the spear after three throws
             if (thrown == 3) {
@@ -115,6 +118,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         // If the player throws the spear and hasn't yet flown, apply impulse and increment throws
         if (active && !flown) {
             flown = true;
+            spear.getComponent(SpearComponent.class).startFlying();
             spear.getComponent(AnimationRenderComponent.class).stopAnimation();
 
             spearBod.applyLinearImpulse(impulse, spearBod.getWorldCenter(), true);
