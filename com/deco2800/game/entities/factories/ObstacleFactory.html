@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -126,10 +126,17 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFloor()">createFloor</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Creates a floor entity.</div>
+<div class="block">Creates a floor entity</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFloor(java.lang.String)">createFloor</a></span>&#8203;(java.lang.String&nbsp;world)</code></th>
+<td class="colLast">
+<div class="block">Creates a floor entity.</div>
+</td>
+</tr>
+<tr class="altColor" id="i2">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createLevelLoadTrigger()">createLevelLoadTrigger</a></span>()</code></th>
 <td class="colLast">
@@ -137,35 +144,35 @@ extends java.lang.Object</pre>
  This is an invisible entity that commands the loading of more levels to the right when touched for the first time by the player</div>
 </td>
 </tr>
-<tr class="altColor" id="i2">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPlatform()">createPlatform</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Creates a floor entity</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPlatform(java.lang.String)">createPlatform</a></span>&#8203;(java.lang.String&nbsp;world)</code></th>
 <td class="colLast">
 <div class="block">Creates a platform entity.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
-<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPlatformWithGradient()">createPlatformWithGradient</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates platform entity with shadow.</div>
-</td>
-</tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createRock()">createRock</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Creates a rock entity.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSpikes()">createSpikes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Creates a spike entity.</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createWall(float,float)">createWall</a></span>&#8203;(float&nbsp;width,
 float&nbsp;height)</code></th>
@@ -214,7 +221,7 @@ float&nbsp;height)</code></th>
  This is an invisible entity that commands the loading of more levels to the right when touched for the first time by the player</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>level trigger entity</dd>
+<dd>entity</dd>
 </dl>
 </section>
 </li>
@@ -231,9 +238,22 @@ float&nbsp;height)</code></th>
 </li>
 <li class="blockList">
 <section class="detail">
+<h3><a id="createPlatform(java.lang.String)">createPlatform</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createPlatform</span>&#8203;(<span class="arguments">java.lang.String&nbsp;world)</span></div>
+<div class="block">Creates a platform entity.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>world</code> - the world type to load in. Must match the name of a .rag file (e.g. world.rag)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>entity</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
 <h3><a id="createPlatform()">createPlatform</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createPlatform</span>()</div>
-<div class="block">Creates a platform entity.</div>
+<div class="block">Creates a floor entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>entity</dd>
@@ -242,10 +262,12 @@ float&nbsp;height)</code></th>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="createPlatformWithGradient()">createPlatformWithGradient</a></h3>
-<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createPlatformWithGradient</span>()</div>
-<div class="block">Creates platform entity with shadow.</div>
+<h3><a id="createFloor(java.lang.String)">createFloor</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createFloor</span>&#8203;(<span class="arguments">java.lang.String&nbsp;world)</span></div>
+<div class="block">Creates a floor entity.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>world</code> - String for to a world name</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>entity</dd>
 </dl>
@@ -255,7 +277,7 @@ float&nbsp;height)</code></th>
 <section class="detail">
 <h3><a id="createFloor()">createFloor</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createFloor</span>()</div>
-<div class="block">Creates a floor entity.</div>
+<div class="block">Creates a floor entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>entity</dd>

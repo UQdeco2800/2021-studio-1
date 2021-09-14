@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -281,47 +281,61 @@ int&nbsp;y)</code></th>
 </tr>
 <tr class="altColor" id="i16">
 <td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnLevelLoadTrigger(int)">spawnLevelLoadTrigger</a></span>&#8203;(int&nbsp;x)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnFloor(int,int,java.lang.String)">spawnFloor</a></span>&#8203;(int&nbsp;x,
+int&nbsp;y,
+java.lang.String&nbsp;world)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor" id="i17">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnLevelLoadTrigger(int)">spawnLevelLoadTrigger</a></span>&#8203;(int&nbsp;x)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i18">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnPlatform(int,int)">spawnPlatform</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i18">
+<tr class="rowColor" id="i19">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnPlatform(int,int,java.lang.String)">spawnPlatform</a></span>&#8203;(int&nbsp;x,
+int&nbsp;y,
+java.lang.String&nbsp;world)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i20">
 <td class="colFirst"><code>protected <a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnPlayer(int,int)">spawnPlayer</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i19">
+<tr class="rowColor" id="i21">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnRocks(int,int)">spawnRocks</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i20">
+<tr class="altColor" id="i22">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnSkeleton(int,int)">spawnSkeleton</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i21">
+<tr class="rowColor" id="i23">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnSpikes(int,int)">spawnSpikes</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i22">
+<tr class="altColor" id="i24">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnWallOfDeath()">spawnWallOfDeath</a></span>()</code></th>
 <td class="colLast">
 <div class="block">This spawns the Wall of Death</div>
 </td>
 </tr>
-<tr class="rowColor" id="i23">
+<tr class="rowColor" id="i25">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnWolf(int,int)">spawnWolf</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
@@ -444,9 +458,25 @@ int&nbsp;y)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
+<h3><a id="spawnPlatform(int,int,java.lang.String)">spawnPlatform</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">spawnPlatform</span>&#8203;(<span class="arguments">int&nbsp;x,
+int&nbsp;y,
+java.lang.String&nbsp;world)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
 <h3><a id="spawnPlatform(int,int)">spawnPlatform</a></h3>
 <div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">spawnPlatform</span>&#8203;(<span class="arguments">int&nbsp;x,
 int&nbsp;y)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="spawnFloor(int,int,java.lang.String)">spawnFloor</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">spawnFloor</span>&#8203;(<span class="arguments">int&nbsp;x,
+int&nbsp;y,
+java.lang.String&nbsp;world)</span></div>
 </section>
 </li>
 <li class="blockList">
