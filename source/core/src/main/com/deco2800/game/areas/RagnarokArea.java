@@ -66,7 +66,8 @@ public class RagnarokArea extends GameArea {
             "images/iso_grass_1.png",
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
-            "images/deathGiant.png"
+            "images/deathGiant.png",
+            "images/ghostKing.png"
     };
 
     //TODO: make Json,
