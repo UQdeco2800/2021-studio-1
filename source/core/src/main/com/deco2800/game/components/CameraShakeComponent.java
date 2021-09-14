@@ -1,7 +1,9 @@
 package com.deco2800.game.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.audio.Music;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.services.ServiceLocator;
 
 public class CameraShakeComponent extends Component {
     private Entity target;
@@ -47,18 +49,22 @@ public class CameraShakeComponent extends Component {
         }
 
         entity.getEvents().trigger("moveRightAngry");
-
+        Music loudWalk = ServiceLocator.getResourceService().getAsset("sounds/giant_walk.mp3", Music.class);
+        Music walk = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
         if (distance < 32f) {
-
+            walk.stop();
             cameraComponent.setOffset(this.toggle);
             cameraComponent.update();
             cameraComponent.resetLastPosition();
+            loudWalk.setVolume(1.8f);
+            loudWalk.play();
         } else {
             entity.getEvents().trigger("moveRight");
             //System.out.print("far");
             cameraComponent.setOffset(0);
             cameraComponent.update();
-
+            loudWalk.stop();
+            walk.play();
         }
     }
 }

@@ -83,8 +83,8 @@ public class RagnarokArea extends GameArea {
     private static final String fireMusic = "sounds/fire.mp3";
     // sound effects of giant walking (still to be tested)
     private static final String walkMusic = "sounds/walk.mp3";
-    private static final String roarMusic = "sounds/roar.mp3";
-    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, roarMusic};
+    private static final String loudWalkMusic = "sounds/giant_walk.mp3";
+    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, loudWalkMusic};
 
     private final TerrainFactory terrainFactory;
 
@@ -319,57 +319,15 @@ public class RagnarokArea extends GameArea {
         Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
         Music fire = ServiceLocator.getResourceService().getAsset(fireMusic, Music.class);
         Music walk = ServiceLocator.getResourceService().getAsset(walkMusic, Music.class);
-        Music roar = ServiceLocator.getResourceService().getAsset(roarMusic, Music.class);
         music.setLooping(true);
         fire.setLooping(true);
         walk.setLooping(true);
         music.setVolume(0.7f);
-        fire.setVolume(0.5f);
+        fire.setVolume(0.6f);
         walk.setVolume(0.8f);
-        roar.setVolume(1f);
         music.play();
         fire.play();
         walk.play();
-        Random randgen = new Random();
-        repeatRandomly(1000, 5000, 100, () -> roar.play());
-    }
-
-    /**
-     * Helper to execute roar randomly between 1-5 seconds apart
-     * @param timer Timer instance
-     * @param min seconds lower bound
-     * @param max seconds upper bound
-     * @param count how many times to do the task
-     * @param r runnable thread
-     */
-    private void _repeatRandomly(Timer timer, int min, int max, int count, Runnable r) {
-        if (count < 1) {
-            timer.cancel();
-            return;
-        }
-        int delay = (new Random().nextInt(4)*(max-min)) + min;
-        timer.schedule(
-            new java.util.TimerTask() {
-                @Override
-                public void run() {
-                    r.run();
-                    _repeatRandomly(timer, min, max, count - 1, r);
-                }
-            },
-            delay
-        );
-    }
-
-    /**
-     * Repeat task randomly
-     * @param min seconds lower bound
-     * @param max seconds upper bound
-     * @param count how many times to do the task
-     * @param r runnable thread
-     */
-    private void repeatRandomly(int min, int max, int count, Runnable r) {
-        Timer timer = new Timer();
-        _repeatRandomly(timer, min, max, count, r);
     }
 
     private void unloadAssets() {
