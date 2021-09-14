@@ -9,55 +9,56 @@ import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 
 public class CameraComponent extends Component {
-  private final Camera camera;
-  private Vector2 lastPosition;
-  private Vector2 targetCenterPosition;
-  private float offset = 0;
+    private final Camera camera;
+    private Vector2 lastPosition;
+    private Vector2 targetCenterPosition;
+    private float offset = 0;
 
-  public CameraComponent() {
-    this(new OrthographicCamera());
-  }
+    public CameraComponent() {
+        this(new OrthographicCamera());
+    }
 
-  public CameraComponent(Camera camera) {
-    this.camera = camera;
-    lastPosition = Vector2.Zero.cpy();
-  }
+    public CameraComponent(Camera camera) {
+        this.camera = camera;
+        lastPosition = Vector2.Zero.cpy();
+    }
 
-  @Override
-  public void update() {
-    Vector2 position = entity.getPosition();
-    if (!lastPosition.epsilonEquals(entity.getPosition())) {
-      camera.position.set(position.x + offset, position.y + offset, 0f);
-      lastPosition = position;
-      camera.update();
+    @Override
+    public void update() {
+        Vector2 position = entity.getPosition();
+        if (!lastPosition.epsilonEquals(entity.getPosition())) {
+            camera.position.set(position.x + offset, position.y + offset, 0f);
+            lastPosition = position;
+            camera.update();
+
+        }
 
     }
 
-  }
+    /**
+     * Sets the offset
+     *
+     * @param offset offset for the camera
+     */
+    public void setOffset(float offset) {
+        this.offset = offset;
+    }
 
-  /**
-   * Sets the offset
-   * @param offset
-   */
-  public void setOffset(float offset) {
-    this.offset = offset;
-  }
+    /**
+     * Gets the offset
+     *
+     * @return offset
+     */
+    public float getOffset() {
+        return this.offset;
+    }
 
-  /**
-   * Gets the offset
-   * @return offset
-   */
-  public float getOffset() {
-    return this.offset;
-  }
-
-  /**
-   *  Resets the last position
-   *
-   */
-  public void resetLastPosition() {
-    lastPosition = Vector2.Zero.cpy();
-  }
+    /**
+     * Resets the last position
+     */
+    public void resetLastPosition() {
+        lastPosition = Vector2.Zero.cpy();
+    }
 
 
      /* Determine whether current player is moving and which direction
@@ -85,18 +86,18 @@ public class CameraComponent extends Component {
     }
       */
 
-  public Matrix4 getProjectionMatrix() {
-    return camera.combined;
-  }
+    public Matrix4 getProjectionMatrix() {
+        return camera.combined;
+    }
 
-  public Camera getCamera() {
-    return camera;
-  }
+    public Camera getCamera() {
+        return camera;
+    }
 
-  public void resize(int screenWidth, int screenHeight, float gameWidth) {
-    float ratio = (float) screenHeight / screenWidth;
-    camera.viewportWidth = gameWidth;
-    camera.viewportHeight = gameWidth * ratio;
-    camera.update();
-  }
+    public void resize(int screenWidth, int screenHeight, float gameWidth) {
+        float ratio = (float) screenHeight / screenWidth;
+        camera.viewportWidth = gameWidth;
+        camera.viewportHeight = gameWidth * ratio;
+        camera.update();
+    }
 }

@@ -24,164 +24,165 @@ import com.deco2800.game.utils.math.Vector2Utils;
  */
 public class ObstacleFactory {
 
-  /**
-   * Creates a rock entity.
-   *
-   * @return rock entity
-   */
-  public static Entity createRock() {
-    Entity rock =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/Rock_1.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+    /**
+     * Creates a rock entity.
+     *
+     * @return rock entity
+     */
+    public static Entity createRock() {
+        Entity rock =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/Rock_1.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    rock.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    rock.getComponent(TextureRenderComponent.class).scaleEntity();
-    rock.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
-    rock.getComponent(ColliderComponent.class).setDensity(1.0f);
-    rock.setScale(1.1f, 0.6f);
+        rock.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        rock.getComponent(TextureRenderComponent.class).scaleEntity();
+        rock.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+        rock.getComponent(ColliderComponent.class).setDensity(1.0f);
+        rock.setScale(1.1f, 0.6f);
 
-    //Rock hitbox -  each vector in rockPoints is a vertex of the hitbox
-    Vector2[] rockPoints = new Vector2[8];
-    rockPoints[0] = new Vector2(0.2f, 0f);
-    rockPoints[1] = new Vector2(0.2f, 0.4f);
-    rockPoints[2] = new Vector2(0.4f, 0.5f);
-    rockPoints[3] = new Vector2(0.6f, 0.5f);
-    rockPoints[4] = new Vector2(0.7f, 0.5f);
-    rockPoints[5] = new Vector2(0.9f, 0.5f);
-    rockPoints[6] = new Vector2(1f, 0.4f);
-    rockPoints[7] = new Vector2(1f, 0f);
-    PolygonShape rockShape = new PolygonShape();
-    rockShape.set(rockPoints);
-    rock.getComponent(ColliderComponent.class).setShape(rockShape);
+        //Rock hitbox -  each vector in rockPoints is a vertex of the hitbox
+        Vector2[] rockPoints = new Vector2[8];
+        rockPoints[0] = new Vector2(0.2f, 0f);
+        rockPoints[1] = new Vector2(0.2f, 0.4f);
+        rockPoints[2] = new Vector2(0.4f, 0.5f);
+        rockPoints[3] = new Vector2(0.6f, 0.5f);
+        rockPoints[4] = new Vector2(0.7f, 0.5f);
+        rockPoints[5] = new Vector2(0.9f, 0.5f);
+        rockPoints[6] = new Vector2(1f, 0.4f);
+        rockPoints[7] = new Vector2(1f, 0f);
+        PolygonShape rockShape = new PolygonShape();
+        rockShape.set(rockPoints);
+        rock.getComponent(ColliderComponent.class).setShape(rockShape);
 
-    rock.setType(EntityTypes.OBSTACLE);
-    return rock;
-  }
+        rock.setType(EntityTypes.OBSTACLE);
+        return rock;
+    }
 
-  /**
-   * Creates a level load Trigger Entity
-   * This is an invisible entity that commands the loading of more levels to the right when touched for the first time by the player
-   *
-   * @param target entity to chase
-   * @return entity
-   */
-  public static Entity createLevelLoadTrigger() {
-    Entity levelLoadTrigger = new Entity();
-    
-    levelLoadTrigger.addComponent(new PhysicsComponent());
-    levelLoadTrigger.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    Vector2 size = new Vector2(1,20);
-    levelLoadTrigger.addComponent(new HitboxComponent());
-    levelLoadTrigger.getComponent(HitboxComponent.class).setAsBox(size);
-    levelLoadTrigger.addComponent(new LevelLoadTriggerComponent());
-    
-    return levelLoadTrigger;
-}
+    /**
+     * Creates a level load Trigger Entity
+     * This is an invisible entity that commands the loading of more levels to the right when touched for the first time by the player
+     *
+     * @return level trigger entity
+     */
+    public static Entity createLevelLoadTrigger() {
+        Entity levelLoadTrigger = new Entity();
 
+        levelLoadTrigger.addComponent(new PhysicsComponent());
+        levelLoadTrigger.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        Vector2 size = new Vector2(1, 20);
+        levelLoadTrigger.addComponent(new HitboxComponent());
+        levelLoadTrigger.getComponent(HitboxComponent.class).setAsBox(size);
+        levelLoadTrigger.addComponent(new LevelLoadTriggerComponent());
+
+        return levelLoadTrigger;
+    }
 
 
-  /**
-   * Creates a spike entity.
-   *
-   * @return spikes entity
-   */
-  public static Entity createSpikes() {
-    Entity spikes =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/Spike_1.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                    .addComponent(new CombatStatsComponent(1, 100))
-                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f));
+    /**
+     * Creates a spike entity.
+     *
+     * @return spikes entity
+     */
+    public static Entity createSpikes() {
+        Entity spikes =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/Spike_1.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                        .addComponent(new CombatStatsComponent(1, 100))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f));
 
-    spikes.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    spikes.getComponent(TextureRenderComponent.class).scaleEntity();
-    spikes.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
-    spikes.getComponent(ColliderComponent.class).setDensity(1.0f);
-    spikes.setScale(1.1f, 0.5f);
-    PhysicsUtils.setScaledCollider(spikes, 0.9f, 0.9f);
-    spikes.setType(EntityTypes.OBSTACLE);
-    return spikes;
-  }
+        spikes.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        spikes.getComponent(TextureRenderComponent.class).scaleEntity();
+        spikes.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+        spikes.getComponent(ColliderComponent.class).setDensity(1.0f);
+        spikes.setScale(1.1f, 0.5f);
+        PhysicsUtils.setScaledCollider(spikes, 0.9f, 0.9f);
+        spikes.setType(EntityTypes.OBSTACLE);
+        return spikes;
+    }
 
-  /**
-   * Creates a platform entity.
-   *
-   * @return entity
-   */
-  public static Entity createPlatform() {
-    Entity platform =
-            new Entity()
-            .addComponent(new TextureRenderComponent("images/platform_no_gradient.png"))
-            .addComponent(new PhysicsComponent())
-            .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+    /**
+     * Creates a platform entity.
+     *
+     * @return entity
+     */
+    public static Entity createPlatform() {
+        Entity platform =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/platform_no_gradient.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    platform.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    platform.getComponent(TextureRenderComponent.class).scaleEntity();
-    // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
-    // difficult.
-    platform.scaleHeight(0.5f);
-    platform.setType(EntityTypes.OBSTACLE);
-    return platform;
-  }
+        platform.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        platform.getComponent(TextureRenderComponent.class).scaleEntity();
+        // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
+        // difficult.
+        platform.scaleHeight(0.5f);
+        platform.setType(EntityTypes.OBSTACLE);
+        return platform;
+    }
 
-  /**
-   * Creates platform entity with shadow.
-   * @return entity
-   */
-  public static Entity createPlatformWithGradient() {
-    Entity platformGradient =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/platform_gradient.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+    /**
+     * Creates platform entity with shadow.
+     *
+     * @return entity
+     */
+    public static Entity createPlatformWithGradient() {
+        Entity platformGradient =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/platform_gradient.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-    platformGradient.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    platformGradient.getComponent(TextureRenderComponent.class).scaleEntity();
-    // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
-    // difficult.
-    platformGradient.scaleHeight(0.5f);
-    platformGradient.setType(EntityTypes.OBSTACLE);
-    return platformGradient;
-  }
+        platformGradient.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        platformGradient.getComponent(TextureRenderComponent.class).scaleEntity();
+        // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
+        // difficult.
+        platformGradient.scaleHeight(0.5f);
+        platformGradient.setType(EntityTypes.OBSTACLE);
+        return platformGradient;
+    }
 
-  /**
-   * Creates a floor entity.
-   * @return entity
-   */
-  public static Entity createFloor() {
-    Entity floor =
-            new Entity()
-                    .addComponent(new TextureRenderComponent("images/floor.png"))
-                    .addComponent(new PhysicsComponent())
-                    .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    
-    floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-    floor.getComponent(TextureRenderComponent.class).scaleEntity();
-    floor.scaleHeight(0.5f);
-    floor.setType(EntityTypes.OBSTACLE);
-    return floor;
-  }
+    /**
+     * Creates a floor entity.
+     *
+     * @return entity
+     */
+    public static Entity createFloor() {
+        Entity floor =
+                new Entity()
+                        .addComponent(new TextureRenderComponent("images/floor.png"))
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-  /**
-   * Creates an invisible physics wall.
-   * @param width Wall width in world units
-   * @param height Wall height in world units
-   * @return Wall entity of given width and height
-   */
-  public static Entity createWall(float width, float height) {
-    Entity wall = new Entity()
-        .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
-        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-    wall.setScale(width, height);
-    wall.setType(EntityTypes.OBSTACLE);
-    return wall;
-  }
+        floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        floor.getComponent(TextureRenderComponent.class).scaleEntity();
+        floor.scaleHeight(0.5f);
+        floor.setType(EntityTypes.OBSTACLE);
+        return floor;
+    }
 
-  private ObstacleFactory() {
-    throw new IllegalStateException("Instantiating static util class");
-  }
+    /**
+     * Creates an invisible physics wall.
+     *
+     * @param width  Wall width in world units
+     * @param height Wall height in world units
+     * @return Wall entity of given width and height
+     */
+    public static Entity createWall(float width, float height) {
+        Entity wall = new Entity()
+                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        wall.setScale(width, height);
+        wall.setType(EntityTypes.OBSTACLE);
+        return wall;
+    }
+
+    private ObstacleFactory() {
+        throw new IllegalStateException("Instantiating static util class");
+    }
 }
