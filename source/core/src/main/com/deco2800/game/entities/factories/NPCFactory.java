@@ -15,6 +15,7 @@ import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.tasks.MoveRightTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.components.tasks.MoveLeftTask;
+import com.deco2800.game.components.tasks.ShootTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
@@ -103,7 +104,7 @@ public class NPCFactory {
     AnimationRenderComponent animator =
             new AnimationRenderComponent(
                     ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
-//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
     animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
     wolf
@@ -148,7 +149,7 @@ public class NPCFactory {
 
   public static Entity createFireSpirit(Entity target) {
     Entity fireSpirit = createFireSpiritNPC(target);
-    BaseEntityConfig config = configs.wolf;
+    BaseEntityConfig config = configs.fireSpirit;
 
     fireSpirit
             .addComponent(new TextureRenderComponent("images/fire_spirit.png"))
@@ -263,6 +264,8 @@ public class NPCFactory {
             .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
             .addComponent(aiComponent);
     PhysicsUtils.setScaledCollider(npc, 0f, 0f);
+    npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
+            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
     return npc;
@@ -300,7 +303,8 @@ public class NPCFactory {
   private static Entity createFireSpiritNPC(Entity target) {
     AITaskComponent aiComponent =
             new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(0f, 0f), 0f));
+                    .addTask(new WanderTask(new Vector2(0f, 0f), 0f))
+                    .addTask(new ShootTask(target, 5f, ProjectileFactory.fireBall()));
     Entity npc =
             new Entity()
                     .addComponent(new PhysicsComponent())
@@ -314,6 +318,7 @@ public class NPCFactory {
             PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
     npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
     npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
+    npc.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
     return npc;
   }
 
@@ -329,7 +334,7 @@ public class NPCFactory {
                     .addComponent(new ColliderComponent())
                     .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                     .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
-                   .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0))
 
                     .addComponent(aiComponent);
 

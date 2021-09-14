@@ -8,6 +8,7 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
+import com.deco2800.game.entities.factories.ProjectileFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -66,7 +67,17 @@ public class RagnarokArea extends GameArea {
             "images/iso_grass_2.png",
             "images/iso_grass_3.png",
             "images/deathGiant.png",
-            "images/sfx.png"
+            "images/sfx.png",
+            "images/earth_1.png",
+            "images/earth_2.png",
+            "images/earth_3.png",
+            "images/earth_4.png",
+            "images/asgard_1.png",
+            "images/asgard_2.png",
+            "images/hel_1.png",
+            "images/hel_2.png",
+            "images/jotunheimr_1.png",
+            "images/jotunheimr_2.png"
     };
 
     //TODO: make Json,
@@ -85,8 +96,8 @@ public class RagnarokArea extends GameArea {
     private static final String fireMusic = "sounds/fire.mp3";
     // sound effects of giant walking (still to be tested)
     private static final String walkMusic = "sounds/walk.mp3";
-    private static final String roarMusic = "sounds/roar.mp3";
-    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, roarMusic};
+    private static final String loudWalkMusic = "sounds/giant_walk.mp3";
+    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, loudWalkMusic};
 
     private final TerrainFactory terrainFactory;
 
@@ -130,7 +141,7 @@ public class RagnarokArea extends GameArea {
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
-            logger.info("Loading... {}%", resourceService.getProgress());
+            // logger.info("Loading... {}%", resourceService.getProgress());
         }
     }
 
@@ -200,25 +211,30 @@ public class RagnarokArea extends GameArea {
 
     }
 
-    protected void spawnPlatform(int x, int y) {
-        Entity platform = ObstacleFactory.createPlatform();
+    protected void spawnPlatform(int x, int y, String world) {
+        Entity platform = ObstacleFactory.createPlatform(world);
         GridPoint2 pos = new GridPoint2(x, y+2);
         spawnEntityAt(platform, pos, false, false);
-
         signup(pos, platform);
-
-        //entitySignUp.put(pos, platform);
     }
 
-    protected void spawnFloor(int x, int y) {
+    protected void spawnPlatform(int x, int y) {
+        spawnPlatform(x, y, null);
+    }
+
+    protected void spawnFloor(int x, int y, String world) {
         for(int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                Entity floor = ObstacleFactory.createFloor();
+                Entity floor = ObstacleFactory.createFloor(world);
                 GridPoint2 pos = new GridPoint2(x+i, y+j);
                 spawnEntityAt(floor, pos, false, false);
                 signup(pos, floor);
             }
         }
+    }
+
+    protected void spawnFloor(int x, int y) {
+        spawnFloor(x, y, null);
     }
 
     protected void spawnRocks(int x, int y) {
@@ -254,6 +270,11 @@ public class RagnarokArea extends GameArea {
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(fireSpirit, pos, false, false);
         //signup(pos, skeleton);
+    }
+
+    protected void projectileFromEnemy(GridPoint2 enemy) {
+        Entity fireBall = ProjectileFactory.fireBall();
+        spawnEntityAt(fireBall, enemy, false, false);
     }
 
     public void clearEntitiesAt(int x, int y) {
@@ -331,57 +352,15 @@ public class RagnarokArea extends GameArea {
         Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
         Music fire = ServiceLocator.getResourceService().getAsset(fireMusic, Music.class);
         Music walk = ServiceLocator.getResourceService().getAsset(walkMusic, Music.class);
-        Music roar = ServiceLocator.getResourceService().getAsset(roarMusic, Music.class);
         music.setLooping(true);
         fire.setLooping(true);
         walk.setLooping(true);
         music.setVolume(0.7f);
-        fire.setVolume(0.5f);
+        fire.setVolume(0.7f);
         walk.setVolume(0.8f);
-        roar.setVolume(1f);
         music.play();
         fire.play();
         walk.play();
-        Random randgen = new Random();
-        repeatRandomly(1000, 5000, 100, () -> roar.play());
-    }
-
-    /**
-     * Helper to execute roar randomly between 1-5 seconds apart
-     * @param timer Timer instance
-     * @param min seconds lower bound
-     * @param max seconds upper bound
-     * @param count how many times to do the task
-     * @param r runnable thread
-     */
-    private void _repeatRandomly(Timer timer, int min, int max, int count, Runnable r) {
-        if (count < 1) {
-            timer.cancel();
-            return;
-        }
-        int delay = (new Random().nextInt(4)*(max-min)) + min;
-        timer.schedule(
-            new java.util.TimerTask() {
-                @Override
-                public void run() {
-                    r.run();
-                    _repeatRandomly(timer, min, max, count - 1, r);
-                }
-            },
-            delay
-        );
-    }
-
-    /**
-     * Repeat task randomly
-     * @param min seconds lower bound
-     * @param max seconds upper bound
-     * @param count how many times to do the task
-     * @param r runnable thread
-     */
-    private void repeatRandomly(int min, int max, int count, Runnable r) {
-        Timer timer = new Timer();
-        _repeatRandomly(timer, min, max, count, r);
     }
 
     private void unloadAssets() {
