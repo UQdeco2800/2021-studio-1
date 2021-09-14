@@ -35,6 +35,15 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
     }
 
     /**
+     * Returns the number of blocks remaining on the shield
+     *
+     * @return the number of blocks
+     */
+    public int getBlocks() {
+        return blocks;
+    }
+
+    /**
      * Returns the active status of the shield
      *
      * @return true if the shield is active (more than 0 blocks), false

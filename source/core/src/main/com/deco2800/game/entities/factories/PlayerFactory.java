@@ -89,6 +89,27 @@ public class PlayerFactory {
     animator.addAnimation("crouch-right", 0.2f,
             Animation.PlayMode.LOOP);
 
+    animator.addAnimation("spear-still-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-crouch-still-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-crouch-still-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-jump-left", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-jump-right", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-run-left", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-run-right", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-crouch-left", 0.2f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("spear-crouch-right", 0.2f,
+            Animation.PlayMode.LOOP);
+
     animator.addAnimation("shield-still-right", 1f,
                     Animation.PlayMode.LOOP);
     animator.addAnimation("shield-still-left", 1f,
@@ -146,6 +167,8 @@ public class PlayerFactory {
     player.getComponent(ColliderComponent.class).setDensity(1.0f);
 
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
+    player.getComponent(AnimationRenderComponent.class).startAnimation("spear-still-right");
+
     //gravity scalar used to multiply gravity from physics engine, used 5 for
     //base character vary based on how heavy we want characters to look
     player.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
