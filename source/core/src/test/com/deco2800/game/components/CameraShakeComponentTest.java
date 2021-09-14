@@ -10,6 +10,7 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.deco2800.game.components.CameraComponent;
+import com.deco2800.game.entities.factories.NPCFactory;
 
 
 import com.deco2800.game.services.ServiceLocator;
@@ -85,14 +86,14 @@ class CameraShakeComponentTest {
   }
 
   Entity createTarget(short layer, Entity attacker) {
-
+    Entity sfx = NPCFactory.createScreenFX(attacker);
     Entity target =
         new Entity()
             .addComponent(new CombatStatsComponent(10, 0))
             .addComponent(new PhysicsComponent())
             .addComponent(new HitboxComponent().setLayer(layer))
                 .addComponent(new CameraShakeComponent(attacker,
-                        attacker.getComponent(CameraComponent.class)));
+                        attacker.getComponent(CameraComponent.class), sfx));
     target.create();
     return target;
   }
