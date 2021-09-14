@@ -18,4 +18,4 @@ $@player set [3,3]
 $-spawn [7,8] (skeleton)
 $-spawn [9,8] (skeleton)
 $-spawn [5,8] (skeleton)
-
+$-spawn [4,5] (levelTrigger)

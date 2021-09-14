@@ -103,13 +103,16 @@ public class MainGameScreen extends ScreenAdapter {
 
   @Override
   public void render(float delta) {
-    physicsEngine.update();
+    
+    ServiceLocator.getTerminalService().processMessageBuffer();
     ServiceLocator.getEntityService().update();
+
+    physicsEngine.update();
 
     if (ragnarokManager != null) {
       renderer.updateCameraPosition(ragnarokManager.getPlayer());
     }
-
+    
     renderer.render();
 
     //TODO: do terminal requests

@@ -1,6 +1,7 @@
 package com.deco2800.game.areas;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
@@ -13,6 +14,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.deco2800.game.components.CameraShakeComponent;
 
 import static com.badlogic.gdx.Gdx.app;
 
@@ -25,6 +27,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.Random;
+import java.util.Timer;
 
 public class RagnarokArea extends GameArea {
 
@@ -33,6 +37,7 @@ public class RagnarokArea extends GameArea {
     private static final float WALL_WIDTH = 0.1f;
     private final String name; //initiliase in the loader
     private AreaManager manager;
+    private Vector2 lastPos;
 
     private Hashtable<GridPoint2, LinkedList<Entity>> entitySignUp;
 
@@ -44,6 +49,7 @@ public class RagnarokArea extends GameArea {
             "images/floor.png",
             "images/platform_gradient.png",
             "images/platform_no_gradient.png",
+            "images/fire_spirit.png",
             "images/tree.png",
             "images/skeleton.png",
             "images/Spear_1.png",
@@ -65,7 +71,7 @@ public class RagnarokArea extends GameArea {
     //TODO: make Json,
     private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
             "images/terrain_iso_grass.atlas", "images/ghostKing" +
-            ".atlas", "images/odin.atlas", "images/wall.atlas", "images/skeleton.atlas"
+            ".atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas"
     };
 
     // get the sounds to work and then move the music & sounds to a json
@@ -74,7 +80,12 @@ public class RagnarokArea extends GameArea {
     private static final String mainMusic = "sounds/main.mp3";
     private static final String townMusic = "sounds/town.mp3";
     private static final String raiderMusic = "sounds/raider.mp3";
-    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic};
+    // sound effect of fire/burning behind giant *fwoom* *crackle*
+    private static final String fireMusic = "sounds/fire.mp3";
+    // sound effects of giant walking (still to be tested)
+    private static final String walkMusic = "sounds/walk.mp3";
+    private static final String roarMusic = "sounds/roar.mp3";
+    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, roarMusic};
 
     private final TerrainFactory terrainFactory;
 
@@ -94,11 +105,8 @@ public class RagnarokArea extends GameArea {
         loadAssets();
         displayUI();
         spawnTerrain();
-        //spawnWallOfDeath(); //this is dependant
 
-        //player = spawnPlayer(10, 5);
-
-        //playMusic(); //TODO: eventual move to music
+        playMusic(); //TODO: eventual move to music
     }
 
     public void setManager(AreaManager manager) {
@@ -137,6 +145,33 @@ public class RagnarokArea extends GameArea {
         return newPlayer;
     }
 
+    /**
+     * This spawns the Wall of Death
+     */
+    protected void spawnWallOfDeath() {
+        GridPoint2 leftPos = new GridPoint2(-40,13);
+        Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
+        wallOfDeath.addComponent(new CameraShakeComponent(this.player,this.terrainFactory.getCameraComponent()));
+        spawnEntityAt(wallOfDeath, leftPos, true, true);
+    }
+
+    /**
+     * This spawns the Death Giant in front of the Wall of Death
+     */
+    protected void spawnDeathGiant() {
+        GridPoint2 leftPos2 = new GridPoint2(-15, 13);
+        Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
+        spawnEntityAt(deathGiant, leftPos2, true, true);
+    }
+
+
+    protected void spawnLevelLoadTrigger(int x) {
+        GridPoint2 centrePos = new GridPoint2(x, 6);
+        Entity levelLoadTrigger = ObstacleFactory.createLevelLoadTrigger();
+        spawnEntityAt(levelLoadTrigger, centrePos, true, true);
+    }
+
+
     //TODO: KEEP
     private void spawnTerrain() {
         // Background terrain
@@ -147,16 +182,6 @@ public class RagnarokArea extends GameArea {
         float tileSize = terrain.getTileSize();
         GridPoint2 tileBounds = terrain.getMapBounds(0);
         Vector2 worldBounds = new Vector2(tileBounds.x * tileSize, tileBounds.y * tileSize);
-
-        // Left
-        // spawnEntityAt(
-        //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y), GridPoint2Utils.ZERO, false, false);
-        // Right
-        // spawnEntityAt(
-        //     ObstacleFactory.createWall(WALL_WIDTH, worldBounds.y),
-        //     new GridPoint2(tileBounds.x, 0),
-        //     false,
-        //     false);
 
         // Top
         spawnEntityAt(
@@ -220,6 +245,13 @@ public class RagnarokArea extends GameArea {
         //signup(pos, skeleton);
     }
 
+    protected void spawnFireSpirit(int x, int y) {
+        Entity fireSpirit = NPCFactory.createFireSpirit(player);
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(fireSpirit, pos, false, false);
+        //signup(pos, skeleton);
+    }
+
     public void clearEntitiesAt(int x, int y) {
         // takes the global scale x and y, so mutliply them by 3 in here
         for(int i = 0; i < 3; i++) {
@@ -274,7 +306,95 @@ public class RagnarokArea extends GameArea {
 
     }
 
+    /**
+     * Play all SFX in the game.
+     */
+    private void playMusic() {
 
+        String witchMusic;
+
+        Random rand = new Random();
+        switch (rand.nextInt(3)) {
+            case 1:
+                witchMusic = townMusic;
+                break;
+            case 2:
+                witchMusic = raiderMusic;
+                break;
+            default:
+                witchMusic = mainMusic;
+        }
+        Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
+        Music fire = ServiceLocator.getResourceService().getAsset(fireMusic, Music.class);
+        Music walk = ServiceLocator.getResourceService().getAsset(walkMusic, Music.class);
+        Music roar = ServiceLocator.getResourceService().getAsset(roarMusic, Music.class);
+        music.setLooping(true);
+        fire.setLooping(true);
+        walk.setLooping(true);
+        music.setVolume(0.7f);
+        fire.setVolume(0.5f);
+        walk.setVolume(0.8f);
+        roar.setVolume(1f);
+        music.play();
+        fire.play();
+        walk.play();
+        Random randgen = new Random();
+        repeatRandomly(1000, 5000, 100, () -> roar.play());
+    }
+
+    /**
+     * Helper to execute roar randomly between 1-5 seconds apart
+     * @param timer Timer instance
+     * @param min seconds lower bound
+     * @param max seconds upper bound
+     * @param count how many times to do the task
+     * @param r runnable thread
+     */
+    private void _repeatRandomly(Timer timer, int min, int max, int count, Runnable r) {
+        if (count < 1) {
+            timer.cancel();
+            return;
+        }
+        int delay = (new Random().nextInt(4)*(max-min)) + min;
+        timer.schedule(
+            new java.util.TimerTask() {
+                @Override
+                public void run() {
+                    r.run();
+                    _repeatRandomly(timer, min, max, count - 1, r);
+                }
+            },
+            delay
+        );
+    }
+
+    /**
+     * Repeat task randomly
+     * @param min seconds lower bound
+     * @param max seconds upper bound
+     * @param count how many times to do the task
+     * @param r runnable thread
+     */
+    private void repeatRandomly(int min, int max, int count, Runnable r) {
+        Timer timer = new Timer();
+        _repeatRandomly(timer, min, max, count, r);
+    }
+
+    private void unloadAssets() {
+        logger.debug("Unloading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.unloadAssets(racerTextures);
+        resourceService.unloadAssets(racerTextureAtlases);
+        resourceService.unloadAssets(racerSounds);
+        resourceService.unloadAssets(racerMusic);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        ServiceLocator.getResourceService().getAsset(mainMusic, Music.class).stop();
+        this.unloadAssets();
+    }
 
 }
 

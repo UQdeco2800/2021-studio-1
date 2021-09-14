@@ -95,6 +95,25 @@ public class GeneratorFactory {
         return wolf;
     }
 
+    public static Entity createFireSpirit() {
+        Entity fireSpirit = createNPC();
+        BaseEntityConfig config = NPC_CONFIGS.fireSpirit;
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
+        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
+        fireSpirit
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
+        fireSpirit.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+        fireSpirit.setScale(0.8f, 0.8f);
+        return fireSpirit;
+    }
+
     private static Entity createNPC() {
         AITaskComponent aiComponent =
                 new AITaskComponent()

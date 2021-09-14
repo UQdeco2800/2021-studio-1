@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
+import java.util.LinkedList;
 
 // TerminalService has two main functions:
 //      1. allow the static calling of strings to the terminal
@@ -30,6 +32,7 @@ public class Terminal extends Component {
   private String enteredMessage = "";
   private boolean isOpen = false;
   private boolean inLoad = false;
+  private Queue<String> messageBuffer = new LinkedList<String>();
 
   public Terminal() {
     this(new HashMap<>());
@@ -99,26 +102,36 @@ public class Terminal extends Component {
   }
 
   /**
-   * Processes the completed message entered by the user. If the message corresponds to a valid
-   * command, the command will be actioned.
-   * @return true if command handled, false otherwise
+   * Adds command to be executed by message buffer. Buffer is then processed every cycle in main game screen
+   * @return true if command added, false otherwise
    */
   public boolean processMessage() {
     logger.debug("Processing message");
     // strip leading and trailing whitespace
     String message = enteredMessage.trim();
+    return messageBuffer.add(message);
+  }
 
-    // separate command from args
-    String[] sections = message.split(" ");
-    String command = sections[0];
 
-    ArrayList<String> args = new ArrayList<>(Arrays.asList(sections).subList(1, sections.length));
+  public boolean processMessageBuffer() {
+    while (!messageBuffer.isEmpty()) {
+      // separate command from args
+      
+      String message = messageBuffer.poll();
+      if (message.equals(null)) {
+        return false;
+      } 
+      String[] sections = message.split(" ");
+      String command = sections[0];
 
-    if (commands.containsKey(command)) {
-      setEnteredMessage("");
-      return commands.get(command).action(args);
+      ArrayList<String> args = new ArrayList<>(Arrays.asList(sections).subList(1, sections.length));
+
+      if (!commands.containsKey(command)) {
+        return false;
+      }
+      commands.get(command).action(args);
     }
-    return false;
+    return true;
   }
 
   /**

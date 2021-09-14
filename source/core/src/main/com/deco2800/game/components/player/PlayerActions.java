@@ -135,7 +135,6 @@ public class PlayerActions extends Component {
     }
   }
 
-
   /**
    * Moves the player towards a given direction and copies that direction as
    * the previous direction
