@@ -62,7 +62,7 @@ public class LevelLoadTriggerComponent extends Component {
 
     private String getNextArea() {
         Path directory = Paths.get("configs/rags/");
-        ArrayList<Path> pathList = new ArrayList<Path>();
+        ArrayList<Path> pathList = new ArrayList<>();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory, "*.rag")) {
             for (Path path : stream) {
                 pathList.add(path);

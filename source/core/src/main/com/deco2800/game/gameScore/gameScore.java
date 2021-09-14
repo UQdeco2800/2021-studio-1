@@ -17,18 +17,20 @@ public class gameScore extends Component {
 
     /**
      * Returns the current score to anywhere in the game
+     *
+     * @return current score
      **/
-
     public long getCurrentScore() {
         if (entity != null) {
             entity.getEvents().trigger("updateScore", score);
         }
         getCurrentTime();
         setScore();
-        return score ;
+        return score;
     }
-    public void getCurrentTime(){
-        current_time  = (time.getTime()+ 100);
+
+    public void getCurrentTime() {
+        current_time = (time.getTime() + 100);
     }
 
     /**
@@ -36,7 +38,7 @@ public class gameScore extends Component {
      **/
     public void setScore() {
         getCurrentTime();
-        score = current_time/100;
+        score = current_time / 100;
         if (entity != null) {
             entity.getEvents().trigger("updateScore", score);
         }
@@ -48,6 +50,7 @@ public class gameScore extends Component {
     public void obstacleOneHit() {
         score -= 50;
     }
+
     /**
      * Score depletion on the basis of object being hit
      */
