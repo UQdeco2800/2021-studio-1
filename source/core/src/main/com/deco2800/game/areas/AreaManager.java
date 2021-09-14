@@ -5,6 +5,7 @@ import com.deco2800.game.files.RagLoader;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.deco2800.game.components.CameraShakeComponent;
 
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -81,8 +82,11 @@ public class AreaManager extends RagnarokArea {
         persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
         persistentInstance.setManager(this);
         persistentInstance.create();
-        persistentInstance.spawnWallOfDeath();
         persistentInstance.makePlayer(10, 5);
+
+        persistentInstance.spawnWallOfDeath();
+        persistentInstance.spawnDeathGiant();
+
         this.player = persistentInstance.getPlayer();
 
         load("ragnorok");

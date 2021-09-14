@@ -52,12 +52,12 @@ public class KeyboardTerminalInputComponent extends InputComponent {
 
     if(!terminal.isOpen()) {
       if (keycode == Input.Keys.P) {
-        entity.getEvents().trigger("pause");
+        entity.getEvents().trigger("Pause Menu");
         return true;
       }
 
       if (keycode == Input.Keys.I) {
-        entity.getEvents().trigger("score screen");
+        entity.getEvents().trigger("Score Screen");
         return true;
       }
 
