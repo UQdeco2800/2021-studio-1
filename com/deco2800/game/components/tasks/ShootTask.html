@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -141,6 +141,11 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.de
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fireball">fireball</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected <a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#player">player</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -171,7 +176,9 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.de
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">ShootTask</a></span>()</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.deco2800.game.entities.Entity,float,com.deco2800.game.entities.Entity)">ShootTask</a></span>&#8203;(<a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;player,
+float&nbsp;waitTime,
+<a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;fireball)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -204,17 +211,12 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.de
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shootPlayer()">shootPlayer</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor" id="i2">
-<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#start()">start</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Start running this task.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i2">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
@@ -259,6 +261,12 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.de
 <div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType"><a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">player</span></div>
 </section>
 </li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="fireball">fireball</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType"><a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">fireball</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -271,8 +279,10 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.de
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;()">ShootTask</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">ShootTask</span>()</div>
+<h3><a id="&lt;init&gt;(com.deco2800.game.entities.Entity,float,com.deco2800.game.entities.Entity)">ShootTask</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">ShootTask</span>&#8203;(<span class="arguments"><a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;player,
+float&nbsp;waitTime,
+<a href="../../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a>&nbsp;fireball)</span></div>
 </section>
 </li>
 </ul>
@@ -307,12 +317,6 @@ implements <a href="../../ai/tasks/PriorityTask.html" title="interface in com.de
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../ai/tasks/DefaultTask.html#start()">start</a></code>&nbsp;in class&nbsp;<code><a href="../../ai/tasks/DefaultTask.html" title="class in com.deco2800.game.ai.tasks">DefaultTask</a></code></dd>
 </dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="shootPlayer()">shootPlayer</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">shootPlayer</span>()</div>
 </section>
 </li>
 <li class="blockList">
