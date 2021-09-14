@@ -44,7 +44,7 @@ public class RagnarokArea extends GameArea {
             "images/floor.png",
             "images/platform_gradient.png",
             "images/platform_no_gradient.png",
-            "images/ghostKing.png",
+            "images/fire_spirit.png",
             "images/tree.png",
             "images/skeleton.png",
             "images/Spear_1.png",
