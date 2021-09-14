@@ -10,5 +10,6 @@ public enum EntityTypes {
     ENEMY,
     WALL,
     SKELETON,
-    WOLF;
+    WOLF,
+    FIRESPIRIT
 }

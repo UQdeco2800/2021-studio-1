@@ -264,6 +264,7 @@ public class PlayerActions extends Component {
         powerUp.getComponent(PhysicsComponent.class).getBody().setGravityScale(0);
 
         entity.getComponent(LightningPowerUpComponent.class).setEnabled(true);
+        powerUp.getComponent(ColliderComponent.class).setSensor(true);
         entity.getComponent(LightningPowerUpComponent.class).obtainPowerUp(powerUp);
 
         powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();

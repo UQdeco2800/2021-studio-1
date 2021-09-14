@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchDisposeComponent;
@@ -50,8 +51,7 @@ public class NPCFactory {
     /**
      * Creates a skeleton entity.
      *
-     * @param target entity to chase
-     * @return entity
+     * @param target entity to chase* @return entity
      */
     public static Entity createSkeleton(Entity target) {
         Entity skeleton = createSkeletonNPC(target);
@@ -60,7 +60,7 @@ public class NPCFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
-//    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+        //animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float_back", 0.1f, Animation.PlayMode.LOOP);
 
@@ -72,20 +72,22 @@ public class NPCFactory {
         skeleton.setScale(1f, 1.2f);
 
         // NEED TO CHANGE COLLISION BOXES -> RUN THROUGH ENEMIES
-    /*
-    //set body collision box
-    skeleton.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.6f,
-            0.45f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
-    //create head circle collision box
-    CircleShape head = new CircleShape();
-    head.setRadius(0.2f);
-    Vector2 circleOffset = new Vector2(skeleton.getCenterPosition().x + 0.2f,
-            skeleton.getCenterPosition().y + 0.055f);
-    head.setPosition(circleOffset);
-    skeleton.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
-    skeleton.getEvents().addListener("dispose", skeleton::flagDelete);
+        //set body collision box
+        skeleton.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.6f,
+            0.7f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
+        //create head circle collision box
+        CircleShape head = new CircleShape();
+        head.setRadius(0.2f);
+        Vector2 circleOffset = new Vector2(skeleton.getCenterPosition().x + 0.15f,
+            skeleton.getCenterPosition().y + 0.3f);
+        head.setPosition(circleOffset);
+        skeleton.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+        skeleton.getEvents().addListener("dispose", skeleton::flagDelete);
 
-    */
+        for(Fixture fixture : skeleton.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
+            fixture.setSensor(true);
+        }
+
         skeleton.setType(EntityTypes.SKELETON);
 
         return skeleton;
@@ -104,11 +106,9 @@ public class NPCFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
-        animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
 
         wolf
-//            .addComponent(new TextureRenderComponent("images/skeleton.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                 .addComponent(animator)
                 .addComponent(new GhostAnimationController());
@@ -117,29 +117,31 @@ public class NPCFactory {
         wolf.setScale(1.3f, 1f);
 
         // NEED TO CHANGE COLLISION BOXES -> RUN THROUGH ENEMIES
-    /*
-    //create body collision box using collider component
-    wolf.getComponent(ColliderComponent.class).setAsBoxAligned(new Vector2(0.8f,
-            0.5f), PhysicsComponent.AlignX.CENTER,
-            PhysicsComponent.AlignY.BOTTOM);
+        //create body collision box using collider component
+        wolf.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.8f,
+                0.5f), PhysicsComponent.AlignX.CENTER,
+                PhysicsComponent.AlignY.BOTTOM);
 
-    //create head circle collision box
-    CircleShape head = new CircleShape();
-    head.setRadius(0.15f);
-    Vector2 circleOffset = new Vector2(wolf.getCenterPosition().x - 0.2f,
-            wolf.getCenterPosition().y + 0.1f);
-    head.setPosition(circleOffset);
-    wolf.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+        //create head circle collision box
+        CircleShape head = new CircleShape();
+        head.setRadius(0.15f);
+        Vector2 circleOffset = new Vector2(wolf.getCenterPosition().x - 0.2f,
+                wolf.getCenterPosition().y + 0.1f);
+        head.setPosition(circleOffset);
+        wolf.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
 
-    //create neck circle collision box
-    CircleShape neck = new CircleShape();
-    neck.setRadius(0.15f);
-    Vector2 neckOffset = new Vector2(wolf.getCenterPosition().x ,
-            wolf.getCenterPosition().y );
-    neck.setPosition(neckOffset);
-    wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck,1.0f);
-    wolf.getEvents().addListener("dispose", wolf::flagDelete);
-     */
+        //create neck circle collision box
+        CircleShape neck = new CircleShape();
+        neck.setRadius(0.15f);
+        Vector2 neckOffset = new Vector2(wolf.getCenterPosition().x ,
+                wolf.getCenterPosition().y );
+        neck.setPosition(neckOffset);
+        wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck,1.0f);
+        wolf.getEvents().addListener("dispose", wolf::flagDelete);
+
+        for(Fixture fixture : wolf.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
+            fixture.setSensor(true);
+        }
 
         wolf.setType(EntityTypes.WOLF);
 
@@ -156,6 +158,24 @@ public class NPCFactory {
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
 
         fireSpirit.getComponent(TextureRenderComponent.class).scaleEntity();
+
+        //set body collision box
+        fireSpirit.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.6f,
+                0.7f), PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
+        //create head circle collision box
+        CircleShape head = new CircleShape();
+        head.setRadius(0.2f);
+        Vector2 circleOffset = new Vector2(fireSpirit.getCenterPosition().x + 0.05f,
+                fireSpirit.getCenterPosition().y + 0.35f);
+        head.setPosition(circleOffset);
+        fireSpirit.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+        fireSpirit.getEvents().addListener("dispose", fireSpirit::flagDelete);
+
+        for(Fixture fixture : fireSpirit.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
+            fixture.setSensor(true);
+        }
+
+        fireSpirit.setType(EntityTypes.FIRESPIRIT);
 
         fireSpirit.setScale(1.2f, 1f);
         return fireSpirit;
