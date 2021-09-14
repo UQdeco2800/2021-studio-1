@@ -6,13 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.NPCFactory;
-import com.deco2800.game.entities.factories.ObstacleFactory;
-import com.deco2800.game.entities.factories.ProjectileFactory;
-import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
+import com.deco2800.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
@@ -77,13 +75,21 @@ public class RagnarokArea extends GameArea {
             "images/hel_1.png",
             "images/hel_2.png",
             "images/jotunheimr_1.png",
-            "images/jotunheimr_2.png"
+            "images/jotunheimr_2.png",
+            "images/powerup-shield.png"
     };
 
     //TODO: make Json,
     private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
-            "images/terrain_iso_grass.atlas", "images/ghostKing.atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas", "images/sfx.atlas"
-
+            "images/terrain_iso_grass.atlas",
+            "images/ghostKing.atlas",
+            "images/odin.atlas",
+            "images/wall.atlas",
+            "images/deathGiant.atlas",
+            "images/skeleton.atlas",
+            "images/sfx.atlas",
+            "images/lightning-animation.atlas",
+            "images/player-spear.atlas"
     };
 
     // get the sounds to work and then move the music & sounds to a json
@@ -118,6 +124,9 @@ public class RagnarokArea extends GameArea {
         displayUI();
         spawnTerrain();
 
+        // TODO: Add power ups to RagEdit
+        spawnPowerUps();
+
         playMusic(); //TODO: eventual move to music
     }
 
@@ -142,6 +151,38 @@ public class RagnarokArea extends GameArea {
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
             // logger.info("Loading... {}%", resourceService.getProgress());
+        }
+    }
+
+    private void spawnPowerUps() {
+        GridPoint2 start = new GridPoint2(1, 10);
+        GridPoint2 end = new GridPoint2(1000, 10);
+
+        GridPoint2 playerPos = new GridPoint2(12,5);
+
+        Entity startingSpear = PowerUpFactory.createSpearPowerUp();
+        spawnEntityAt(startingSpear, playerPos, false, false);
+
+        Entity powerUp;
+
+        for (int i = 0; i < 31; i++) {
+            GridPoint2 posLeft = RandomUtils.random(start, end);
+
+            switch (i % 3) {
+                case 0:
+                    powerUp = PowerUpFactory.createLightningPowerUp();
+                    break;
+
+                case 1:
+                    powerUp = PowerUpFactory.createShieldPowerUp();
+                    break;
+
+                default:
+                    powerUp = PowerUpFactory.createSpearPowerUp();
+                    break;
+            }
+
+            spawnEntityAt(powerUp, posLeft, false, false);
         }
     }
 

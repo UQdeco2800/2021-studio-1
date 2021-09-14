@@ -97,7 +97,7 @@ public class PowerUpFactory {
 
         AnimationRenderComponent animator =
             new AnimationRenderComponent(ServiceLocator.getResourceService()
-                .getAsset("images/playerspear.atlas", TextureAtlas.class));
+                .getAsset("images/player-spear.atlas", TextureAtlas.class));
 
         animator.addAnimation("flat-left", 1f, Animation.PlayMode.LOOP);
         animator.addAnimation("flat-right", 1f, Animation.PlayMode.LOOP);
