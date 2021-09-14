@@ -42,7 +42,8 @@ public class TouchDisposeComponent extends Component {
             return;
         }
 
-        if (!PhysicsLayer.contains(PhysicsLayer.OBSTACLE, other.getFilterData().categoryBits)) {
+        if (!(PhysicsLayer.contains(PhysicsLayer.OBSTACLE, other.getFilterData().categoryBits)
+                || PhysicsLayer.contains(PhysicsLayer.NPC, other.getFilterData().categoryBits))) {
             // Isn't an obstacle or NPC, don't dispose of
             return;
         }
@@ -51,13 +52,6 @@ public class TouchDisposeComponent extends Component {
 
         if (entity.getPosition().x < target.getPosition().x) {
             // Entity has not passed to the left of the wall, do not dispose
-            return;
-        }
-
-        if (PhysicsLayer.contains(PhysicsLayer.NPC, other.getFilterData().categoryBits)) {
-            // This is an NPC and may contain an atlas file, which when disposed of will remove the
-            // atlas file from use for any other entities using it. Disable it instead.
-            target.setEnabled(false);
             return;
         }
 
