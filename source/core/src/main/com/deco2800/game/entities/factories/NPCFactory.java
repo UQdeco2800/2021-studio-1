@@ -118,23 +118,23 @@ public class NPCFactory {
 
         // NEED TO CHANGE COLLISION BOXES -> RUN THROUGH ENEMIES
         //create body collision box using collider component
-        wolf.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.8f,
-                0.5f), PhysicsComponent.AlignX.CENTER,
+        wolf.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(1f,
+                0.6f), PhysicsComponent.AlignX.CENTER,
                 PhysicsComponent.AlignY.BOTTOM);
 
         //create head circle collision box
         CircleShape head = new CircleShape();
         head.setRadius(0.15f);
-        Vector2 circleOffset = new Vector2(wolf.getCenterPosition().x - 0.2f,
-                wolf.getCenterPosition().y + 0.1f);
+        Vector2 circleOffset = new Vector2(wolf.getCenterPosition().x - 0.4f,
+                wolf.getCenterPosition().y + 0.2f);
         head.setPosition(circleOffset);
         wolf.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
 
         //create neck circle collision box
         CircleShape neck = new CircleShape();
         neck.setRadius(0.15f);
-        Vector2 neckOffset = new Vector2(wolf.getCenterPosition().x ,
-                wolf.getCenterPosition().y );
+        Vector2 neckOffset = new Vector2(wolf.getCenterPosition().x - 0.2f,
+                wolf.getCenterPosition().y + 0.15f);
         neck.setPosition(neckOffset);
         wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck,1.0f);
         wolf.getEvents().addListener("dispose", wolf::flagDelete);

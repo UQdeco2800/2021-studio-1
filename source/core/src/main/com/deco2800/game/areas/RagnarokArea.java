@@ -10,6 +10,7 @@ import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.ProjectileFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -255,6 +256,7 @@ public class RagnarokArea extends GameArea {
         Entity wolf = NPCFactory.createWolf(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(wolf, pos, false, false);
+        wolf.getComponent(AnimationRenderComponent.class).startAnimation("float");
         //signup(pos, wolf);
     }
 
