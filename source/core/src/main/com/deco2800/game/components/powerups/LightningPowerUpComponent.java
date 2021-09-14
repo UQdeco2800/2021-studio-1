@@ -14,6 +14,18 @@ public class LightningPowerUpComponent extends PowerUpComponent {
     boolean active;
     Entity powerUp;
 
+    public Entity getPowerUp(){
+        return powerUp;
+    }
+
+    public boolean getActive(){
+        return this.active;
+    }
+
+    public void setActive(boolean active){
+        this.active = active;
+    }
+
     public void obtainPowerUp(Entity lightning) {
         powerUp = lightning;
     }
@@ -34,6 +46,7 @@ public class LightningPowerUpComponent extends PowerUpComponent {
             if (powerUp.getComponent(AnimationRenderComponent.class).getCurrentAnimation().equals("float")) {
                 if (powerUp.getComponent(AnimationRenderComponent.class).isFinished()) {
                     active = false;
+                    enabled = false;
                     powerUp.flagDelete();
                 }
             }
@@ -44,7 +57,7 @@ public class LightningPowerUpComponent extends PowerUpComponent {
     public void activate() {
         active = true;
 
-        powerUp.setPosition(entity.getCenterPosition().sub(9f,4));
+        powerUp.setPosition(entity.getCenterPosition().sub(9f,4f).x, 0f);
         powerUp.setScale(20f, 15f);
         powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
         powerUp.getComponent(AnimationRenderComponent.class).startAnimation("float");

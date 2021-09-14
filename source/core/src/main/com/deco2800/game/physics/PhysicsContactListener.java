@@ -2,6 +2,7 @@ package com.deco2800.game.physics;
 
 import com.badlogic.gdx.physics.box2d.*;
 
+import com.deco2800.game.components.SpearComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EntityTypes;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ public class PhysicsContactListener implements ContactListener {
 
     checkPowerUpCollision(bodyA, bodyB);
     checkProjectileCollision(bodyA, bodyB);
+    checkSpearCollision(bodyA, bodyB);
   }
 
   @Override
@@ -122,6 +124,28 @@ public class PhysicsContactListener implements ContactListener {
       bodyA.entity.getEvents().trigger("dispose");
     } else if (bodyB.entity.getType() == EntityTypes.PROJECTILE) {
       bodyB.entity.getEvents().trigger("dispose");
+    }
+  }
+
+  /**
+   * Checks if out of two bodies involved in a collision, one is a projectile
+   *
+   * @param bodyA - first body involved in the collision
+   * @param bodyB - second body involved in the collision
+   */
+  private void checkSpearCollision(BodyUserData bodyA, BodyUserData bodyB) {
+    if(bodyA.entity.getType() == EntityTypes.SPEARPOWERUP &&
+            bodyA.entity.getComponent(SpearComponent.class).isFlying()) {
+      if (bodyB.entity.getType() == EntityTypes.SKELETON || bodyB.entity.getType() == EntityTypes.WOLF) {
+        bodyB.entity.getEvents().trigger("dispose");
+        bodyA.entity.getComponent(SpearComponent.class).hitEnemy();
+      }
+    } else if (bodyB.entity.getType() == EntityTypes.SPEARPOWERUP &&
+            bodyB.entity.getComponent(SpearComponent.class).isFlying()) {
+      if (bodyA.entity.getType() == EntityTypes.SKELETON || bodyA.entity.getType() == EntityTypes.WOLF) {
+        bodyA.entity.getEvents().trigger("dispose");
+        bodyB.entity.getComponent(SpearComponent.class).hitEnemy();
+      }
     }
   }
 }

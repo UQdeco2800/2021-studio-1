@@ -28,10 +28,21 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
      * out of blocks
      */
     public void activate() {
-        blocks -= 1;
-        if (blocks == 0) {
-            enabled = false;
+        if (blocks > 0) {
+            blocks -= 1;
+            if (blocks == 0) {
+                enabled = false;
+            }
         }
+    }
+
+    /**
+     * Returns the number of blocks remaining on the shield
+     *
+     * @return the number of blocks
+     */
+    public int getBlocks() {
+        return blocks;
     }
 
     /**

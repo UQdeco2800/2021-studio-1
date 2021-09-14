@@ -15,15 +15,15 @@ import java.awt.geom.Area;
  */
 
 /*
- decided to make AreaService actually AreaManger so people won't call functions on it directly
+ decided to make AreaService actually AreaManager so people won't call functions on it directly
  and must interface through the terminal using only a handful of commands
  the point of this is to avoid people shooting themselves in the foot...
  */
 
 /*
 current idea for implementation:
-    make AreaManger which handles such with protected functions (can't be called publicly)
-    make an AreaTerminalInterface which extends AreaManger (so can call protected functions)
+    make AreaManager which handles such with protected functions (can't be called publicly)
+    make an AreaTerminalInterface which extends AreaManager (so can call protected functions)
     that is nested in the Terminal, is passed a reference to the static AreaService...
     AreaService just need not have any public calls, otherwise people will change levels midupdate
     and other fuck shit

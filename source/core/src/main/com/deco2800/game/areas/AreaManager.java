@@ -159,7 +159,7 @@ public class AreaManager extends RagnarokArea {
 
     /**
      * Spawn is for "Active Entities" i.e. ones that move around or smt.
-     * The definition is somewhat loose, nut won't parse arguments for terrain types.
+     * The definition is somewhat loose, but won't parse arguments for terrain types.
      * @param area specified area to spawn in
      * @param x ragGrid x coOrdinate
      * @param y ragGrid y coOrdinate
@@ -179,6 +179,9 @@ public class AreaManager extends RagnarokArea {
                 break;
             case "levelTrigger":
                 area.spawnLevelLoadTrigger(gx); //TODO: MAKE THiS DYNAMICALLY BASED ON SCREEN WIDTH
+                break;
+            case "fireSpirit":
+                area.spawnFireSpirit(gx, gy);
                 break;
             case "default":
                 logger.error("spawn() called in AreaManger without valid spawnType");

@@ -38,7 +38,7 @@ public class PowerUpFactory {
 
         animator.addAnimation("icon", 1f, Animation.PlayMode.LOOP);
         animator.addAnimation("blank", 1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("float", 0.2f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("float", 0.1f, Animation.PlayMode.NORMAL);
 
         powerUp.addComponent(animator);
         powerUp.getComponent(AnimationRenderComponent.class).startAnimation("icon");
@@ -46,7 +46,7 @@ public class PowerUpFactory {
         powerUp.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
                 PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
         powerUp.getComponent(ColliderComponent.class).setAsCircleAligned(0.2f,
-            PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
+                PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
 
         powerUp.setType(EntityTypes.LIGHTNINGPOWERUP);
 
@@ -89,13 +89,10 @@ public class PowerUpFactory {
      */
     public static Entity createSpearPowerUp() {
         Entity powerUp = ProjectileFactory.createSpearEntity();
-
-
-
-
         powerUp.getComponent(HitboxComponent.class).setAsBox(new Vector2(0.1f, 1f), powerUp.getCenterPosition());
+        powerUp.getComponent(PhysicsComponent.class).setGravityScale(2f);
 
-        powerUp.setScale(1f, 1f);
+        powerUp.setScale(1.1f, 1.1f);
         PhysicsUtils.setScaledCollider(powerUp, 1f, 1f);
 
         AnimationRenderComponent animator =
@@ -108,11 +105,12 @@ public class PowerUpFactory {
         animator.addAnimation("fly-right", 0.2f, Animation.PlayMode.LOOP);
         animator.addAnimation("stand-left", 1f, Animation.PlayMode.LOOP);
         animator.addAnimation("stand-right", 1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("swing-left", 0.09f, Animation.PlayMode.LOOP);
-        animator.addAnimation("swing-right", 0.09f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swing-left", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swing-right", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("static", 1f, Animation.PlayMode.LOOP);
 
         powerUp.addComponent(animator);
+        powerUp.getComponent(AnimationRenderComponent.class).startAnimation("static");
 
         powerUp.setType(EntityTypes.SPEARPOWERUP);
 

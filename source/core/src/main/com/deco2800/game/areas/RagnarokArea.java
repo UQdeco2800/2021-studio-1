@@ -8,6 +8,7 @@ import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.NPCFactory;
 import com.deco2800.game.entities.factories.ObstacleFactory;
+import com.deco2800.game.entities.factories.ProjectileFactory;
 import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
@@ -49,6 +50,7 @@ public class RagnarokArea extends GameArea {
             "images/floor.png",
             "images/platform_gradient.png",
             "images/platform_no_gradient.png",
+            "images/fire_spirit.png",
             "images/tree.png",
             "images/skeleton.png",
             "images/Spear_1.png",
@@ -80,8 +82,7 @@ public class RagnarokArea extends GameArea {
 
     //TODO: make Json,
     private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
-            "images/terrain_iso_grass.atlas", "images/ghostKing" +
-            ".atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas"
+            "images/terrain_iso_grass.atlas", "images/ghostKing.atlas", "images/odin.atlas", "images/wall.atlas", "images/deathGiant.atlas", "images/skeleton.atlas"
     };
 
     // get the sounds to work and then move the music & sounds to a json
@@ -258,6 +259,18 @@ public class RagnarokArea extends GameArea {
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(skeleton, pos, false, false);
         //signup(pos, skeleton);
+    }
+
+    protected void spawnFireSpirit(int x, int y) {
+        Entity fireSpirit = NPCFactory.createFireSpirit(player);
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(fireSpirit, pos, false, false);
+        //signup(pos, skeleton);
+    }
+
+    protected void projectileFromEnemy(GridPoint2 enemy) {
+        Entity fireBall = ProjectileFactory.fireBall();
+        spawnEntityAt(fireBall, enemy, false, false);
     }
 
     public void clearEntitiesAt(int x, int y) {
