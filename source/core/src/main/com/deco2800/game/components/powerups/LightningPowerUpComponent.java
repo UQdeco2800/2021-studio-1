@@ -57,7 +57,7 @@ public class LightningPowerUpComponent extends PowerUpComponent {
     public void activate() {
         active = true;
 
-        powerUp.setPosition(entity.getCenterPosition().sub(9f,4));
+        powerUp.setPosition(entity.getCenterPosition().sub(9f,4f).x, 0f);
         powerUp.setScale(20f, 15f);
         powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
         powerUp.getComponent(AnimationRenderComponent.class).startAnimation("float");
