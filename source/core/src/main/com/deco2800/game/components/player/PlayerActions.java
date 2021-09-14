@@ -52,10 +52,6 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("jump", this::jump);
     entity.getEvents().addListener("crouch", this::crouch);
     entity.getEvents().addListener("stop crouch", this::stopCrouching);
-    entity.getEvents().addListener("attack", this::attack);
-    entity.getEvents().addListener("stop attack", this::stopAttack);
-    entity.getEvents().addListener("powerAttack", this::powerAttack);
-    entity.getEvents().addListener("stop stopPowerAttack", this::stopPowerAttack);
     entity.getEvents().addListener("obtainPowerUp", this::obtainPowerUp);
     entity.getEvents().addListener("usePowerUp", this::usePowerUp);
   }
@@ -99,7 +95,8 @@ public class PlayerActions extends Component {
    */
   private void applyJumpForce() {
     Body body = physicsComponent.getBody();
-    body.applyLinearImpulse(new Vector2(0f,  40f).scl(body.getMass()), body.getWorldCenter(), true);
+    body.applyLinearImpulse(new Vector2(0f,  40f).scl(body.getMass()),
+            body.getWorldCenter(), true);
     falling = true;
     jumping = false;
   }
@@ -109,13 +106,11 @@ public class PlayerActions extends Component {
    */
   private void checkFalling() {
     Body body = physicsComponent.getBody();
-    entity.getComponent(AnimationRenderComponent.class).stopAnimation();
     whichAnimation();
     float currentYVelocity = physicsComponent.getBody().getLinearVelocity().y;
     if (currentYVelocity >= -0.01f  && currentYVelocity <= 0.01f ) {
       falling = false;
       //Determine which animation to play
-      entity.getComponent(AnimationRenderComponent.class).stopAnimation();
       whichAnimation();
     } else {
       if (moving) { //Checks if the player is moving and applies respective force
@@ -128,7 +123,7 @@ public class PlayerActions extends Component {
                   body.getPosition(),
                   true);
         }
-      } else { //Applies force when player is not moving
+      } else { //Applies no force when player is not moving
         body.applyLinearImpulse(new Vector2(0f,  0f).scl(body.getMass()),
                 body.getWorldCenter(), true);
       }
@@ -145,8 +140,6 @@ public class PlayerActions extends Component {
     this.runDirection = direction;
     moving = true;
     //Determine which animation to play
-    entity.getComponent(AnimationRenderComponent.class)
-            .stopAnimation();
     whichAnimation();
     previousDirection = this.runDirection.cpy();
   }
@@ -159,17 +152,15 @@ public class PlayerActions extends Component {
     update();
     moving = false;
     //Determine which animation to play
-    entity.getComponent(AnimationRenderComponent.class)
-            .stopAnimation();
     whichAnimation();
   }
 
   void jump() {
-    if (entity.getComponent(PhysicsComponent.class).getBody().getLinearVelocity().y == 0) {
+    if (entity.getComponent(PhysicsComponent.class).getBody()
+            .getLinearVelocity().y == 0) {
       jumping = true;
     }
     //Determine which animation to play
-    entity.getComponent(AnimationRenderComponent.class).stopAnimation();
     whichAnimation();
   }
 
@@ -178,7 +169,6 @@ public class PlayerActions extends Component {
     entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
             .scl(0.5F));
     //Determine which animation to play
-    entity.getComponent(AnimationRenderComponent.class).stopAnimation();
     whichAnimation();
   }
 
@@ -188,73 +178,7 @@ public class PlayerActions extends Component {
             .scl(2F));
     update();
     //Determine which animation to play
-    entity.getComponent(AnimationRenderComponent.class)
-            .stopAnimation();
     whichAnimation();
-  }
-
-  /**
-   * Makes the player attack.
-   */
-  void attack() {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset(
-            "sounds/Impact4.ogg", Sound.class);
-    attackSound.play();
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("attack-right");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("attack-left");
-    }
-  }
-
-  void stopAttack() {
-    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
-            .scl(2F));
-    update();
-    //Determine which animation to play
-    entity.getComponent(AnimationRenderComponent.class)
-            .stopAnimation();
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("still-right");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("still-left");
-    }
-  }
-  /**
-   * Player attack for powers up
-   */
-
-  void powerAttack() {
-    Sound attackSound = ServiceLocator.getResourceService().getAsset(
-            "sounds/Impact4.ogg", Sound.class);
-    attackSound.play();
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("power-right");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("power-left");
-    }
-  }
-
-  void stopPowerAttack() {
-    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
-            .scl(2F));
-    update();
-    //Determine which animation to play
-    entity.getComponent(AnimationRenderComponent.class)
-            .stopAnimation();
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("still-right");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("still-left");
-    }
   }
 
   public void obtainPowerUp(Entity powerUp) {
@@ -337,145 +261,216 @@ public class PlayerActions extends Component {
   /**
    * Determine which animation to play based off of which triggers are active
    */
-  void whichAnimation() {
+  private void whichAnimation() {
+    entity.getComponent(AnimationRenderComponent.class).stopAnimation();
     if (entity.getComponent(ShieldPowerUpComponent.class).getActive()) {
-      if (jumping || falling) {
-        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("shield-jump-right");
-        } else {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("shield-jump-left");
-        }
-      } else if (moving) {
-        if (crouching) {
-          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("shield-crouch-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("shield-crouch-left");
-          }
-        } else {
-          if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("shield-run-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("shield-run-left");
-          }
-        }
+      if (isJumping()) {
+        shieldJumpingAnimations();
+      } else if (isMoving()) {
+        shieldMovingAnimations();
       } else {
-        if (crouching) {
-          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("shield-crouch-still-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("shield-crouch-still-left");
-          }
-        } else {
-          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("shield-still-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("shield-still-left");
-          }
-        }
+        shieldStillAnimations();
       }
-    } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled() && !entity.getComponent(SpearPowerUpComponent.class).getActive()) {
-      if (jumping || falling) {
-        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("spear-jump-right");
-        } else {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("spear-jump-left");
-        }
-      } else if (moving) {
-        if (crouching) {
-          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("spear-crouch-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("spear-crouch-left");
-          }
-        } else {
-          if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("spear-run-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("spear-run-left");
-          }
-        }
+    } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()
+            && !entity.getComponent(SpearPowerUpComponent.class).getActive()) {
+      if (isJumping()) {
+        spearJumpingAnimations();
+      } else if (isMoving()) {
+        spearMovingAnimations();
       } else {
-        if (crouching) {
-          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("spear-crouch-still-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("spear-crouch-still-left");
-          }
-        } else {
-          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("spear-still-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("spear-still-left");
-          }
-        }
+        spearStillAnimations();
       }
     } else {
-      if (jumping || falling) {
-        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("jump-right");
-        } else {
-          entity.getComponent(AnimationRenderComponent.class)
-                  .startAnimation("jump-left");
-        }
-      } else if (moving) {
-        if (crouching) {
-          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("crouch-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("crouch-left");
-          }
-        } else {
-          if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("run-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("run-left");
-          }
-        }
+      if (isJumping()) {
+        jumpingAnimations();
+      } else if (isMoving()) {
+        movingAnimations();
       } else {
-        if (crouching) {
-          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("crouch-still-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("crouch-still-left");
-          }
-        } else {
-          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("still-right");
-          } else {
-            entity.getComponent(AnimationRenderComponent.class)
-                    .startAnimation("still-left");
-          }
-        }
+        stillAnimations();
       }
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is standing still
+   */
+  private void stillAnimations() {
+    if (isCrouching()) {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("crouch-still-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("crouch-still-left");
+      }
+    } else {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("still-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("still-left");
+      }
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is moving
+   */
+  private void movingAnimations() {
+    if (isCrouching()) {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("crouch-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("crouch-left");
+      }
+    } else {
+      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("run-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("run-left");
+      }
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is jumping
+   */
+  private void jumpingAnimations() {
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("jump-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("jump-left");
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is standing still with
+   * the spear power up
+   */
+  private void spearStillAnimations() {
+    if (isCrouching()) {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("crouch-still-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("spear-crouch-still-left");
+      }
+    } else {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("spear-still-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("spear-still-left");
+      }
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is moving with
+   * the spear power up
+   */
+  private void spearMovingAnimations() {
+    if (isCrouching()) {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("spear-crouch-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("spear-crouch-left");
+      }
+    } else {
+      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("spear-run-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("spear-run-left");
+      }
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is jumping with
+   * the spear power up
+   */
+  private void spearJumpingAnimations() {
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("spear-jump-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("spear-jump-left");
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is shield with the spear
+   * power up
+   */
+  private void shieldStillAnimations() {
+    if (isCrouching()) {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("shield-crouch-still-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("shield-crouch-still-left");
+      }
+    } else {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("shield-still-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("shield-still-left");
+      }
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is shield with the spear
+   * power up
+   */
+  private void shieldMovingAnimations() {
+    if (isCrouching()) {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("shield-crouch-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("shield-crouch-left");
+      }
+    } else {
+      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("shield-run-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("shield-run-left");
+      }
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is shield with the spear
+   * power up
+   */
+  private void shieldJumpingAnimations() {
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("shield-jump-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("shield-jump-left");
     }
   }
 }

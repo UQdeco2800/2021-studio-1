@@ -95,13 +95,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerRunEvent();
         isDirection = 4;
         return true;
-      case Keys.SPACE:
-        triggerStopAttackEvent();
-        return true;
-      /* Keys.J to test powers up attack */
-      case Keys.J:
-        triggerStopPowerAttackEvent();
-        return true;
       default:
         return false;
     }
