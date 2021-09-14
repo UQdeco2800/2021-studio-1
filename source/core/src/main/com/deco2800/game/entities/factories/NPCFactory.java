@@ -63,7 +63,6 @@ public class NPCFactory {
     animator.addAnimation("float_back", 0.1f, Animation.PlayMode.LOOP);
 
     skeleton
-//            .addComponent(new TextureRenderComponent("images/skeleton.png"))
             .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
             .addComponent(animator)
             .addComponent(new GhostAnimationController());
