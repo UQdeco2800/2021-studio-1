@@ -146,6 +146,8 @@ public class NPCFactory {
         wolf.setType(EntityTypes.WOLF);
 
         wolf.setScale(1.3f, 1f);
+
+        wolf.getComponent(AnimationRenderComponent.class).startAnimation("float");
         return wolf;
     }
 

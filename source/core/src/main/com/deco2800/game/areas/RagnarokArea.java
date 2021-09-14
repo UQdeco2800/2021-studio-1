@@ -296,7 +296,6 @@ public class RagnarokArea extends GameArea {
         Entity wolf = NPCFactory.createWolf(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(wolf, pos, false, false);
-        wolf.getComponent(AnimationRenderComponent.class).startAnimation("float");
         //signup(pos, wolf);
     }
 
