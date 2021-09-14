@@ -34,7 +34,7 @@ public class MoveLeftTask extends DefaultTask implements PriorityTask {
     super.start();
     startPos = owner.getEntity().getPosition();
 
-    movementTask = new MovementTask(new Vector2(0,25));
+    movementTask = new MovementTask(new Vector2(-1000000,25));
     movementTask.create(owner);
 
     movementTask.start();
@@ -52,11 +52,10 @@ public class MoveLeftTask extends DefaultTask implements PriorityTask {
   }
 
   /**
-   * Sets the target to continuously move to the right direction
+   * Sets the target to continuously move to the left direction
    */
   private void startMoving() {
     logger.debug("Starting moving");
-    movementTask.setTarget(new Vector2(0,25));
+    movementTask.setTarget(new Vector2(-1000000,25));
   }
-
 }

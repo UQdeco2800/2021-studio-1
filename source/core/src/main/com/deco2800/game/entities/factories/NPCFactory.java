@@ -98,6 +98,27 @@ public class NPCFactory {
     return wolf;
   }
 
+  public static Entity createFireSpirit(Entity target) {
+    Entity fireSpirit = createFireSpiritNPC(target);
+    BaseEntityConfig config = configs.wolf;
+
+//    AnimationRenderComponent animator =
+//            new AnimationRenderComponent(
+//                    ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
+////    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
+//    animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+
+    fireSpirit
+            .addComponent(new TextureRenderComponent("images/fire_spirit.png"))
+            .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+//            .addComponent(animator)
+//            .addComponent(new GhostAnimationController());
+    fireSpirit.getComponent(TextureRenderComponent.class).scaleEntity();
+
+    fireSpirit.setScale(0.8f, 0.8f);
+    return fireSpirit;
+  }
+
   /**
    * Creates a Wall of Death entity
    *
@@ -176,10 +197,32 @@ public class NPCFactory {
   private static Entity createWolfNPC(Entity target) {
     AITaskComponent aiComponent =
             new AITaskComponent()
-                    .addTask(new WanderTask(new Vector2(10f, 0f), 5f));
-    //.addTask(new MoveLeftTask());
+                    //.addTask(new WanderTask(new Vector2(10f, 0f), 5f));
+                    .addTask(new MoveLeftTask());
     //.addTask(new AttackTask(new Vector2(10f, 0f), 5f));
     //.addTask(new ChaseTask(target, 10, 3f, 4f));
+    Entity npc =
+            new Entity()
+                    .addComponent(new PhysicsComponent())
+                    .addComponent(new PhysicsMovementComponent())
+                    .addComponent(new ColliderComponent())
+                    .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
+                    .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                    .addComponent(aiComponent);
+    PhysicsUtils.setScaledCollider(npc, 0.9f, 0.4f);
+    npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
+    npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
+    return npc;
+  }
+
+  /**
+   * Creates a generic NPC to be used as a base entity by more specific NPC creation methods.
+   * @return entity
+   */
+  private static Entity createFireSpiritNPC(Entity target) {
+    AITaskComponent aiComponent =
+            new AITaskComponent()
+                    .addTask(new WanderTask(new Vector2(0f, 0f), 0f));
     Entity npc =
             new Entity()
                     .addComponent(new PhysicsComponent())
