@@ -33,9 +33,6 @@ public class PlayerActions extends Component {
   private Vector2 runDirection = Vector2.Zero.cpy();
   private Vector2 previousDirection = Vector2.Zero.cpy();
 
-  //private final float runAnimationlength = 0.5f;
-  private float lastRunAnimationTime;
-
   public static boolean moving = false;
   private boolean jumping = false;
   private boolean falling = false;

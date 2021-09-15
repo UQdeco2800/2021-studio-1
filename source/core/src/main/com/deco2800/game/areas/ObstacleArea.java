@@ -20,12 +20,8 @@ public class ObstacleArea extends GameArea {
 
     private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
 
-    private static final GridPoint2 FLOOR = new GridPoint2(10, 5);
-
     private static final float WALL_WIDTH = 0.1f;
     private static final float WALL_HEIGHT = 0.1f;
-
-    private int abstractPlayerId;
 
     private static final String[] forestTextures = {
             "images/box_boy_leaf.png",
@@ -59,12 +55,7 @@ public class ObstacleArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
 
-    private int ticks;
-
-    private Entity player;
-    private Entity ui;
     private Entity abstractPlayer;
-    private Entity generator;
 
     public ObstacleArea(TerrainFactory terrainFactory) {
         super();
@@ -84,9 +75,9 @@ public class ObstacleArea extends GameArea {
 
         spawnFloor(40, 4, xOffset);
 
-        player = spawnPlayer();
+        Entity player = spawnPlayer();
         abstractPlayer = spawnAbstractPlayer();
-        abstractPlayerId = abstractPlayer.getId();
+        int abstractPlayerId = abstractPlayer.getId();
 
         displayUI(); // done after all stuff cause it gets added, jafeel?
 
@@ -96,7 +87,7 @@ public class ObstacleArea extends GameArea {
     }
 
     private void displayUI() {
-        ui = new Entity();
+        Entity ui = new Entity();
 
         GameAreaDisplay gameDisplay = new GameAreaDisplay("__obstacleArea");
         //gameDisplay.setPlayer(player);
@@ -108,7 +99,7 @@ public class ObstacleArea extends GameArea {
 
     private void makeGenerator() {
 
-        generator = new Entity();
+        Entity generator = new Entity();
         GeneratorComponent generatorComponent = new GeneratorComponent(this, abstractPlayer);
         generator.addComponent(generatorComponent);
 

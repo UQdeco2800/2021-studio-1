@@ -47,13 +47,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerRunEvent();
         isDirection = 4;
         return true;
-      case Keys.SPACE:
-        entity.getEvents().trigger("attack");
-        return true;
-      /* Keys.J to test powers up attack */
-      case Keys.J:
-        entity.getEvents().trigger("powerAttack");
-        return true;
       case Keys.L:
         triggerLightningEvent();
         return true;
@@ -120,24 +113,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     entity.getEvents().trigger("jump");
   }
 
-  private void triggerStopJumpEvent() {
-    entity.getEvents().trigger("stop jump");
-  }
-
   private void triggerCrouchEvent() {
     entity.getEvents().trigger("crouch");
   }
 
   private void triggerStopCrouchEvent() {
     entity.getEvents().trigger("stop crouch");
-  }
-
-  private void triggerStopAttackEvent() {
-    entity.getEvents().trigger("stop attack");
-  }
-
-  private void triggerStopPowerAttackEvent() {
-    entity.getEvents().trigger("stop stopPowerAttack");
   }
 
   private void triggerLightningEvent() {
