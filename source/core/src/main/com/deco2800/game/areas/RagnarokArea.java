@@ -14,26 +14,16 @@ import com.deco2800.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
-
-import static com.badlogic.gdx.Gdx.app;
-
-import java.awt.geom.Area;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Random;
-import java.util.Timer;
 
 public class RagnarokArea extends GameArea {
 
     private static final Logger logger = LoggerFactory.getLogger(RagnarokArea.class);
 
     private static final float WALL_WIDTH = 0.1f;
+    private static final float WALL_HEIGHT = 0.1f;
     private final String name; //initiliase in the loader
     private AreaManager manager;
     private Vector2 lastPos;
@@ -224,14 +214,15 @@ public class RagnarokArea extends GameArea {
 
         // Top
         spawnEntityAt(
-                ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+                ObstacleFactory.createWall(worldBounds.x, WALL_HEIGHT),
                 new GridPoint2(0, tileBounds.y),
                 false,
                 false);
 
         // Bottom
         spawnEntityAt(
-                ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+                ObstacleFactory.createWall(worldBounds.x, WALL_HEIGHT),
+                GridPoint2Utils.ZERO, false, false);
 
     }
 

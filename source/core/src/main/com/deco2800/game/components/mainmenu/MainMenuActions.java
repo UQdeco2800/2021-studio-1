@@ -2,10 +2,8 @@ package com.deco2800.game.components.mainmenu;
 
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.ui.UIComponent;
 import com.deco2800.game.ui.UIPop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

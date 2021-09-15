@@ -17,11 +17,11 @@ public class AreaManager extends RagnarokArea {
      * don't change this unless you want the *entire* "bricking" of the game
      * to be altered.
      */
-    private final int GRID_SCALE = 3;
+    private static final int GRID_SCALE = 3;
 
     /**
      * this contains a list of GameAreas inside the manager,
-     * thought it is currently underutilised. BackgroundArea, MainArea?
+     * though it is currently underutilised. BackgroundArea, MainArea?
      */
     private LinkedList<RagnarokArea> areaInstances;
 

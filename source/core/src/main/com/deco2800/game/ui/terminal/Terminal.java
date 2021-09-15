@@ -1,14 +1,10 @@
 package com.deco2800.game.ui.terminal;
 
-import com.deco2800.game.areas.AreaManager;
-import com.deco2800.game.areas.RagnarokArea;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.files.RagLoader;
 import com.deco2800.game.ui.terminal.commands.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,7 +28,7 @@ public class Terminal extends Component {
   private String enteredMessage = "";
   private boolean isOpen = false;
   private boolean inLoad = false;
-  private Queue<String> messageBuffer = new LinkedList<String>();
+  private Queue<String> messageBuffer = new LinkedList<>();
 
   public Terminal() {
     this(new HashMap<>());

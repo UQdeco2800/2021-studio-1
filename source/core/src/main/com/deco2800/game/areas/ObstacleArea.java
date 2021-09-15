@@ -11,7 +11,6 @@ import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
-import com.deco2800.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +23,7 @@ public class ObstacleArea extends GameArea {
     private static final GridPoint2 FLOOR = new GridPoint2(10, 5);
 
     private static final float WALL_WIDTH = 0.1f;
+    private static final float WALL_HEIGHT = 0.1f;
 
     private int abstractPlayerId;
 
@@ -137,13 +137,14 @@ public class ObstacleArea extends GameArea {
         false);
     // Top
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH),
+        ObstacleFactory.createWall(worldBounds.x, WALL_HEIGHT),
         new GridPoint2(0, tileBounds.y),
         false,
         false);
     // Bottom
     spawnEntityAt(
-        ObstacleFactory.createWall(worldBounds.x, WALL_WIDTH), GridPoint2Utils.ZERO, false, false);
+        ObstacleFactory.createWall(worldBounds.x, WALL_HEIGHT),
+            GridPoint2Utils.ZERO, false, false);
   }
 
   public void spawnFromGenerator(ObstacleTypes obstacleTypes) {

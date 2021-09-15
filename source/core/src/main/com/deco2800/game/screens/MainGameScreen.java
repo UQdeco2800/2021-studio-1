@@ -6,14 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.areas.AreaManager;
 import com.deco2800.game.areas.AreaService;
-import com.deco2800.game.areas.ObstacleArea;
-import com.deco2800.game.areas.RagnarokArea;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
-import com.deco2800.game.entities.factories.ObstacleFactory;
 import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
@@ -112,8 +109,10 @@ public class MainGameScreen extends ScreenAdapter {
       renderer.updateCameraPosition(ragnarokManager.getPlayer());
     }
 
-    if (ragnarokManager.getPlayer().getComponent(CombatStatsComponent.class).getHealth() == 0) {
-      game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+    if (ragnarokManager.getPlayer() != null) {
+      if (ragnarokManager.getPlayer().getComponent(CombatStatsComponent.class).getHealth() == 0) {
+        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+      }
     }
     
     renderer.render();

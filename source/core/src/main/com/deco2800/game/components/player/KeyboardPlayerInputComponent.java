@@ -1,13 +1,10 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.input.InputComponent;
-import com.deco2800.game.input.InputService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
