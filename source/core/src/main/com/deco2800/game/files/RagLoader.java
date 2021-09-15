@@ -11,16 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class RagLoader {
-
     private static final Logger logger = LoggerFactory.getLogger(RagLoader.class);
-    private final AreaManager manager;
-
-    public RagLoader(AreaManager manager) {
-        this.manager = manager;
-    }
-
-    // the createAreaFromFile method has been depreciated,
-    // and is now replaced by the newCreateFromFile method... maybe a name change is in order
 
     /**
      * Loads file, sending messages to the terminal that are handled and delegated to the AreaManager.
@@ -28,7 +19,7 @@ public class RagLoader {
      *
      * @param ragFile the ragfile wished to be loaded, in format [ragFile].rag. ** DONT TYPE the .rag**
      */
-    public void newCreateFromFile(String ragFile) {
+    public static void createFromFile(String ragFile) {
 
         String filepath = "configs/rags/" + ragFile + ".rag";
 
