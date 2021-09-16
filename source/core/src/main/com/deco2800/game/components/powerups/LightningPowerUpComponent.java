@@ -15,6 +15,9 @@ public class LightningPowerUpComponent extends PowerUpComponent {
     boolean active;
     Entity powerUp;
 
+    /**
+     * Called when a lighting power up is collected, enable this component
+     */
     public void obtainPowerUp() {
         enabled = true;
     }
@@ -44,6 +47,12 @@ public class LightningPowerUpComponent extends PowerUpComponent {
         }
     }
 
+    /**
+     * Called when the player activates the lightning power up by pressing
+     * the 'L' key, creates a new lightning power up that plays the lightning
+     * animation and kills all enemies (except for the wall of death) that
+     * are on the players screen
+     */
     @Override
     public void activate() {
         active = true;
@@ -68,15 +77,30 @@ public class LightningPowerUpComponent extends PowerUpComponent {
         }
     }
 
+    /**
+     * Returns the lightning power up created when activated
+     *
+     * @return the lightning power up
+     */
     public Entity getPowerUp(){
         return powerUp;
     }
 
-    public boolean getActive(){
-        return this.active;
-    }
-
+    /**
+     * Sets the active status of the lightning power up
+     *
+     * @param active - status the lightning power should be set to
+     */
     public void setActive(boolean active){
         this.active = active;
+    }
+
+    /**
+     * Returns the active status of the lightning power up
+     *
+     * @return true if the power up is active, false otherwise
+     */
+    public boolean getActive(){
+        return this.active;
     }
 }
