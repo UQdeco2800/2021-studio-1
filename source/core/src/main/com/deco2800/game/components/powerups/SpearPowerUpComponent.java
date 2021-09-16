@@ -22,10 +22,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     private boolean active;
     private int thrown;
 
-    public Entity getSpear(){
-        return this.spear;
-    }
-
     public void obtainSpear() {
         thrown = 0;
         enabled = true;
@@ -116,7 +112,18 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         active = false;
     }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     public boolean getActive() {
         return active;
+    }
+
+    public Entity getSpear(){
+        return this.spear;
+    }
+
+    public int getThrown() {
+        return thrown;
     }
 }

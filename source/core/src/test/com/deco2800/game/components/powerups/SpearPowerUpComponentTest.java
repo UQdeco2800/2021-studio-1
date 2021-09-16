@@ -15,9 +15,11 @@ public class SpearPowerUpComponentTest {
         powerUp.setType(EntityTypes.SPEARPOWERUP);
 
         player.addComponent(new SpearPowerUpComponent());
-        player.getComponent(SpearPowerUpComponent.class).obtainSpear(powerUp);
+        player.getComponent(SpearPowerUpComponent.class).obtainSpear();
 
-        assertEquals(EntityTypes.SPEARPOWERUP, player.getComponent(SpearPowerUpComponent.class).getSpear().getType());
+        assertEquals(0,
+                player.getComponent(SpearPowerUpComponent.class).getThrown());
+        assertTrue(player.getComponent(SpearPowerUpComponent.class).getEnabled());
     }
     @Test
     public void activateSpearTest(){
@@ -26,8 +28,8 @@ public class SpearPowerUpComponentTest {
         powerUp.setType(EntityTypes.SPEARPOWERUP);
 
         player.addComponent(new SpearPowerUpComponent());
-        player.getComponent(SpearPowerUpComponent.class).obtainSpear(powerUp);
-        player.getComponent(SpearPowerUpComponent.class).activate();
+        player.getComponent(SpearPowerUpComponent.class).obtainSpear();
+        player.getComponent(SpearPowerUpComponent.class).setActive(true);
 
         assertTrue(player.getComponent(SpearPowerUpComponent.class).getActive());
     }

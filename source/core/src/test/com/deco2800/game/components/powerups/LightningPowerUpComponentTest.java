@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LightningPowerUpComponentTest {
+
     @Test
     public void obtainLightningTest(){
         Entity player = new Entity();
@@ -15,9 +16,8 @@ public class LightningPowerUpComponentTest {
         powerUp.setType(EntityTypes.LIGHTNINGPOWERUP);
 
         player.addComponent(new LightningPowerUpComponent());
-        player.getComponent(LightningPowerUpComponent.class).obtainPowerUp(powerUp);
-
-        assertEquals(EntityTypes.LIGHTNINGPOWERUP, player.getComponent(LightningPowerUpComponent.class).getPowerUp().getType());
+        player.getComponent(LightningPowerUpComponent.class).obtainPowerUp();
+        assertTrue(player.getComponent(LightningPowerUpComponent.class).getEnabled());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class LightningPowerUpComponentTest {
         powerUp.setType(EntityTypes.LIGHTNINGPOWERUP);
 
         player.addComponent(new LightningPowerUpComponent());
-        player.getComponent(LightningPowerUpComponent.class).obtainPowerUp(powerUp);
+        player.getComponent(LightningPowerUpComponent.class).obtainPowerUp();
 
         player.getComponent(LightningPowerUpComponent.class).setActive(true);
 
