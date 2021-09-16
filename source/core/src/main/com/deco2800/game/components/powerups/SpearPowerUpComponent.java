@@ -68,12 +68,12 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         if (active) {
             if (entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
                 spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
-                        new Vector2(10f, 0f),
+                        new Vector2(5f, 0f),
                         spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
                         true);
             } else {
                 spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
-                        new Vector2(-10f, 0f),
+                        new Vector2(-5f, 0f),
                         spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
                         true);
             }
@@ -82,30 +82,39 @@ public class SpearPowerUpComponent extends PowerUpComponent {
 
     @Override
     public void activate() {
-        active = true;
-        spear = ProjectileFactory.createSpearEntity();
-        ServiceLocator.getEntityService().register(spear);
-        ServiceLocator.getRenderService().register(
-                spear.getComponent(AnimationRenderComponent.class));
-        if (entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
-            spear.setPosition(entity.getPosition().x + 1f, entity.getPosition().y);
-            spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
-                    new Vector2(10f, 0f),
-                    spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
-                    true);
-            spear.getComponent(AnimationRenderComponent.class).stopAnimation();
-            spear.getComponent(AnimationRenderComponent.class).startAnimation(
-                    "fly-right");
-        } else {
-            spear.setPosition(entity.getPosition().x - 1f, entity.getPosition().y);
-            spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
-                    new Vector2(-10f, 0f),
-                    spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
-                    true);
-            spear.getComponent(AnimationRenderComponent.class).stopAnimation();
-            spear.getComponent(AnimationRenderComponent.class).startAnimation(
-                    "fly-left");
+        if (!active) {
+            active = true;
+            spear = ProjectileFactory.createSpearEntity();
+            ServiceLocator.getEntityService().register(spear);
+            ServiceLocator.getRenderService().register(
+                    spear.getComponent(AnimationRenderComponent.class));
+            spear.getEvents().addListener("dispose", this::disposeSpear);
+            if (entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
+                spear.setPosition(entity.getPosition().x + 1f, entity.getPosition().y);
+                spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
+                        new Vector2(10f, 0f),
+                        spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
+                        true);
+                spear.getComponent(AnimationRenderComponent.class).stopAnimation();
+                spear.getComponent(AnimationRenderComponent.class).startAnimation(
+                        "fly-right");
+            } else {
+                spear.setPosition(entity.getPosition().x - 1f, entity.getPosition().y);
+                spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
+                        new Vector2(-10f, 0f),
+                        spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
+                        true);
+                spear.getComponent(AnimationRenderComponent.class).stopAnimation();
+                spear.getComponent(AnimationRenderComponent.class).startAnimation(
+                        "fly-left");
+            }
+            thrown += 1;
         }
+    }
+
+    private void disposeSpear() {
+        spear.flagDelete();
+        active = false;
     }
 
     public boolean getActive() {
