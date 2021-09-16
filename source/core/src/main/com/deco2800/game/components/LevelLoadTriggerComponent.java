@@ -1,9 +1,6 @@
 package com.deco2800.game.components;
 
-
-import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.physics.BodyUserData;
@@ -15,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**

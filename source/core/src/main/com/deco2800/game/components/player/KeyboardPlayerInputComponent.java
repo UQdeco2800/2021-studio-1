@@ -1,13 +1,10 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.input.InputComponent;
-import com.deco2800.game.input.InputService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
@@ -49,13 +46,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         runDirection.add(Vector2Utils.RIGHT);
         triggerRunEvent();
         isDirection = 4;
-        return true;
-      case Keys.SPACE:
-        entity.getEvents().trigger("attack");
-        return true;
-      /* Keys.J to test powers up attack */
-      case Keys.J:
-        entity.getEvents().trigger("powerAttack");
         return true;
       case Keys.L:
         triggerLightningEvent();
@@ -123,24 +113,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
     entity.getEvents().trigger("jump");
   }
 
-  private void triggerStopJumpEvent() {
-    entity.getEvents().trigger("stop jump");
-  }
-
   private void triggerCrouchEvent() {
     entity.getEvents().trigger("crouch");
   }
 
   private void triggerStopCrouchEvent() {
     entity.getEvents().trigger("stop crouch");
-  }
-
-  private void triggerStopAttackEvent() {
-    entity.getEvents().trigger("stop attack");
-  }
-
-  private void triggerStopPowerAttackEvent() {
-    entity.getEvents().trigger("stop stopPowerAttack");
   }
 
   private void triggerLightningEvent() {

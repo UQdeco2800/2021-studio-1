@@ -4,9 +4,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.deco2800.game.entities.Entity;
-import com.deco2800.game.components.player.PlayerActions;
-import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 
 public class CameraComponent extends Component {
     private final Camera camera;

@@ -12,7 +12,6 @@ import com.deco2800.game.components.npc.DeathGiantAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ScreenFXAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.tasks.MoveRightTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.components.tasks.MoveLeftTask;
@@ -179,8 +178,6 @@ public class NPCFactory {
         }
 
         fireSpirit.setType(EntityTypes.FIRESPIRIT);
-
-        fireSpirit.setScale(1.2f, 1f);
         return fireSpirit;
     }
 
@@ -211,6 +208,7 @@ public class NPCFactory {
         wallOfDeath.setScale(25f, 12f);
 
         wallOfDeath.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+        wallOfDeath.setType(EntityTypes.WALL);
 
         return wallOfDeath;
     }
@@ -268,6 +266,7 @@ public class NPCFactory {
                 PhysicsComponent.AlignY.BOTTOM);
 
         deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+        deathGiant.setType(EntityTypes.GIANT);
         return deathGiant;
     }
 

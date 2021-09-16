@@ -2,7 +2,6 @@ package com.deco2800.game.components.powerups;
 
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EntityTypes;
-import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -64,8 +63,10 @@ public class LightningPowerUpComponent extends PowerUpComponent {
 
         // If the enemy is a wolf or skeleton within 8 metres, dispose
         for (Entity enemy : ServiceLocator.getEntityService().getEntityArray()) {
-            if (enemy.getType() == EntityTypes.WOLF ||enemy.getType() == EntityTypes.SKELETON) {
-                if (enemy.getCenterPosition().x - entity.getCenterPosition().x <= 8f) {
+            if (enemy.getType() == EntityTypes.WOLF
+                    ||enemy.getType() == EntityTypes.SKELETON
+                    || enemy.getType() == EntityTypes.FIRESPIRIT) {
+                if (enemy.getCenterPosition().x - entity.getCenterPosition().x <= 15f) {
                     enemy.flagDelete();
                 }
             }

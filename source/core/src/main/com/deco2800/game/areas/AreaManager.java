@@ -5,6 +5,7 @@ import com.deco2800.game.files.RagLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -17,11 +18,11 @@ public class AreaManager extends RagnarokArea {
      * don't change this unless you want the *entire* "bricking" of the game
      * to be altered.
      */
-    private final int GRID_SCALE = 3;
+    private static final int GRID_SCALE = 3;
 
     /**
      * this contains a list of GameAreas inside the manager,
-     * thought it is currently underutilised. BackgroundArea, MainArea?
+     * though it is currently underutilised. BackgroundArea, MainArea?
      */
     private LinkedList<RagnarokArea> areaInstances;
 
@@ -30,11 +31,6 @@ public class AreaManager extends RagnarokArea {
      * spawned into. where is the player, or wall of death?
      */
     private RagnarokArea terrainInstance;
-
-    /**
-     * they are members of the persistentInstance class, the AreaManager
-     */
-    private RagnarokArea persistentInstance;
 
     //TODO: make this *far* less volatile. currently if either the height/width value loaded
     //      by the loader doesn't equal the amount of lines/colums this thing will go bananas
@@ -61,7 +57,7 @@ public class AreaManager extends RagnarokArea {
      * buffered "spawns" will eventually store a list
      * of coords and the entity to spawn them @
      */
-    private Hashtable<String, String> bufferedSpawns;
+    private HashMap<String, String> bufferedSpawns;
 
     /**
      * this is passed to all areas inside... I think
@@ -90,9 +86,9 @@ public class AreaManager extends RagnarokArea {
         this.mainTerrainFactory = terrainFactory;
         this.areaInstances = new LinkedList<>();
 
-        bufferedSpawns = new Hashtable<>();
+        bufferedSpawns = new HashMap<>();
         this.startNextArea = 0;
-        //eventually moved to terminal?
+        // eventually moved to terminal?
         // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
 
         //terrain = terrainFactory.createTerrain(TerrainFactory.TerrainType.FOREST_DEMO);
@@ -105,9 +101,10 @@ public class AreaManager extends RagnarokArea {
      * *RAW* stuff of the class. This function is used for clarity.
      * Calls to load and other "set up" functions for the manager should be called here.
      */
+    @Override
     public void create() {
 
-        persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
+        RagnarokArea persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
         persistentInstance.setManager(this);
         persistentInstance.create();
         persistentInstance.makePlayer(10, 5);
@@ -121,7 +118,6 @@ public class AreaManager extends RagnarokArea {
 
         //mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
         //this.player = mainInstance.getPlayer();
-
     }
 
     /**
