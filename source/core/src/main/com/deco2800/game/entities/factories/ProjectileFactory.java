@@ -68,11 +68,10 @@ public class ProjectileFactory {
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-        spear.getComponent(HitboxComponent.class).setAsBox(new Vector2(1.3f,
-                0.1f), spear.getCenterPosition());
-        spear.getComponent(PhysicsComponent.class).setGravityScale(2f);
-
         spear.setScale(1.1f, 1.1f);
+        spear.getComponent(ColliderComponent.class).setAsBox(new Vector2(1.3f,
+                0.1f), spear.getCenterPosition());
+        spear.getComponent(PhysicsComponent.class).setGravityScale(3f);
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(ServiceLocator.getResourceService()

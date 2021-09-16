@@ -113,6 +113,14 @@ class PhysicsContactListenerTest {
     return entity;
   }
 
+  Entity createProjectileEntity() {
+    Entity entity =
+            new Entity().addComponent(new PhysicsComponent()).addComponent(new ColliderComponent());
+    entity.setType(EntityTypes.PROJECTILE);
+    entity.create();
+    return entity;
+  }
+
   Fixture createFixture(PhysicsEngine engine) {
     Body body = engine.createBody(new BodyDef());
     return body.createFixture(new FixtureDef());

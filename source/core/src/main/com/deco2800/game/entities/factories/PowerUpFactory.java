@@ -2,6 +2,7 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -33,10 +34,15 @@ public class PowerUpFactory {
         powerUp.addComponent(animator);
         powerUp.getComponent(AnimationRenderComponent.class).startAnimation("icon");
 
-        powerUp.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
-                PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
-        powerUp.getComponent(ColliderComponent.class).setAsCircleAligned(0.2f,
-                PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
+        powerUp.getComponent(HitboxComponent.class).setAsCircleAligned(
+                0.2f, PhysicsComponent.AlignX.CENTER,
+                PhysicsComponent.AlignY.BOTTOM);
+        powerUp.getComponent(ColliderComponent.class).setAsCircleAligned(
+                0.2f, PhysicsComponent.AlignX.CENTER,
+                PhysicsComponent.AlignY.BOTTOM);
+        powerUp.getComponent(ColliderComponent.class).setSensor(true);
+        powerUp.getComponent(PhysicsComponent.class).setBodyType
+                (BodyDef.BodyType.StaticBody);
 
         powerUp.setType(EntityTypes.LIGHTNINGPOWERUP);
 
@@ -63,7 +69,10 @@ public class PowerUpFactory {
 
         PolygonShape shield = new PolygonShape();
         shield.set(shieldPoints);
-        powerUp.getComponent(HitboxComponent.class).setShape(shield);
+        powerUp.getComponent(ColliderComponent.class).setShape(shield);
+        powerUp.getComponent(ColliderComponent.class).setSensor(true);
+        powerUp.getComponent(PhysicsComponent.class).setBodyType
+                (BodyDef.BodyType.StaticBody);
         powerUp.setType(EntityTypes.SHIELDPOWERUP);
 
         return powerUp;
@@ -81,6 +90,9 @@ public class PowerUpFactory {
 
         powerUp.setScale(1.1f, 1.1f);
         PhysicsUtils.setScaledCollider(powerUp, 1f, 1f);
+
+        powerUp.getComponent(PhysicsComponent.class).setBodyType
+                (BodyDef.BodyType.StaticBody);
 
         powerUp.setType(EntityTypes.SPEARPOWERUP);
         return powerUp;

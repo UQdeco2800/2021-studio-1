@@ -132,8 +132,8 @@ public class RagnarokArea extends GameArea {
     }
 
     private void spawnPowerUps() {
-        GridPoint2 start = new GridPoint2(10, 10);
-        GridPoint2 end = new GridPoint2(1000, 10);
+        GridPoint2 start = new GridPoint2(10, 3);
+        GridPoint2 end = new GridPoint2(1000, 3);
 
         Entity powerUp;
 
