@@ -191,9 +191,8 @@ public class PlayerActions extends Component {
         break;
 
       case SPEARPOWERUP:
-        powerUp.getComponent(ColliderComponent.class).setSensor(true);
         entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
-        entity.getComponent(SpearPowerUpComponent.class).obtainSpear(powerUp);
+        entity.getComponent(SpearPowerUpComponent.class).obtainSpear();
         break;
 
       case SHIELDPOWERUP:
@@ -217,7 +216,6 @@ public class PlayerActions extends Component {
       case SPEARPOWERUP:
         if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
           entity.getComponent(SpearPowerUpComponent.class).activate();
-          entity.getComponent(AnimationRenderComponent.class).stopAnimation();
           whichAnimation();
         }
         break;

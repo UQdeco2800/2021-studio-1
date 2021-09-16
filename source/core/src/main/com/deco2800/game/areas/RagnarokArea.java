@@ -54,6 +54,7 @@ public class RagnarokArea extends GameArea {
             "images/jotunheimr_1.png",
             "images/jotunheimr_2.png",
             "images/powerup-shield.png",
+            "images/powerup-spear.png",
             "images/blue_bck.png"
     };
 

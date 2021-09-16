@@ -2,9 +2,9 @@ package com.deco2800.game.physics;
 
 import com.badlogic.gdx.physics.box2d.*;
 
-import com.deco2800.game.components.SpearComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EntityTypes;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,10 +82,7 @@ public class PhysicsContactListener implements ContactListener {
       Entity powerUp = getPlayerPower(bodyA, bodyB).get(1);
 
       player.getEvents().trigger("obtainPowerUp", powerUp);
-
-      if (!(powerUp.getType() == EntityTypes.SPEARPOWERUP)) {
-        powerUp.getEvents().trigger("dispose");
-      }
+      powerUp.getEvents().trigger("dispose");
     }
   }
 
@@ -134,19 +131,20 @@ public class PhysicsContactListener implements ContactListener {
    * @param bodyB - second body involved in the collision
    */
   private void checkSpearCollision(BodyUserData bodyA, BodyUserData bodyB) {
-    if(bodyA.entity.getType() == EntityTypes.SPEARPOWERUP &&
-            bodyA.entity.getComponent(SpearComponent.class).isFlying()) {
+    if(bodyA.entity.getType() == EntityTypes.PLAYERSPEAR) {
       if (bodyB.entity.getType() == EntityTypes.SKELETON || bodyB.entity.getType() == EntityTypes.WOLF ||
               bodyB.entity.getType() == EntityTypes.FIRESPIRIT) {
         bodyB.entity.getEvents().trigger("dispose");
-        bodyA.entity.getComponent(SpearComponent.class).hitEnemy();
+        bodyA.entity.getComponent(AnimationRenderComponent.class).stopAnimation();
+        bodyA.entity.getEvents().trigger("dispose");
       }
-    } else if (bodyB.entity.getType() == EntityTypes.SPEARPOWERUP &&
-            bodyB.entity.getComponent(SpearComponent.class).isFlying()) {
+    } else if (bodyB.entity.getType() == EntityTypes.PLAYERSPEAR) {
       if (bodyA.entity.getType() == EntityTypes.SKELETON || bodyA.entity.getType() == EntityTypes.WOLF ||
               bodyA.entity.getType() == EntityTypes.FIRESPIRIT) {
         bodyA.entity.getEvents().trigger("dispose");
-        bodyB.entity.getComponent(SpearComponent.class).hitEnemy();
+        //bodyB.entity.getComponent(AnimationRenderComponent.class)
+        // .stopAnimation();
+        bodyB.entity.getEvents().trigger("dispose");
       }
     }
   }

@@ -1,8 +1,9 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.CombatStatsComponent;
-import com.deco2800.game.components.SpearComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -11,7 +12,9 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
+import com.deco2800.game.services.ServiceLocator;
 
 public class ProjectileFactory {
     /**
@@ -58,17 +61,40 @@ public class ProjectileFactory {
     }
 
     public static Entity createSpearEntity() {
-        Entity powerUp =
+        Entity spear =
                 new Entity()
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new SpearComponent());
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
 
-        powerUp.setScale(1f, 0.5f);
-        PhysicsUtils.setScaledCollider(powerUp, 1f, 1f);
-        powerUp.setType(EntityTypes.PROJECTILE);
-        return powerUp;
+        spear.getComponent(HitboxComponent.class).setAsBox(new Vector2(2f,
+                0.1f), spear.getCenterPosition());
+        spear.getComponent(PhysicsComponent.class).setGravityScale(2f);
+
+        spear.setScale(1.1f, 1.1f);
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService()
+                        .getAsset("images/player-spear.atlas", TextureAtlas.class));
+
+        animator.addAnimation("flat-left", 1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("flat-right", 1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("fly-left", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("fly-right", 0.2f, Animation.PlayMode.LOOP);
+        animator.addAnimation("stand-left", 1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("stand-right", 1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swing-left", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("swing-right", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("static", 1f, Animation.PlayMode.LOOP);
+
+        spear.addComponent(animator);
+        spear.getComponent(AnimationRenderComponent.class).startAnimation(
+                "static");
+
+        spear.setType(EntityTypes.PLAYERSPEAR);
+        spear.getEvents().addListener("dispose", spear::flagDelete);
+
+        return spear;
     }
 }
