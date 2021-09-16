@@ -190,7 +190,7 @@ public class PlayerActions extends Component {
         powerUp.getComponent(AnimationRenderComponent.class).startAnimation("blank");
         break;
 
-      case SPEARPOWERUP:
+      case SPEARPOWERUP: 
         entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
         entity.getComponent(SpearPowerUpComponent.class).obtainSpear();
         break;

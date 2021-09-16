@@ -16,6 +16,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
  */
 public class SpearPowerUpComponent extends PowerUpComponent {
     private Entity spear;
+    private Vector2 spearDirection;
 
     // Update flags to check
     private boolean active;
@@ -66,7 +67,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     @Override
     public void update() {
         if (active) {
-            if (entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
+            if (spearDirection.hasSameDirection(Vector2Utils.RIGHT)) {
                 spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
                         new Vector2(5f, 0f),
                         spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
@@ -89,7 +90,9 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             ServiceLocator.getRenderService().register(
                     spear.getComponent(AnimationRenderComponent.class));
             spear.getEvents().addListener("dispose", this::disposeSpear);
-            if (entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
+            spearDirection = entity.getComponent(PlayerActions.class).getPreviousDirection();
+            if (spearDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+
                 spear.setPosition(entity.getPosition().x + 1f, entity.getPosition().y);
                 spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
                         new Vector2(10f, 0f),
