@@ -72,7 +72,6 @@ public class ProjectileFactory {
         spear.getComponent(ColliderComponent.class).setAsBox(new Vector2(1.3f,
                 0.1f), spear.getCenterPosition());
         spear.getComponent(PhysicsComponent.class).setGravityScale(3f);
-        spear.getComponent(ColliderComponent.class).setSensor(true);
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(ServiceLocator.getResourceService()
