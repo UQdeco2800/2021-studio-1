@@ -28,6 +28,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
 
     public void obtainSpear() {
         thrown = 0;
+        enabled = true;
     }
 
     public void reset() {
@@ -55,8 +56,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
                 if (thrown == 3) {
                     reset();
                     setEnabled(false);
-                    spear.getComponent(AnimationRenderComponent.class).stopAnimation();
-                    spear.getEvents().trigger("dispose");
                 }
             }
         }
@@ -83,6 +82,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     public void activate() {
         if (!active) {
             active = true;
+            thrown += 1;
             spear = ProjectileFactory.createSpearEntity();
             ServiceLocator.getEntityService().register(spear);
             ServiceLocator.getRenderService().register(
@@ -108,7 +108,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
                 spear.getComponent(AnimationRenderComponent.class).startAnimation(
                         "fly-left");
             }
-            thrown += 1;
         }
     }
 

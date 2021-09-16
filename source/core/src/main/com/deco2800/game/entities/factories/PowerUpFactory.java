@@ -66,7 +66,7 @@ public class PowerUpFactory {
 
         PolygonShape shield = new PolygonShape();
         shield.set(shieldPoints);
-        powerUp.getComponent(HitboxComponent.class).setShape(shield);
+        powerUp.getComponent(ColliderComponent.class).setShape(shield);
         powerUp.setType(EntityTypes.SHIELDPOWERUP);
 
         powerUp.getEvents().addListener("dispose",

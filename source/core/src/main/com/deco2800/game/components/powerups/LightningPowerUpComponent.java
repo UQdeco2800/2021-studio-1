@@ -2,6 +2,8 @@ package com.deco2800.game.components.powerups;
 
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EntityTypes;
+import com.deco2800.game.entities.factories.PowerUpFactory;
+import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -25,14 +27,15 @@ public class LightningPowerUpComponent extends PowerUpComponent {
         this.active = active;
     }
 
-    public void obtainPowerUp(Entity lightning) {
-        powerUp = lightning;
+    public void obtainPowerUp() {
+        enabled = true;
     }
 
     @Override
     public void create() {
         enabled = false;
         active = false;
+        powerUp = null;
     }
 
     /**
@@ -44,6 +47,7 @@ public class LightningPowerUpComponent extends PowerUpComponent {
         if (active) {
             if (powerUp.getComponent(AnimationRenderComponent.class).getCurrentAnimation().equals("float")) {
                 if (powerUp.getComponent(AnimationRenderComponent.class).isFinished()) {
+                    powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
                     active = false;
                     enabled = false;
                     powerUp.flagDelete();
@@ -55,10 +59,13 @@ public class LightningPowerUpComponent extends PowerUpComponent {
     @Override
     public void activate() {
         active = true;
-
+        powerUp = PowerUpFactory.createLightningPowerUp();
+        ServiceLocator.getEntityService().register(powerUp);
+        ServiceLocator.getRenderService().register(
+                powerUp.getComponent(AnimationRenderComponent.class));
         powerUp.setPosition(entity.getCenterPosition().sub(9f,4f).x, 0f);
+        powerUp.getComponent(ColliderComponent.class).setSensor(true);
         powerUp.setScale(20f, 15f);
-        powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
         powerUp.getComponent(AnimationRenderComponent.class).startAnimation("float");
 
         // If the enemy is a wolf or skeleton within 8 metres, dispose

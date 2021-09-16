@@ -53,7 +53,7 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
-
+    whichAnimation();
     // for pause condition
     if (!playerInputComponent.isPlayerInputEnabled()) {
         return;}
@@ -179,25 +179,15 @@ public class PlayerActions extends Component {
   public void obtainPowerUp(Entity powerUp) {
     switch (powerUp.getType()) {
       case LIGHTNINGPOWERUP:
-        powerUp.getComponent(ColliderComponent.class).setEnabled(false);
-        powerUp.getComponent(PhysicsComponent.class).getBody().setGravityScale(0);
-
-        entity.getComponent(LightningPowerUpComponent.class).setEnabled(true);
-        powerUp.getComponent(ColliderComponent.class).setSensor(true);
-        entity.getComponent(LightningPowerUpComponent.class).obtainPowerUp(powerUp);
-
-        powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
-        powerUp.getComponent(AnimationRenderComponent.class).startAnimation("blank");
+        entity.getComponent(LightningPowerUpComponent.class).obtainPowerUp();
         break;
 
-      case SPEARPOWERUP: 
-        entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
+      case SPEARPOWERUP:
         entity.getComponent(SpearPowerUpComponent.class).obtainSpear();
         break;
 
       case SHIELDPOWERUP:
         entity.getEvents().trigger("pickUpShield");
-        entity.getComponent(ShieldPowerUpComponent.class).setEnabled(true);
         break;
 
       default:
