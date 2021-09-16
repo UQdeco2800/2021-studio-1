@@ -1,35 +1,21 @@
 package com.deco2800.game.components.powerups;
 
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.EntityTypes;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+
 public class SpearPowerUpComponentTest {
+
+
     @Test
-    public void obtainSpearTest(){
+    public void obtainsSpearTest(){
         Entity player = new Entity();
-        Entity powerUp = new Entity();
-        powerUp.setType(EntityTypes.SPEARPOWERUP);
 
         player.addComponent(new SpearPowerUpComponent());
-        player.getComponent(SpearPowerUpComponent.class).obtainSpear(powerUp);
+        player.getComponent(SpearPowerUpComponent.class).setEnabled(true);
 
-        assertEquals(EntityTypes.SPEARPOWERUP, player.getComponent(SpearPowerUpComponent.class).getSpear().getType());
+        assertTrue(player.getComponent(SpearPowerUpComponent.class).getEnabled());
     }
-    @Test
-    public void activateSpearTest(){
-        Entity player = new Entity();
-        Entity powerUp = new Entity();
-        powerUp.setType(EntityTypes.SPEARPOWERUP);
-
-        player.addComponent(new SpearPowerUpComponent());
-        player.getComponent(SpearPowerUpComponent.class).obtainSpear(powerUp);
-        player.getComponent(SpearPowerUpComponent.class).activate();
-
-        assertTrue(player.getComponent(SpearPowerUpComponent.class).getActive());
-    }
-
 }

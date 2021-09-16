@@ -2,9 +2,12 @@ package com.deco2800.game.components.powerups;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.entities.factories.ProjectileFactory;
+import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -19,26 +22,17 @@ public class SpearPowerUpComponent extends PowerUpComponent {
 
     // Update flags to check
     private boolean active;
-    private boolean flown;
     private int thrown;
 
     public Entity getSpear(){
         return this.spear;
     }
 
-    public void obtainSpear() {
-        thrown = 0;
-    }
-
-    public void reset() {
-        thrown = 0;
-    }
-
     @Override
     public void create() {
         setEnabled(false);
         spear = null;
-        reset();
+        thrown = 0;
     }
 
     @Override
@@ -48,16 +42,15 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             // If after flying, the spear stops or goes below y = 0, deactivate and reset
             if ((active && spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0) {
                 active = false;
-                flown = false;
                 spear.getComponent(AnimationRenderComponent.class).stopAnimation();
-                spear.getEvents().trigger("dispose");
+                disposeSpear();
 
                 // Disposes the spear after three throws
                 if (thrown == 3) {
-                    reset();
+                    thrown = 0;
                     setEnabled(false);
                     spear.getComponent(AnimationRenderComponent.class).stopAnimation();
-                    spear.getEvents().trigger("dispose");
+                    disposeSpear();
                 }
             }
         }
@@ -86,9 +79,9 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             active = true;
             spear = ProjectileFactory.createSpearEntity();
             ServiceLocator.getEntityService().register(spear);
-            ServiceLocator.getRenderService().register(
-                    spear.getComponent(AnimationRenderComponent.class));
-            spear.getEvents().addListener("dispose", this::disposeSpear);
+
+            spear.getEvents().addListener("collisionStart", this::killEnemy);
+
             if (entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
                 spear.setPosition(entity.getPosition().x + 1f, entity.getPosition().y);
                 spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
@@ -119,5 +112,20 @@ public class SpearPowerUpComponent extends PowerUpComponent {
 
     public boolean getActive() {
         return active;
+    }
+
+    public int getThrown() { return thrown;}
+
+    private void killEnemy (Fixture spearFixture, Fixture otherFixture) {
+        BodyUserData spearBody = (BodyUserData) spearFixture.getBody().getUserData();
+        BodyUserData otherBody = (BodyUserData) otherFixture.getBody().getUserData();
+
+        if (otherBody.entity.getType() == EntityTypes.FIRESPIRIT
+                || otherBody.entity.getType() == EntityTypes.SKELETON
+                || otherBody.entity.getType() == EntityTypes.WOLF) {
+
+            otherBody.entity.flagDelete();
+            spearBody.entity.getEvents().trigger("dispose");
+        }
     }
 }

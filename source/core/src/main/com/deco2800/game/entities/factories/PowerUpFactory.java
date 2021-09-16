@@ -38,9 +38,6 @@ public class PowerUpFactory {
         powerUp.getComponent(ColliderComponent.class).setAsCircleAligned(0.2f,
                 PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
 
-        powerUp.getEvents().addListener("dispose",
-                powerUp::flagDelete);
-
         powerUp.setType(EntityTypes.LIGHTNINGPOWERUP);
 
         return powerUp;
@@ -69,9 +66,6 @@ public class PowerUpFactory {
         powerUp.getComponent(HitboxComponent.class).setShape(shield);
         powerUp.setType(EntityTypes.SHIELDPOWERUP);
 
-        powerUp.getEvents().addListener("dispose",
-            powerUp::flagDelete);
-
         return powerUp;
     }
 
@@ -87,9 +81,6 @@ public class PowerUpFactory {
 
         powerUp.setScale(1.1f, 1.1f);
         PhysicsUtils.setScaledCollider(powerUp, 1f, 1f);
-
-        powerUp.getEvents().addListener("dispose",
-                powerUp::flagDelete);
 
         powerUp.setType(EntityTypes.SPEARPOWERUP);
         return powerUp;
