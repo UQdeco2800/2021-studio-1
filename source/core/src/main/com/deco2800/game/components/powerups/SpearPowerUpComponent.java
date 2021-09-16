@@ -20,7 +20,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
 
     // Update flags to check
     private boolean active;
-    private boolean flown;
     private int thrown;
 
     public Entity getSpear(){
@@ -49,7 +48,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             // If after flying, the spear stops or goes below y = 0, deactivate and reset
             if ((active && spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0) {
                 active = false;
-                flown = false;
                 spear.getComponent(AnimationRenderComponent.class).stopAnimation();
                 spear.getEvents().trigger("dispose");
 
@@ -92,10 +90,9 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             spear.getEvents().addListener("dispose", this::disposeSpear);
             spearDirection = entity.getComponent(PlayerActions.class).getPreviousDirection();
             if (spearDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-
                 spear.setPosition(entity.getPosition().x + 1f, entity.getPosition().y);
                 spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
-                        new Vector2(10f, 0f),
+                        new Vector2(10f, 10f),
                         spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
                         true);
                 spear.getComponent(AnimationRenderComponent.class).stopAnimation();
@@ -104,7 +101,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             } else {
                 spear.setPosition(entity.getPosition().x - 1f, entity.getPosition().y);
                 spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
-                        new Vector2(-10f, 0f),
+                        new Vector2(-10f, 10f),
                         spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
                         true);
                 spear.getComponent(AnimationRenderComponent.class).stopAnimation();
