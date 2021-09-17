@@ -15,6 +15,9 @@ public class LightningPowerUpComponent extends PowerUpComponent {
     boolean active;
     Entity powerUp;
 
+    /**
+     * Creates the lightning component
+     */
     @Override
     public void create() {
         enabled = false;
