@@ -108,7 +108,8 @@ public class ObstacleFactory {
     /**
      * Creates a platform entity.
      *
-     * @param world the world type to load in. Must match the name of a .rag file (e.g. world.rag)
+     * @param world the world type to load in. Must match the name of a .png file in
+     *              assets/images (e.g. assets/images/world.png)
      * @return entity
      */
     public static Entity createPlatform(String world) {
@@ -116,27 +117,49 @@ public class ObstacleFactory {
                 new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        if (world == null) {
-            platform.addComponent(new TextureRenderComponent("images/platform_gradient.png"));
-        } else {
-            platform.addComponent(new TextureRenderComponent("images/" + world + ".png"));
-        }
+        makeBasePlatform(world, platform);
         platform.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        platform.getComponent(TextureRenderComponent.class).scaleEntity();
-        // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
-        // difficult.
-        platform.scaleHeight(0.5f);
-        platform.setType(EntityTypes.OBSTACLE);
         return platform;
     }
 
     /**
-     * Creates a floor entity
+     * Return a platform entity that has no physics or collision component.
+     *
+     * @param world the world type to load in. Must match the name of a .png file in
+     *              assets/images (e.g. assets/images/world.png)
+     * @return entity
+     */
+    public static Entity createPlatformNoCollider(String world) {
+        Entity platform = new Entity();
+        makeBasePlatform(world, platform);
+        return platform;
+    }
+
+    /**
+     * Creates a platform entity with the default world type.
      *
      * @return entity
      */
     public static Entity createPlatform() {
         return createPlatform(null);
+    }
+
+    /**
+     * Add the required components and properties to the given entity to make it a platform.
+     *
+     * @param world  the world type corresponding the art style that the platform will mimic. Must
+     *               be the same as the name of an image in assets/images/'world'.png.
+     * @param entity entity to transform into a platform
+     */
+    private static void makeBasePlatform(String world, Entity entity) {
+        if (world == null) {
+            entity.addComponent(new TextureRenderComponent("images/platform_gradient.png"));
+        } else {
+            entity.addComponent(new TextureRenderComponent("images/" + world + ".png"));
+        }
+        entity.getComponent(TextureRenderComponent.class).scaleEntity();
+        entity.scaleHeight(0.5f);
+        entity.setType(EntityTypes.OBSTACLE);
     }
 
     /**
@@ -150,15 +173,14 @@ public class ObstacleFactory {
                 new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        if (world == null) {
-            floor.addComponent(new TextureRenderComponent("images/floor.png"));
-        } else {
-            floor.addComponent(new TextureRenderComponent("images/" + world + ".png"));
-        }
+        makeBaseFloor(world, floor);
         floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        floor.getComponent(TextureRenderComponent.class).scaleEntity();
-        floor.scaleHeight(0.5f);
-        floor.setType(EntityTypes.OBSTACLE);
+        return floor;
+    }
+
+    public static Entity createFloorNoCollider(String world) {
+        Entity floor = new Entity();
+        makeBaseFloor(world, floor);
         return floor;
     }
 
@@ -169,6 +191,36 @@ public class ObstacleFactory {
      */
     public static Entity createFloor() {
         return createFloor(null);
+    }
+
+    /**
+     * Add the required components and properties to entity to make it a floor entity.
+     *
+     * @param world  the world type corresponding the art style that the platform will mimic. Must
+     *               be the same as the name of an image in assets/images/'world'.png.
+     * @param entity entity to transform into a platform
+     */
+    private static void makeBaseFloor(String world, Entity entity) {
+        if (world == null) {
+            entity.addComponent(new TextureRenderComponent("images/floor.png"));
+        } else {
+            entity.addComponent(new TextureRenderComponent("images/" + world + ".png"));
+        }
+        entity.getComponent(TextureRenderComponent.class).scaleEntity();
+        entity.scaleHeight(0.5f);
+        entity.setType(EntityTypes.OBSTACLE);
+    }
+
+    public static Entity createCollider(int x1, int x2, int height) {
+        Vector2 scale = new Vector2(0.5f, 0.5f);
+        Vector2 size = new Vector2(x2 - x1, height).scl(scale);
+        Entity collider = new Entity()
+                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        collider.setScale(scale);
+        collider.getComponent(ColliderComponent.class).setAsBoxAligned(size,
+                PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM);
+        return collider;
     }
 
 

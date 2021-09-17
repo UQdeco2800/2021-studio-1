@@ -5,7 +5,7 @@ import com.deco2800.game.files.RagLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class AreaManager extends RagnarokArea {
@@ -17,11 +17,11 @@ public class AreaManager extends RagnarokArea {
      * don't change this unless you want the *entire* "bricking" of the game
      * to be altered.
      */
-    private final int GRID_SCALE = 3;
+    private static final int GRID_SCALE = 3;
 
     /**
      * this contains a list of GameAreas inside the manager,
-     * thought it is currently underutilised. BackgroundArea, MainArea?
+     * though it is currently underutilised. BackgroundArea, MainArea?
      */
     private LinkedList<RagnarokArea> areaInstances;
 
@@ -30,11 +30,6 @@ public class AreaManager extends RagnarokArea {
      * spawned into. where is the player, or wall of death?
      */
     private RagnarokArea terrainInstance;
-
-    /**
-     * they are members of the persistentInstance class, the AreaManager
-     */
-    private RagnarokArea persistentInstance;
 
     //TODO: make this *far* less volatile. currently if either the height/width value loaded
     //      by the loader doesn't equal the amount of lines/colums this thing will go bananas
@@ -61,7 +56,7 @@ public class AreaManager extends RagnarokArea {
      * buffered "spawns" will eventually store a list
      * of coords and the entity to spawn them @
      */
-    private Hashtable<String, String> bufferedSpawns;
+    private HashMap<String, String> bufferedSpawns;
 
     /**
      * this is passed to all areas inside... I think
@@ -90,9 +85,9 @@ public class AreaManager extends RagnarokArea {
         this.mainTerrainFactory = terrainFactory;
         this.areaInstances = new LinkedList<>();
 
-        bufferedSpawns = new Hashtable<>();
+        bufferedSpawns = new HashMap<>();
         this.startNextArea = 0;
-        //eventually moved to terminal?
+        // eventually moved to terminal?
         // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
 
         //terrain = terrainFactory.createTerrain(TerrainFactory.TerrainType.FOREST_DEMO);
@@ -105,9 +100,10 @@ public class AreaManager extends RagnarokArea {
      * *RAW* stuff of the class. This function is used for clarity.
      * Calls to load and other "set up" functions for the manager should be called here.
      */
+    @Override
     public void create() {
 
-        persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
+        RagnarokArea persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
         persistentInstance.setManager(this);
         persistentInstance.create();
         persistentInstance.makePlayer(10, 5);
@@ -119,9 +115,10 @@ public class AreaManager extends RagnarokArea {
 
         load("ragnorok");
 
+        logger.debug("Creating AreaManager");
+
         //mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
         //this.player = mainInstance.getPlayer();
-
     }
 
     /**
@@ -146,7 +143,7 @@ public class AreaManager extends RagnarokArea {
      *
      * @param area      which area to call the spawn method on
      * @param x         ragGrid x coOrdinate
-     * @param y         ragGrdi y coOrdinate
+     * @param y         ragGrid y coOrdinate
      * @param placeType type of terrain to place
      */
     public void place(RagnarokArea area, int x, int y, String placeType) {
@@ -157,8 +154,14 @@ public class AreaManager extends RagnarokArea {
             case "floor":
                 area.spawnFloor(gx, gy);
                 break;
+            case "floorNoCollision":
+                area.spawnFloorNoCollision(gx, gy);
+                break;
             case "platform":
                 area.spawnPlatform(gx, gy, this.currentWorld);
+                break;
+            case "platformNoCollision":
+                area.spawnPlatformNoCollision(gx, gy, this.currentWorld);
                 break;
             case "rocks":
                 area.spawnRocks(gx, gy);
@@ -314,7 +317,37 @@ public class AreaManager extends RagnarokArea {
      * But will be intercepted as functionality is developed.
      */
     private void makeBufferedPlace() {
+        logger.debug("Placing terrain stored in buffer");
         int x = startNextArea;
+
+        for (int col = 0; col < bPWidth; col++) {
+            for (int row = 0; row < bPHeight; row++) {
+                int length;
+                int height = 1;
+                if (bufferedPlaces[col][row].equals("platform")) {
+                    length = replaceDuplicatesInRow(row, col, "platform",
+                            "platformNoCollision");
+                    if (length > 1) {
+                        // Some places have been changed, spawn a collision box to encompass them
+                        terrainInstance.spawnCollider((x + col) * GRID_SCALE,
+                                (x + col + length) * GRID_SCALE,
+                                row * GRID_SCALE + 2,
+                                height);
+                    }
+                } else if (bufferedPlaces[col][row].equals("floor")) {
+                    length = replaceDuplicatesInRow(row, col, "floor", "floorNoCollision");
+                    height = 3; // This is because of how floors are spawned as triple height.
+                    if (length > 0) {
+                        // Some places have been changed, spawn a collision box to encompass them
+                        terrainInstance.spawnCollider((x + col) * GRID_SCALE,
+                                (x + col + length) * GRID_SCALE,
+                                row * GRID_SCALE,
+                                height);
+                    }
+                }
+            }
+        }
+
         for (String[] column : bufferedPlaces) {
             int y = 0;
             for (String placeType : column) {
@@ -323,6 +356,55 @@ public class AreaManager extends RagnarokArea {
             }
             x++;
         }
+    }
+
+    /**
+     * Replace all consecutive instances of 'placeType' in the given row of this.bufferedPlaces
+     * with replacement, return the number of replacements made.
+     * <p>
+     * Will scan columns after the given col at height row until the stored value is no longer
+     * placeType, then replace those values it found.
+     * <p>
+     * Example, in the given world:
+     * <p>
+     * 5 {        },{        },{        },{        },{        }
+     * 4 {platform},{platform},{        },{        },{        }
+     * 3 {        },{        },{        },{        },{        }
+     * 2 {        },{platform},{platform},{platform},{platform}
+     * 1 {        },{        },{        },{        },{        }
+     * 0 {  floor },{  floor },{  floor },{  floor },{  floor }
+     * --0          1          2          3          4
+     * <p>
+     * calling replaceDuplicatesInRow(0, 4, 'platform', 'platformNoCollision') would set (4,0) and
+     * (4,1) to 'platFormNoCollision'.
+     *
+     * @param col         column of bufferedPlaces to start looking
+     * @param row         row of bufferedPlaces to start looking
+     * @param placeType   type of object to search e.g. "platform", "floor"
+     * @param replacement word to replace placeType with
+     * @return how many values were changed
+     */
+    private int replaceDuplicatesInRow(int row, int col, String placeType, String replacement) {
+        if (!bufferedPlaces[col][row].equals(placeType)) {
+            // Original placeType incorrect
+            logger.debug("Attempted to replace {} at {},{} but that position does not hold {}.",
+                    placeType, row, col, placeType);
+            return 0;
+        }
+        int nextCol = col + 1;
+        if (!bufferedPlaces[nextCol][row].equals(placeType)) return 1;
+        // Search through the columns until the string stored is no longer placeType, or the end
+        // of the world is reached.
+        do {
+            nextCol++;
+        } while (nextCol < bPWidth && bufferedPlaces[nextCol][row].equals(placeType));
+
+        // Replace values from column col to nextCol.
+        for (int i = col; i < nextCol; i++) {
+            bufferedPlaces[i][row] = replacement;
+        }
+
+        return nextCol - col;
     }
 
 }

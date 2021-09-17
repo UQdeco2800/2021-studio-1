@@ -32,7 +32,7 @@ public class Terminal extends Component {
   private String enteredMessage = "";
   private boolean isOpen = false;
   private boolean inLoad = false;
-  private Queue<String> messageBuffer = new LinkedList<String>();
+  private Queue<String> messageBuffer = new LinkedList<>();
 
   public Terminal() {
     this(new HashMap<>());
@@ -118,7 +118,7 @@ public class Terminal extends Component {
       // separate command from args
       
       String message = messageBuffer.poll();
-      if (message.equals(null)) {
+      if (message == null) {
         return false;
       } 
       String[] sections = message.split(" ");

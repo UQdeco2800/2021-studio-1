@@ -7,6 +7,7 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -116,6 +117,8 @@ public class RagnarokArea extends GameArea {
         spawnPowerUps();
 
         playMusic(); //TODO: eventual move to music
+
+        logger.debug("Creating new RagnarokArea");
     }
 
     public void setManager(AreaManager manager) {
@@ -136,10 +139,10 @@ public class RagnarokArea extends GameArea {
         resourceService.loadSounds(racerSounds);
         resourceService.loadMusic(racerMusic);
 
-        while (!resourceService.loadForMillis(10)) {
+//        while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
             // logger.info("Loading... {}%", resourceService.getProgress());
-        }
+//        }
     }
 
     private void spawnPowerUps() {
@@ -185,11 +188,11 @@ public class RagnarokArea extends GameArea {
      * This spawns the Wall of Death
      */
     protected void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-40,13);
-        GridPoint2 leftPos2 = new GridPoint2(-5,13);
+        GridPoint2 leftPos = new GridPoint2(-40, 13);
+        GridPoint2 leftPos2 = new GridPoint2(-5, 13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
-        wallOfDeath.addComponent(new CameraShakeComponent(this.player,this.terrainFactory.getCameraComponent(), sfx));
+        wallOfDeath.addComponent(new CameraShakeComponent(this.player, this.terrainFactory.getCameraComponent(), sfx));
         spawnEntityAt(wallOfDeath, leftPos, true, true);
         spawnEntityAt(sfx, leftPos2, true, true);
     }
@@ -237,7 +240,14 @@ public class RagnarokArea extends GameArea {
 
     protected void spawnPlatform(int x, int y, String world) {
         Entity platform = ObstacleFactory.createPlatform(world);
-        GridPoint2 pos = new GridPoint2(x, y+2);
+        GridPoint2 pos = new GridPoint2(x, y + 2);
+        spawnEntityAt(platform, pos, false, false);
+        signup(pos, platform);
+    }
+
+    protected void spawnPlatformNoCollision(int x, int y, String world) {
+        Entity platform = ObstacleFactory.createPlatformNoCollider(world);
+        GridPoint2 pos = new GridPoint2(x, y + 2);
         spawnEntityAt(platform, pos, false, false);
         signup(pos, platform);
     }
@@ -247,18 +257,55 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnFloor(int x, int y, String world) {
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 Entity floor = ObstacleFactory.createFloor(world);
-                GridPoint2 pos = new GridPoint2(x+i, y+j);
+                GridPoint2 pos = new GridPoint2(x + i, y + j);
                 spawnEntityAt(floor, pos, false, false);
                 signup(pos, floor);
             }
         }
     }
 
+    /**
+     * Spawn a floor with no physics or collision component, with world style given by world.
+     *
+     * @param x     x coordinate in Area
+     * @param y     y coordinate in Area
+     * @param world the world type to load in. Must match the name of a .png file in
+     *              assets/images (e.g. assets/images/world.png)
+     */
+    protected void spawnFloorNoCollision(int x, int y, String world) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                Entity floor = ObstacleFactory.createFloorNoCollider(world);
+                GridPoint2 pos = new GridPoint2(x + i, y + j);
+                spawnEntityAt(floor, pos, false, false);
+                signup(pos, floor);
+            }
+        }
+    }
+
+    /**
+     * Spawn a floor with no physics or collision component, with the default world style.
+     *
+     * @param x x coordinate in Area
+     * @param y y coordinate in Area
+     */
+    protected void spawnFloorNoCollision(int x, int y) {
+        spawnFloorNoCollision(x, y, null);
+    }
+
     protected void spawnFloor(int x, int y) {
         spawnFloor(x, y, null);
+    }
+
+    protected void spawnCollider(int x1, int x2, int y, int height) {
+        Entity collider = ObstacleFactory.createCollider(x1, x2, height);
+        logger.debug("Spawning Collider at {},{} with height: {}", x1, y, height);
+        GridPoint2 pos = new GridPoint2(x1, y);
+        spawnEntityAt(collider, pos, false, false);
+        signup(pos, collider);
     }
 
     protected void spawnRocks(int x, int y) {
@@ -303,9 +350,9 @@ public class RagnarokArea extends GameArea {
 
     public void clearEntitiesAt(int x, int y) {
         // takes the global scale x and y, so mutliply them by 3 in here
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) {
-                GridPoint2 index = new GridPoint2(x+i, y+j);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                GridPoint2 index = new GridPoint2(x + i, y + j);
 
                 if (entitySignUp.get(index) != null) {
                     for (Entity e : entitySignUp.get(index)) {
@@ -326,7 +373,7 @@ public class RagnarokArea extends GameArea {
     }
 
     public void signup(GridPoint2 pos, Entity entity) {
-        if(!entitySignUp.containsKey(pos)) {
+        if (!entitySignUp.containsKey(pos)) {
 
             LinkedList<Entity> posList = new LinkedList<>();
             entitySignUp.put(pos, posList);
