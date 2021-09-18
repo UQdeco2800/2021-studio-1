@@ -102,13 +102,14 @@ public class PlayerStatsDisplay extends UIComponent {
 
   }
 
+  public long getPlayerScore() {
+      return scoring.getCurrentScore();
+  }
+
   @Override
   public void dispose() {
     super.dispose();
     healthLabel.remove();
     scoreLabel.remove();
-
-
-
   }
 }

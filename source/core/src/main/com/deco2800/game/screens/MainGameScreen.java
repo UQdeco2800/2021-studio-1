@@ -9,6 +9,8 @@ import com.deco2800.game.areas.AreaService;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
+import com.deco2800.game.components.mainmenu.MainMenuDisplay;
+import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -28,6 +30,8 @@ import com.deco2800.game.components.maingame.MainGamePannelDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * The game screen containing the main game.
@@ -110,7 +114,17 @@ public class MainGameScreen extends ScreenAdapter {
     }
 
     if (ragnarokManager.getPlayer() != null) {
-      if (ragnarokManager.getPlayer().getComponent(CombatStatsComponent.class).getHealth() == 0) {
+        Entity player = ragnarokManager.getPlayer();
+
+        if (player.getComponent(CombatStatsComponent.class).getHealth() == 0) {
+
+        long currentScore = player.getComponent(PlayerStatsDisplay.class).getPlayerScore();
+
+        if (currentScore > MainMenuDisplay.getHighScore()) {
+
+            recordHighScore("" + currentScore);
+
+        }
         game.setScreen(GdxGame.ScreenType.MAIN_MENU);
       }
     }
@@ -121,7 +135,7 @@ public class MainGameScreen extends ScreenAdapter {
 
   }
 
-  @Override
+    @Override
   public void resize(int width, int height) {
     renderer.resize(width, height);
     logger.trace("Resized renderer: ({} x {})", width, height);
@@ -187,5 +201,23 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(new TerminalDisplay());
 
     ServiceLocator.getEntityService().register(ui);
+  }
+
+    private void recordHighScore(String currentScore) {
+
+      String availableNames[] = {"Zebra", "Fox", "Hound", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
+      char[] scoreIntegers = currentScore.toCharArray();
+      String randValue = "" + scoreIntegers[scoreIntegers.length - 1];
+      String name = availableNames[Integer.parseInt(randValue)];
+
+      FileWriter highScoreFile = null;
+
+      try {
+          highScoreFile = new FileWriter("gameinfo/highScores.txt");
+          highScoreFile.write(name + "," + currentScore);
+          highScoreFile.close();
+      } catch (IOException e) {
+          logger.info("Could not record high score");
+      }
   }
 }
