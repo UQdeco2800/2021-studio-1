@@ -2,15 +2,11 @@ package com.deco2800.game.components.gamearea;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.ai.tasks.AITaskComponent;
-import com.deco2800.game.ai.tasks.Task;
-import com.deco2800.game.areas.GameArea;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.GeneratorComponent;
 import com.deco2800.game.physics.components.AbstractPlayerMovementComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -20,7 +16,7 @@ import com.deco2800.game.ui.UIComponent;
  * Displays the name of the current game area.
  */
 public class GameAreaDisplay extends UIComponent {
-  private String gameAreaName = "";
+  private String gameAreaName;
   private Label title;
 
   private Label debug;
@@ -75,7 +71,8 @@ public class GameAreaDisplay extends UIComponent {
 
     StringBuilder debugString = new StringBuilder("DE_BUG:\n");
 
-    debugString.append(this.gameAreaName + "\n");
+    debugString.append(this.gameAreaName);
+    debugString.append("\n");
 
     Array<Entity> sortedArray = new Array<>(ServiceLocator.getEntityService().getEntityArray());
 

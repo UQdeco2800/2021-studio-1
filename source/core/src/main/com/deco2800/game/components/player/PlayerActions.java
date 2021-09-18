@@ -1,6 +1,5 @@
 package com.deco2800.game.components.player;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -14,7 +13,6 @@ import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
-import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
 /**
@@ -34,9 +32,6 @@ public class PlayerActions extends Component {
 
   private Vector2 runDirection = Vector2.Zero.cpy();
   private Vector2 previousDirection = Vector2.Zero.cpy();
-
-  //private final float runAnimationlength = 0.5f;
-  private float lastRunAnimationTime;
 
   public static boolean moving = false;
   private boolean jumping = false;

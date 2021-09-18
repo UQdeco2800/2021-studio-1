@@ -2,9 +2,7 @@ package com.deco2800.game.components.powerups;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.SpearComponent;
-import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.components.ColliderComponent;

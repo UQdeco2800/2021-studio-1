@@ -6,6 +6,7 @@ public class SpearComponent extends Component{
     /**
      * Create the spear component - used to check if the spear collides with an enemy
      */
+    @Override
     public void create() {
         hit = false;
         flying = false;
