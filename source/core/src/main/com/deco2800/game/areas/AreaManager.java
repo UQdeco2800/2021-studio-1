@@ -109,7 +109,6 @@ public class AreaManager extends RagnarokArea {
         persistentInstance.makePlayer(10, 5);
 
         persistentInstance.spawnWallOfDeath();
-        persistentInstance.spawnDeathGiant();
 
         this.player = persistentInstance.getPlayer();
 

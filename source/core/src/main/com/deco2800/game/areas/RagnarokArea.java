@@ -15,6 +15,7 @@ import com.deco2800.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
+import com.deco2800.game.components.VariableSpeedComponent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -180,20 +181,18 @@ public class RagnarokArea extends GameArea {
         GridPoint2 leftPos2 = new GridPoint2(-5, 13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
-        wallOfDeath.addComponent(new CameraShakeComponent(this.player, this.terrainFactory.getCameraComponent(), sfx));
+        wallOfDeath.addComponent(new CameraShakeComponent(getPlayer(), this.terrainFactory.getCameraComponent(), sfx));
+
+        GridPoint2 leftPos3 = new GridPoint2(-15, 13);
+        Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
+
+        wallOfDeath.addComponent(new VariableSpeedComponent(getPlayer(), deathGiant, sfx));
+
         spawnEntityAt(wallOfDeath, leftPos, true, true);
         spawnEntityAt(sfx, leftPos2, true, true);
-    }
+        spawnEntityAt(deathGiant, leftPos3, true, true);
 
-    /**
-     * This spawns the Death Giant in front of the Wall of Death
-     */
-    protected void spawnDeathGiant() {
-        GridPoint2 leftPos2 = new GridPoint2(-15, 13);
-        Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
-        spawnEntityAt(deathGiant, leftPos2, true, true);
     }
-
 
     protected void spawnLevelLoadTrigger(int x) {
         GridPoint2 centrePos = new GridPoint2(x, 6);
