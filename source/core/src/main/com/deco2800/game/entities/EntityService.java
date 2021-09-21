@@ -46,6 +46,7 @@ public class EntityService {
   public void update() {
     List<Entity> copy = new ArrayList<>(toDispose);
     toDispose.clear();
+    logger.debug("Entity service is disposing: {}", copy);
     copy.forEach(Entity::dispose);
     for (Entity entity : entities) {
       entity.earlyUpdate();

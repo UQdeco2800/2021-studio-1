@@ -146,6 +146,7 @@ public class AreaManager extends RagnarokArea {
      * @param placeType type of terrain to place
      */
     public void place(RagnarokArea area, int x, int y, String placeType) {
+        logger.debug("Placing element - x:{} y:{} type:{}", x, y, placeType);
 
         int gx = x * GRID_SCALE;
         int gy = y * GRID_SCALE;
@@ -153,14 +154,8 @@ public class AreaManager extends RagnarokArea {
             case "floor":
                 area.spawnFloor(gx, gy);
                 break;
-            case "floorNoCollision":
-                area.spawnFloorNoCollision(gx, gy);
-                break;
             case "platform":
                 area.spawnPlatform(gx, gy, this.currentWorld);
-                break;
-            case "platformNoCollision":
-                area.spawnPlatformNoCollision(gx, gy, this.currentWorld);
                 break;
             case "rocks":
                 area.spawnRocks(gx, gy);
@@ -169,7 +164,8 @@ public class AreaManager extends RagnarokArea {
                 area.spawnSpikes(gx, gy);
                 break;
             case "null":
-                area.clearEntitiesAt(gx, gy);
+                // This should no longer be needed since we are loading one after another
+                // area.clearEntitiesAt(gx, gy);
                 break;
             default:
                 logger.error("place() called in AreaManager without valid placeType");
@@ -322,27 +318,24 @@ public class AreaManager extends RagnarokArea {
         for (int col = 0; col < bPWidth; col++) {
             for (int row = 0; row < bPHeight; row++) {
                 int length;
-                int height = 1;
                 if (bufferedPlaces[col][row].equals("platform")) {
-                    length = replaceDuplicatesInRow(row, col, "platform",
-                            "platformNoCollision");
-                    if (length > 1) {
-                        // Some places have been changed, spawn a collision box to encompass them
-                        terrainInstance.spawnCollider((x + col) * GRID_SCALE,
-                                (x + col + length) * GRID_SCALE,
-                                row * GRID_SCALE + 2,
-                                height);
+                    length = replaceDuplicatesInRow(row, col, "platform", "null");
+                    int[] xCoordinates = new int[length + 1];
+                    for (int i = 0; i < length + 1; i++) {
+                        xCoordinates[i] = (x + col + i) * GRID_SCALE;
                     }
+                    if (length > 1) terrainInstance.spawnPlatformChunk(xCoordinates,
+                            row * GRID_SCALE + 2,
+                            this.currentWorld);
                 } else if (bufferedPlaces[col][row].equals("floor")) {
-                    length = replaceDuplicatesInRow(row, col, "floor", "floorNoCollision");
-                    height = 3; // This is because of how floors are spawned as triple height.
-                    if (length > 0) {
-                        // Some places have been changed, spawn a collision box to encompass them
-                        terrainInstance.spawnCollider((x + col) * GRID_SCALE,
-                                (x + col + length) * GRID_SCALE,
-                                row * GRID_SCALE,
-                                height);
+                    length = replaceDuplicatesInRow(row, col, "floor", "null");
+                    int[] xCoordinates = new int[length + 1];
+                    for (int i = 0; i < length + 1; i++) {
+                        xCoordinates[i] = (x + col + i) * GRID_SCALE;
                     }
+                    if (length > 1) terrainInstance.spawnFloorChunk(xCoordinates,
+                            row * GRID_SCALE,
+                            this.currentWorld);
                 }
             }
         }
@@ -355,6 +348,7 @@ public class AreaManager extends RagnarokArea {
             }
             x++;
         }
+        logger.debug("Finished placing terrain in buffer");
     }
 
     /**
@@ -391,6 +385,7 @@ public class AreaManager extends RagnarokArea {
             return 0;
         }
         int nextCol = col + 1;
+        if (nextCol == bufferedPlaces.length) return 1;
         if (!bufferedPlaces[nextCol][row].equals(placeType)) return 1;
         // Search through the columns until the string stored is no longer placeType, or the end
         // of the world is reached.

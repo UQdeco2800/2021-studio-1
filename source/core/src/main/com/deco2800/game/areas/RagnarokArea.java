@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
+import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
@@ -292,6 +293,69 @@ public class RagnarokArea extends GameArea {
         Entity collider = ObstacleFactory.createCollider(x1, x2, height);
         logger.debug("Spawning Collider at {},{} with height: {}", x1, y, height);
         GridPoint2 pos = new GridPoint2(x1, y);
+        spawnEntityAt(collider, pos, false, false);
+        signup(pos, collider);
+    }
+
+    /**
+     * Spawn a line of platforms from x[0] to x[end] having only a single collision entity and their
+     * texture given by world.
+     * <p>
+     * On disposal of the overarching collision entity, all platforms created are disposed of.
+     *
+     * @param x     array of x coordinates to spawn floors at
+     * @param y     the y coordinate to spawn all platforms at
+     * @param world the world type to load in. Must match the name of a .png file in
+     *              assets/images (e.g. assets/images/world.png)
+     */
+    protected void spawnPlatformChunk(int[] x, int y, String world) {
+        Entity[] platforms = new Entity[x.length];
+        for (int i = 0; i < x.length; i++) {
+            Entity platform = ObstacleFactory.createPlatformNoCollider(world);
+            // add to array of entities so that they can all be disposed of at once
+            platforms[i] = platform;
+            // y + 2 exists in first implementations, not sure why it is here
+            GridPoint2 pos = new GridPoint2(x[i], y + 2);
+            spawnEntityAt(platform, pos, false, false);
+            signup(pos, platform);
+        }
+
+        Entity collider = ObstacleFactory.createCollider(x[0], x[x.length - 1], 1);
+        collider.addComponent(new GroupDisposeComponent(platforms));
+
+        GridPoint2 pos = new GridPoint2(x[0], y);
+        spawnEntityAt(collider, pos, false, false);
+        signup(pos, collider);
+    }
+
+    /**
+     * Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
+     * spans from x[1] to x[n].
+     * <p>
+     * On disposal of the overarching collision entity, all floors created are disposed of.
+     *
+     * @param x     array of x coordinates to spawn floors at
+     * @param y     the y coordinate to spawn all floors at
+     * @param world the world type to load in. Must match the name of a .png file in
+     *              assets/images (e.g. assets/images/world.png)
+     */
+    protected void spawnFloorChunk(int[] x, int y, String world) {
+        // Floors are three platforms stacked vertically, so repeat spawn process three times
+        Entity[] floors = new Entity[(x.length) * 3];
+        for (int i = 0; i < x.length; i++) {
+            for (int level = 0; level < 3; level++) {
+                Entity floor = ObstacleFactory.createFloorNoCollider(world);
+                // add to array of entities so that they can all be disposed of at once
+                floors[i * 3 + level] = floor;
+                GridPoint2 pos = new GridPoint2(x[i], y + level);
+                spawnEntityAt(floor, pos, false, false);
+                signup(pos, floor);
+            }
+        }
+        Entity collider = ObstacleFactory.createCollider(x[0], x[x.length - 1], 3);
+        collider.addComponent(new GroupDisposeComponent(floors));
+
+        GridPoint2 pos = new GridPoint2(x[0], y);
         spawnEntityAt(collider, pos, false, false);
         signup(pos, collider);
     }
