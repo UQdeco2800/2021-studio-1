@@ -173,16 +173,7 @@ public class PlayerFactory {
     // base character vary based on how heavy we want characters to look
     player.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
 
-    // shield are initially disabled and become enabled on pickup
-    player.getComponent(ShieldPowerUpComponent.class).setEnabled(false);
-    player.getComponent(LightningPowerUpComponent.class).setEnabled(false);
-
     player.setType(EntityTypes.PLAYER);
-
-    Entity playerSpear = PowerUpFactory.createSpearPowerUp();
-    ServiceLocator.getEntityService().register(playerSpear);
-
-    playerSpear.setPosition(player.getCenterPosition().add(5f, 0f));
 
     return player;
   }

@@ -20,6 +20,7 @@ public class LightningPowerUpComponent extends PowerUpComponent {
      */
     @Override
     public void create() {
+        setEnabled(false);
         enabled = false;
         active = false;
         powerUp = null;
