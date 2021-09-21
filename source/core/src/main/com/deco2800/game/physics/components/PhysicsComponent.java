@@ -18,6 +18,9 @@ import com.deco2800.game.services.ServiceLocator;
  * {@link PhysicsContactListener }
  */
 public class PhysicsComponent extends Component {
+
+  private static int componentCount;
+
   private static final float GROUND_FRICTION = 5f;
   private final PhysicsEngine physics;
   private final Body body;
@@ -35,6 +38,15 @@ public class PhysicsComponent extends Component {
   public PhysicsComponent(PhysicsEngine engine) {
     this.physics = engine;
 
+    componentCount++;
+    //System.err.printf("Physics Component #%d Init Called\n", componentCount);
+
+    // crashed @ 1822 made pid90754
+    // crashed @ 1856 made pid90793
+
+    // so far deduced that it always happens in the create floor method,
+    // though this may be due to ... who knows
+
     BodyDef bodyDef = new BodyDef();
     bodyDef.type = BodyType.DynamicBody;
     bodyDef.fixedRotation = true;
@@ -42,6 +54,9 @@ public class PhysicsComponent extends Component {
     bodyDef.angle = 0f;
     bodyDef.active = false;
     bodyDef.gravityScale = 0.0f;
+
+    //System.err.printf(bodyDef + " in #%d\n", componentCount);
+
     body = physics.createBody(bodyDef);
   }
 
