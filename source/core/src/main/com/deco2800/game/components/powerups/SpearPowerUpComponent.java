@@ -36,6 +36,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     }
 
     public void obtainSpear() {
+        System.out.println("Reset throws");
         thrown = 0;
     }
 
@@ -48,17 +49,12 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         if (spear != null) {
             Body spearBod = spear.getComponent(PhysicsComponent.class).getBody();
             // If after flying, the spear stops or goes below y = 0, deactivate and reset
-            if ((active && spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0) {
-                active = false;
-                disposeSpear();
-
-                // Disposes the spear after three throws
-                if (thrown == 3) {
+            if ((active && (spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0)) {
+                if (thrown >= 3) {
                     thrown = 0;
-
                     setEnabled(false);
-                    disposeSpear();
                 }
+                disposeSpear();
             }
         }
     }
@@ -89,7 +85,10 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      */
     @Override
     public void activate() {
-        if (!active) {
+        if (thrown >= 3) {
+            thrown = 0;
+            setEnabled(false);
+        } else if (!active ) {
             active = true;
             thrown += 1;
             spear = ProjectileFactory.createSpearEntity();
@@ -115,24 +114,25 @@ public class SpearPowerUpComponent extends PowerUpComponent {
                 spearDirection = Vector2Utils.LEFT.cpy();
                 spear.getComponent(PhysicsComponent.class).getBody()
                         .applyLinearImpulse(
-                        new Vector2(-10f, 10f),
-                        spear.getComponent(PhysicsComponent.class).getBody()
-                                .getWorldCenter(), true);
+                                new Vector2(-10f, 10f),
+                                spear.getComponent(PhysicsComponent.class).getBody()
+                                        .getWorldCenter(), true);
                 spear.getComponent(AnimationRenderComponent.class)
                         .stopAnimation();
                 spear.getComponent(AnimationRenderComponent.class)
                         .startAnimation("fly-left");
             }
         }
+
     }
 
     /**
      * Triggered when the spear should get deleted
      */
     private void disposeSpear() {
+        active = false;
         spear.getComponent(AnimationRenderComponent.class).stopAnimation();
         spear.flagDelete();
-        active = false;
     }
 
     /**
