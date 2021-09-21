@@ -61,7 +61,12 @@ public class AreaManager extends RagnarokArea {
 
     /**
      * this is passed to all areas inside... I think
-     * it's actually i
+     *
+     * note on 21/9/21: worth investigating if changing this permits
+     * changing of the terrain that is spawned? maybe different
+     * terrainFactories can model the different world types?
+     *
+     * see place() "platform" for usage
      */
     private TerrainFactory mainTerrainFactory;
 
@@ -114,7 +119,7 @@ public class AreaManager extends RagnarokArea {
 
         this.player = persistentInstance.getPlayer();
 
-        load("ragnorok");
+        load("asg1");
 
         //mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
         //this.player = mainInstance.getPlayer();
@@ -211,7 +216,16 @@ public class AreaManager extends RagnarokArea {
             case "fireSpirit":
                 area.spawnFireSpirit(gx, gy);
                 break;
-            case "default":
+            case "shield":
+                area.spawnShield(gx, gy);
+                break;
+            case "spear":
+                area.spawnSpear(gx, gy);
+                break;
+            case "lightning":
+                area.spawnLightning(gx, gy);
+                break;
+            default:
                 logger.error("spawn() called in AreaManger without valid spawnType");
         }
     }

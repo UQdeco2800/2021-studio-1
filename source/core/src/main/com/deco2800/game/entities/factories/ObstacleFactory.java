@@ -108,6 +108,9 @@ public class ObstacleFactory {
     /**
      * Creates a platform entity.
      *
+     * note: is the world file not meant to represent a .png?
+     *
+     * world the world type to load in. Must match the name of .png file (e.g.
      * @param world the world type to load in. Must match the name of a .rag file (e.g. world.rag)
      * @return entity
      */
@@ -119,7 +122,7 @@ public class ObstacleFactory {
         if (world == null) {
             platform.addComponent(new TextureRenderComponent("images/platform_gradient.png"));
         } else {
-            platform.addComponent(new TextureRenderComponent("images/" + world + ".png"));
+            platform.addComponent(new TextureRenderComponent("images/worlds/" + world + ".png"));
         }
         platform.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         platform.getComponent(TextureRenderComponent.class).scaleEntity();
