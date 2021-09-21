@@ -38,7 +38,7 @@ public class GameTime {
 
   /** @return time passed since the game started in milliseconds */
   public long getTime() {
-    return TimeUtils.timeSinceMillis(startTime);
+   return TimeUtils.timeSinceMillis(startTime);
   }
 
   public long getTimeSince(long lastTime) {

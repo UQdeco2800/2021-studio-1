@@ -23,7 +23,7 @@ task run(dependsOn: classes, type: JavaExec) {
          jvmArgs = ["-Djava.util.logging.config.file=../../logging.properties", "-XstartOnFirstThread"]
     } else {
          // Windows, Linux etc.
-        jvmArgs = ["-Djava.util.logging.config.file=../../logging.properties"]
+        jvmArgs = ["-Djava.util.logging.config.file=../../logging.properties","-XstartOnFirstThread"]
     }
 }
 
