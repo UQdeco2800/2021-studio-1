@@ -14,11 +14,11 @@ public class VariableSpeedComponent extends Component {
     /**
      * Class to shake the camera and start event listener for animation
      *
-     * @param target          the target of the camera
-     * @param cameraComponent current camera to shake
-     * @param sfx             screen effects entity
+     * @param target     the target of the camera
+     * @param deathGiant the death giant whose speed is changing
+     * @param sfx        screen effects entity
      */
-    public VariableSpeedComponent(Entity target, Entity deathGiant, Entity sfx ) {
+    public VariableSpeedComponent(Entity target, Entity deathGiant, Entity sfx) {
         this.target = target;
         this.deathGiant = deathGiant;
         this.sfx = sfx;
