@@ -3,16 +3,17 @@ package com.deco2800.game.components.mainmenu;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 /**
  * A ui component for displaying the Main menu.
@@ -22,8 +23,11 @@ public class MainMenuDisplay extends UIComponent {
   private static final float Z_INDEX = 2f;
   private Table rootTable;
   private Table table;
-  private Table rightTable;
-  private Table leftTable;
+  private Table helpTable;
+  private Table highScoreTable;
+  private Table muteTable;
+  private static String highScoreName = "";
+  private static int highScorevalue = 0;
 
 
   @Override
@@ -35,12 +39,14 @@ public class MainMenuDisplay extends UIComponent {
   private void addActors() {
     rootTable = new Table();
     table = new Table();
-    rightTable = new Table();
-    leftTable = new Table();
+    helpTable = new Table();
+    highScoreTable = new Table();
+    muteTable = new Table();
     rootTable.setFillParent(true);
     table.setFillParent(true);
-    rightTable.setFillParent(true);
-    leftTable.setFillParent(true);
+    helpTable.setFillParent(true);
+    muteTable.setFillParent(true);
+    highScoreTable.setFillParent(true);
 
     Image title =
         new Image(
@@ -57,6 +63,11 @@ public class MainMenuDisplay extends UIComponent {
     ImageButton muteButton = new ImageButton(new TextureRegionDrawable(
             ServiceLocator.getResourceService().getAsset(
                     "images/mute_button_on.png", Texture.class)));
+
+    highScoreName = readHighestScore();
+    Label highScorePreText = new Label("Best Runner", skin, "popUpFont");
+    Label highScoreNameText = new Label(highScoreName, skin, "popUpFont");
+    Label highScoreValueText = new Label("" + highScorevalue , skin, "popUpFont");
 
     // Triggers an event when the button is pressed
 
@@ -97,8 +108,9 @@ public class MainMenuDisplay extends UIComponent {
         });
     */
 
-    leftTable.bottom().left();
-    rightTable.bottom().right();
+    muteTable.bottom().left();
+    helpTable.bottom().right();
+    highScoreTable.top().right();
 
     settingsBtn.addListener(
         new ChangeListener() {
@@ -127,16 +139,56 @@ public class MainMenuDisplay extends UIComponent {
     table.row();
     table.add(exitBtn).padTop(30f);
 
-    rightTable.add(helpBtn);
-    leftTable.add(muteButton);
+    helpTable.add(helpBtn);
+    muteTable.add(muteButton);
+    highScoreTable.add(highScorePreText);
+    highScoreTable.row();
+    highScoreTable.add(highScoreNameText).bottom().right();
+    highScoreTable.row();
+    highScoreTable.add(highScoreValueText).bottom().right();
 
     stage.addActor(rootTable);
     stage.addActor(table);
-    stage.addActor(rightTable);
-    stage.addActor(leftTable);
+    stage.addActor(helpTable);
+    stage.addActor(muteTable);
+    stage.addActor(highScoreTable);
   }
 
-  @Override
+    private String readHighestScore() {
+
+            String name = "";
+
+            File highScoresFile = new File("gameinfo/highScores.txt");
+            Scanner highScoresScanner = null;
+            try {
+                highScoresScanner = new Scanner(highScoresFile);
+            } catch (FileNotFoundException f) {
+                return "High Score file not found";
+            }
+
+            while(highScoresScanner.hasNextLine()) {
+
+                String line = highScoresScanner.nextLine();
+                String lineResult[] = line.split(",");
+                highScoreName = lineResult[0];
+                highScorevalue = Integer.parseInt(lineResult[1]);
+            }
+
+            name = highScoreName;
+            highScoresScanner.close();
+
+            return name;
+    }
+
+    public static int getHighScore() {
+      return highScorevalue;
+    }
+
+    public static String getHighScoreName() {
+      return highScoreName;
+    }
+
+    @Override
   public void draw(SpriteBatch batch) {
     // draw is handled by the stage
   }
@@ -149,8 +201,9 @@ public class MainMenuDisplay extends UIComponent {
   @Override
   public void dispose() {
     table.clear();
-    leftTable.clear();
-    rightTable.clear();
+    muteTable.clear();
+    helpTable.clear();
+    highScoreTable.clear();
     super.dispose();
   }
 }

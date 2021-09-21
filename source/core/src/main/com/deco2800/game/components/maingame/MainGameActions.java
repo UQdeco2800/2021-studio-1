@@ -84,6 +84,7 @@ public class MainGameActions extends Component {
 
         if (game.scoreShown) {
             popUp.dispose();
+            ServiceLocator.getEntityService().unregister(popUp);
             //score screen removed sound
             scoreScreenSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
             game.scoreShown = false;
