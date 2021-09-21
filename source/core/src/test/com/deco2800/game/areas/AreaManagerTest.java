@@ -64,17 +64,6 @@ class AreaManagerTest {
     }
 
     @Test
-    void shouldClearEntityAt() {
-        TerrainFactory factory = mock(TerrainFactory.class);
-        AreaManager manager = new AreaManager(factory);
-
-        RagnarokArea area = mock(RagnarokArea.class);
-
-        manager.place(area, x, y, "null");
-        verify(area).clearEntitiesAt(x * GRID_SCALE, y * GRID_SCALE);
-    }
-
-    @Test
     void placeShouldNotCallSpawn() {
         TerrainFactory factory = mock(TerrainFactory.class);
         AreaManager manager = new AreaManager(factory);
