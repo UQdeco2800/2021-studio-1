@@ -1,0 +1,66 @@
+$_title hell
+$_width 30
+$_height 10
+$_world hel_1
+
+$#.........F
+$#........PS
+$#........PS
+$#........PS
+$#.........S
+$#.......P.S
+$#.....P...S
+$#.....P...S
+$#.......P.S
+$#....P.P..S
+$#...RP....S
+$#....P....S
+$#.........S
+$#.........S
+$#....P....S
+$#....P....S
+$#.........S
+$#.......P.S
+$#......P..S
+$#.........S
+$#.........S
+$#........PS
+$#........PS
+$#FFFFFFF.PS
+$#......P.PS
+$#....PRP.PS
+$#...RP.P.PS
+$#....P...PS
+$#....FFFFFF
+$#.........F
+
+$@player set [2,1]
+
+$-spawn [11,1] (fireSpirit)
+$-spawn [2,1] (skeleton)
+$-spawn [9,1] (fireSpirit)
+$-spawn [18,1] (skeleton)
+$-spawn [12,1] (skeleton)
+$-spawn [19,1] (fireSpirit)
+$-spawn [13,1] (fireSpirit)
+$-spawn [4,1] (skeleton)
+$-spawn [5,1] (fireSpirit)
+$-spawn [14,1] (skeleton)
+$-spawn [20,1] (skeleton)
+$-spawn [15,1] (fireSpirit)
+$-spawn [6,1] (skeleton)
+$-spawn [7,1] (fireSpirit)
+$-spawn [16,1] (skeleton)
+$-spawn [10,1] (skeleton)
+$-spawn [17,1] (fireSpirit)
+$-spawn [8,1] (skeleton)
+
+$-spawn [22,2] (lightning)
+$-spawn [3,2] (spear)
+$-spawn [25,2] (shield)
+$-spawn [24,2] (shield)
+$-spawn [7,5] (spear)
+$-spawn [17,3] (lightning)
+$-spawn [26,2] (shield)
+
+$-spawn [25,5] (levelTrigger)

@@ -1,0 +1,39 @@
+$_title j
+$_width 20
+$_height 10
+$_world jotunheimr_1
+
+$#..FFFFF..F
+$#......P..F
+$#.........F
+$#.....P.P.F
+$#.....FFFFF
+$#.....P...S
+$#.....PPPPS
+$#.....PPRFF
+$#.....PPSPS
+$#.....P...S
+$#.....PPPPS
+$#.....PPRFF
+$#.....PPPPS
+$#.....P...S
+$#....SPPPPS
+$#.....PSPFF
+$#.....PP.PS
+$#.....P...S
+$#.....PPPPS
+$#....SPPRFF
+
+$@player set [2,1]
+
+$-spawn [9,5] (skeleton)
+$-spawn [15,5] (wolf)
+$-spawn [11,5] (skeleton)
+$-spawn [10,5] (skeleton)
+$-spawn [17,5] (wolf)
+$-spawn [16,5] (wolf)
+
+$-spawn [6,5] (spear)
+$-spawn [12,5] (spear)
+
+$-spawn [15,5] (levelTrigger)

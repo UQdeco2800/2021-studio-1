@@ -1,0 +1,37 @@
+$_title new
+$_width 20
+$_height 10
+$_world asgard_2
+
+$#.........F
+$#.........F
+$#.........F
+$#..FFFF...F
+$#..F..P...F
+$#..F......F
+$#..F....P.F
+$#..F..FFFFF
+$#..F..P.FFF
+$#..F..P..FF
+$#..F.....FF
+$#..F...P..F
+$#..FFFFF..F
+$#..F..P...F
+$#..F......F
+$#..F....P.F
+$#..F..FFFFF
+$#.......P.F
+$#.........F
+$#.........F
+
+$@player set [2,1]
+
+$-spawn [14,1] (wolf)
+$-spawn [8,5] (skeleton)
+$-spawn [8,3] (fireSpirit)
+
+$-spawn [18,1] (shield)
+$-spawn [4,1] (lightning)
+$-spawn [4,5] (spear)
+
+$-spawn [15,5] (levelTrigger)

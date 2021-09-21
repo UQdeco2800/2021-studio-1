@@ -43,16 +43,16 @@ public class RagnarokArea extends GameArea {
             "images/Spike_1.png",
             "images/deathGiant.png",
             "images/sfx.png",
-            "images/earth_1.png",
-            "images/earth_2.png",
-            "images/earth_3.png",
-            "images/earth_4.png",
-            "images/asgard_1.png",
-            "images/asgard_2.png",
-            "images/hel_1.png",
-            "images/hel_2.png",
-            "images/jotunheimr_1.png",
-            "images/jotunheimr_2.png",
+            "images/worlds/earth_1.png",
+            "images/worlds/earth_2.png",
+            "images/worlds/earth_3.png",
+            "images/worlds/earth_4.png",
+            "images/worlds/asgard_1.png",
+            "images/worlds/asgard_2.png",
+            "images/worlds/hel_1.png",
+            "images/worlds/hel_2.png",
+            "images/worlds/jotunheimr_1.png",
+            "images/worlds/jotunheimr_2.png",
             "images/powerup-shield.png",
             "images/powerup-spear.png",
             "images/blue_bck.png"
@@ -103,9 +103,11 @@ public class RagnarokArea extends GameArea {
         spawnTerrain();
 
         // TODO: Add power ups to RagEdit and reformat spawn method
-        spawnPowerUps();
+        //generatePowerUps();
 
         playMusic(); //TODO: eventual move to music
+        // also this is the cause of all music playing at once, because multiple ragnorok areas
+        // get made...
     }
 
     public void setManager(AreaManager manager) {
@@ -131,7 +133,9 @@ public class RagnarokArea extends GameArea {
         }
     }
 
-    private void spawnPowerUps() {
+    // randomly generates powerups for an area,
+    // used to be spawn power ups
+    private void generatePowerUps() {
         GridPoint2 start = new GridPoint2(10, 3);
         GridPoint2 end = new GridPoint2(1000, 3);
 
@@ -201,6 +205,8 @@ public class RagnarokArea extends GameArea {
 
 
     //TODO: KEEP
+    // this has to get kept otherwise calls to spawn stuff
+    // gets messed, as terrain has not been initialised
     private void spawnTerrain() {
         // Background terrain
         terrain = terrainFactory.createTerrain(TerrainFactory.TerrainType.RAGNAROK_MAIN);
@@ -232,6 +238,7 @@ public class RagnarokArea extends GameArea {
         signup(pos, platform);
     }
 
+    // ayo shoutout jackson
     protected void spawnPlatform(int x, int y) {
         spawnPlatform(x, y, null);
     }
@@ -325,24 +332,30 @@ public class RagnarokArea extends GameArea {
         entitySignUp.get(pos).add(entity);
     }
 
+    protected void spawnShield(int x, int y) {
+        Entity shield = PowerUpFactory.createShieldPowerUp();
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(shield, pos, false, false);
+    }
+
+    protected void spawnSpear(int x, int y) {
+        Entity spear = PowerUpFactory.createSpearPowerUp();
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(spear, pos, false, false);
+    }
+
+    protected void spawnLightning(int x, int y) {
+        Entity lightning = PowerUpFactory.createLightningPowerUp();
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(lightning, pos, false, false);
+    }
+
     public Entity getPlayer() {
         return this.player;
     }
 
-    public void clearPlayer() {
-        player.flagDelete();
-    }
-
     public void makePlayer(int x, int y) {
         this.player = spawnPlayer(x, y);
-    }
-
-    public void movePlayerPos(float x, float y) {
-        this.player.setPosition(x, y);
-    }
-
-    protected void deleteEntity() {
-
     }
 
     /**
@@ -393,17 +406,4 @@ public class RagnarokArea extends GameArea {
         this.unloadAssets();
     }
 
-}
-
-enum Lanes {
-    LANE0(4),
-    LANE1(9),
-    LANE2(15),
-    LANE3(21);
-
-    public int y;
-
-    Lanes(int y_value) {
-        this.y = y_value;
-    }
 }
