@@ -52,23 +52,25 @@ public class LightningPowerUpComponent extends PowerUpComponent {
      */
     @Override
     public void activate() {
-        active = true;
-        powerUp = PowerUpFactory.createLightningPowerUp();
-        ServiceLocator.getEntityService().register(powerUp);
-        ServiceLocator.getRenderService().register(
-                powerUp.getComponent(AnimationRenderComponent.class));
-        powerUp.setPosition(entity.getCenterPosition().sub(9f,4f).x, 0f);
-        powerUp.getComponent(ColliderComponent.class).setSensor(true);
-        powerUp.setScale(20f, 15f);
-        powerUp.getComponent(AnimationRenderComponent.class).startAnimation("float");
+        if (!active) {
+            active = true;
+            powerUp = PowerUpFactory.createLightningPowerUp();
+            ServiceLocator.getEntityService().register(powerUp);
+            ServiceLocator.getRenderService().register(
+                    powerUp.getComponent(AnimationRenderComponent.class));
+            powerUp.setPosition(entity.getCenterPosition().sub(9f,4f).x, 0f);
+            powerUp.getComponent(ColliderComponent.class).setSensor(true);
+            powerUp.setScale(20f, 15f);
+            powerUp.getComponent(AnimationRenderComponent.class).startAnimation("float");
 
-        // If the enemy is a wolf or skeleton within 8 metres, dispose
-        for (Entity enemy : ServiceLocator.getEntityService().getEntityArray()) {
-            if (enemy.getType() == EntityTypes.WOLF
-                    ||enemy.getType() == EntityTypes.SKELETON
-                    || enemy.getType() == EntityTypes.FIRESPIRIT) {
-                if (enemy.getCenterPosition().x - entity.getCenterPosition().x <= 15f) {
-                    enemy.flagDelete();
+            // If the enemy is a wolf or skeleton within 8 metres, dispose
+            for (Entity enemy : ServiceLocator.getEntityService().getEntityArray()) {
+                if (enemy.getType() == EntityTypes.WOLF
+                        ||enemy.getType() == EntityTypes.SKELETON
+                        || enemy.getType() == EntityTypes.FIRESPIRIT) {
+                    if (enemy.getCenterPosition().x - entity.getCenterPosition().x <= 15f) {
+                        enemy.flagDelete();
+                    }
                 }
             }
         }
