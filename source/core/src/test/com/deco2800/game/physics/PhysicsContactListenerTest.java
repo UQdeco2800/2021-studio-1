@@ -27,6 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(GameExtension.class)
 class PhysicsContactListenerTest {
+
   @BeforeEach
   void beforeEach() {
     // Set up services and time
@@ -90,33 +91,6 @@ class PhysicsContactListenerTest {
   Entity createPhysicsEntity() {
     Entity entity =
         new Entity().addComponent(new PhysicsComponent()).addComponent(new ColliderComponent());
-    entity.create();
-    return entity;
-  }
-
-
-  Entity createPlayerEntity() {
-    Entity entity =
-            new Entity().addComponent(new PhysicsComponent()).addComponent(new ColliderComponent());
-    entity.setType(EntityTypes.PLAYER);
-    entity.create();
-    return entity;
-  }
-
-  Entity createPowerUpEntity() {
-    Entity entity =
-            new Entity().addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent())
-                        .addComponent(new LightningPowerUpComponent());
-    entity.setType(EntityTypes.LIGHTNINGPOWERUP);
-    entity.create();
-    return entity;
-  }
-
-  Entity createProjectileEntity() {
-    Entity entity =
-            new Entity().addComponent(new PhysicsComponent()).addComponent(new ColliderComponent());
-    entity.setType(EntityTypes.PROJECTILE);
     entity.create();
     return entity;
   }

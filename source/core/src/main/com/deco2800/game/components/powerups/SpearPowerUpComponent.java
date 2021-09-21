@@ -32,6 +32,10 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         thrown = 0;
     }
 
+    public void obtainSpear() {
+        thrown = 0;
+    }
+
     /**
      * If a spear exists, delete it if it has stopped or fallen below the
      * world and disable this component  if it has been thrown three times
@@ -43,7 +47,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             // If after flying, the spear stops or goes below y = 0, deactivate and reset
             if ((active && spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0) {
                 active = false;
-                spear.getComponent(AnimationRenderComponent.class).stopAnimation();
                 disposeSpear();
 
                 // Disposes the spear after three throws
@@ -51,8 +54,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
                     thrown = 0;
 
                     setEnabled(false);
-
-                    spear.getComponent(AnimationRenderComponent.class).stopAnimation();
                     disposeSpear();
                 }
             }
@@ -92,6 +93,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             ServiceLocator.getEntityService().register(spear);
 
             spear.getEvents().addListener("collisionStart", this::killEnemy);
+            spear.getEvents().addListener("dispose", this::disposeSpear);
 
             if (entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
                 spear.setPosition(entity.getPosition().x + 1f, entity.getPosition().y);
@@ -125,6 +127,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      * Triggered when the spear should get deleted
      */
     private void disposeSpear() {
+        spear.getComponent(AnimationRenderComponent.class).stopAnimation();
         spear.flagDelete();
         active = false;
     }

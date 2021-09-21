@@ -90,7 +90,7 @@ public class PowerUpFactory {
 
         powerUp.setScale(1.1f, 1.1f);
         PhysicsUtils.setScaledCollider(powerUp, 1f, 1f);
-
+        powerUp.getComponent(ColliderComponent.class).setSensor(true);
         powerUp.getComponent(PhysicsComponent.class).setBodyType
                 (BodyDef.BodyType.StaticBody);
 
