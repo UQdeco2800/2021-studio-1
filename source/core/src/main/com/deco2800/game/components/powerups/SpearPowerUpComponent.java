@@ -25,6 +25,9 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     private boolean active;
     private int thrown;
 
+    /**
+     * Creates the spear component
+     */
     @Override
     public void create() {
         setEnabled(false);
@@ -150,8 +153,19 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         return active;
     }
 
+    /**
+     * Returns the number of times the current spear has been thrown
+     *
+     * @return the number of throws
+     */
     public int getThrown() { return thrown;}
 
+    /**
+     * Deletes enemy when spear hits them
+     *
+     * @param spearFixture - the fixture attached to the spear body
+     * @param otherFixture - the fixture attached to the enemies body
+     */
     private void killEnemy (Fixture spearFixture, Fixture otherFixture) {
         BodyUserData spearBody = (BodyUserData) spearFixture.getBody().getUserData();
         BodyUserData otherBody = (BodyUserData) otherFixture.getBody().getUserData();
