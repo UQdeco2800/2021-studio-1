@@ -53,6 +53,10 @@ public class RagnarokArea extends GameArea {
             "images/worlds/hel_2.png",
             "images/worlds/jotunheimr_1.png",
             "images/worlds/jotunheimr_2.png",
+            "images/floors/alfheim.png",
+            "images/floors/asgard_floor.png",
+            "images/floors/hel_floor.png",
+            "images/floors/jotunheim_floor.png",
             "images/powerup-shield.png",
             "images/blue_bck.png"
     };
