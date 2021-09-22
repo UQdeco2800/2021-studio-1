@@ -108,8 +108,10 @@ public class ObstacleFactory {
     /**
      * Creates a platform entity.
      *
-     * @param world the world type to load in. Must match the name of a .png file in
-     *              assets/images (e.g. assets/images/world.png)
+     * note: is the world file not meant to represent a .png?
+     *
+     * world the world type to load in. Must match the name of .png file (e.g.
+     * @param world the world type to load in. Must match the name of a .rag file (e.g. world.rag)
      * @return entity
      */
     public static Entity createPlatform(String world) {
@@ -117,7 +119,11 @@ public class ObstacleFactory {
                 new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        makeBasePlatform(world, platform);
+        if (world == null) {
+            platform.addComponent(new TextureRenderComponent("images/platform_gradient.png"));
+        } else {
+            platform.addComponent(new TextureRenderComponent("images/worlds/" + world + ".png"));
+        }
         platform.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         return platform;
     }
@@ -173,7 +179,11 @@ public class ObstacleFactory {
                 new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        makeBaseFloor(world, floor);
+        if (world == null) {
+            floor.addComponent(new TextureRenderComponent("images/floor.png"));
+        } else {
+            floor.addComponent(new TextureRenderComponent("images/floors" + world + ".png"));
+        }
         floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         return floor;
     }

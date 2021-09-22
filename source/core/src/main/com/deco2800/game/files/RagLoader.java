@@ -25,17 +25,16 @@ public class RagLoader {
         //ServiceLocator.getTerminalService().sendTerminal("-place [1,1] (platform)");
 
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-            // SO THIS FIRST SECTION JUST DEALS WITH THE TILE MAP @ THE TOP
+
 
             String line;
-            //float lane = 6.8f;
             boolean inConfig = false;
             boolean inTerrain = false;
             boolean inSpawn = false;
 
             while ((line = br.readLine()) != null) {
 
-                if (line.length() == 0) continue;
+                if (line.length() == 0) continue; // will ignore blank lines
 
                 if (line.startsWith("$")) {
 
