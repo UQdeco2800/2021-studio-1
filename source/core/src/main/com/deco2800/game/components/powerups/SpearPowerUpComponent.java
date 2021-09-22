@@ -36,7 +36,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     }
 
     public void obtainSpear() {
-        System.out.println("Reset throws");
         thrown = 0;
     }
 
@@ -64,7 +63,10 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      */
     @Override
     public void update() {
-        if (active) {
+        if (thrown >= 3) {
+            thrown = 0;
+            setEnabled(false);
+        } else if (active) {
             if (spearDirection.hasSameDirection(Vector2Utils.RIGHT)) {
                 spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
                         new Vector2(5f, 0f),
