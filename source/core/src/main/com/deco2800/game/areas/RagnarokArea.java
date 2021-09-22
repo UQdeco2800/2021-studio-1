@@ -57,9 +57,10 @@ public class RagnarokArea extends GameArea {
             "images/worlds/jotunheimr_1.png",
             "images/worlds/jotunheimr_2.png",
             "images/floors/alfheim.png",
-            "images/floors/asgard_floor.png",
-            "images/floors/hel_floor.png",
-            "images/floors/jotunheim_floor.png",
+            "images/floors/asgard.png",
+            "images/floors/earth.png",
+            "images/floors/hel.png",
+            "images/floors/jotunheimr.png",
             "images/powerup-shield.png",
             "images/blue_bck.png"
     };
@@ -237,74 +238,33 @@ public class RagnarokArea extends GameArea {
 
     }
 
+    /**
+     * Spawn a single platform at (x,y) with texture given by world.
+     *
+     * @param x     left coordinate
+     * @param y     bottom coordinate
+     * @param world the world type to load in
+     */
     protected void spawnPlatform(int x, int y, String world) {
         Entity platform = ObstacleFactory.createPlatform(world);
+        // y + 2 is on this line so the platform spawns at the top of a tile, not the bottom.
         GridPoint2 pos = new GridPoint2(x, y + 2);
         spawnEntityAt(platform, pos, false, false);
         signup(pos, platform);
     }
 
-    protected void spawnPlatformNoCollision(int x, int y, String world) {
-        Entity platform = ObstacleFactory.createPlatformNoCollider(world);
-        GridPoint2 pos = new GridPoint2(x, y + 2);
-        spawnEntityAt(platform, pos, false, false);
-        signup(pos, platform);
-    }
-
-    protected void spawnPlatform(int x, int y) {
-        spawnPlatform(x, y, null);
-    }
-
+    /**
+     * Spawn a single floor entity at (x,y) with texture given by world.
+     *
+     * @param x     left coordinate
+     * @param y     bottom coordinate
+     * @param world the world type to load in
+     */
     protected void spawnFloor(int x, int y, String world) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                Entity floor = ObstacleFactory.createFloor(world);
-                GridPoint2 pos = new GridPoint2(x + i, y + j);
-                spawnEntityAt(floor, pos, false, false);
-                signup(pos, floor);
-            }
-        }
-    }
-
-    /**
-     * Spawn a floor with no physics or collision component, with world style given by world.
-     *
-     * @param x     x coordinate in Area
-     * @param y     y coordinate in Area
-     * @param world the world type to load in. Must match the name of a .png file in
-     *              assets/images (e.g. assets/images/world.png)
-     */
-    protected void spawnFloorNoCollision(int x, int y, String world) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                Entity floor = ObstacleFactory.createFloorNoCollider(world);
-                GridPoint2 pos = new GridPoint2(x + i, y + j);
-                spawnEntityAt(floor, pos, false, false);
-                signup(pos, floor);
-            }
-        }
-    }
-
-    /**
-     * Spawn a floor with no physics or collision component, with the default world style.
-     *
-     * @param x x coordinate in Area
-     * @param y y coordinate in Area
-     */
-    protected void spawnFloorNoCollision(int x, int y) {
-        spawnFloorNoCollision(x, y, null);
-    }
-
-    protected void spawnFloor(int x, int y) {
-        spawnFloor(x, y, null);
-    }
-
-    protected void spawnCollider(int x1, int x2, int y, int height) {
-        Entity collider = ObstacleFactory.createCollider(x1, x2, height);
-        logger.debug("Spawning Collider at {},{} with height: {}", x1, y, height);
-        GridPoint2 pos = new GridPoint2(x1, y);
-        spawnEntityAt(collider, pos, false, false);
-        signup(pos, collider);
+        Entity floor = ObstacleFactory.createFloor(world);
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(floor, pos, false, false);
+        signup(pos, floor);
     }
 
     /**
@@ -320,17 +280,24 @@ public class RagnarokArea extends GameArea {
      */
     protected void spawnPlatformChunk(int[] x, int y, String world) {
         Entity[] platforms = new Entity[x.length];
+
+        // y + 2 so that the platforms are at the top of a terrain tile, not the bottom
+        y += 2;
+
         for (int i = 0; i < x.length; i++) {
             Entity platform = ObstacleFactory.createPlatformNoCollider(world);
             // add to array of entities so that they can all be disposed of at once
             platforms[i] = platform;
-            // y + 2 exists in first implementations, not sure why it is here
-            GridPoint2 pos = new GridPoint2(x[i], y + 2);
+            GridPoint2 pos = new GridPoint2(x[i], y);
             spawnEntityAt(platform, pos, false, false);
             signup(pos, platform);
         }
 
-        Entity collider = ObstacleFactory.createCollider(x[0], x[x.length - 1], 1);
+        // Calculate width by getting taking away the starting position of the first platform from
+        // the starting position of the last platform. This is still one platform too short, so
+        // add 3 which is the width of a single tile.
+        int width = x[x.length - 1] - x[0] + 3;
+        Entity collider = ObstacleFactory.createCollider(width, 1);
         collider.addComponent(new GroupDisposeComponent(platforms));
 
         GridPoint2 pos = new GridPoint2(x[0], y);
@@ -350,24 +317,27 @@ public class RagnarokArea extends GameArea {
      *              assets/images (e.g. assets/images/world.png)
      */
     protected void spawnFloorChunk(int[] x, int y, String world) {
-        // Floors are three platforms stacked vertically, so repeat spawn process three times
-        Entity[] floors = new Entity[(x.length) * 3];
+        Entity[] floors = new Entity[x.length];
         for (int i = 0; i < x.length; i++) {
-            for (int level = 0; level < 3; level++) {
-                Entity floor = ObstacleFactory.createFloorNoCollider(world);
-                // add to array of entities so that they can all be disposed of at once
-                floors[i * 3 + level] = floor;
-                GridPoint2 pos = new GridPoint2(x[i], y + level);
-                spawnEntityAt(floor, pos, false, false);
-                signup(pos, floor);
-            }
+            Entity floor = ObstacleFactory.createFloorNoCollider(world);
+            // add to array of entities so that they can all be disposed of at once
+            floors[i] = floor;
+            GridPoint2 pos = new GridPoint2(x[i], y);
+            spawnEntityAt(floor, pos, false, false);
+            signup(pos, floor);
         }
-        Entity collider = ObstacleFactory.createCollider(x[0], x[x.length - 1], 3);
+
+        // Calculate width by getting taking away the starting position of the first platform from
+        // the starting position of the last platform. This is still one platform too short, so
+        // add 3 which is the width of a single tile.
+        int width = x[x.length - 1] - x[0] + 3;
+        Entity collider = ObstacleFactory.createCollider(width, 3);
         collider.addComponent(new GroupDisposeComponent(floors));
 
         GridPoint2 pos = new GridPoint2(x[0], y);
         spawnEntityAt(collider, pos, false, false);
         signup(pos, collider);
+
     }
 
     protected void spawnRocks(int x, int y) {

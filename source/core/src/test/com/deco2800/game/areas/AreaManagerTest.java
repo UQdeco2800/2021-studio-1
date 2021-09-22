@@ -27,7 +27,7 @@ class AreaManagerTest {
         RagnarokArea area = mock(RagnarokArea.class);
 
         manager.place(area, x, y, "floor");
-        verify(area).spawnFloor(x * GRID_SCALE, y * GRID_SCALE);
+        verify(area).spawnFloor(x * GRID_SCALE, y * GRID_SCALE, null);
     }
 
     @Test

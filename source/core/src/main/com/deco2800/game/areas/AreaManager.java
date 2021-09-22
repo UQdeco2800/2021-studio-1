@@ -60,11 +60,11 @@ public class AreaManager extends RagnarokArea {
 
     /**
      * this is passed to all areas inside... I think
-     *
+     * <p>
      * note on 21/9/21: worth investigating if changing this permits
      * changing of the terrain that is spawned? maybe different
      * terrainFactories can model the different world types?
-     *
+     * <p>
      * see place() "platform" for usage
      */
     private TerrainFactory mainTerrainFactory;
@@ -157,7 +157,7 @@ public class AreaManager extends RagnarokArea {
         int gy = y * GRID_SCALE;
         switch (placeType) {
             case "floor":
-                area.spawnFloor(gx, gy);
+                area.spawnFloor(gx, gy, this.currentWorld);
                 break;
             case "platform":
                 area.spawnPlatform(gx, gy, this.currentWorld);
@@ -322,34 +322,46 @@ public class AreaManager extends RagnarokArea {
     }
 
     /**
-     * Unspoodles the bufferedPlaces. This is called immediately after the player is set in the loader,
-     * But will be intercepted as functionality is developed.
+     * Unspoodles the bufferedPlaces. This is called immediately after the player is set in the
+     * loader, But will be intercepted as functionality is developed.
+     * <p>
+     * Places / spawns all obstacles in the level. First, finds
      */
     private void makeBufferedPlace() {
-        logger.debug("Placing terrain stored in buffer");
+        logger.debug("Placing terrain stored in buffer with world type: {}", this.currentWorld);
         int x = startNextArea;
 
+        // Make changed to bufferedPlaces so that large chunks of platforms/floors are spawned
+        // together.
         for (int col = 0; col < bPWidth; col++) {
             for (int row = 0; row < bPHeight; row++) {
-                int length;
+                // Check if there are multiple platforms in a row, spawn them as a group if so.
+                // If there is, this place will be 'null' afterwards.
                 if (bufferedPlaces[col][row].equals("platform")) {
-                    length = replaceDuplicatesInRow(row, col, "platform", "null");
-                    int[] xCoordinates = new int[length + 1];
-                    for (int i = 0; i < length + 1; i++) {
-                        xCoordinates[i] = (x + col + i) * GRID_SCALE;
+                    int length = nullifyDuplicatesInRow(row, col, "platform");
+                    if (length > 1) {
+                        int[] xCoordinates = new int[length];
+                        for (int i = 0; i < length; i++) {
+                            xCoordinates[i] = (x + col + i) * GRID_SCALE;
+                        }
+                        terrainInstance.spawnPlatformChunk(xCoordinates,
+                                row * GRID_SCALE,
+                                this.currentWorld);
                     }
-                    if (length > 1) terrainInstance.spawnPlatformChunk(xCoordinates,
-                            row * GRID_SCALE + 2,
-                            this.currentWorld);
+
                 } else if (bufferedPlaces[col][row].equals("floor")) {
-                    length = replaceDuplicatesInRow(row, col, "floor", "null");
-                    int[] xCoordinates = new int[length + 1];
-                    for (int i = 0; i < length + 1; i++) {
-                        xCoordinates[i] = (x + col + i) * GRID_SCALE;
+                    // Check if there are multiple floors in a row, spawn them as a group if so.
+                    // If there is, this place will be 'null' afterwards.
+                    int length = nullifyDuplicatesInRow(row, col, "floor");
+                    if (length > 1) {
+                        int[] xCoordinates = new int[length];
+                        for (int i = 0; i < length; i++) {
+                            xCoordinates[i] = (x + col + i) * GRID_SCALE;
+                        }
+                        terrainInstance.spawnFloorChunk(xCoordinates,
+                                row * GRID_SCALE,
+                                this.currentWorld);
                     }
-                    if (length > 1) terrainInstance.spawnFloorChunk(xCoordinates,
-                            row * GRID_SCALE,
-                            this.currentWorld);
                 }
             }
         }
@@ -367,7 +379,8 @@ public class AreaManager extends RagnarokArea {
 
     /**
      * Replace all consecutive instances of 'placeType' in the given row of this.bufferedPlaces
-     * with replacement, return the number of replacements made.
+     * with "null" and return the number of replacements made. If there are no consecutive
+     * instances of 'placeType', then return 1 and make no change.
      * <p>
      * Will scan columns after the given col at height row until the stored value is no longer
      * placeType, then replace those values it found.
@@ -385,13 +398,12 @@ public class AreaManager extends RagnarokArea {
      * calling replaceDuplicatesInRow(0, 4, 'platform', 'platformNoCollision') would set (4,0) and
      * (4,1) to 'platFormNoCollision'.
      *
-     * @param col         column of bufferedPlaces to start looking
-     * @param row         row of bufferedPlaces to start looking
-     * @param placeType   type of object to search e.g. "platform", "floor"
-     * @param replacement word to replace placeType with
+     * @param col       column of bufferedPlaces to start looking
+     * @param row       row of bufferedPlaces to start looking
+     * @param placeType type of object to search e.g. "platform", "floor"
      * @return how many values were changed
      */
-    private int replaceDuplicatesInRow(int row, int col, String placeType, String replacement) {
+    private int nullifyDuplicatesInRow(int row, int col, String placeType) {
         if (!bufferedPlaces[col][row].equals(placeType)) {
             // Original placeType incorrect
             logger.debug("Attempted to replace {} at {},{} but that position does not hold {}.",
@@ -409,7 +421,7 @@ public class AreaManager extends RagnarokArea {
 
         // Replace values from column col to nextCol.
         for (int i = col; i < nextCol; i++) {
-            bufferedPlaces[i][row] = replacement;
+            bufferedPlaces[i][row] = "null";
         }
 
         return nextCol - col;

@@ -106,124 +106,110 @@ public class ObstacleFactory {
     }
 
     /**
-     * Creates a platform entity.
+     * Create and return a platform entity.
      *
-     * note: is the world file not meant to represent a .png?
-     *
-     * world the world type to load in. Must match the name of .png file (e.g.
-     * @param world the world type to load in. Must match the name of a .rag file (e.g. world.rag)
-     * @return entity
+     * @param world the world type to load in. Must match the name of a .png file in
+     *              assets/images (e.g. assets/images/world.png)
+     * @return platform entity
      */
     public static Entity createPlatform(String world) {
-        Entity platform =
-                new Entity()
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        if (world == null) {
-            platform.addComponent(new TextureRenderComponent("images/platform_gradient.png"));
-        } else {
-            platform.addComponent(new TextureRenderComponent("images/worlds/" + world + ".png"));
-        }
+        Entity platform = createPlatformNoCollider(world)
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         platform.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         return platform;
     }
 
     /**
-     * Return a platform entity that has no physics or collision component.
+     * Create and return a platform entity that has no physics or collision component.
      *
      * @param world the world type to load in. Must match the name of a .png file in
      *              assets/images (e.g. assets/images/world.png)
-     * @return entity
+     * @return platform entity
      */
     public static Entity createPlatformNoCollider(String world) {
         Entity platform = new Entity();
-        makeBasePlatform(world, platform);
+        if (world == null) {
+            platform.addComponent(new TextureRenderComponent("images/platform_gradient.png"));
+        } else {
+            platform.addComponent(new TextureRenderComponent("images/worlds/" + world + ".png"));
+        }
+        platform.getComponent(TextureRenderComponent.class).scaleEntity();
+        platform.scaleHeight(0.5f);
+        platform.setType(EntityTypes.OBSTACLE);
         return platform;
     }
 
     /**
      * Creates a platform entity with the default world type.
      *
-     * @return entity
+     * @return platform entity
      */
     public static Entity createPlatform() {
         return createPlatform(null);
     }
 
     /**
-     * Add the required components and properties to the given entity to make it a platform.
+     * Creates a floor entity with Physics and Collider components.
      *
-     * @param world  the world type corresponding the art style that the platform will mimic. Must
-     *               be the same as the name of an image in assets/images/'world'.png.
-     * @param entity entity to transform into a platform
-     */
-    private static void makeBasePlatform(String world, Entity entity) {
-        if (world == null) {
-            entity.addComponent(new TextureRenderComponent("images/platform_gradient.png"));
-        } else {
-            entity.addComponent(new TextureRenderComponent("images/" + world + ".png"));
-        }
-        entity.getComponent(TextureRenderComponent.class).scaleEntity();
-        entity.scaleHeight(0.5f);
-        entity.setType(EntityTypes.OBSTACLE);
-    }
-
-    /**
-     * Creates a floor entity.
-     *
-     * @param world String for to a world name
-     * @return entity
+     * @param world the world type corresponding the art style that the platform will mimic. Must
+     *              be the same as the name of an image in assets/images/'world'.png.
+     * @return floor entity
      */
     public static Entity createFloor(String world) {
-        Entity floor =
-                new Entity()
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
-        if (world == null) {
-            floor.addComponent(new TextureRenderComponent("images/floor.png"));
-        } else {
-            floor.addComponent(new TextureRenderComponent("images/floors" + world + ".png"));
-        }
+        Entity floor = createFloorNoCollider(world)
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
         floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         return floor;
     }
 
+    /**
+     * Create and return a floor entity that has no Physics or Collider component.
+     * <p>
+     * The value of 'world' must be the same as the name of a world style with any content following
+     * an underscore afterwards. E.g. as of 22/9 the following values are all valid: 'asgard',
+     * 'hel_1', 'hel_fdsagdsa', 'jotunheimr', 'earth'. This is to allow variations on platform types
+     * while keeping a single floor type.
+     *
+     * @param world the world type corresponding the art style that the floor will mimic.
+     * @return floor entity
+     */
     public static Entity createFloorNoCollider(String world) {
         Entity floor = new Entity();
-        makeBaseFloor(world, floor);
+        if (world == null) {
+            floor.addComponent(new TextureRenderComponent("images/floor.png"));
+        } else {
+            // Strip any information including and after an underscore.
+            String specificWorld = world.split("_", 2)[0];
+            floor.addComponent(new TextureRenderComponent(
+                    "images/floors/" + specificWorld + ".png"));
+        }
+        floor.getComponent(TextureRenderComponent.class).scaleEntity();
+        floor.scaleHeight(1.5f);
+        floor.setType(EntityTypes.OBSTACLE);
         return floor;
     }
 
     /**
-     * Creates a floor entity
+     * Create and return a floor entity with default world type.
      *
-     * @return entity
+     * @return floor entity
      */
     public static Entity createFloor() {
         return createFloor(null);
     }
 
     /**
-     * Add the required components and properties to entity to make it a floor entity.
+     * Create and return an entity that has a collision hitbox with position given by parameters.
      *
-     * @param world  the world type corresponding the art style that the platform will mimic. Must
-     *               be the same as the name of an image in assets/images/'world'.png.
-     * @param entity entity to transform into a platform
+     * @param width  width of the hitbox
+     * @param height height of the hitbox
+     * @return entity having only PhysicsComponent and ColliderComponent
      */
-    private static void makeBaseFloor(String world, Entity entity) {
-        if (world == null) {
-            entity.addComponent(new TextureRenderComponent("images/floor.png"));
-        } else {
-            entity.addComponent(new TextureRenderComponent("images/" + world + ".png"));
-        }
-        entity.getComponent(TextureRenderComponent.class).scaleEntity();
-        entity.scaleHeight(0.5f);
-        entity.setType(EntityTypes.OBSTACLE);
-    }
-
-    public static Entity createCollider(int x1, int x2, int height) {
+    public static Entity createCollider(int width, int height) {
         Vector2 scale = new Vector2(0.5f, 0.5f);
-        Vector2 size = new Vector2(x2 - x1, height).scl(scale);
+        Vector2 size = new Vector2(width, height).scl(scale);
         Entity collider = new Entity()
                 .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
@@ -233,9 +219,8 @@ public class ObstacleFactory {
         return collider;
     }
 
-
     /**
-     * Creates an invisible physics wall.
+     * Create an invisible physics wall.
      *
      * @param width  Wall width in world units
      * @param height Wall height in world units
