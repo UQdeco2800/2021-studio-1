@@ -89,7 +89,9 @@ public class RagnarokArea extends GameArea {
     // sound effects of giant walking (still to be tested)
     private static final String walkMusic = "sounds/walk.mp3";
     private static final String loudWalkMusic = "sounds/giant_walk.mp3";
-    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, loudWalkMusic};
+    private static final String roarMusic = "sounds/roar.mp3";
+    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, loudWalkMusic,
+                                                roarMusic};
 
     private final TerrainFactory terrainFactory;
 
