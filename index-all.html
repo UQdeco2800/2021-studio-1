@@ -432,6 +432,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/gamearea/PerformanceDisplay.html#create()">create()</a></span> - Method in class com.deco2800.game.components.gamearea.<a href="com/deco2800/game/components/gamearea/PerformanceDisplay.html" title="class in com.deco2800.game.components.gamearea">PerformanceDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/GroupDisposeComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/GroupDisposeComponent.html" title="class in com.deco2800.game.components">GroupDisposeComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/LevelLoadTriggerComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/LevelLoadTriggerComponent.html" title="class in com.deco2800.game.components">LevelLoadTriggerComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/maingame/MainGameActions.html#create()">create()</a></span> - Method in class com.deco2800.game.components.maingame.<a href="com/deco2800/game/components/maingame/MainGameActions.html" title="class in com.deco2800.game.components.maingame">MainGameActions</a></dt>
@@ -475,6 +477,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/TouchDisposeComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/TouchDisposeComponent.html" title="class in com.deco2800.game.components">TouchDisposeComponent</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/VariableSpeedComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/VariableSpeedComponent.html" title="class in com.deco2800.game.components">VariableSpeedComponent</a></dt>
+<dd>
+<div class="block">Create event listener for collision</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/Entity.html#create()">create()</a></span> - Method in class com.deco2800.game.entities.<a href="com/deco2800/game/entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></dt>
 <dd>
 <div class="block">Create the entity and start running.</div>
@@ -535,6 +541,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/RenderFactory.html#createCamera()">createCamera()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/RenderFactory.html" title="class in com.deco2800.game.entities.factories">RenderFactory</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createCollider(int,int)">createCollider(int, int)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
+<dd>
+<div class="block">Create and return an entity that has a collision hitbox with position given by parameters.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/NPCFactory.html#createDeathGiant(com.deco2800.game.entities.Entity)">createDeathGiant(Entity)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/NPCFactory.html" title="class in com.deco2800.game.entities.factories">NPCFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/GeneratorFactory.html#createFireSpirit()">createFireSpirit()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/GeneratorFactory.html" title="class in com.deco2800.game.entities.factories">GeneratorFactory</a></dt>
@@ -543,11 +553,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createFloor()">createFloor()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
 <dd>
-<div class="block">Creates a floor entity</div>
+<div class="block">Create and return a floor entity with default world type.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createFloor(java.lang.String)">createFloor(String)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
 <dd>
-<div class="block">Creates a floor entity.</div>
+<div class="block">Creates a floor entity with Physics and Collider components.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createFloorNoCollider(java.lang.String)">createFloorNoCollider(String)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
+<dd>
+<div class="block">Create and return a floor entity that has no Physics or Collider component.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/input/InputFactory.html#createForPlayer()">createForPlayer()</a></span> - Method in class com.deco2800.game.input.<a href="com/deco2800/game/input/InputFactory.html" title="class in com.deco2800.game.input">InputFactory</a></dt>
 <dd>
@@ -592,11 +606,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createPlatform()">createPlatform()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
 <dd>
-<div class="block">Creates a floor entity</div>
+<div class="block">Creates a platform entity with the default world type.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createPlatform(java.lang.String)">createPlatform(String)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
 <dd>
-<div class="block">Creates a platform entity.</div>
+<div class="block">Create and return a platform entity.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createPlatformNoCollider(java.lang.String)">createPlatformNoCollider(String)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
+<dd>
+<div class="block">Create and return a platform entity that has no physics or collision component.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/PlayerFactory.html#createPlayer()">createPlayer()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/PlayerFactory.html" title="class in com.deco2800.game.entities.factories">PlayerFactory</a></dt>
 <dd>
@@ -647,7 +665,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createWall(float,float)">createWall(float, float)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
 <dd>
-<div class="block">Creates an invisible physics wall.</div>
+<div class="block">Create an invisible physics wall.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/NPCFactory.html#createWallOfDeath(com.deco2800.game.entities.Entity)">createWallOfDeath(Entity)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/NPCFactory.html" title="class in com.deco2800.game.entities.factories">NPCFactory</a></dt>
 <dd>
@@ -731,6 +749,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/gamearea/PerformanceDisplay.html#dispose()">dispose()</a></span> - Method in class com.deco2800.game.components.gamearea.<a href="com/deco2800/game/components/gamearea/PerformanceDisplay.html" title="class in com.deco2800.game.components.gamearea">PerformanceDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/GroupDisposeComponent.html#dispose()">dispose()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/GroupDisposeComponent.html" title="class in com.deco2800.game.components">GroupDisposeComponent</a></dt>
+<dd>
+<div class="block">Dispose of all entities held in this component.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/maingame/MainGamePannelDisplay.html#dispose()">dispose()</a></span> - Method in class com.deco2800.game.components.maingame.<a href="com/deco2800/game/components/maingame/MainGamePannelDisplay.html" title="class in com.deco2800.game.components.maingame">MainGamePannelDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/mainmenu/MainMenuDisplay.html#dispose()">dispose()</a></span> - Method in class com.deco2800.game.components.mainmenu.<a href="com/deco2800/game/components/mainmenu/MainMenuDisplay.html" title="class in com.deco2800.game.components.mainmenu">MainMenuDisplay</a></dt>
@@ -993,6 +1015,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  elapsed since the beginning of the start.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/gameScore/gameScore.html#%3Cinit%3E()">gameScore()</a></span> - Constructor for class com.deco2800.game.gameScore.<a href="com/deco2800/game/gameScore/gameScore.html" title="class in com.deco2800.game.gameScore">gameScore</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/GdxGame.html#gameStarted">gameStarted</a></span> - Variable in class com.deco2800.game.<a href="com/deco2800/game/GdxGame.html" title="class in com.deco2800.game">GdxGame</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/services/GameTime.html" title="class in com.deco2800.game.services"><span class="typeNameLink">GameTime</span></a> - Class in <a href="com/deco2800/game/services/package-summary.html">com.deco2800.game.services</a></dt>
 <dd>
@@ -1337,6 +1361,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><a href="com/deco2800/game/utils/math/GridPoint2Utils.html" title="class in com.deco2800.game.utils.math"><span class="typeNameLink">GridPoint2Utils</span></a> - Class in <a href="com/deco2800/game/utils/math/package-summary.html">com.deco2800.game.utils.math</a></dt>
 <dd>
 <div class="block">Contains additional utility constants and functions for common GridPoint2 operations.</div>
+</dd>
+<dt><a href="com/deco2800/game/components/GroupDisposeComponent.html" title="class in com.deco2800.game.components"><span class="typeNameLink">GroupDisposeComponent</span></a> - Class in <a href="com/deco2800/game/components/package-summary.html">com.deco2800.game.components</a></dt>
+<dd>
+<div class="block">When this entity is disposed of, it disposes of a list of other entities.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/GroupDisposeComponent.html#%3Cinit%3E(com.deco2800.game.entities.Entity%5B%5D)">GroupDisposeComponent(Entity[])</a></span> - Constructor for class com.deco2800.game.components.<a href="com/deco2800/game/components/GroupDisposeComponent.html" title="class in com.deco2800.game.components">GroupDisposeComponent</a></dt>
+<dd>
+<div class="block">Create a component which disposes all entities on its disposal.</div>
 </dd>
 </dl>
 <a id="I:H">
@@ -2546,10 +2578,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/commands/SpawnCommand.html#%3Cinit%3E()">SpawnCommand()</a></span> - Constructor for class com.deco2800.game.ui.terminal.commands.<a href="com/deco2800/game/ui/terminal/commands/SpawnCommand.html" title="class in com.deco2800.game.ui.terminal.commands">SpawnCommand</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnDeathGiant()">spawnDeathGiant()</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
-<dd>
-<div class="block">This spawns the Death Giant in front of the Wall of Death</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/GameArea.html#spawnEntity(com.deco2800.game.entities.Entity)">spawnEntity(Entity)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/GameArea.html" title="class in com.deco2800.game.areas">GameArea</a></dt>
 <dd>
 <div class="block">Spawn entity at its current position</div>
@@ -2560,20 +2588,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnFireSpirit(int,int)">spawnFireSpirit(int, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnFloor(int,int)">spawnFloor(int, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnFloor(int,int,java.lang.String)">spawnFloor(int, int, String)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Spawn a single floor entity at (x,y) with texture given by world.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnFloorChunk(int%5B%5D,int,java.lang.String)">spawnFloorChunk(int[], int, String)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
+<dd>
+<div class="block">Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
+ spans from x[1] to x[n].</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/ObstacleArea.html#spawnFromGenerator(com.deco2800.game.entities.factories.ObstacleTypes)">spawnFromGenerator(ObstacleTypes)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/ObstacleArea.html" title="class in com.deco2800.game.areas">ObstacleArea</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnLevelLoadTrigger(int)">spawnLevelLoadTrigger(int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnLightning(int,int)">spawnLightning(int, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnPlatform(int,int)">spawnPlatform(int, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnPlatform(int,int,java.lang.String)">spawnPlatform(int, int, String)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Spawn a single platform at (x,y) with texture given by world.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnPlatformChunk(int%5B%5D,int,java.lang.String)">spawnPlatformChunk(int[], int, String)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
+<dd>
+<div class="block">Spawn a line of platforms from x[0] to x[end] having only a single collision entity and their
+ texture given by world.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnPlayer(int,int)">spawnPlayer(int, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnRocks(int,int)">spawnRocks(int, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
@@ -3082,6 +3120,12 @@ the order they are declared.</div>
 <dd>
 <div class="block">Returns an array containing the constants of this enum type, in
 the order they are declared.</div>
+</dd>
+<dt><a href="com/deco2800/game/components/VariableSpeedComponent.html" title="class in com.deco2800.game.components"><span class="typeNameLink">VariableSpeedComponent</span></a> - Class in <a href="com/deco2800/game/components/package-summary.html">com.deco2800.game.components</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/VariableSpeedComponent.html#%3Cinit%3E(com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity)">VariableSpeedComponent(Entity, Entity, Entity)</a></span> - Constructor for class com.deco2800.game.components.<a href="com/deco2800/game/components/VariableSpeedComponent.html" title="class in com.deco2800.game.components">VariableSpeedComponent</a></dt>
+<dd>
+<div class="block">Class to shake the camera and start event listener for animation</div>
 </dd>
 <dt><a href="com/deco2800/game/utils/math/Vector2Utils.html" title="class in com.deco2800.game.utils.math"><span class="typeNameLink">Vector2Utils</span></a> - Class in <a href="com/deco2800/game/utils/math/package-summary.html">com.deco2800.game.utils.math</a></dt>
 <dd>
