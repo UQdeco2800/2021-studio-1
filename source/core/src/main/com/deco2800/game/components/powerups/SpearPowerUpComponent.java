@@ -2,12 +2,15 @@ package com.deco2800.game.components.powerups;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.deco2800.game.components.SpearComponent;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.entities.factories.EntityTypes;
+import com.deco2800.game.entities.factories.ProjectileFactory;
+import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
 /**
@@ -16,132 +19,163 @@ import com.deco2800.game.utils.math.Vector2Utils;
  */
 public class SpearPowerUpComponent extends PowerUpComponent {
     private Entity spear;
+    private Vector2 spearDirection;
 
     // Update flags to check
     private boolean active;
-    private boolean flown;
     private int thrown;
 
-    public Entity getSpear(){
-        return this.spear;
-    }
-
-    public void obtainSpear(Entity spear) {
-        this.spear = spear;
-    }
-
-    public void reset() {
-        active = false;
-        flown = false;
-        thrown = 0;
-    }
-
+    /**
+     * Creates the spear component
+     */
     @Override
     public void create() {
         setEnabled(false);
         spear = null;
-        reset();
+        thrown = 0;
     }
 
+    public void obtainSpear() {
+        System.out.println("Reset throws");
+        thrown = 0;
+    }
+
+    /**
+     * If a spear exists, delete it if it has stopped or fallen below the
+     * world and disable this component  if it has been thrown three times
+     */
     @Override
     public void earlyUpdate() {
-        Body spearBod = spear.getComponent(PhysicsComponent.class).getBody();
-        // If after flying, the spear stops or goes below y = 0, deactivate and reset
-        if ((flown && active && spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0 ||
-                spear.getComponent(SpearComponent.class).hasHit()) {
-            active = false;
-            flown = false;
-            spear.getComponent(SpearComponent.class).resetSpear();
-
-            // Disposes the spear after three throws
-            if (thrown == 3) {
-                reset();
-                setEnabled(false);
-                spear.flagDelete();
+        if (spear != null) {
+            Body spearBod = spear.getComponent(PhysicsComponent.class).getBody();
+            // If after flying, the spear stops or goes below y = 0, deactivate and reset
+            if ((active && (spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0)) {
+                if (thrown >= 3) {
+                    thrown = 0;
+                    setEnabled(false);
+                }
+                disposeSpear();
             }
         }
     }
 
     /**
-     * Checks the state of the spear and tracks the player's movement.
+     * Continue applying a force to the spear if it has been created
      */
     @Override
     public void update() {
-        PlayerActions playerActions = entity.getComponent(PlayerActions.class);
-        Vector2 playerPos = entity.getCenterPosition();
-        Vector2 playerDir = playerActions.getRunDirection();
-
-        Vector2 impulse;
-        Body spearBod = spear.getComponent(PhysicsComponent.class).getBody();
-
-        Vector2 offset;
-        Vector2 extraVert = Vector2.Zero.cpy(); // Offset vector for crouching
-
-        Vector2 spearPos;
-
-        StringBuilder anim = new StringBuilder();
-
-        // Determines which animation to play with precedence
         if (active) {
-            anim.append("fly-");
-        } else if (playerActions.isJumping() || playerActions.isCrouching()) {
-            anim.append("flat-");
-        } else if (playerActions.isMoving()) {
-            anim.append("swing-");
-        } else {
-            anim.append("stand-");
-        }
-
-        if (!(playerActions.isMoving())) {
-            playerDir = playerActions.getPreviousDirection();
-        }
-
-        // Determines which direction for the animation needs to play
-        if (playerDir.hasSameDirection(Vector2Utils.LEFT)) {
-            offset = new Vector2(0f, 0.5f);
-            spearPos = playerPos.sub(offset);
-            impulse = new Vector2(-60f, 20f).scl(spearBod.getMass());
-            anim.append("left");
-        } else {
-            offset = new Vector2(0f, -0.5f);
-            spearPos = playerPos.add(offset);
-            impulse = new Vector2(60f, 20f).scl(spearBod.getMass());
-            anim.append("right");
-        }
-
-        if (playerActions.isCrouching()) {
-            extraVert.sub(new Vector2(0f, 0.3f));
-        }
-
-        if (spearBod.getLinearVelocity().x > 0.5f && active) {
-            spear.getComponent(ColliderComponent.class).setSensor(false);
-        }
-
-        // If the player throws the spear and hasn't yet flown, apply impulse and increment throws
-        if (active && !flown) {
-            flown = true;
-            spear.getComponent(SpearComponent.class).startFlying();
-            spear.getComponent(AnimationRenderComponent.class).stopAnimation();
-
-            spearBod.applyLinearImpulse(impulse, spearBod.getWorldCenter(), true);
-            spear.getComponent(AnimationRenderComponent.class).startAnimation(anim.toString());
-            thrown++;
-        }
-
-        // Default animations while spear is in hand
-        if (!active) {
-            spear.getComponent(ColliderComponent.class).setSensor(true);
-            spear.setPosition(spearPos.add(extraVert));
-            spear.getComponent(AnimationRenderComponent.class).stopAnimation();
+            if (spearDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+                spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
+                        new Vector2(5f, 0f),
+                        spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
+                        true);
+            } else {
+                spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
+                        new Vector2(-5f, 0f),
+                        spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
+                        true);
+            }
         }
     }
 
+    /**
+     * Creates a spear entity on the event the player presses 'K', and
+     * applies a force to the spear to have it fly through the air
+     */
     @Override
     public void activate() {
-        active = true;
+        if (thrown >= 3) {
+            thrown = 0;
+            setEnabled(false);
+        } else if (!active ) {
+            active = true;
+            thrown += 1;
+            spear = ProjectileFactory.createSpearEntity();
+            ServiceLocator.getEntityService().register(spear);
+
+            spear.getEvents().addListener("collisionStart", this::killEnemy);
+            spear.getEvents().addListener("dispose", this::disposeSpear);
+
+            if (entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
+                spear.setPosition(entity.getPosition().x + 1f, entity.getPosition().y);
+                spearDirection = Vector2Utils.RIGHT.cpy();
+                spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
+                        new Vector2(10f, 10f),
+                        spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
+                        true);
+                spear.getComponent(AnimationRenderComponent.class).stopAnimation();
+                spear.getComponent(AnimationRenderComponent.class).startAnimation(
+                        "fly-right");
+
+            } else {
+                spear.setPosition(entity.getPosition().x - 1f,
+                        entity.getPosition().y);
+                spearDirection = Vector2Utils.LEFT.cpy();
+                spear.getComponent(PhysicsComponent.class).getBody()
+                        .applyLinearImpulse(
+                                new Vector2(-10f, 10f),
+                                spear.getComponent(PhysicsComponent.class).getBody()
+                                        .getWorldCenter(), true);
+                spear.getComponent(AnimationRenderComponent.class)
+                        .stopAnimation();
+                spear.getComponent(AnimationRenderComponent.class)
+                        .startAnimation("fly-left");
+            }
+        }
+
     }
 
+    /**
+     * Triggered when the spear should get deleted
+     */
+    private void disposeSpear() {
+        active = false;
+        spear.getComponent(AnimationRenderComponent.class).stopAnimation();
+        spear.flagDelete();
+    }
+
+    /**
+     * Set the active status of the spear
+     *
+     * @param active - the active status the spear should be set to
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    /**
+     * Returns the active status of the spear
+     *
+     * @return true if the spear is active and has been thrown, false otherwise
+     */
     public boolean getActive() {
         return active;
+    }
+
+    /**
+     * Returns the number of times the current spear has been thrown
+     *
+     * @return the number of throws
+     */
+    public int getThrown() { return thrown;}
+
+    /**
+     * Deletes enemy when spear hits them
+     *
+     * @param spearFixture - the fixture attached to the spear body
+     * @param otherFixture - the fixture attached to the enemies body
+     */
+    private void killEnemy (Fixture spearFixture, Fixture otherFixture) {
+        BodyUserData spearBody = (BodyUserData) spearFixture.getBody().getUserData();
+        BodyUserData otherBody = (BodyUserData) otherFixture.getBody().getUserData();
+
+        if (otherBody.entity.getType() == EntityTypes.FIRESPIRIT
+                || otherBody.entity.getType() == EntityTypes.SKELETON
+                || otherBody.entity.getType() == EntityTypes.WOLF) {
+
+            otherBody.entity.flagDelete();
+            spearBody.entity.getEvents().trigger("dispose");
+        }
     }
 }

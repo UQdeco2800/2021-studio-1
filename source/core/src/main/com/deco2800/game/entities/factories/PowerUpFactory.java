@@ -2,6 +2,7 @@ package com.deco2800.game.entities.factories;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsUtils;
@@ -33,10 +34,15 @@ public class PowerUpFactory {
         powerUp.addComponent(animator);
         powerUp.getComponent(AnimationRenderComponent.class).startAnimation("icon");
 
-        powerUp.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
-                PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
-        powerUp.getComponent(ColliderComponent.class).setAsCircleAligned(0.2f,
-                PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.BOTTOM);
+        powerUp.getComponent(HitboxComponent.class).setAsCircleAligned(
+                0.2f, PhysicsComponent.AlignX.CENTER,
+                PhysicsComponent.AlignY.BOTTOM);
+        powerUp.getComponent(ColliderComponent.class).setAsCircleAligned(
+                0.2f, PhysicsComponent.AlignX.CENTER,
+                PhysicsComponent.AlignY.BOTTOM);
+        powerUp.getComponent(ColliderComponent.class).setSensor(true);
+        powerUp.getComponent(PhysicsComponent.class).setBodyType
+                (BodyDef.BodyType.StaticBody);
 
         powerUp.setType(EntityTypes.LIGHTNINGPOWERUP);
 
@@ -63,11 +69,11 @@ public class PowerUpFactory {
 
         PolygonShape shield = new PolygonShape();
         shield.set(shieldPoints);
-        powerUp.getComponent(HitboxComponent.class).setShape(shield);
+        powerUp.getComponent(ColliderComponent.class).setShape(shield);
+        powerUp.getComponent(ColliderComponent.class).setSensor(true);
+        powerUp.getComponent(PhysicsComponent.class).setBodyType
+                (BodyDef.BodyType.StaticBody);
         powerUp.setType(EntityTypes.SHIELDPOWERUP);
-
-        powerUp.getEvents().addListener("dispose",
-            powerUp::flagDelete);
 
         return powerUp;
     }
@@ -78,32 +84,17 @@ public class PowerUpFactory {
      * @return spear power up entity.
      */
     public static Entity createSpearPowerUp() {
-        Entity powerUp = ProjectileFactory.createSpearEntity();
-        powerUp.getComponent(HitboxComponent.class).setAsBox(new Vector2(0.1f, 1f), powerUp.getCenterPosition());
-        powerUp.getComponent(PhysicsComponent.class).setGravityScale(2f);
+        Entity powerUp = createBasePowerUp();
+        powerUp.addComponent(new TextureRenderComponent("images/powerup-spear" +
+                ".png"));
 
         powerUp.setScale(1.1f, 1.1f);
         PhysicsUtils.setScaledCollider(powerUp, 1f, 1f);
-
-        AnimationRenderComponent animator =
-            new AnimationRenderComponent(ServiceLocator.getResourceService()
-                .getAsset("images/player-spear.atlas", TextureAtlas.class));
-
-        animator.addAnimation("flat-left", 1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("flat-right", 1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("fly-left", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("fly-right", 0.2f, Animation.PlayMode.LOOP);
-        animator.addAnimation("stand-left", 1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("stand-right", 1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("swing-left", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("swing-right", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("static", 1f, Animation.PlayMode.LOOP);
-
-        powerUp.addComponent(animator);
-        powerUp.getComponent(AnimationRenderComponent.class).startAnimation("static");
+        powerUp.getComponent(ColliderComponent.class).setSensor(true);
+        powerUp.getComponent(PhysicsComponent.class).setBodyType
+                (BodyDef.BodyType.StaticBody);
 
         powerUp.setType(EntityTypes.SPEARPOWERUP);
-
         return powerUp;
     }
 

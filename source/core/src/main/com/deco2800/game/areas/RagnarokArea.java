@@ -58,6 +58,7 @@ public class RagnarokArea extends GameArea {
             "images/floors/hel_floor.png",
             "images/floors/jotunheim_floor.png",
             "images/powerup-shield.png",
+            "images/powerup-spear.png",
             "images/blue_bck.png"
     };
 
@@ -139,8 +140,8 @@ public class RagnarokArea extends GameArea {
     // randomly generates powerups for an area,
     // used to be spawn power ups
     private void generatePowerUps() {
-        GridPoint2 start = new GridPoint2(10, 10);
-        GridPoint2 end = new GridPoint2(1000, 10);
+        GridPoint2 start = new GridPoint2(10, 3);
+        GridPoint2 end = new GridPoint2(1000, 3);
 
         Entity powerUp;
 

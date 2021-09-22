@@ -3,6 +3,7 @@ package com.deco2800.game.components.player;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
@@ -10,6 +11,7 @@ import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EntityTypes;
+import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
@@ -47,13 +49,13 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("jump", this::jump);
     entity.getEvents().addListener("crouch", this::crouch);
     entity.getEvents().addListener("stop crouch", this::stopCrouching);
-    entity.getEvents().addListener("obtainPowerUp", this::obtainPowerUp);
+    entity.getEvents().addListener("collisionStart", this::obtainPowerUp);
     entity.getEvents().addListener("usePowerUp", this::usePowerUp);
   }
 
   @Override
   public void update() {
-
+    whichAnimation();
     // for pause condition
     if (!playerInputComponent.isPlayerInputEnabled()) {
         return;}
@@ -176,33 +178,35 @@ public class PlayerActions extends Component {
     whichAnimation();
   }
 
-  public void obtainPowerUp(Entity powerUp) {
-    switch (powerUp.getType()) {
-      case LIGHTNINGPOWERUP:
-        powerUp.getComponent(ColliderComponent.class).setEnabled(false);
-        powerUp.getComponent(PhysicsComponent.class).getBody().setGravityScale(0);
+  public void obtainPowerUp(Fixture playerFixture, Fixture other) {
+    BodyUserData otherBody = (BodyUserData) other.getBody().getUserData();
 
-        entity.getComponent(LightningPowerUpComponent.class).setEnabled(true);
-        powerUp.getComponent(ColliderComponent.class).setSensor(true);
-        entity.getComponent(LightningPowerUpComponent.class).obtainPowerUp(powerUp);
+    if (otherBody.entity.getType() == EntityTypes.SPEARPOWERUP
+          || otherBody.entity.getType() == EntityTypes.LIGHTNINGPOWERUP
+          || otherBody.entity.getType() == EntityTypes.SHIELDPOWERUP) {
 
-        powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
-        powerUp.getComponent(AnimationRenderComponent.class).startAnimation("blank");
-        break;
+      Entity powerUp = otherBody.entity;
 
-      case SPEARPOWERUP:
-        powerUp.getComponent(ColliderComponent.class).setSensor(true);
-        entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
-        entity.getComponent(SpearPowerUpComponent.class).obtainSpear(powerUp);
-        break;
+      switch (powerUp.getType()) {
+        case LIGHTNINGPOWERUP:
+          entity.getComponent(LightningPowerUpComponent.class).setEnabled(true);
+          break;
 
-      case SHIELDPOWERUP:
-        entity.getEvents().trigger("pickUpShield");
-        entity.getComponent(ShieldPowerUpComponent.class).setEnabled(true);
-        break;
+        case SPEARPOWERUP:
+          entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
+          entity.getComponent(SpearPowerUpComponent.class).obtainSpear();
+          break;
 
-      default:
-        break;
+        case SHIELDPOWERUP:
+          entity.getEvents().trigger("pickUpShield");
+          entity.getComponent(ShieldPowerUpComponent.class).setEnabled(true);
+          break;
+
+        default:
+          break;
+      }
+
+      powerUp.flagDelete();
     }
   }
 
@@ -217,7 +221,6 @@ public class PlayerActions extends Component {
       case SPEARPOWERUP:
         if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
           entity.getComponent(SpearPowerUpComponent.class).activate();
-          entity.getComponent(AnimationRenderComponent.class).stopAnimation();
           whichAnimation();
         }
         break;
