@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.LinkedList;
 
 public class AreaManager extends RagnarokArea {
@@ -61,11 +60,11 @@ public class AreaManager extends RagnarokArea {
 
     /**
      * this is passed to all areas inside... I think
-     *
+     * <p>
      * note on 21/9/21: worth investigating if changing this permits
      * changing of the terrain that is spawned? maybe different
      * terrainFactories can model the different world types?
-     *
+     * <p>
      * see place() "platform" for usage
      */
     private TerrainFactory mainTerrainFactory;
@@ -115,11 +114,12 @@ public class AreaManager extends RagnarokArea {
         persistentInstance.makePlayer(10, 5);
 
         persistentInstance.spawnWallOfDeath();
-        persistentInstance.spawnDeathGiant();
 
         this.player = persistentInstance.getPlayer();
 
         load("asg1");
+
+        logger.debug("Creating AreaManager");
 
         //mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
         //this.player = mainInstance.getPlayer();
@@ -147,16 +147,17 @@ public class AreaManager extends RagnarokArea {
      *
      * @param area      which area to call the spawn method on
      * @param x         ragGrid x coOrdinate
-     * @param y         ragGrdi y coOrdinate
+     * @param y         ragGrid y coOrdinate
      * @param placeType type of terrain to place
      */
     public void place(RagnarokArea area, int x, int y, String placeType) {
+        logger.debug("Placing element - x:{} y:{} type:{}", x, y, placeType);
 
         int gx = x * GRID_SCALE;
         int gy = y * GRID_SCALE;
         switch (placeType) {
             case "floor":
-                area.spawnFloor(gx, gy);
+                area.spawnFloor(gx, gy, this.currentWorld);
                 break;
             case "platform":
                 area.spawnPlatform(gx, gy, this.currentWorld);
@@ -168,7 +169,8 @@ public class AreaManager extends RagnarokArea {
                 area.spawnSpikes(gx, gy);
                 break;
             case "null":
-                area.clearEntitiesAt(gx, gy);
+                // This should no longer be needed since we are loading one after another
+                // area.clearEntitiesAt(gx, gy);
                 break;
             default:
                 logger.error("place() called in AreaManager without valid placeType");
@@ -320,11 +322,50 @@ public class AreaManager extends RagnarokArea {
     }
 
     /**
-     * Unspoodles the bufferedPlaces. This is called immediately after the player is set in the loader,
-     * But will be intercepted as functionality is developed.
+     * Unspoodles the bufferedPlaces. This is called immediately after the player is set in the
+     * loader, But will be intercepted as functionality is developed.
+     * <p>
+     * Places / spawns all obstacles in the level. First, finds
      */
     private void makeBufferedPlace() {
+        logger.debug("Placing terrain stored in buffer with world type: {}", this.currentWorld);
         int x = startNextArea;
+
+        // Make changed to bufferedPlaces so that large chunks of platforms/floors are spawned
+        // together.
+        for (int col = 0; col < bPWidth; col++) {
+            for (int row = 0; row < bPHeight; row++) {
+                // Check if there are multiple platforms in a row, spawn them as a group if so.
+                // If there is, this place will be 'null' afterwards.
+                if (bufferedPlaces[col][row].equals("platform")) {
+                    int length = nullifyDuplicatesInRow(row, col, "platform");
+                    if (length > 1) {
+                        int[] xCoordinates = new int[length];
+                        for (int i = 0; i < length; i++) {
+                            xCoordinates[i] = (x + col + i) * GRID_SCALE;
+                        }
+                        terrainInstance.spawnPlatformChunk(xCoordinates,
+                                row * GRID_SCALE,
+                                this.currentWorld);
+                    }
+
+                } else if (bufferedPlaces[col][row].equals("floor")) {
+                    // Check if there are multiple floors in a row, spawn them as a group if so.
+                    // If there is, this place will be 'null' afterwards.
+                    int length = nullifyDuplicatesInRow(row, col, "floor");
+                    if (length > 1) {
+                        int[] xCoordinates = new int[length];
+                        for (int i = 0; i < length; i++) {
+                            xCoordinates[i] = (x + col + i) * GRID_SCALE;
+                        }
+                        terrainInstance.spawnFloorChunk(xCoordinates,
+                                row * GRID_SCALE,
+                                this.currentWorld);
+                    }
+                }
+            }
+        }
+
         for (String[] column : bufferedPlaces) {
             int y = 0;
             for (String placeType : column) {
@@ -333,6 +374,57 @@ public class AreaManager extends RagnarokArea {
             }
             x++;
         }
+        logger.debug("Finished placing terrain in buffer");
+    }
+
+    /**
+     * Replace all consecutive instances of 'placeType' in the given row of this.bufferedPlaces
+     * with "null" and return the number of replacements made. If there are no consecutive
+     * instances of 'placeType', then return 1 and make no change.
+     * <p>
+     * Will scan columns after the given col at height row until the stored value is no longer
+     * placeType, then replace those values it found.
+     * <p>
+     * Example, in the given world:
+     * <p>
+     * 5 {        },{        },{        },{        },{        }
+     * 4 {platform},{platform},{        },{        },{        }
+     * 3 {        },{        },{        },{        },{        }
+     * 2 {        },{platform},{platform},{platform},{platform}
+     * 1 {        },{        },{        },{        },{        }
+     * 0 {  floor },{  floor },{  floor },{  floor },{  floor }
+     * --0          1          2          3          4
+     * <p>
+     * calling replaceDuplicatesInRow(0, 4, 'platform', 'platformNoCollision') would set (4,0) and
+     * (4,1) to 'platFormNoCollision'.
+     *
+     * @param col       column of bufferedPlaces to start looking
+     * @param row       row of bufferedPlaces to start looking
+     * @param placeType type of object to search e.g. "platform", "floor"
+     * @return how many values were changed
+     */
+    private int nullifyDuplicatesInRow(int row, int col, String placeType) {
+        if (!bufferedPlaces[col][row].equals(placeType)) {
+            // Original placeType incorrect
+            logger.debug("Attempted to replace {} at {},{} but that position does not hold {}.",
+                    placeType, row, col, placeType);
+            return 0;
+        }
+        int nextCol = col + 1;
+        if (nextCol == bufferedPlaces.length) return 1;
+        if (!bufferedPlaces[nextCol][row].equals(placeType)) return 1;
+        // Search through the columns until the string stored is no longer placeType, or the end
+        // of the world is reached.
+        do {
+            nextCol++;
+        } while (nextCol < bPWidth && bufferedPlaces[nextCol][row].equals(placeType));
+
+        // Replace values from column col to nextCol.
+        for (int i = col; i < nextCol; i++) {
+            bufferedPlaces[i][row] = "null";
+        }
+
+        return nextCol - col;
     }
 
 }

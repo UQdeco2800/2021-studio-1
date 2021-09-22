@@ -114,7 +114,7 @@ public class Terminal extends Component {
       // separate command from args
       
       String message = messageBuffer.poll();
-      if (message.equals(null)) {
+      if (message == null) {
         return false;
       } 
       String[] sections = message.split(" ");
