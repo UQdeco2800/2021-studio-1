@@ -55,12 +55,15 @@ public class CameraShakeComponent extends Component {
         this.sfx.getEvents().trigger("dark");
         Music loudWalk = ServiceLocator.getResourceService().getAsset("sounds/giant_walk.mp3", Music.class);
         Music walk = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
+        Music roar = ServiceLocator.getResourceService().getAsset("sounds/roar.mp3", Music.class);
         if (distance < 32f) {
             walk.stop();
             cameraComponent.setOffset(this.toggle);
             cameraComponent.update();
             cameraComponent.resetLastPosition();
             loudWalk.setVolume(2f);
+            roar.setVolume(1.5f);
+            roar.play();
             loudWalk.play();
         } else {
             entity.getEvents().trigger("moveRight");
@@ -69,6 +72,18 @@ public class CameraShakeComponent extends Component {
             cameraComponent.setOffset(0);
             cameraComponent.update();
             loudWalk.stop();
+            if (distance >= 32 && distance < 40) {
+                walk.setVolume(1f);
+            }
+            if (distance >= 40 && distance < 50) {
+                walk.setVolume(0.7f);
+            }
+            if (distance >= 50 && distance < 60) {
+                walk.setVolume(0.3f);
+            }
+            if (distance > 60) {
+                walk.setVolume(0f);
+            }
             walk.play();
         }
     }
