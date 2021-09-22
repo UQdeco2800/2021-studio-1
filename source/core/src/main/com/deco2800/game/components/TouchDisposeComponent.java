@@ -3,6 +3,7 @@ package com.deco2800.game.components;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
+import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
@@ -47,7 +48,6 @@ public class TouchDisposeComponent extends Component {
             // Isn't an obstacle or NPC, don't dispose of
             return;
         }
-
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
 
         if (entity.getPosition().x < target.getPosition().x) {
@@ -56,6 +56,7 @@ public class TouchDisposeComponent extends Component {
         }
 
         // Dispose target after the physics step
+        target.getEvents().trigger("dispose");
         entityService.disposeAfterStep(target);
     }
 }

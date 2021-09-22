@@ -12,5 +12,6 @@ public enum EntityTypes {
     SKELETON,
     WOLF,
     FIRESPIRIT,
-    GIANT
+    GIANT,
+    PLAYERSPEAR
 }
