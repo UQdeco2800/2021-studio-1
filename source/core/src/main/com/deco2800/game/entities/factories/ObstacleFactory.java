@@ -156,7 +156,7 @@ public class ObstacleFactory {
         if (world == null) {
             floor.addComponent(new TextureRenderComponent("images/floor.png"));
         } else {
-            floor.addComponent(new TextureRenderComponent("images/" + world + ".png"));
+            floor.addComponent(new TextureRenderComponent("images/floors" + world + ".png"));
         }
         floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         floor.getComponent(TextureRenderComponent.class).scaleEntity();
