@@ -38,7 +38,7 @@ public class GroupDisposeComponent extends Component {
      */
     public void dispose() {
         for (Entity entity : entities) {
-            if (entity != null) entityService.disposeAfterStep(entity);
+            if (entity != null) entity.flagDelete();
         }
     }
 }

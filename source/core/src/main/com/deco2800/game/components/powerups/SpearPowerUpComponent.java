@@ -3,6 +3,7 @@ package com.deco2800.game.components.powerups;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.deco2800.game.components.LevelLoadTriggerComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EntityTypes;
@@ -12,6 +13,8 @@ import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controls the behaviour for the spear.
@@ -20,6 +23,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
 public class SpearPowerUpComponent extends PowerUpComponent {
     private Entity spear;
     private Vector2 spearDirection;
+    private static final Logger logger = LoggerFactory.getLogger(SpearPowerUpComponent.class);
 
     // Update flags to check
     private boolean active;
@@ -36,7 +40,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     }
 
     public void obtainSpear() {
-        System.out.println("Reset throws");
+        logger.info("Reset throws");
         thrown = 0;
     }
 

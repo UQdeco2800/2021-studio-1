@@ -181,6 +181,8 @@ public class PlayerFactory {
 /**
  * Relative player is basically an object that abstracts the illusion of forward movement.
  * Its x value is always going up, and obstacles are generated and moved based on its movement.
+ *
+ * @return basic player entity
  */
   public static Entity createAbstractPlayer() {
     AITaskComponent aiComponent =
