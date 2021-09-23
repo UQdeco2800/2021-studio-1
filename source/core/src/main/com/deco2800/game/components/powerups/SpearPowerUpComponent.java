@@ -2,6 +2,7 @@ package com.deco2800.game.components.powerups;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
@@ -48,12 +49,15 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         if (spear != null) {
             Body spearBod = spear.getComponent(PhysicsComponent.class).getBody();
             // If after flying, the spear stops or goes below y = 0, deactivate and reset
-            if ((active && (spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0)) {
-                if (thrown >= 3) {
-                    thrown = 0;
-                    setEnabled(false);
-                }
+            if (thrown >= 3) {
+                thrown = 0;
+                setEnabled(false);
+            }
+            if ((active && spear.getCenterPosition().y < 0)) {
                 disposeSpear();
+            } else if (active && spearBod.getLinearVelocity().isZero()) {
+                spear.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+                active = false;
             }
         }
     }
