@@ -8,22 +8,23 @@ import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SpearComponent extends Component {
     private Entity player;
-    private boolean makeSensor;
-    private int collision;
-    private static final Logger logger = LoggerFactory.getLogger(SpearComponent.class);
 
+    /**
+     * Add an event to the spear when it is created
+     */
     public void create() {
-        makeSensor = false;
         entity.getEvents().addListener("collisionStart", this::handleSpearCollision);
     }
 
+    /**
+     * If the spear is stationary (i.e. stuck to a wall) and the player is falling or on a surface, the spear can be
+     * collided with, otherwise it cannot. This allows for the player to jump through the spear from underneath and
+     * land on top of it and use it as a platform
+     */
     public void update() {
-        //entity.getComponent(ColliderComponent.class).setSensor(makeSensor);
         if (entity.getComponent(PhysicsComponent.class).getBody().getType() == BodyDef.BodyType.StaticBody) {
             if (player.getComponent(PhysicsComponent.class).getBody().getLinearVelocity().y <= 0) {
                 entity.getComponent(ColliderComponent.class).setSensor(false);
@@ -33,6 +34,14 @@ public class SpearComponent extends Component {
         }
     }
 
+    /**
+     * If the spear is stationary (i.e. stuck to a wall) and it collides with another spear, remove the other spear.
+     * This prevents spears from stacking up or being placed too close together.
+     * Otherwise, if the spear collides with an enemy, kill the enemy and delete the spear
+     *
+     * @param spearFixture - the fixture for the spear in the collision
+     * @param otherFixture - the fixture for the other entity in the collision with the spear
+     */
     private void handleSpearCollision (Fixture spearFixture, Fixture otherFixture) {
         BodyUserData spearBody = (BodyUserData) spearFixture.getBody().getUserData();
         BodyUserData otherBody = (BodyUserData) otherFixture.getBody().getUserData();
@@ -51,6 +60,11 @@ public class SpearComponent extends Component {
         }
     }
 
+    /**
+     * Sets the player entity for the spear (used in the logic to allow the player to collide with spear (see update())
+     *
+     * @param player - the player entity
+     */
     public void setPlayer(Entity player) {
         this.player = player;
     }
