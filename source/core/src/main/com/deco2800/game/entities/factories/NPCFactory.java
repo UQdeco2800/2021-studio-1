@@ -81,7 +81,6 @@ public class NPCFactory {
             skeleton.getCenterPosition().y + 0.3f);
         head.setPosition(circleOffset);
         skeleton.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
-        skeleton.getEvents().addListener("dispose", skeleton::flagDelete);
 
         for(Fixture fixture : skeleton.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
             fixture.setSensor(true);
@@ -136,7 +135,6 @@ public class NPCFactory {
                 wolf.getCenterPosition().y + 0.15f);
         neck.setPosition(neckOffset);
         wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck,1.0f);
-        wolf.getEvents().addListener("dispose", wolf::flagDelete);
 
         for(Fixture fixture : wolf.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
             fixture.setSensor(true);
@@ -171,7 +169,6 @@ public class NPCFactory {
                 fireSpirit.getCenterPosition().y + 0.35f);
         head.setPosition(circleOffset);
         fireSpirit.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
-        fireSpirit.getEvents().addListener("dispose", fireSpirit::flagDelete);
 
         for(Fixture fixture : fireSpirit.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
             fixture.setSensor(true);

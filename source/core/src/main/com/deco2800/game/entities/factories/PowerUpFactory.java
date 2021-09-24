@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
@@ -108,7 +109,7 @@ public class PowerUpFactory {
                 new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new ColliderComponent())
-                        .addComponent(new HitboxComponent());
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.POWERUP));
 
         powerUp.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
 

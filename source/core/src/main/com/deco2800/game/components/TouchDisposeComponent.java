@@ -44,8 +44,9 @@ public class TouchDisposeComponent extends Component {
         }
 
         if (!(PhysicsLayer.contains(PhysicsLayer.OBSTACLE, other.getFilterData().categoryBits)
-                || PhysicsLayer.contains(PhysicsLayer.NPC, other.getFilterData().categoryBits))) {
-            // Isn't an obstacle or NPC, don't dispose of
+                || PhysicsLayer.contains(PhysicsLayer.NPC, other.getFilterData().categoryBits)
+                || PhysicsLayer.contains(PhysicsLayer.POWERUP, other.getFilterData().categoryBits))) {
+            // Isn't an obstacle, NPC, or power up, don't dispose of
             return;
         }
         Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
@@ -56,7 +57,6 @@ public class TouchDisposeComponent extends Component {
         }
 
         // Dispose target after the physics step
-        target.getEvents().trigger("dispose");
-        entityService.disposeAfterStep(target);
+        target.flagDelete();
     }
 }
