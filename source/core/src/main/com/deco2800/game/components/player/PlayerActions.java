@@ -162,7 +162,6 @@ public class PlayerActions extends Component {
       walkSpeed.add(new Vector2(0.1f,0f));
       mediumSpeed.add(new Vector2(0.2f,0f));
       maxSpeed.add(new Vector2(0.3f,0f));
-      System.out.println("updated speed");
     }
   }
 

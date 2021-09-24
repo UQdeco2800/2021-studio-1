@@ -94,7 +94,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             active = true;
             thrown += 1;
             spear = ProjectileFactory.createSpearEntity();
-            spear.getComponent(SpearComponent.class).setPlayer(entity);
             ServiceLocator.getEntityService().register(spear);
 
             spear.getEvents().addListener("dispose", this::disposeSpear);
