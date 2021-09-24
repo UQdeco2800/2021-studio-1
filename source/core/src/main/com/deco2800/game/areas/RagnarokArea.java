@@ -115,7 +115,7 @@ public class RagnarokArea extends GameArea {
         // TODO: Add power ups to RagEdit and reformat spawn method
         //generatePowerUps();
 
-        playMusic(); //TODO: eventual move to music
+        //playMusic(); //TODO: eventual move to music
         // also this is the cause of all music playing at once, because multiple ragnorok areas
         // get made...
 
@@ -136,8 +136,8 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(racerTextures);
         resourceService.loadTextureAtlases(racerTextureAtlases);
-        resourceService.loadSounds(racerSounds);
-        resourceService.loadMusic(racerMusic);
+        //resourceService.loadSounds(racerSounds);
+        //resourceService.loadMusic(racerMusic);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -201,10 +201,9 @@ public class RagnarokArea extends GameArea {
 
         wallOfDeath.addComponent(new VariableSpeedComponent(getPlayer(), deathGiant, sfx));
 
-        spawnEntityAt(wallOfDeath, leftPos, true, true);
-        spawnEntityAt(sfx, leftPos2, true, true);
-        spawnEntityAt(deathGiant, leftPos3, true, true);
-
+        //spawnEntityAt(wallOfDeath, leftPos, true, true);
+        //spawnEntityAt(sfx, leftPos2, true, true);
+        //spawnEntityAt(deathGiant, leftPos3, true, true);
     }
 
     protected void spawnLevelLoadTrigger(int x) {
