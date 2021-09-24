@@ -83,6 +83,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
                         true);
             }
         }
+        entity.getEvents().trigger("updatePowerUps");
     }
 
     /**
