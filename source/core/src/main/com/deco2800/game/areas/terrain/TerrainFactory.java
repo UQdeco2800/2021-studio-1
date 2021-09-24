@@ -64,44 +64,59 @@ public class TerrainFactory {
     ResourceService resourceService = ServiceLocator.getResourceService();
     switch (terrainType) {
       case RAGNAROK_MAIN:
-        TextureRegion background =
+        TextureRegion orthoGrass =
             new TextureRegion(resourceService.getAsset("images/Backgrounds/asgard_bg.png",
-                Texture.class));
-        return createRagnarockTerrain(0.5f, background);
+                    Texture.class));
+        TextureRegion orthoTuft =
+            new TextureRegion(resourceService.getAsset("images/Backgrounds/asgard_bg.png", Texture.class));
+        TextureRegion orthoRocks =
+            new TextureRegion(resourceService.getAsset("images/Backgrounds/asgard_bg.png", Texture.class));
+        return createRagnarockTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
       default:
         return null;
     }
   }
 
   private TerrainComponent createRagnarockTerrain(
-      float tileWorldSize, TextureRegion background) {
-    GridPoint2 tilePixelSize = new GridPoint2(background.getRegionWidth(), background.getRegionHeight());
-    TiledMap tiledMap = createBackGndTiles(tilePixelSize, background);
-    TiledMapRenderer renderer = createRenderer(tiledMap, 40*tileWorldSize/tilePixelSize.y);
+      float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
+    GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
+    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, grass, grassTuft, rocks);
+    TiledMapRenderer renderer = createRenderer(tiledMap, 60*tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
   private TiledMapRenderer createRenderer(TiledMap tiledMap, float tileScale) {
-    return new OrthogonalTiledMapRenderer(tiledMap, tileScale);
+    switch (orientation) {
+      case ORTHOGONAL:
+        return new OrthogonalTiledMapRenderer(tiledMap, tileScale);
+      case ISOMETRIC:
+        return new IsometricTiledMapRenderer(tiledMap, tileScale);
+      case HEXAGONAL:
+        return new HexagonalTiledMapRenderer(tiledMap, tileScale);
+      default:
+        return null;
+    }
   }
 
-  private TiledMap createBackGndTiles(
-      GridPoint2 tileSize, TextureRegion background) {
+  private TiledMap createForestDemoTiles(
+      GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
     TiledMap tiledMap = new TiledMap();
-    TerrainTile backgndTile = new TerrainTile(background);
+    TerrainTile grassTile = new TerrainTile(grass);
+    TerrainTile grassTuftTile = new TerrainTile(grassTuft);
+    TerrainTile rockTile = new TerrainTile(rocks);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
-    // Create base background
-    fillTiles(layer, MAP_SIZE, backgndTile);
+    // Create base grass
+    fillTiles(layer, MAP_SIZE, grassTile);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
   }
 
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
-    Cell cell = new Cell();
-    cell.setTile(tile);
-    layer.setCell(0, mapSize.x/40 - 1, cell);
+      Cell cell = new Cell();
+      cell.setTile(tile);
+      layer.setCell(0, mapSize.x/60 - 1, cell);
   }
 
   /**

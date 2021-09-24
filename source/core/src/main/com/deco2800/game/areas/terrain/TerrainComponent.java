@@ -40,7 +40,18 @@ public class TerrainComponent extends RenderComponent {
   }
 
   public Vector2 tileToWorldPosition(int x, int y) {
-    return new Vector2(x * tileSize, y * tileSize);
+    switch (orientation) {
+      case HEXAGONAL:
+        float hexLength = tileSize / 2;
+        float yOffset = (x % 2 == 0) ? 0.5f * tileSize : 0f;
+        return new Vector2(x * (tileSize + hexLength) / 2, y + yOffset);
+      case ISOMETRIC:
+        return new Vector2((x + y) * tileSize / 2, (y - x) * tileSize / 2);
+      case ORTHOGONAL:
+        return new Vector2(x * tileSize, y * tileSize);
+      default:
+        return null;
+    }
   }
 
   public float getTileSize() {
