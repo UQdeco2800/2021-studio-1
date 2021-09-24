@@ -81,6 +81,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             thrown = 0;
             setEnabled(false);
         }
+        entity.getEvents().trigger("updatePowerUps");
     }
 
     /**

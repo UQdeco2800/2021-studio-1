@@ -99,6 +99,7 @@ public class CombatStatsComponent extends Component {
     if (entity.getComponent(ShieldPowerUpComponent.class).getActive() &&
             attacker.getEntity().getType() != EntityTypes.WALL) {
       entity.getEvents().trigger("block");
+
     } else {
       int newHealth = getHealth() - attacker.getBaseAttack();
       setHealth(newHealth);

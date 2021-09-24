@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.components.powerups.PowerUpGUIComponent;
 import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
 import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 
@@ -205,7 +206,6 @@ public class PlayerActions extends Component {
         default:
           break;
       }
-
       powerUp.flagDelete();
     }
   }

@@ -36,6 +36,7 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
                 enabled = false;
             }
         }
+        entity.getEvents().trigger("updatePowerUps");
     }
 
     /**

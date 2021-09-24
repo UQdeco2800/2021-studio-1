@@ -123,9 +123,11 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   private void triggerLightningEvent() {
     entity.getEvents().trigger("usePowerUp", EntityTypes.LIGHTNINGPOWERUP);
+    entity.getEvents().trigger("updatePowerUps");
   }
 
   private void triggerSpearEvent() {
     entity.getEvents().trigger("usePowerUp", EntityTypes.SPEARPOWERUP);
+    entity.getEvents().trigger("updatePowerUps");
   }
 }
