@@ -28,11 +28,12 @@ import com.deco2800.game.utils.math.Vector2Utils;
 public class PlayerActions extends Component {
   private SpeedTypes playerSpeed;
   private long walkTime;
-  private static final Vector2 MAX_SPEED = new Vector2(7f, 1f); // Metres
+  private long gameTime;
+  private Vector2 maxSpeed = new Vector2(8f, 1f); // Metres
   // per second
-  private static final Vector2 MEDIUM_SPEED = new Vector2(4f, 1f);
+  private Vector2 mediumSpeed = new Vector2(6f, 1f);
   // Metres per second
-  private static final Vector2 WALK_SPEED = new Vector2(1f, 1f);
+  private Vector2 walkSpeed = new Vector2(4f, 1f);
   // Metres per second
 
   private PhysicsComponent physicsComponent;
@@ -49,6 +50,7 @@ public class PlayerActions extends Component {
   @Override
   public void create() {
     walkTime = ServiceLocator.getTimeSource().getTime();
+    gameTime = ServiceLocator.getTimeSource().getTime();
     playerSpeed = SpeedTypes.WALK_SPEED;
     physicsComponent = entity.getComponent(PhysicsComponent.class);
     playerInputComponent = entity.getComponent(KeyboardPlayerInputComponent.class);
@@ -73,6 +75,8 @@ public class PlayerActions extends Component {
     } else if (moving) {
       updateRunningSpeed();
     }
+
+    checkGameTime();
   }
 
   private void updateRunningSpeed() {
@@ -82,25 +86,26 @@ public class PlayerActions extends Component {
       falling = true;
     }
 
+    //Set the player speed
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity;
     switch(playerSpeed) {
       case WALK_SPEED:
-        desiredVelocity = runDirection.cpy().scl(WALK_SPEED);
+        desiredVelocity = runDirection.cpy().scl(walkSpeed);
         if (ServiceLocator.getTimeSource().getTimeSince(walkTime) > 250L) {
           playerSpeed = SpeedTypes.MEDIUM_SPEED;
           walkTime = ServiceLocator.getTimeSource().getTime();
         }
         break;
       case MEDIUM_SPEED:
-        desiredVelocity = runDirection.cpy().scl(MEDIUM_SPEED);
+        desiredVelocity = runDirection.cpy().scl(mediumSpeed);
         if (ServiceLocator.getTimeSource().getTimeSince(walkTime) > 500L) {
           playerSpeed = SpeedTypes.RUN_SPEED;
           walkTime = ServiceLocator.getTimeSource().getTime();
         }
         break;
       case RUN_SPEED:
-        desiredVelocity = runDirection.cpy().scl(MAX_SPEED);
+        desiredVelocity = runDirection.cpy().scl(maxSpeed);
         break;
       default:
         throw new IllegalStateException("Unexpected value: " + playerSpeed);
@@ -142,13 +147,22 @@ public class PlayerActions extends Component {
                   true);
         } else {
           body.applyLinearImpulse(new Vector2(-0.75f,  0f).scl(body.getMass()),
-                  body.getPosition(),
-                  true);
+                  body.getPosition(), true);
         }
       } else { //Applies no force when player is not moving
         body.applyLinearImpulse(new Vector2(0f,  0f).scl(body.getMass()),
                 body.getWorldCenter(), true);
       }
+    }
+  }
+
+  private void checkGameTime() {
+    if (ServiceLocator.getTimeSource().getTimeSince(gameTime) >= 5000L) {
+      gameTime = ServiceLocator.getTimeSource().getTime();
+      walkSpeed.add(new Vector2(0.1f,0f));
+      mediumSpeed.add(new Vector2(0.2f,0f));
+      maxSpeed.add(new Vector2(0.3f,0f));
+      System.out.println("updated speed");
     }
   }
 
