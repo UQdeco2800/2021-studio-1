@@ -36,13 +36,18 @@ public class SpearComponent extends Component {
     private void handleSpearCollision (Fixture spearFixture, Fixture otherFixture) {
         BodyUserData spearBody = (BodyUserData) spearFixture.getBody().getUserData();
         BodyUserData otherBody = (BodyUserData) otherFixture.getBody().getUserData();
+        if (entity.getComponent(PhysicsComponent.class).getBody().getType() == BodyDef.BodyType.StaticBody) {
+            if (otherBody.entity.getType() == EntityTypes.PLAYERSPEAR) {
+                otherBody.entity.flagDelete();
+            }
+        } else {
+            if (otherBody.entity.getType() == EntityTypes.FIRESPIRIT
+                    || otherBody.entity.getType() == EntityTypes.SKELETON
+                    || otherBody.entity.getType() == EntityTypes.WOLF) {
 
-        if (otherBody.entity.getType() == EntityTypes.FIRESPIRIT
-                || otherBody.entity.getType() == EntityTypes.SKELETON
-                || otherBody.entity.getType() == EntityTypes.WOLF) {
-
-            otherBody.entity.flagDelete();
-            spearBody.entity.getEvents().trigger("dispose");
+                otherBody.entity.flagDelete();
+                spearBody.entity.getEvents().trigger("dispose");
+            }
         }
     }
 
