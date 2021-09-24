@@ -72,9 +72,10 @@ public class ObstacleFactory {
         levelLoadTrigger.addComponent(new PhysicsComponent());
         levelLoadTrigger.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         Vector2 size = new Vector2(1, 20);
-        levelLoadTrigger.addComponent(new HitboxComponent());
+        levelLoadTrigger.addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
         levelLoadTrigger.getComponent(HitboxComponent.class).setAsBox(size);
         levelLoadTrigger.addComponent(new LevelLoadTriggerComponent());
+        levelLoadTrigger.setType(EntityTypes.OBSTACLE);
 
         return levelLoadTrigger;
     }
@@ -216,6 +217,7 @@ public class ObstacleFactory {
         collider.setScale(scale);
         collider.getComponent(ColliderComponent.class).setAsBoxAligned(size,
                 PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM);
+        collider.setType(EntityTypes.OBSTACLE);
         return collider;
     }
 

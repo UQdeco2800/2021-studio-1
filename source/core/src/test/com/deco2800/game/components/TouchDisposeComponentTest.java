@@ -38,7 +38,7 @@ class TouchDisposeComponentTest {
         Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionEnd", entityFixture, targetFixture);
 
-        verify(entityService).disposeAfterStep(target);
+        verify(target).flagDelete();
     }
 
     @Test
@@ -53,7 +53,22 @@ class TouchDisposeComponentTest {
         Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionEnd", entityFixture, targetFixture);
 
-        verify(entityService).disposeAfterStep(target);
+        verify(target).flagDelete();
+    }
+
+    @Test
+    void shouldDisposePOWERUP() {
+        short targetLayer = PhysicsLayer.POWERUP;
+        Entity entity = createDisposer();
+        Entity target = createTarget(targetLayer);
+        entity.setPosition(10f, 0f);
+        entityService.register(entity);
+        entityService.register(target);
+        Fixture entityFixture = entity.getComponent(HitboxComponent.class).getFixture();
+        Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();
+        entity.getEvents().trigger("collisionEnd", entityFixture, targetFixture);
+
+        verify(target).flagDelete();
     }
 
     @Test
@@ -68,7 +83,7 @@ class TouchDisposeComponentTest {
         Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionEnd", entityFixture, targetFixture);
 
-        verify(entityService, never()).disposeAfterStep(target);
+        verify(target, never()).flagDelete();
     }
 
     @Test
@@ -82,7 +97,7 @@ class TouchDisposeComponentTest {
         Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionStart", entityFixture, targetFixture);
 
-        verify(entityService, never()).disposeAfterStep(target);
+        verify(target, never()).flagDelete();
     }
 
     @Test
@@ -96,7 +111,7 @@ class TouchDisposeComponentTest {
         Fixture targetFixture = target.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionStart", entityFixture, targetFixture);
 
-        verify(entityService, never()).disposeAfterStep(target);
+        verify(target, never()).flagDelete();
     }
 
     Entity createDisposer() {
@@ -111,7 +126,7 @@ class TouchDisposeComponentTest {
 
     Entity createTarget(short layer) {
         Entity target =
-                new Entity()
+                spy(Entity.class)
                         .addComponent(new PhysicsComponent())
                         .addComponent(new HitboxComponent().setLayer(layer));
         target.create();
