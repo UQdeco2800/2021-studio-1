@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.components.powerups.PowerUpGUIComponent;
 import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
 import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 
@@ -15,6 +16,8 @@ import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
+import com.deco2800.game.services.GameTime;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
 /**
@@ -23,9 +26,14 @@ import com.deco2800.game.utils.math.Vector2Utils;
  * class.
  */
 public class PlayerActions extends Component {
-  private static final Vector2 MAX_SPEED = new Vector2(7f, 1f); // Metres
+  private SpeedTypes playerSpeed;
+  private long walkTime;
+  private long gameTime;
+  private Vector2 maxSpeed = new Vector2(8f, 1f); // Metres
   // per second
-  private static final Vector2 CROUCH_SPEED = new Vector2(1f, 1f);
+  private Vector2 mediumSpeed = new Vector2(6f, 1f);
+  // Metres per second
+  private Vector2 walkSpeed = new Vector2(4f, 1f);
   // Metres per second
 
   private PhysicsComponent physicsComponent;
@@ -34,7 +42,6 @@ public class PlayerActions extends Component {
 
   private Vector2 runDirection = Vector2.Zero.cpy();
   private Vector2 previousDirection = Vector2.Zero.cpy();
-
   public static boolean moving = false;
   private boolean jumping = false;
   private boolean falling = false;
@@ -42,13 +49,14 @@ public class PlayerActions extends Component {
 
   @Override
   public void create() {
+    walkTime = ServiceLocator.getTimeSource().getTime();
+    gameTime = ServiceLocator.getTimeSource().getTime();
+    playerSpeed = SpeedTypes.WALK_SPEED;
     physicsComponent = entity.getComponent(PhysicsComponent.class);
     playerInputComponent = entity.getComponent(KeyboardPlayerInputComponent.class);
     entity.getEvents().addListener("run", this::run);
     entity.getEvents().addListener("stop run", this::stopRunning);
     entity.getEvents().addListener("jump", this::jump);
-    entity.getEvents().addListener("crouch", this::crouch);
-    entity.getEvents().addListener("stop crouch", this::stopCrouching);
     entity.getEvents().addListener("collisionStart", this::obtainPowerUp);
     entity.getEvents().addListener("usePowerUp", this::usePowerUp);
   }
@@ -58,8 +66,8 @@ public class PlayerActions extends Component {
     whichAnimation();
     // for pause condition
     if (!playerInputComponent.isPlayerInputEnabled()) {
-        return;}
-
+        return;
+    }
     if (falling) {
       checkFalling();
     } else if (jumping) {
@@ -67,6 +75,8 @@ public class PlayerActions extends Component {
     } else if (moving) {
       updateRunningSpeed();
     }
+
+    checkGameTime();
   }
 
   private void updateRunningSpeed() {
@@ -75,13 +85,33 @@ public class PlayerActions extends Component {
     if (currentYVelocity > 0.01f || currentYVelocity < -0.01f) {
       falling = true;
     }
+
+    //Set the player speed
     Vector2 velocity = body.getLinearVelocity();
     Vector2 desiredVelocity;
-    if (crouching) { //Determine speed based on whether crouching or not
-      desiredVelocity = runDirection.cpy().scl(CROUCH_SPEED);
-    } else {
-      desiredVelocity = runDirection.cpy().scl(MAX_SPEED);
+    switch(playerSpeed) {
+      case WALK_SPEED:
+        desiredVelocity = runDirection.cpy().scl(walkSpeed);
+        if (ServiceLocator.getTimeSource().getTimeSince(walkTime) > 250L) {
+          playerSpeed = SpeedTypes.MEDIUM_SPEED;
+          walkTime = ServiceLocator.getTimeSource().getTime();
+        }
+        break;
+      case MEDIUM_SPEED:
+        desiredVelocity = runDirection.cpy().scl(mediumSpeed);
+        if (ServiceLocator.getTimeSource().getTimeSince(walkTime) > 500L) {
+          playerSpeed = SpeedTypes.RUN_SPEED;
+          walkTime = ServiceLocator.getTimeSource().getTime();
+        }
+        break;
+      case RUN_SPEED:
+        desiredVelocity = runDirection.cpy().scl(maxSpeed);
+        break;
+      default:
+        throw new IllegalStateException("Unexpected value: " + playerSpeed);
+
     }
+
     // impulse = (desiredVel - currentVel) * mass
     Vector2 impulse = desiredVelocity.sub(velocity).scl(body.getMass());
     body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
@@ -117,13 +147,22 @@ public class PlayerActions extends Component {
                   true);
         } else {
           body.applyLinearImpulse(new Vector2(-0.75f,  0f).scl(body.getMass()),
-                  body.getPosition(),
-                  true);
+                  body.getPosition(), true);
         }
       } else { //Applies no force when player is not moving
         body.applyLinearImpulse(new Vector2(0f,  0f).scl(body.getMass()),
                 body.getWorldCenter(), true);
       }
+    }
+  }
+
+  private void checkGameTime() {
+    if (ServiceLocator.getTimeSource().getTimeSince(gameTime) >= 5000L) {
+      gameTime = ServiceLocator.getTimeSource().getTime();
+      walkSpeed.add(new Vector2(0.1f,0f));
+      mediumSpeed.add(new Vector2(0.2f,0f));
+      maxSpeed.add(new Vector2(0.3f,0f));
+      System.out.println("updated speed");
     }
   }
 
@@ -134,6 +173,10 @@ public class PlayerActions extends Component {
    * @param direction direction to move in
    */
   void run(Vector2 direction) {
+    if (!moving) {
+      playerSpeed = SpeedTypes.WALK_SPEED;
+      walkTime = ServiceLocator.getTimeSource().getTime();
+    }
     this.runDirection = direction;
     moving = true;
     //Determine which animation to play
@@ -157,23 +200,6 @@ public class PlayerActions extends Component {
             .getLinearVelocity().y == 0) {
       jumping = true;
     }
-    //Determine which animation to play
-    whichAnimation();
-  }
-
-  void crouch() {
-    crouching = true;
-    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
-            .scl(0.5F));
-    //Determine which animation to play
-    whichAnimation();
-  }
-
-  void stopCrouching() {
-    crouching = false;
-    entity.getComponent(ColliderComponent.class).setAsBox(entity.getScale()
-            .scl(2F));
-    update();
     //Determine which animation to play
     whichAnimation();
   }
@@ -205,7 +231,6 @@ public class PlayerActions extends Component {
         default:
           break;
       }
-
       powerUp.flagDelete();
     }
   }
@@ -471,4 +496,10 @@ public class PlayerActions extends Component {
               .startAnimation("shield-jump-left");
     }
   }
+}
+
+enum SpeedTypes {
+  RUN_SPEED,
+  MEDIUM_SPEED,
+  WALK_SPEED
 }

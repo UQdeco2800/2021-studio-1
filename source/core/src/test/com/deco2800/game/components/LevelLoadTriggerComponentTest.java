@@ -9,6 +9,7 @@ import com.deco2800.game.physics.PhysicsService;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.ui.terminal.Terminal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,7 @@ import static org.mockito.Mockito.*;
 
 class LevelLoadTriggerComponentTest {
     AreaService areaService;
+    Terminal terminal;
 
     @BeforeEach
     void beforeEach() {
@@ -23,6 +25,8 @@ class LevelLoadTriggerComponentTest {
         ServiceLocator.registerEntityService(new EntityService());
         areaService = mock(AreaService.class);
         ServiceLocator.registerAreaService(areaService);
+        terminal = mock(Terminal.class);
+        ServiceLocator.registerTerminalService(terminal);
     }
 
     @Test
@@ -33,7 +37,7 @@ class LevelLoadTriggerComponentTest {
         Fixture playerFixture = player.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionStart", entityFixture, playerFixture);
 
-        verify(areaService).load(anyString());
+        verify(terminal).sendTerminal("-load " + anyString());
     }
 
     @Test
@@ -44,7 +48,7 @@ class LevelLoadTriggerComponentTest {
         Fixture playerFixture = other.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionStart", entityFixture, playerFixture);
 
-        verify(areaService, never()).load(anyString());
+        verify(terminal, never()).sendTerminal("-load " + anyString());
     }
 
     @Test
@@ -55,7 +59,7 @@ class LevelLoadTriggerComponentTest {
         Fixture playerFixture = other.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionStart", entityFixture, playerFixture);
 
-        verify(areaService, never()).load(anyString());
+        verify(terminal, never()).sendTerminal("-load " + anyString());
     }
 
     @Test
@@ -66,7 +70,7 @@ class LevelLoadTriggerComponentTest {
         Fixture playerFixture = other.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionStart", entityFixture, playerFixture);
 
-        verify(areaService, never()).load(anyString());
+        verify(terminal, never()).sendTerminal("-load " + anyString());
     }
 
     @Test
@@ -77,7 +81,7 @@ class LevelLoadTriggerComponentTest {
         Fixture playerFixture = player.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionEnd", entityFixture, playerFixture);
 
-        verify(areaService, never()).load(anyString());
+        verify(terminal, never()).sendTerminal("-load " + anyString());
     }
 
     @Test
@@ -92,7 +96,7 @@ class LevelLoadTriggerComponentTest {
         entityFixture = entity.getComponent(HitboxComponent.class).getFixture();
         entity.getEvents().trigger("collisionStart", entityFixture, playerFixture);
 
-        verify(areaService, times(2)).load(anyString());
+        verify(terminal, times(2)).sendTerminal("-load " + anyString());
     }
 
     @Test
@@ -109,21 +113,7 @@ class LevelLoadTriggerComponentTest {
             entity.getEvents().trigger("collisionStart", entityFixture, playerFixture);
         }
 
-        verify(areaService, times(5)).load(anyString());
-    }
-
-    @Test
-    void shouldDisposeAfterUse() {
-        EntityService entityService = mock(EntityService.class);
-        ServiceLocator.registerEntityService(entityService);
-
-        Entity entity = createLevelLoad();
-        Entity player = createPlayer();
-        Fixture entityFixture = entity.getComponent(HitboxComponent.class).getFixture();
-        Fixture playerFixture = player.getComponent(HitboxComponent.class).getFixture();
-        entity.getEvents().trigger("collisionStart", entityFixture, playerFixture);
-
-        verify(entityService).disposeAfterStep(entity);
+        verify(terminal, times(5)).sendTerminal("-load " + anyString());
     }
 
     Entity createLevelLoad() {

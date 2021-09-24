@@ -11,6 +11,7 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
+import com.deco2800.game.components.powerups.PowerUpGUIComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -40,7 +41,11 @@ import java.io.IOException;
  */
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {};
+  private static final String[] mainGameTextures = {
+          "images/powerup-shield.png",
+          "images/powerup-spear.png",
+          "images/powerup-lightning.png"
+  };
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
@@ -195,10 +200,11 @@ public class MainGameScreen extends ScreenAdapter {
     ui.addComponent(new InputDecorator(stage, 10))
         .addComponent(new PerformanceDisplay())
         .addComponent(new MainGameActions(this.game))
-        .addComponent(new MainGamePannelDisplay())
+        //.addComponent(new MainGamePannelDisplay())
         .addComponent(theOg)
         .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay());
+        .addComponent(new TerminalDisplay())
+        .addComponent(new PowerUpGUIComponent());
 
     ServiceLocator.getEntityService().register(ui);
   }

@@ -13,6 +13,7 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.components.powerups.PowerUpGUIComponent;
 import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
 import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 import com.deco2800.game.components.tasks.WanderTask;
@@ -58,7 +59,8 @@ public class PlayerFactory {
             .addComponent(new CameraComponent())
             .addComponent(new LightningPowerUpComponent())
             .addComponent(new ShieldPowerUpComponent())
-            .addComponent(new SpearPowerUpComponent());
+            .addComponent(new SpearPowerUpComponent())
+                .addComponent(new PowerUpGUIComponent());
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(ServiceLocator.getResourceService()
@@ -181,6 +183,8 @@ public class PlayerFactory {
 /**
  * Relative player is basically an object that abstracts the illusion of forward movement.
  * Its x value is always going up, and obstacles are generated and moved based on its movement.
+ *
+ * @return basic player entity
  */
   public static Entity createAbstractPlayer() {
     AITaskComponent aiComponent =

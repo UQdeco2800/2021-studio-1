@@ -42,6 +42,7 @@ public class LightningPowerUpComponent extends PowerUpComponent {
                 }
             }
         }
+        entity.getEvents().trigger("updatePowerUps");
     }
 
     /**

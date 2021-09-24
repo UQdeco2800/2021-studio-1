@@ -63,7 +63,9 @@ public class RagnarokArea extends GameArea {
             "images/floors/jotunheimr.png",
             "images/powerup-shield.png",
             "images/powerup-spear.png",
-            "images/blue_bck.png"
+            "images/blue_bck.png",
+            "images/Backgrounds/black_back.png",
+            "images/Backgrounds/asgard_bg.png"
     };
 
     //TODO: make Json,
@@ -204,7 +206,6 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(wallOfDeath, leftPos, true, true);
         spawnEntityAt(sfx, leftPos2, true, true);
         spawnEntityAt(deathGiant, leftPos3, true, true);
-
     }
 
     protected void spawnLevelLoadTrigger(int x) {

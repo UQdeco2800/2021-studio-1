@@ -2,12 +2,14 @@ package com.deco2800.game.components.powerups;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.entities.factories.ProjectileFactory;
 import com.deco2800.game.physics.BodyUserData;
+import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -48,13 +50,13 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         if (spear != null) {
             Body spearBod = spear.getComponent(PhysicsComponent.class).getBody();
             // If after flying, the spear stops or goes below y = 0, deactivate and reset
-            if ((active && (spearBod.getLinearVelocity().isZero()) || spear.getCenterPosition().y < 0)) {
-                if (thrown >= 3) {
-                    thrown = 0;
-                    setEnabled(false);
-                }
+            if ((active && spear.getCenterPosition().y < 0)) {
                 disposeSpear();
+            } else if (active && spearBod.getLinearVelocity().isZero()) {
+                spear.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
+                active = false;
             }
+
         }
     }
 
@@ -63,10 +65,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      */
     @Override
     public void update() {
-        if (thrown >= 3) {
-            thrown = 0;
-            setEnabled(false);
-        } else if (active) {
+        if (active) {
             if (spearDirection.hasSameDirection(Vector2Utils.RIGHT)) {
                 spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
                         new Vector2(5f, 0f),
@@ -78,7 +77,11 @@ public class SpearPowerUpComponent extends PowerUpComponent {
                         spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
                         true);
             }
+        } else if (thrown >= 3) {
+            thrown = 0;
+            setEnabled(false);
         }
+        entity.getEvents().trigger("updatePowerUps");
     }
 
     /**
@@ -87,16 +90,13 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      */
     @Override
     public void activate() {
-        if (thrown >= 3) {
-            thrown = 0;
-            setEnabled(false);
-        } else if (!active ) {
+        if (!active ) {
             active = true;
             thrown += 1;
             spear = ProjectileFactory.createSpearEntity();
+            spear.getComponent(SpearComponent.class).setPlayer(entity);
             ServiceLocator.getEntityService().register(spear);
 
-            spear.getEvents().addListener("collisionStart", this::killEnemy);
             spear.getEvents().addListener("dispose", this::disposeSpear);
 
             if (entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
@@ -124,8 +124,10 @@ public class SpearPowerUpComponent extends PowerUpComponent {
                 spear.getComponent(AnimationRenderComponent.class)
                         .startAnimation("fly-left");
             }
+        } else if (thrown >= 3) {
+            thrown = 0;
+            setEnabled(false);
         }
-
     }
 
     /**
@@ -161,23 +163,4 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      * @return the number of throws
      */
     public int getThrown() { return thrown;}
-
-    /**
-     * Deletes enemy when spear hits them
-     *
-     * @param spearFixture - the fixture attached to the spear body
-     * @param otherFixture - the fixture attached to the enemies body
-     */
-    private void killEnemy (Fixture spearFixture, Fixture otherFixture) {
-        BodyUserData spearBody = (BodyUserData) spearFixture.getBody().getUserData();
-        BodyUserData otherBody = (BodyUserData) otherFixture.getBody().getUserData();
-
-        if (otherBody.entity.getType() == EntityTypes.FIRESPIRIT
-                || otherBody.entity.getType() == EntityTypes.SKELETON
-                || otherBody.entity.getType() == EntityTypes.WOLF) {
-
-            otherBody.entity.flagDelete();
-            spearBody.entity.getEvents().trigger("dispose");
-        }
-    }
 }

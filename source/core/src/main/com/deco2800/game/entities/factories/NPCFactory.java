@@ -114,7 +114,6 @@ public class NPCFactory {
 
         wolf.setScale(1.3f, 1f);
 
-        // NEED TO CHANGE COLLISION BOXES -> RUN THROUGH ENEMIES
         //create body collision box using collider component
         wolf.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(1f,
                 0.6f), PhysicsComponent.AlignX.CENTER,
@@ -169,7 +168,6 @@ public class NPCFactory {
                 fireSpirit.getCenterPosition().y + 0.35f);
         head.setPosition(circleOffset);
         fireSpirit.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
-        fireSpirit.getEvents().addListener("dispose", fireSpirit::flagDelete);
 
         for(Fixture fixture : fireSpirit.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
             fixture.setSensor(true);
