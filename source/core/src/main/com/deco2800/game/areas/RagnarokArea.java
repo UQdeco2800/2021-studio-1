@@ -64,7 +64,9 @@ public class RagnarokArea extends GameArea {
             "images/floors/jotunheimr.png",
             "images/powerup-shield.png",
             "images/powerup-spear.png",
-            "images/blue_bck.png"
+            "images/blue_bck.png",
+            "images/Backgrounds/black_back.png",
+            "images/Backgrounds/asgard_bg.png"
     };
 
     //TODO: make Json,
