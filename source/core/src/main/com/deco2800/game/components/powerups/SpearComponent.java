@@ -32,13 +32,10 @@ public class SpearComponent extends Component {
      */
     private void spearCollisionWithPlayer (Contact contact, BodyUserData spear,
                                        BodyUserData other) {
-        System.out.println("spear collision");
         if (entity.getComponent(PhysicsComponent.class).getBody().getType() == BodyDef.BodyType.StaticBody) {
-            System.out.println("spear collision while static");
             if (other.entity.getType() == EntityTypes.PLAYER &&
                     other.entity.getComponent(PhysicsComponent.class)
                             .getBody().getLinearVelocity().y > 0) {
-                System.out.println("spear collision with player");
                 contact.setEnabled(false);
             }
         }
@@ -59,11 +56,8 @@ public class SpearComponent extends Component {
                 (BodyUserData) spearFixture.getBody().getUserData();
         BodyUserData other =
                 (BodyUserData) otherFixture.getBody().getUserData();
-        System.out.println("spear collision");
         if (entity.getComponent(PhysicsComponent.class).getBody().getType() == BodyDef.BodyType.StaticBody) {
-            System.out.println("spear collision while static");
             if (other.entity.getType() == EntityTypes.PLAYERSPEAR) {
-                System.out.println("spear collision with spear");
                 other.entity.flagDelete();
             }
         } else {
