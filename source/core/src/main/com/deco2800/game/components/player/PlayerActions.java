@@ -188,7 +188,6 @@ public class PlayerActions extends Component {
    */
   void stopRunning() {
     this.runDirection = Vector2.Zero;
-    update();
     moving = false;
     //Determine which animation to play
     whichAnimation();
