@@ -21,6 +21,7 @@ import com.deco2800.game.components.VariableSpeedComponent;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.function.Function;
 
 public class RagnarokArea extends GameArea {
 
@@ -93,7 +94,7 @@ public class RagnarokArea extends GameArea {
     private static final String loudWalkMusic = "sounds/giant_walk.mp3";
     private static final String roarMusic = "sounds/roar.mp3";
     private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, loudWalkMusic,
-                                                roarMusic};
+            roarMusic};
 
     private final TerrainFactory terrainFactory;
 
@@ -272,76 +273,64 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
-     * Spawn a line of platforms from x[0] to x[end] having only a single collision entity and their
-     * texture given by world.
+     * * Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
+     * * spans from x[1] to x[n].
+     * * <p>
+     * * On disposal of the overarching collision entity, all floors created are disposed of.
+     * *
+     * * @param x     array of x coordinates to spawn floors at
+     * * @param y     the y coordinate to spawn all floors at
+     * * @param world the world type to load in. Must match the name of a .png file in
+     * *              assets/images (e.g. assets/images/world.png)
+     * Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
+     * spans from x[0] to the end of the map chunk at x[n + 3].
      * <p>
-     * On disposal of the overarching collision entity, all platforms created are disposed of.
+     * On disposal of the single collision entity, all map pieces created are disposed of.
      *
-     * @param x     array of x coordinates to spawn floors at
-     * @param y     the y coordinate to spawn all platforms at
+     * @param x     game x coordinates to spawn floors at
+     * @param y     game y coordinates to spawn floors at
+     * @param type  type of map piece, should only be either 'floor' or 'platform'
      * @param world the world type to load in. Must match the name of a .png file in
-     *              assets/images (e.g. assets/images/world.png)
+     *              assets/images/worlds (e.g. assets/images/worlds/world.png)
      */
-    protected void spawnPlatformChunk(int[] x, int y, String world) {
-        Entity[] platforms = new Entity[x.length];
+    protected void spawnMapChunk(int[] x, int y, String type, String world) {
+        // Define a functional interface to create an entity of either a floor or platform type.
+        Function<String, Entity> createMapEntity;
+        // The height of the map piece.
+        int height;
+        if (type.equals("floor")) {
+            createMapEntity = ObstacleFactory::createFloorNoCollider;
+            height = 3;
+        } else if (type.equals("platform")) {
+            createMapEntity = ObstacleFactory::createPlatformNoCollider;
+            height = 1;
+            // Platforms should be sitting at the top of a tile.
+            y += 2;
+        } else {
+            logger.error("Tried to spawn map chunk with incorrect type {}", type);
+            return;
+        }
 
-        // y + 2 so that the platforms are at the top of a terrain tile, not the bottom
-        y += 2;
-
+        Entity[] entities = new Entity[x.length];
         for (int i = 0; i < x.length; i++) {
-            Entity platform = ObstacleFactory.createPlatformNoCollider(world);
-            // add to array of entities so that they can all be disposed of at once
-            platforms[i] = platform;
+            Entity mapPart = createMapEntity.apply(world);
+            // Add to array of entities so that they can all be disposed of at once.
+            entities[i] = mapPart;
             GridPoint2 pos = new GridPoint2(x[i], y);
-            spawnEntityAt(platform, pos, false, false);
-            signup(pos, platform);
+            spawnEntityAt(mapPart, pos, false, false);
+            signup(pos, mapPart);
         }
 
         // Calculate width by getting taking away the starting position of the first platform from
-        // the starting position of the last platform. This is still one platform too short, so
+        // the starting position of the last platform. This is still one map piece too short, so
         // add 3 which is the width of a single tile.
         int width = x[x.length - 1] - x[0] + 3;
-        Entity collider = ObstacleFactory.createCollider(width, 1);
-        collider.addComponent(new GroupDisposeComponent(platforms));
+        Entity collider = ObstacleFactory.createCollider(width, height);
+        collider.addComponent(new GroupDisposeComponent(entities));
 
         GridPoint2 pos = new GridPoint2(x[0], y);
         spawnEntityAt(collider, pos, false, false);
         signup(pos, collider);
-    }
-
-    /**
-     * Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
-     * spans from x[1] to x[n].
-     * <p>
-     * On disposal of the overarching collision entity, all floors created are disposed of.
-     *
-     * @param x     array of x coordinates to spawn floors at
-     * @param y     the y coordinate to spawn all floors at
-     * @param world the world type to load in. Must match the name of a .png file in
-     *              assets/images (e.g. assets/images/world.png)
-     */
-    protected void spawnFloorChunk(int[] x, int y, String world) {
-        Entity[] floors = new Entity[x.length];
-        for (int i = 0; i < x.length; i++) {
-            Entity floor = ObstacleFactory.createFloorNoCollider(world);
-            // add to array of entities so that they can all be disposed of at once
-            floors[i] = floor;
-            GridPoint2 pos = new GridPoint2(x[i], y);
-            spawnEntityAt(floor, pos, false, false);
-            signup(pos, floor);
-        }
-
-        // Calculate width by getting taking away the starting position of the first platform from
-        // the starting position of the last platform. This is still one platform too short, so
-        // add 3 which is the width of a single tile.
-        int width = x[x.length - 1] - x[0] + 3;
-        Entity collider = ObstacleFactory.createCollider(width, 3);
-        collider.addComponent(new GroupDisposeComponent(floors));
-
-        GridPoint2 pos = new GridPoint2(x[0], y);
-        spawnEntityAt(collider, pos, false, false);
-        signup(pos, collider);
-
     }
 
     protected void spawnRocks(int x, int y) {
