@@ -99,7 +99,6 @@ public class CombatStatsComponent extends Component {
     if (entity.getComponent(ShieldPowerUpComponent.class).getActive() &&
             attacker.getEntity().getType() != EntityTypes.WALL &&
             attacker.getEntity().getType() != EntityTypes.GIANT) {
-      System.out.println(attacker.getEntity().getType());
       entity.getEvents().trigger("block");
 
     } else {
