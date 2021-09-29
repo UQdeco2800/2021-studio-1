@@ -1,11 +1,18 @@
 odin.png
 size: 1920, 704
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest, Nearest
 repeat: none
+blank
+  rotate: false
+  xy: 0, 640
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
 default
   rotate: false
-  xy: 0, 0
+  xy: 960, 512
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -997,7 +1004,7 @@ jump-right
   orig: 64, 64
   offset: 0, 0
   index: 4
-jump-right-6
+jump-right
   rotate: false
   xy: 1344, 256
   size: 64, 64
@@ -1389,7 +1396,7 @@ run-left-spear
   orig: 64, 64
   offset: 0, 0
   index: 8
-run-left-spear09
+run-left-spear
   rotate: false
   xy: 1088, 384
   size: 64, 64
@@ -1564,7 +1571,7 @@ run-right-spear-shield
   orig: 64, 64
   offset: 0, 0
   index: 3
-run-right-spear-shield04
+run-right-spear-shield
   rotate: false
   xy: 768, 448
   size: 64, 64
@@ -2108,12 +2115,5 @@ throwing-spear-with-shield-while-jumping-right
   xy: 1856, 576
   size: 64, 64
   orig: 64, 64
-  offset: 0, 0pd
-  index: 4
-blank
-  rotate: false
-  xy: 0, 640
-  size: 64, 64
-  orig: 64, 64
   offset: 0, 0
-  index: 0
+  index: 4
