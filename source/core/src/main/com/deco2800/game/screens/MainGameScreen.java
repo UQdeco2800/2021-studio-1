@@ -43,9 +43,10 @@ import java.io.IOException;
 public class MainGameScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {
-          "images/powerup-shield.png",
-          "images/powerup-spear.png",
-          "images/powerup-lightning.png",
+          "images/PowerUpGUI/Shield.png",
+          "images/PowerUpGUI/Spear.png",
+          "images/PowerUpGUI/Lightning.png",
+          "images/PowerUpGUI/Empty.png",
           "images/PowerUpGUI/lightning0.png",
           "images/PowerUpGUI/lightning1.png",
           "images/PowerUpGUI/shield0.png",
@@ -215,7 +216,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(theOg)
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
-        .addComponent(new PowerUpGUIComponent2());
+        .addComponent(new PowerUpGUIComponent());
 
     ServiceLocator.getEntityService().register(ui);
   }

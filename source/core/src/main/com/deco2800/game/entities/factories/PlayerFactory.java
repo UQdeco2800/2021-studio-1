@@ -57,7 +57,7 @@ public class PlayerFactory {
             .addComponent(new LightningPowerUpComponent())
             .addComponent(new ShieldPowerUpComponent())
             .addComponent(new SpearPowerUpComponent())
-                .addComponent(new PowerUpGUIComponent2());
+                .addComponent(new PowerUpGUIComponent());
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(ServiceLocator.getResourceService()

@@ -13,13 +13,21 @@ import com.deco2800.game.ui.UIComponent;
  */
 public class PowerUpGUIComponent extends UIComponent {
     //Icons used for gui, assets loaded in MainGameScreen
-    private final Image shield1 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-shield.png", Texture.class));
-    private final Image shield2 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-shield.png", Texture.class));
-    private final Image shield3 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-shield.png", Texture.class));
-    private final Image spear1 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-spear.png", Texture.class));
-    private final Image spear2 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-spear.png", Texture.class));
-    private final Image spear3 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-spear.png", Texture.class));
-    private final Image lightning = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-lightning.png", Texture.class));
+    private final Image shield1 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Shield.png", Texture.class));
+    private final Image shield2 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Shield.png", Texture.class));
+    private final Image shield3 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Shield.png", Texture.class));
+    private final Image spear1 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Spear.png", Texture.class));
+    private final Image spear2 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Spear.png", Texture.class));
+    private final Image spear3 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Spear.png", Texture.class));
+    private final Image lightning = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Lightning.png", Texture.class));
+    private final Image empty1 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
+    private final Image empty2 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
+    private final Image empty3 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
+    private final Image empty4 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
+    private final Image empty5 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
+    private final Image empty6 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
+    private final Image empty7 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
+
 
     /**
      * Creates and adds actors to stage for PowerUpGUIComponent
@@ -35,43 +43,67 @@ public class PowerUpGUIComponent extends UIComponent {
      * Creates power up icons, positions them in tables and sets them initially to not be visible
      */
     private void addActors() {
+        float iconSize = 40f;
         //Shield Display
+        Table emptyShieldDisplay = new Table();
+        emptyShieldDisplay.top().right().padTop(5).padRight(5);
+        emptyShieldDisplay.setFillParent(true);
+
+        emptyShieldDisplay.add(empty1).size(iconSize).pad(2);
+        emptyShieldDisplay.add(empty2).size(iconSize).pad(2);
+        emptyShieldDisplay.add(empty3).size(iconSize).pad(2);
+
         Table shieldDisplay = new Table();
-        shieldDisplay.top().right().padTop(5);
+        shieldDisplay.top().right().padTop(5).padRight(5);
         shieldDisplay.setFillParent(true);
 
-        float shieldSize = 50f;
-        shieldDisplay.add(shield1).size(shieldSize).pad(5);
-        shieldDisplay.add(shield2).size(shieldSize).pad(5);
-        shieldDisplay.add(shield3).size(shieldSize).pad(5);
+        shieldDisplay.add(shield1).size(iconSize).pad(2);
+        shieldDisplay.add(shield2).size(iconSize).pad(2);
+        shieldDisplay.add(shield3).size(iconSize).pad(2);
         shield1.setVisible(false);
         shield2.setVisible(false);
         shield3.setVisible(false);
 
         //Spear Display
+        Table emptySpearDisplay = new Table();
+        emptySpearDisplay.top().right().padTop(47f).padRight(5);
+        emptySpearDisplay.setFillParent(true);
+
+        emptySpearDisplay.add(empty4).size(iconSize).pad(2);
+        emptySpearDisplay.add(empty5).size(iconSize).pad(2);
+        emptySpearDisplay.add(empty6).size(iconSize).pad(2);
+
+
         Table spearDisplay = new Table();
-        spearDisplay.top().right().padTop(55f);
+        spearDisplay.top().right().padTop(47f).padRight(5);
         spearDisplay.setFillParent(true);
 
-        float spearSize = 50f;
-        spearDisplay.add(spear1).size(spearSize).pad(5);
-        spearDisplay.add(spear2).size(spearSize).pad(5);
-        spearDisplay.add(spear3).size(spearSize).pad(5);
+        spearDisplay.add(spear1).size(iconSize).pad(2);
+        spearDisplay.add(spear2).size(iconSize).pad(2);
+        spearDisplay.add(spear3).size(iconSize).pad(2);
         spear1.setVisible(false);
         spear2.setVisible(false);
         spear3.setVisible(false);
 
         //Lightning Display
+        Table emptyLightningDisplay = new Table();
+        emptyLightningDisplay.top().right().padTop(89f).padRight(5);
+        emptyLightningDisplay.setFillParent(true);
+
+        emptyLightningDisplay.add(empty7).size(iconSize).pad(2);
+
         Table lightningDisplay = new Table();
-        lightningDisplay.top().right().padTop(80f);
+        lightningDisplay.top().right().padTop(89f).padRight(5);
         lightningDisplay.setFillParent(true);
 
-        float lightningSize = 64f;
-        lightningDisplay.add(lightning).size(lightningSize).pad(5);
+        lightningDisplay.add(lightning).size(iconSize).pad(2);
         lightning.setVisible(false);
 
+        stage.addActor(emptyShieldDisplay);
         stage.addActor(shieldDisplay);
+        stage.addActor(emptySpearDisplay);
         stage.addActor(spearDisplay);
+        stage.addActor(emptyLightningDisplay);
         stage.addActor(lightningDisplay);
     }
 
