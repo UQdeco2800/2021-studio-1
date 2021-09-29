@@ -67,77 +67,48 @@ public class PlayerFactory {
             Animation.PlayMode.LOOP);
     animator.addAnimation("still-left", 1f,
             Animation.PlayMode.LOOP);
-
-    animator.addAnimation("crouch-still-right", 1f,
+    animator.addAnimation("still-right-shield", 1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("crouch-still-left", 1f,
+    animator.addAnimation("still-right-spear-shield", 1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("crouch-left", 0.2f,
-        Animation.PlayMode.LOOP);
-    animator.addAnimation("crouch-right", 0.2f,
-        Animation.PlayMode.LOOP);
+    animator.addAnimation("still-right-spear", 1f,
+            Animation.PlayMode.LOOP);
 
     animator.addAnimation("jump-left", 1f,
             Animation.PlayMode.LOOP);
     animator.addAnimation("jump-right", 1f,
             Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-left-shield", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-left-spear", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-left-spear-shield", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-right-shield", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-right-spear", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-right-spear-shield", 1f,
+            Animation.PlayMode.LOOP);
 
     animator.addAnimation("run-left", 0.2f,
             Animation.PlayMode.LOOP);
     animator.addAnimation("run-right", 0.2f,
-              Animation.PlayMode.LOOP);
-
-    animator.addAnimation("spear-still-right", 1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("spear-still-left", 1f,
+    animator.addAnimation("run-right-spear", 0.2f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("spear-crouch-still-right", 1f,
+    animator.addAnimation("run-right-spear-shield", 0.2f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("spear-crouch-still-left", 1f,
+    animator.addAnimation("run-right-shield", 0.2f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("spear-jump-left", 1f,
+    animator.addAnimation("run-left-spear", 0.2f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("spear-jump-right", 1f,
+    animator.addAnimation("run-left-spear-shield", 0.2f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("spear-run-left", 0.2f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("spear-run-right", 0.2f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("spear-crouch-left", 0.2f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("spear-crouch-right", 0.2f,
+    animator.addAnimation("run-left-shield", 0.2f,
             Animation.PlayMode.LOOP);
 
-    animator.addAnimation("shield-still-right", 1f,
-                    Animation.PlayMode.LOOP);
-    animator.addAnimation("shield-still-left", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("shield-crouch-still-right", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("shield-crouch-still-left", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("shield-jump-left", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("shield-jump-right", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("shield-run-left", 0.2f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("shield-run-right", 0.2f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("shield-crouch-left", 0.2f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("shield-crouch-right", 0.2f,
-            Animation.PlayMode.LOOP);
 
-    animator.addAnimation("attack-right", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("attack-left", 1f,
-            Animation.PlayMode.LOOP);
-
-    animator.addAnimation("power-right", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("power-left", 1f,
-            Animation.PlayMode.LOOP);
 
     player.addComponent(animator);
 
@@ -166,7 +137,7 @@ public class PlayerFactory {
     player.getComponent(ColliderComponent.class).setDensity(1.0f);
 
     player.getComponent(AnimationRenderComponent.class).scaleEntity();
-    player.getComponent(AnimationRenderComponent.class).startAnimation("spear-still-right");
+    player.getComponent(AnimationRenderComponent.class).startAnimation("still-right");
 
     // gravity scalar used to multiply gravity from physics engine, used 5 for
     // base character vary based on how heavy we want characters to look
