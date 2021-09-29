@@ -12,6 +12,7 @@ import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.components.powerups.PowerUpGUIComponent;
+import com.deco2800.game.components.powerups.PowerUpGUIComponent2;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -44,7 +45,17 @@ public class MainGameScreen extends ScreenAdapter {
   private static final String[] mainGameTextures = {
           "images/powerup-shield.png",
           "images/powerup-spear.png",
-          "images/powerup-lightning.png"
+          "images/powerup-lightning.png",
+          "images/PowerUpGUI/lightning0.png",
+          "images/PowerUpGUI/lightning1.png",
+          "images/PowerUpGUI/shield0.png",
+          "images/PowerUpGUI/shield1.png",
+          "images/PowerUpGUI/shield2.png",
+          "images/PowerUpGUI/shield3.png",
+          "images/PowerUpGUI/spear0.png",
+          "images/PowerUpGUI/spear1.png",
+          "images/PowerUpGUI/spear2.png",
+          "images/PowerUpGUI/spear3.png"
   };
 
   private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
@@ -204,7 +215,7 @@ public class MainGameScreen extends ScreenAdapter {
         .addComponent(theOg)
         .addComponent(inputComponent)
         .addComponent(new TerminalDisplay())
-        .addComponent(new PowerUpGUIComponent());
+        .addComponent(new PowerUpGUIComponent2());
 
     ServiceLocator.getEntityService().register(ui);
   }

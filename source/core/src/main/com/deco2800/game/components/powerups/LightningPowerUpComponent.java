@@ -12,8 +12,8 @@ import com.deco2800.game.services.ServiceLocator;
  * Lightning may only be activated once per pickup.
  */
 public class LightningPowerUpComponent extends PowerUpComponent {
-    boolean active;
-    Entity powerUp;
+    private boolean active;
+    private Entity powerUp;
 
     /**
      * Creates the lightning component

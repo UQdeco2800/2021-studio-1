@@ -8,17 +8,18 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 
 /**
- * Class that graphically displays the amount of each power up a player has available
+ * Class that graphically displays the amount of each power up a player has available.
+ * Component needs to be added to MainGameScreen and to the player in PlayerFatcory to make it visible.
  */
 public class PowerUpGUIComponent extends UIComponent {
     //Icons used for gui, assets loaded in MainGameScreen
-    private Image shield1 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-shield.png", Texture.class));
-    private Image shield2 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-shield.png", Texture.class));
-    private Image shield3 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-shield.png", Texture.class));
-    private Image spear1 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-spear.png", Texture.class));
-    private Image spear2 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-spear.png", Texture.class));
-    private Image spear3 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-spear.png", Texture.class));
-    private Image lightning = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-lightning.png", Texture.class));
+    private final Image shield1 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-shield.png", Texture.class));
+    private final Image shield2 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-shield.png", Texture.class));
+    private final Image shield3 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-shield.png", Texture.class));
+    private final Image spear1 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-spear.png", Texture.class));
+    private final Image spear2 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-spear.png", Texture.class));
+    private final Image spear3 = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-spear.png", Texture.class));
+    private final Image lightning = new Image(ServiceLocator.getResourceService().getAsset("images/powerup-lightning.png", Texture.class));
 
     /**
      * Creates and adds actors to stage for PowerUpGUIComponent

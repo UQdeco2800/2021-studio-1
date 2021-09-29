@@ -130,15 +130,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     }
 
     /**
-     * Triggered when the spear should get deleted
-     */
-    private void disposeSpear() {
-        active = false;
-        spear.getComponent(AnimationRenderComponent.class).stopAnimation();
-        spear.flagDelete();
-    }
-
-    /**
      * Set the active status of the spear
      *
      * @param active - the active status the spear should be set to
@@ -162,4 +153,13 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      * @return the number of throws
      */
     public int getThrown() { return thrown;}
+
+    /**
+     * Triggered when the spear should get deleted
+     */
+    private void disposeSpear() {
+        active = false;
+        spear.getComponent(AnimationRenderComponent.class).stopAnimation();
+        spear.flagDelete();
+    }
 }

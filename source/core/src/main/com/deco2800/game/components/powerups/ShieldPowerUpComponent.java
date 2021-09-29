@@ -22,6 +22,7 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
     public void pickedUpShield() {
         blocks = 3;
         enabled = true;
+        entity.getEvents().trigger("updatePowerUps");
     }
 
     /**

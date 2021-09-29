@@ -100,16 +100,16 @@ public class PlayerActionsTest {
     }
 
     Entity createSpear() {
-        Entity shield = new Entity().addComponent(new PhysicsComponent());
-        shield.addComponent(new ColliderComponent());
-        shield.setType(EntityTypes.SPEARPOWERUP);
-        return shield;
+        Entity spear = new Entity().addComponent(new PhysicsComponent());
+        spear.addComponent(new ColliderComponent());
+        spear.setType(EntityTypes.SPEARPOWERUP);
+        return spear;
     }
 
     Entity createLightning() {
-        Entity shield = new Entity().addComponent(new PhysicsComponent());
-        shield.addComponent(new ColliderComponent());
-        shield.setType(EntityTypes.LIGHTNINGPOWERUP);
-        return shield;
+        Entity lightning = new Entity().addComponent(new PhysicsComponent());
+        lightning.addComponent(new ColliderComponent());
+        lightning.setType(EntityTypes.LIGHTNINGPOWERUP);
+        return lightning;
     }
 }

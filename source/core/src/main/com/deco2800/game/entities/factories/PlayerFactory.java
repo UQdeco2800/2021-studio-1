@@ -12,10 +12,7 @@ import com.deco2800.game.components.CameraComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
-import com.deco2800.game.components.powerups.LightningPowerUpComponent;
-import com.deco2800.game.components.powerups.PowerUpGUIComponent;
-import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
-import com.deco2800.game.components.powerups.SpearPowerUpComponent;
+import com.deco2800.game.components.powerups.*;
 import com.deco2800.game.components.tasks.WanderTask;
 
 import com.deco2800.game.entities.Entity;
@@ -60,7 +57,7 @@ public class PlayerFactory {
             .addComponent(new LightningPowerUpComponent())
             .addComponent(new ShieldPowerUpComponent())
             .addComponent(new SpearPowerUpComponent())
-                .addComponent(new PowerUpGUIComponent());
+                .addComponent(new PowerUpGUIComponent2());
 
     AnimationRenderComponent animator =
             new AnimationRenderComponent(ServiceLocator.getResourceService()
