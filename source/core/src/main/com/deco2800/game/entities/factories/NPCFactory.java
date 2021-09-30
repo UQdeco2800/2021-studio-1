@@ -326,8 +326,9 @@ public class NPCFactory {
     private static Entity createFireSpiritNPC(Entity target) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new WanderTask(new Vector2(0f, 0f), 0f))
-                        .addTask(new ShootTask(target, 5f, ProjectileFactory.fireBall()));
+                        .addTask(new ShootTask(target, 5f))
+                        .addTask(new WanderTask(new Vector2(0f, 0f), 0f));
+
         Entity npc =
                 new Entity()
                         .addComponent(new PhysicsComponent())

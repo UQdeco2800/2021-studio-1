@@ -33,6 +33,7 @@ public class ProjectileFactory {
     public static Entity fireBall() {
         Entity fireBall = createBaseProjectile();
         fireBall.getComponent(PhysicsMovementComponent.class);
+        fireBall.setType(EntityTypes.FIREBALL);
         return fireBall;
     }
 
@@ -56,7 +57,6 @@ public class ProjectileFactory {
         baseProjectile.setScale(1f, 0.5f);
         PhysicsUtils.setScaledCollider(baseProjectile, 1f, 1f);
         baseProjectile.setType(EntityTypes.PROJECTILE);
-        baseProjectile.getEvents().addListener("collisionStart", baseProjectile::flagDelete);
         return baseProjectile;
     }
 
