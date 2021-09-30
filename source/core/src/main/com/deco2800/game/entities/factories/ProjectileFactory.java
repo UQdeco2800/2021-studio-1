@@ -15,6 +15,8 @@ import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.ai.tasks.AITaskComponent;
+import com.deco2800.game.components.tasks.RunningTask;
 
 public class ProjectileFactory {
     /**
@@ -26,13 +28,14 @@ public class ProjectileFactory {
      */
     public static Entity createSpearAtHeight(float height) {
         Entity spear = createBaseProjectile();
-        spear.getComponent(PhysicsMovementComponent.class).setTarget(new Vector2(0, height));
         return spear;
     }
 
-    public static Entity fireBall() {
+    public static Entity createFireBall() {
+        AITaskComponent aiComponent =
+                new AITaskComponent()
+                        .addTask(new RunningTask());
         Entity fireBall = createBaseProjectile();
-        fireBall.getComponent(PhysicsMovementComponent.class);
         return fireBall;
     }
 

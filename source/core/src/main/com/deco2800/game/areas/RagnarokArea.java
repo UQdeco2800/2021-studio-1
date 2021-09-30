@@ -378,9 +378,10 @@ public class RagnarokArea extends GameArea {
         //signup(pos, skeleton);
     }
 
-    protected void projectileFromEnemy(GridPoint2 enemy) {
-        Entity fireBall = ProjectileFactory.fireBall();
-        spawnEntityAt(fireBall, enemy, false, false);
+    protected void spawnFireBall(int x, int y) {
+        Entity fireball = ProjectileFactory.createFireBall();
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(fireball, pos, false, false);
     }
 
     public void clearEntitiesAt(int x, int y) {
