@@ -74,9 +74,9 @@ public class PlayerFactory {
     animator.addAnimation("still-right-spear", 1f,
             Animation.PlayMode.LOOP);
 
-    animator.addAnimation("jump-left", 1f,
+    animator.addAnimation("jump-left", 0.2f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("jump-right", 1f,
+    animator.addAnimation("jump-right", 0.2f,
             Animation.PlayMode.LOOP);
     animator.addAnimation("jump-left-shield", 1f,
             Animation.PlayMode.LOOP);
@@ -91,23 +91,31 @@ public class PlayerFactory {
     animator.addAnimation("jump-right-spear-shield", 1f,
             Animation.PlayMode.LOOP);
 
-    animator.addAnimation("run-left", 0.2f,
+    animator.addAnimation("run-left", 0.1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("run-right", 0.2f,
+    animator.addAnimation("run-right", 0.1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("run-right-spear", 0.2f,
+    animator.addAnimation("run-right-spear", 0.1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("run-right-spear-shield", 0.2f,
+    animator.addAnimation("run-right-spear-shield", 0.1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("run-right-shield", 0.2f,
+    animator.addAnimation("run-right-shield", 0.1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("run-left-spear", 0.2f,
+    animator.addAnimation("run-left-spear", 0.1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("run-left-spear-shield", 0.2f,
+    animator.addAnimation("run-left-spear-shield", 0.1f,
             Animation.PlayMode.LOOP);
-    animator.addAnimation("run-left-shield", 0.2f,
+    animator.addAnimation("run-left-shield", 0.1f,
             Animation.PlayMode.LOOP);
 
+    animator.addAnimation("throwing-spear-right", 0.05f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("throwing-spear-left", 0.05f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("throwing-spear-with-shield-right", 0.05f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("throwing-spear-with-shield-left", 0.05f,
+            Animation.PlayMode.NORMAL);
 
 
     player.addComponent(animator);

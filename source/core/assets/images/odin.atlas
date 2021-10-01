@@ -1851,6 +1851,13 @@ throwing-spear-left
   orig: 64, 64
   offset: 0, 0
   index: 5
+throwing-spear-left
+  rotate: false
+  xy: 704, 512
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
 throwing-spear-right
   rotate: false
   xy: 1408, 512
@@ -1893,6 +1900,13 @@ throwing-spear-right
   orig: 64, 64
   offset: 0, 0
   index: 5
+throwing-spear-right
+  rotate: false
+  xy: 960, 512
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
 throwing-spear-while-jumping-left
   rotate: false
   xy: 1792, 512
@@ -2005,6 +2019,13 @@ throwing-spear-with-shield-left
   orig: 64, 64
   offset: 0, 0
   index: 5
+throwing-spear-with-shield-left
+  rotate: false
+  xy: 704, 512
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
 throwing-spear-with-shield-right
   rotate: false
   xy: 896, 576
@@ -2047,6 +2068,13 @@ throwing-spear-with-shield-right
   orig: 64, 64
   offset: 0, 0
   index: 5
+throwing-spear-with-shield-right
+  rotate: false
+  xy: 960, 512
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
 throwing-spear-with-shield-while-jumping-left
   rotate: false
   xy: 1280, 576

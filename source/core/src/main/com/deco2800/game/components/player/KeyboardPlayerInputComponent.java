@@ -52,6 +52,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.K:
         triggerSpearEvent();
+        entity.getEvents().trigger("useSpearAttack");
         return true;
       default:
         return false;

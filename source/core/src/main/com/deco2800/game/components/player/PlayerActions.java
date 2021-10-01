@@ -58,6 +58,7 @@ public class PlayerActions extends Component {
     entity.getEvents().addListener("jump", this::jump);
     entity.getEvents().addListener("collisionStart", this::obtainPowerUp);
     entity.getEvents().addListener("usePowerUp", this::usePowerUp);
+    entity.getEvents().addListener("useSpearAttack", this::useSpearAttack);
   }
 
   @Override
@@ -476,6 +477,32 @@ public class PlayerActions extends Component {
     } else {
       entity.getComponent(AnimationRenderComponent.class)
               .startAnimation("jump-left-spear-shield");
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is going to use spear
+   * power up
+   */
+  private void useSpearAttack() {
+    if(entity.getComponent(ShieldPowerUpComponent.class).getActive()
+            && entity.getComponent(SpearPowerUpComponent.class).getEnabled()){
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("throwing-spear-with-shield-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("throwing-spear-with-shield-left");
+      }
+
+    } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("throwing-spear-right");
+      } else {
+        entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("throwing-spear-left");
+      }
     }
   }
 }
