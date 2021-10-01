@@ -28,6 +28,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("exit", this::onExit);
     entity.getEvents().addListener("settings", this::onSettings);
     entity.getEvents().addListener("Help Screen", this::onHelp);
+    entity.getEvents().addListener("Leaderboard", this::onLeaderBoard);
     entity.getEvents().addListener("mute", this::onMute);
   }
 
@@ -74,8 +75,25 @@ public class MainMenuActions extends Component {
     } else {
         mainMenuPop.dispose();
         mainMenuPop = null;
+        ServiceLocator.getEntityService().unregister(mainMenuPop);
     }
   }
+
+    /**
+     * Creates leaderboard popUP on main menu.
+     */
+    private void onLeaderBoard() {
+        logger.info("Launching leaderboard popUp");
+        if (mainMenuPop == null) {
+            mainMenuPop = new Entity();
+            mainMenuPop.addComponent(new UIPop("Leaderboard", entity));
+            ServiceLocator.getEntityService().register(mainMenuPop);
+        } else {
+            mainMenuPop.dispose();
+            mainMenuPop = null;
+            ServiceLocator.getEntityService().unregister(mainMenuPop);
+        }
+    }
 
   /**
     * Mutes main menu sound.
