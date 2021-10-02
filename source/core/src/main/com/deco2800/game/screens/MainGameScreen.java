@@ -108,10 +108,7 @@ public class MainGameScreen extends ScreenAdapter {
     ServiceLocator.getEntityService().update();
 
     physicsEngine.update();
-
-    if (ragnarokManager != null) {
-      renderer.updateCameraPosition(ragnarokManager.getPlayer());
-    }
+    renderer.updateCameraPosition(ragnarokManager.getPlayer());
 
     if (ragnarokManager.getPlayer() != null) {
         Entity player = ragnarokManager.getPlayer();
@@ -205,17 +202,13 @@ public class MainGameScreen extends ScreenAdapter {
 
     private void recordHighScore(String currentScore) {
 
-      String availableNames[] = {"Zebra", "Fox", "Hound", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
+      String[] availableNames = {"Zebra", "Fox", "Hound", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
       char[] scoreIntegers = currentScore.toCharArray();
       String randValue = "" + scoreIntegers[scoreIntegers.length - 1];
       String name = availableNames[Integer.parseInt(randValue)];
 
-      FileWriter highScoreFile = null;
-
-      try {
-          highScoreFile = new FileWriter("gameinfo/highScores.txt");
+      try (FileWriter highScoreFile = new FileWriter("gameinfo/highScores.txt")){
           highScoreFile.write(name + "," + currentScore);
-          highScoreFile.close();
       } catch (IOException e) {
           logger.info("Could not record high score");
       }

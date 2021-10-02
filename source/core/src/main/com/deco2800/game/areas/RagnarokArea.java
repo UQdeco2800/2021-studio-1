@@ -2,6 +2,7 @@ package com.deco2800.game.areas;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.GroupDisposeComponent;
@@ -26,9 +27,10 @@ import java.util.function.Function;
 public class RagnarokArea extends GameArea {
 
     private static final Logger logger = LoggerFactory.getLogger(RagnarokArea.class);
+    private static final Random RANDOM = new Random();
 
     private static final float WALL_HEIGHT = 0.1f;
-    private final String name; //initiliase in the loader
+    private final String name; //initialise in the loader
     private Vector2 lastPos;
 
     private HashMap<GridPoint2, LinkedList<Entity>> entitySignUp;
@@ -441,8 +443,7 @@ public class RagnarokArea extends GameArea {
 
         String witchMusic;
 
-        Random rand = new Random();
-        switch (rand.nextInt(3)) {
+        switch (MathUtils.random(2)) {
             case 1:
                 witchMusic = townMusic;
                 break;

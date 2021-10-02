@@ -30,7 +30,6 @@ public class RagLoader {
             String line;
             boolean inConfig = false;
             boolean inTerrain = false;
-            boolean inSpawn = false;
 
             while ((line = br.readLine()) != null) {
 
@@ -88,9 +87,6 @@ public class RagLoader {
                         //TODO REMOVE THIS HACK U FRAUD
 
                     } else if (line.startsWith("-")) { // direct command line
-
-                        inSpawn = true;
-
                         ServiceLocator.getTerminalService().sendTerminal(line);
                     }
                 }
@@ -100,7 +96,7 @@ public class RagLoader {
             logger.error(erMsg);
             // do with a logger instead
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error loading file: {}", e.getMessage());
         }
 
     }
