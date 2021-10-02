@@ -29,6 +29,7 @@ public class PlayerActions extends Component {
   private SpeedTypes playerSpeed;
   private long walkTime;
   private long gameTime;
+  private long jumpDelay;
   private Vector2 maxSpeed = new Vector2(8f, 1f); // Metres
   // per second
   private Vector2 mediumSpeed = new Vector2(6f, 1f);
@@ -63,7 +64,6 @@ public class PlayerActions extends Component {
 
   @Override
   public void update() {
-
     // for pause condition
     if (!playerInputComponent.isPlayerInputEnabled()) {
         return;
@@ -133,7 +133,6 @@ public class PlayerActions extends Component {
    */
   private void checkFalling() {
     Body body = physicsComponent.getBody();
-    whichAnimation();
     float currentYVelocity = physicsComponent.getBody().getLinearVelocity().y;
     if (currentYVelocity >= -0.01f  && currentYVelocity <= 0.01f ) {
       falling = false;
@@ -268,7 +267,11 @@ public class PlayerActions extends Component {
   }
 
   public boolean isJumping() {
-    return (jumping || falling);
+    return jumping;
+  }
+
+  public boolean isFalling() {
+    return falling;
   }
 
   /**
@@ -280,16 +283,19 @@ public class PlayerActions extends Component {
       && entity.getComponent(SpearPowerUpComponent.class).getEnabled()){
       if (isJumping()) {
         spearShieldJumpingAnimations();
-      } else if (isMoving()) {
+      } else if (isFalling()) {
+        spearShieldFallingAnimations();
+      }else if (isMoving()) {
         spearShieldMovingAnimations();
       } else {
         spearShieldStillAnimations();
       }
-
     }
     else if (entity.getComponent(ShieldPowerUpComponent.class).getActive()) {
       if (isJumping()) {
         shieldJumpingAnimations();
+      } else if (isFalling()) {
+        shieldFallingAnimations();
       } else if (isMoving()) {
         shieldMovingAnimations();
       } else {
@@ -299,6 +305,8 @@ public class PlayerActions extends Component {
             && !entity.getComponent(SpearPowerUpComponent.class).getActive()) {
       if (isJumping()) {
         spearJumpingAnimations();
+      } else if (isFalling()) {
+        spearFallingAnimations();
       } else if (isMoving()) {
         spearMovingAnimations();
       } else {
@@ -307,6 +315,8 @@ public class PlayerActions extends Component {
     } else {
       if (isJumping()) {
         jumpingAnimations();
+      } else if (isFalling()) {
+        fallingAnimations();
       } else if (isMoving()) {
         movingAnimations();
       } else {
@@ -355,6 +365,19 @@ public class PlayerActions extends Component {
   }
 
   /**
+   * Determine which animation to play if the player is falling
+   */
+  private void fallingAnimations() {
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("fall-right");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("fall-left");
+    }
+  }
+
+  /**
    * Determine which animation to play if the player is standing still with
    * the spear power up
    */
@@ -397,7 +420,21 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Determine which animation to play if the player is shield with the spear
+   * Determine which animation to play if the player is falling with
+   * the spear power up
+   */
+  private void spearFallingAnimations() {
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("fall-right-spear");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("fall-left-spear");
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is still with the shield
    * power up
    */
   private void shieldStillAnimations() {
@@ -411,7 +448,7 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Determine which animation to play if the player is shield with the spear
+   * Determine which animation to play if the player is moving with the shield
    * power up
    */
   private void shieldMovingAnimations() {
@@ -425,7 +462,7 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Determine which animation to play if the player is shield with the spear
+   * Determine which animation to play if the player is jumping with the shield
    * power up
    */
   private void shieldJumpingAnimations() {
@@ -439,7 +476,21 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Determine which animation to play if the player is spear&shield with the spear
+   * Determine which animation to play if the player is falling with the shield
+   * power up
+   */
+  private void shieldFallingAnimations() {
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("fall-right-shield");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("fall-left-shield");
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is still with the spear and shield
    * power up
    */
   private void spearShieldStillAnimations() {
@@ -453,7 +504,7 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Determine which animation to play if the player is spear&shield with the spear
+   * Determine which animation to play if the player is moving with the spear and shield
    * power up
    */
   private void spearShieldMovingAnimations() {
@@ -467,7 +518,7 @@ public class PlayerActions extends Component {
   }
 
   /**
-   * Determine which animation to play if the player is spear&shield with the spear
+   * Determine which animation to play if the player is jumping with the spear and shield
    * power up
    */
   private void spearShieldJumpingAnimations() {
@@ -477,6 +528,20 @@ public class PlayerActions extends Component {
     } else {
       entity.getComponent(AnimationRenderComponent.class)
               .startAnimation("jump-left-spear-shield");
+    }
+  }
+
+  /**
+   * Determine which animation to play if the player is falling with the spear and shield
+   * power up
+   */
+  private void spearShieldFallingAnimations() {
+    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("fall-right-spear-shield");
+    } else {
+      entity.getComponent(AnimationRenderComponent.class)
+              .startAnimation("fall-left-spear-shield");
     }
   }
 

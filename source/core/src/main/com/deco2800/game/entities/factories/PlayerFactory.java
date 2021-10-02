@@ -69,27 +69,51 @@ public class PlayerFactory {
             Animation.PlayMode.LOOP);
     animator.addAnimation("still-right-shield", 1f,
             Animation.PlayMode.LOOP);
+    animator.addAnimation("still-left-shield", 1f,
+            Animation.PlayMode.LOOP);
     animator.addAnimation("still-right-spear-shield", 1f,
+            Animation.PlayMode.LOOP);
+    animator.addAnimation("still-left-spear-shield", 1f,
             Animation.PlayMode.LOOP);
     animator.addAnimation("still-right-spear", 1f,
             Animation.PlayMode.LOOP);
+    animator.addAnimation("still-left-spear", 1f,
+            Animation.PlayMode.LOOP);
 
-    animator.addAnimation("jump-left", 0.2f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("jump-right", 0.2f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("jump-left-shield", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("jump-left-spear", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("jump-left-spear-shield", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("jump-right-shield", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("jump-right-spear", 1f,
-            Animation.PlayMode.LOOP);
-    animator.addAnimation("jump-right-spear-shield", 1f,
-            Animation.PlayMode.LOOP);
+    animator.addAnimation("jump-left", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("jump-right", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("jump-left-shield", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("jump-left-spear", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("jump-left-spear-shield", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("jump-right-shield", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("jump-right-spear", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("jump-right-spear-shield", 0.1f,
+            Animation.PlayMode.NORMAL);
+
+    animator.addAnimation("fall-left", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("fall-right", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("fall-left-shield", 1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("fall-left-spear", 1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("fall-left-spear-shield", 1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("fall-right-shield", 1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("fall-right-spear", 1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("fall-right-spear-shield", 1f,
+            Animation.PlayMode.NORMAL);
+
 
     animator.addAnimation("run-left", 0.1f,
             Animation.PlayMode.LOOP);
