@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.entities.Entity;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -32,6 +33,7 @@ public class UIPop extends UIComponent {
         backGroundImages.put("Help Screen", "images/popPauseBack.png");
         backGroundImages.put("Score Screen", "images/popPauseBack.png");
         backGroundImages.put("Pause Menu", "images/popPauseBack.png");
+        backGroundImages.put("Leaderboard", "images/popPauseBack.png");
     }
 
     //the game the popUp will pop onto
@@ -147,10 +149,15 @@ public class UIPop extends UIComponent {
             popUp = formatHelpScreen();
             popUp.add(closeButton);
         }
+        if (screenName.equals("Leaderboard")) {
+            popUp = formatLeaderboardScreen();
+            popUp.add(closeButton);
+        }
 
         stage.addActor(root);
         return popUp;
     }
+
 
     /*
      * Formats the Settings table
@@ -243,6 +250,28 @@ public class UIPop extends UIComponent {
             popUp.add(quitButton).center();
             stage.addActor(root);
             return popUp;
+    }
+
+    /*
+     * Formats the leaderboard screen with values from current high scores
+     */
+    private Table formatLeaderboardScreen() {
+
+        String[] highScoreNames = MainMenuDisplay.getHighScoreNames();
+        int[] highScoreValues = MainMenuDisplay.getHighScoreValues();
+
+        int numberScores = highScoreNames.length;
+
+        for (int i = 0; i < numberScores; i++) {
+
+            Label scoreLabel = new Label( (i + 1) + ". " +  highScoreNames[i], skin, "popUpFont");
+            Label scoreValue = new Label(highScoreValues[i] + "", skin, "popUpFont");
+
+            popUp.row().padTop(20f);
+            popUp.add(scoreLabel).padLeft(100f).align(1).left();
+            popUp.add(scoreValue);
+        }
+        return popUp;
     }
 
     /*
