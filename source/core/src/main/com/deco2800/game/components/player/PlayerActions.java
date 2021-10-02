@@ -121,11 +121,13 @@ public class PlayerActions extends Component {
    * Applies an upwards force to the player
    */
   private void applyJumpForce() {
-    Body body = physicsComponent.getBody();
-    body.applyLinearImpulse(new Vector2(0f,  40f).scl(body.getMass()),
-            body.getWorldCenter(), true);
-    falling = true;
-    jumping = false;
+    if (ServiceLocator.getTimeSource().getTimeSince(jumpDelay) >= 500L) {
+      Body body = physicsComponent.getBody();
+      body.applyLinearImpulse(new Vector2(0f, 40f).scl(body.getMass()),
+              body.getWorldCenter(), true);
+      falling = true;
+      jumping = false;
+    }
   }
 
   /**
@@ -196,6 +198,7 @@ public class PlayerActions extends Component {
     if (entity.getComponent(PhysicsComponent.class).getBody()
             .getLinearVelocity().y == 0) {
       jumping = true;
+      jumpDelay = ServiceLocator.getTimeSource().getTime();
     }
     //Determine which animation to play
     whichAnimation();
