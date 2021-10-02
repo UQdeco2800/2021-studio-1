@@ -2,13 +2,13 @@ package com.deco2800.game.areas;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
-import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -20,7 +20,6 @@ import com.deco2800.game.components.VariableSpeedComponent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.function.Function;
 
 public class RagnarokArea extends GameArea {
@@ -28,10 +27,9 @@ public class RagnarokArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(RagnarokArea.class);
 
     private static final float WALL_HEIGHT = 0.1f;
-    private final String name; //initiliase in the loader
-    private Vector2 lastPos;
+    private final String name; //initialise in the loader
 
-    private HashMap<GridPoint2, LinkedList<Entity>> entitySignUp;
+    private final HashMap<GridPoint2, LinkedList<Entity>> entitySignUp;
 
     protected Entity player;
 
@@ -83,18 +81,18 @@ public class RagnarokArea extends GameArea {
 
     // get the sounds to work and then move the music & sounds to a json
     //TODO: make Json
-    private static final String[] racerSounds = {"sounds/Impact4.ogg"};
-    private static final String mainMusic = "sounds/main.mp3";
-    private static final String townMusic = "sounds/town.mp3";
-    private static final String raiderMusic = "sounds/raider.mp3";
+    private static final String[] RACER_SOUNDS = {"sounds/Impact4.ogg"};
+    private static final String MAIN_MUSIC = "sounds/main.mp3";
+    private static final String TOWN_MUSIC = "sounds/town.mp3";
+    private static final String RAIDER_MUSIC = "sounds/raider.mp3";
     // sound effect of fire/burning behind giant *fwoom* *crackle*
-    private static final String fireMusic = "sounds/fire.mp3";
+    private static final String FIRE_MUSIC = "sounds/fire.mp3";
     // sound effects of giant walking (still to be tested)
-    private static final String walkMusic = "sounds/walk.mp3";
-    private static final String loudWalkMusic = "sounds/giant_walk.mp3";
-    private static final String roarMusic = "sounds/roar.mp3";
-    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, loudWalkMusic,
-            roarMusic};
+    private static final String WALK_MUSIC = "sounds/walk.mp3";
+    private static final String LOUD_WALK_MUSIC = "sounds/giant_walk.mp3";
+    private static final String ROAR_MUSIC = "sounds/roar.mp3";
+    private static final String[] RACER_MUSIC = {MAIN_MUSIC, TOWN_MUSIC, RAIDER_MUSIC, FIRE_MUSIC,
+            WALK_MUSIC, LOUD_WALK_MUSIC, ROAR_MUSIC};
 
     private final TerrainFactory terrainFactory;
 
@@ -125,9 +123,6 @@ public class RagnarokArea extends GameArea {
         logger.debug("Creating new RagnarokArea");
     }
 
-    public void setManager(AreaManager manager) {
-    }
-
     private void displayUI() {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Ragnarok Area: " + name));
@@ -139,8 +134,8 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(racerTextures);
         resourceService.loadTextureAtlases(racerTextureAtlases);
-        resourceService.loadSounds(racerSounds);
-        resourceService.loadMusic(racerMusic);
+        resourceService.loadSounds(RACER_SOUNDS);
+        resourceService.loadMusic(RACER_MUSIC);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -440,20 +435,19 @@ public class RagnarokArea extends GameArea {
 
         String witchMusic;
 
-        Random rand = new Random();
-        switch (rand.nextInt(3)) {
+        switch (MathUtils.random(2)) {
             case 1:
-                witchMusic = townMusic;
+                witchMusic = TOWN_MUSIC;
                 break;
             case 2:
-                witchMusic = raiderMusic;
+                witchMusic = RAIDER_MUSIC;
                 break;
             default:
-                witchMusic = mainMusic;
+                witchMusic = MAIN_MUSIC;
         }
         Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
-        Music fire = ServiceLocator.getResourceService().getAsset(fireMusic, Music.class);
-        Music walk = ServiceLocator.getResourceService().getAsset(walkMusic, Music.class);
+        Music fire = ServiceLocator.getResourceService().getAsset(FIRE_MUSIC, Music.class);
+        Music walk = ServiceLocator.getResourceService().getAsset(WALK_MUSIC, Music.class);
         music.setLooping(true);
         fire.setLooping(true);
         walk.setLooping(true);
@@ -470,14 +464,14 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(racerTextures);
         resourceService.unloadAssets(racerTextureAtlases);
-        resourceService.unloadAssets(racerSounds);
-        resourceService.unloadAssets(racerMusic);
+        resourceService.unloadAssets(RACER_SOUNDS);
+        resourceService.unloadAssets(RACER_MUSIC);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(mainMusic, Music.class).stop();
+        ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class).stop();
         this.unloadAssets();
     }
 
