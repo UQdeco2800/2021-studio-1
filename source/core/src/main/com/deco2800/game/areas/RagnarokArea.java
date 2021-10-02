@@ -378,11 +378,13 @@ public class RagnarokArea extends GameArea {
         //signup(pos, skeleton);
     }
 
+    /*
     protected void spawnFireBall(int x, int y) {
         Entity fireball = ProjectileFactory.createFireBall();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(fireball, pos, false, false);
     }
+    */
 
     public void clearEntitiesAt(int x, int y) {
         // takes the global scale x and y, so mutliply them by 3 in here

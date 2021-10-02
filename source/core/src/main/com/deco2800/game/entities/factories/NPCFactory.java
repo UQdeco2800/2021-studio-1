@@ -15,7 +15,7 @@ import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.tasks.MoveRightTask;
 import com.deco2800.game.components.tasks.WanderTask;
 import com.deco2800.game.components.tasks.RunningTask;
-import com.deco2800.game.components.tasks.FireBallTask;
+import com.deco2800.game.components.tasks.ShootTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
@@ -74,7 +74,7 @@ public class NPCFactory {
         //set body collision box
         skeleton.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.6f,
             0.7f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
-        //create head circle collision box
+        //create head circle colilision box
         CircleShape head = new CircleShape();
         head.setRadius(0.2f);
         Vector2 circleOffset = new Vector2(skeleton.getCenterPosition().x + 0.15f,
@@ -327,7 +327,9 @@ public class NPCFactory {
     private static Entity createFireSpiritNPC(Entity target) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new WanderTask(new Vector2(0f, 0f), 5f));
+                        .addTask(new ShootTask(target, 5f))
+                        .addTask(new WanderTask(new Vector2(0f, 0f), 0f));
+
         Entity npc =
                 new Entity()
                         .addComponent(new PhysicsComponent())

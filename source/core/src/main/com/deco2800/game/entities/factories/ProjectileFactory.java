@@ -15,8 +15,6 @@ import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.ai.tasks.AITaskComponent;
-import com.deco2800.game.components.tasks.RunningTask;
 
 public class ProjectileFactory {
     /**
@@ -28,14 +26,14 @@ public class ProjectileFactory {
      */
     public static Entity createSpearAtHeight(float height) {
         Entity spear = createBaseProjectile();
+        spear.getComponent(PhysicsMovementComponent.class).setTarget(new Vector2(0, height));
         return spear;
     }
 
-    public static Entity createFireBall() {
-        AITaskComponent aiComponent =
-                new AITaskComponent()
-                        .addTask(new RunningTask());
+    public static Entity fireBall() {
         Entity fireBall = createBaseProjectile();
+        fireBall.getComponent(PhysicsMovementComponent.class);
+        fireBall.setType(EntityTypes.FIREBALL);
         return fireBall;
     }
 
@@ -59,17 +57,16 @@ public class ProjectileFactory {
         baseProjectile.setScale(1f, 0.5f);
         PhysicsUtils.setScaledCollider(baseProjectile, 1f, 1f);
         baseProjectile.setType(EntityTypes.PROJECTILE);
-        baseProjectile.getEvents().addListener("collisionStart", baseProjectile::flagDelete);
         return baseProjectile;
     }
 
     public static Entity createSpearEntity() {
         Entity spear =
                 new Entity()
-                .addComponent(new PhysicsComponent())
-                .addComponent(new PhysicsMovementComponent())
-                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
+                        .addComponent(new PhysicsComponent())
+                        .addComponent(new PhysicsMovementComponent())
+                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
+                        .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
 
         spear.setScale(1.1f, 1.1f);
         spear.getComponent(ColliderComponent.class).setAsBox(new Vector2(1.3f,
