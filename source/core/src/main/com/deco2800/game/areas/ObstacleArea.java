@@ -49,9 +49,9 @@ public class ObstacleArea extends GameArea {
             "images/terrain_iso_grass.atlas", "images/ghostKing" +
             ".atlas", "images/odin.atlas", "images/wall.atlas", "images/skeleton.atlas"
     };
-    private static final String[] forestSounds = {"sounds/Impact4.ogg"};
-    private static final String backgroundMusic = "sounds/bobjob.mp3";
-    private static final String[] forestMusic = {backgroundMusic};
+    private static final String[] FOREST_SOUNDS = {"sounds/Impact4.ogg"};
+    private static final String BACKGROUND_MUSIC = "sounds/bobjob.mp3";
+    private static final String[] FOREST_MUSIC = {BACKGROUND_MUSIC};
 
     private final TerrainFactory terrainFactory;
 
@@ -201,7 +201,7 @@ public class ObstacleArea extends GameArea {
     }
 
     private void playMusic() {
-        Music music = ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class);
+        Music music = ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class);
         music.setLooping(true);
         music.setVolume(0.3f);
         music.play();
@@ -214,8 +214,8 @@ public class ObstacleArea extends GameArea {
 
         resourceService.loadTextures(forestTextures);
         resourceService.loadTextureAtlases(forestTextureAtlases);
-        resourceService.loadSounds(forestSounds);
-        resourceService.loadMusic(forestMusic);
+        resourceService.loadSounds(FOREST_SOUNDS);
+        resourceService.loadMusic(FOREST_MUSIC);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -228,14 +228,14 @@ public class ObstacleArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(forestTextures);
         resourceService.unloadAssets(forestTextureAtlases);
-        resourceService.unloadAssets(forestSounds);
-        resourceService.unloadAssets(forestMusic);
+        resourceService.unloadAssets(FOREST_SOUNDS);
+        resourceService.unloadAssets(FOREST_MUSIC);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(backgroundMusic, Music.class).stop();
+        ServiceLocator.getResourceService().getAsset(BACKGROUND_MUSIC, Music.class).stop();
         this.unloadAssets();
     }
 }

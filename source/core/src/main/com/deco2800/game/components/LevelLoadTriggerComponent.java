@@ -25,7 +25,6 @@ public class LevelLoadTriggerComponent extends Component {
     HitboxComponent hitboxComponent;
     EntityService entityService;
     private static final Logger logger = LoggerFactory.getLogger(LevelLoadTriggerComponent.class);
-    private static final Random RANDOM = new Random();
 
     /**
      * Create a component which disposes entities on collision finish
@@ -65,7 +64,8 @@ public class LevelLoadTriggerComponent extends Component {
             logger.error("File rags files could not be loaded");
         }
 
-        String RagFile = pathList.get(MathUtils.random(pathList.size())).getFileName().toString();
+        String RagFile =
+                pathList.get(MathUtils.random(pathList.size() - 1)).getFileName().toString();
         logger.debug("Loading Level : " + RagFile);
         return RagFile.substring(0, RagFile.lastIndexOf('.'));
     }
