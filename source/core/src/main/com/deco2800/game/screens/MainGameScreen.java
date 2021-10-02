@@ -28,6 +28,7 @@ import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.maingame.MainGamePannelDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
+import com.sun.tools.javac.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.FileWriter;
@@ -117,7 +118,7 @@ public class MainGameScreen extends ScreenAdapter {
 
         long currentScore = player.getComponent(PlayerStatsDisplay.class).getPlayerScore();
 
-        if (currentScore > MainMenuDisplay.getHighScore()) {
+        if (currentScore > MainMenuDisplay.getHighScoreValues()[4]) {
 
             recordHighScore("" + currentScore);
 
@@ -207,8 +208,16 @@ public class MainGameScreen extends ScreenAdapter {
       String randValue = "" + scoreIntegers[scoreIntegers.length - 1];
       String name = availableNames[Integer.parseInt(randValue)];
 
-      try (FileWriter highScoreFile = new FileWriter("gameinfo/highScores.txt")){
-          highScoreFile.write(name + "," + currentScore);
+      int[] highScoreValues = MainMenuDisplay.getHighScoreValues();
+      String[] highScoreNames = MainMenuDisplay.getHighScoreNames();
+
+      highScoreNames[4] = name;
+      highScoreValues[4] = Integer.parseInt(currentScore);
+
+      try (FileWriter highScoreFile = new FileWriter("gameinfo/highScores.txt") {
+          for (int i = 0; i < highScoreNames.length;  i++) {
+              highScoreFile.write(highScoreNames[i] + "," + highScoreValues[i] + "\n");
+          }
       } catch (IOException e) {
           logger.info("Could not record high score");
       }

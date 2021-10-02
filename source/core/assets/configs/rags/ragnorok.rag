@@ -3,34 +3,34 @@ $_width 53
 $_height 10
 $_world earth_1
 
+$#.....P...F
+$#....FFFF.F
+$#....P.F..F
+$#....FF.F.F
+$#.........F
+$#....FFFF.F
+$#....P.P..F
+$#....F.FF.F
+$#.........F
+$#....FFFF.F
+$#....F..F.F
+$#....F.FF.F
+$#.........F
+$#....FFFF.F
+$#....P.F..F
+$#....FF.F.F
+$#.........F
+$#..F.FFFF.F
+$#....F..F.F
+$#..F.FFFF.F
+$#.........F
+$#....FFFF.F
+$#......F..F
+$#....FF.F.F
 $#.........F
 $#.........F
-$#..FFFF...F
-$#..P.P....F
-$#...F.F...F
+$#...FFF.F.F
 $#.........F
-$#...FFF...F
-$#..P.P....F
-$#...FFF...F
-$#.........F
-$#...FF....F
-$#..P..F...F
-$#..P.PF...F
-$#....F....F
-$#.........F
-$#..FFFF...F
-$#...P.....F
-$#....P....F
-$#..FFFF...F
-$#.........F
-$#...FF....F
-$#..P..F...F
-$#..P..F...F
-$#...FF....F
-$#.........F
-$#..FFFF...F
-$#..P.P....F
-$#...F.F...F
 $#.........F
 $#...FF....F
 $#..P..F...F
@@ -59,16 +59,20 @@ $#.........F
 
 $@player set [2,1]
 
-$-spawn [12,5] (skeleton)
-$-spawn [21,5] (skeleton)
-$-spawn [11,5] (skeleton)
-$-spawn [22,5] (skeleton)
-$-spawn [15,1] (skeleton)
-$-spawn [20,1] (skeleton)
-$-spawn [25,1] (skeleton)
 $-spawn [30,1] (skeleton)
+$-spawn [20,1] (skeleton)
 $-spawn [5,1] (fireSpirit)
 $-spawn [13,1] (wolf)
 $-spawn [19,1] (wolf)
-$-spawn [47,5] (levelTrigger)
+$-spawn [15,1] (skeleton)
 
+$-spawn [8,1] (shield)
+$-spawn [17,8] (spear)
+$-spawn [6,4] (spear)
+$-spawn [4,1] (lightning)
+$-spawn [19,8] (lightning)
+$-spawn [22,4] (lightning)
+$-spawn [26,3] (lightning)
+$-spawn [10,3] (spear)
+
+$-spawn [48,5] (levelTrigger)
