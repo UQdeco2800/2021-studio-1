@@ -144,6 +144,7 @@ public class MainMenuDisplay extends UIComponent {
         });
 
     rootTable.add(title);
+    rootTable.setBackground(new TextureRegionDrawable(new Texture("images/plainBack.png")));
     table.add(startBtn).padTop(70f);
     table.row();
     table.row();
@@ -198,7 +199,7 @@ public class MainMenuDisplay extends UIComponent {
                 String readName = lineResult[0];
                 int scoreValue = Integer.parseInt(lineResult[1]);
 
-                logger.info(readName);
+                //logger.info(readName);
 
                 // sort while reading
                 for (int i = 0; i < 5; i++) {
@@ -215,7 +216,7 @@ public class MainMenuDisplay extends UIComponent {
                         }
 
                 }
-                logger.info(scoreNames[numberScoreRead]);
+                //logger.info(scoreNames[numberScoreRead]);
                 numberScoreRead += 1;
             }
 

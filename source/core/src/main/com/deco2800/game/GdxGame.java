@@ -42,6 +42,12 @@ public class GdxGame extends Game {
   private void loadSettings() {
     logger.debug("Loading game settings");
     UserSettings.Settings settings = UserSettings.get();
+    UserSettings.DisplaySettings display = new UserSettings.DisplaySettings();
+    display.height = 900;
+    display.width = 1440;
+    logger.info(UserSettings.get().displayMode.height + "the display mode settings");
+    logger.info(UserSettings.get().displayMode.width + "the display mode settings");
+    settings.displayMode = display;
     UserSettings.applySettings(settings);
   }
 

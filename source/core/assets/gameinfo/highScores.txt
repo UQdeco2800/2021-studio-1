@@ -1,5 +1,5 @@
 Sam,2044
-Orca,197
-Zebra,170
-Unicorn,159
-Fox,391
+Zebra,1450
+Dragonfly,1348
+Dragonfly,1268
+Triumphant Zebra,640
