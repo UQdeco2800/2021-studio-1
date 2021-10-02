@@ -1,5 +1,5 @@
+Mouse,2946
 Sam,2044
-Orca,197
-Zebra,170
-Unicorn,159
-Fox,391
+Mouse,1796
+Zebra,1320
+Hound,1242
