@@ -1,5 +1,6 @@
 package com.deco2800.game.components;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -63,8 +64,8 @@ public class LevelLoadTriggerComponent extends Component {
             logger.error("File rags files could not be loaded");
         }
 
-        Random rand = new Random();
-        String RagFile = pathList.get(rand.nextInt(pathList.size())).getFileName().toString();
+        String RagFile =
+                pathList.get(MathUtils.random(pathList.size() - 1)).getFileName().toString();
         logger.debug("Loading Level : " + RagFile);
         return RagFile.substring(0, RagFile.lastIndexOf('.'));
     }
