@@ -48,7 +48,7 @@ public class ProjectileFactory {
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 10f))
                 .addComponent(new CombatStatsComponent(1, 100));
 
         baseProjectile.getComponent(PhysicsComponent.class).setGravityScale(5f);
