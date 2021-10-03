@@ -68,23 +68,32 @@ public class CameraShakeComponent extends Component {
         } else {
             entity.getEvents().trigger("moveRight");
             this.sfx.getEvents().trigger("normal");
-            //System.out.print("far");
             cameraComponent.setOffset(0);
             cameraComponent.update();
             loudWalk.stop();
-            if (distance >= 32 && distance < 40) {
-                walk.setVolume(1f);
-            }
-            if (distance >= 40 && distance < 50) {
-                walk.setVolume(0.7f);
-            }
-            if (distance >= 50 && distance < 60) {
-                walk.setVolume(0.3f);
-            }
-            if (distance > 60) {
-                walk.setVolume(0f);
-            }
+            setVolume(walk, distance);
             walk.play();
+        }
+    }
+
+    /**
+     * Set music volume proportionate to distance.
+     *
+     * @param music    music to change volume
+     * @param distance distance from target
+     */
+    private void setVolume(Music music, float distance) {
+        if (distance >= 32 && distance < 40) {
+            music.setVolume(1f);
+        }
+        if (distance >= 40 && distance < 50) {
+            music.setVolume(0.7f);
+        }
+        if (distance >= 50 && distance < 60) {
+            music.setVolume(0.3f);
+        }
+        if (distance > 60) {
+            music.setVolume(0f);
         }
     }
 }

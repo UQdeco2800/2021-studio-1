@@ -1,38 +1,31 @@
-$_title earth2
-$_width 20
+$_title earth1
+$_width 15
 $_height 10
-$_world earth_2
+$_world earth_1
 
 $#.........F
-$#.........F
-$#.........F
+$#.PPP.....F
+$#.PP......F
+$#.P.......F
+$#.......P.F
+$#.PPP...F.F
+$#...P..RF.F
+$#.PPP.FFF.F
+$#.....P...F
+$#.PPP.P..SF
+$#.P.P.P...F
+$#.P.P.P...F
+$#.....P...F
+$#....RFFF.F
 $#..........
-$#........P.
-$#.......P..
-$#.......P..
-$#.......P..
-$#.......P..
-$#..........
-$#......P...
-$#......P...
-$#......P...
-$#..........
-$#....P.....
-$#...SP..P..
-$#...P...P..
-$#...P...P..
-$#...P......
-$#...P.....F
 
-$@player set [2,1]
+$@player set [2,8]
 
-$-spawn [16,3] (fireSpirit)
-$-spawn [11,4] (wolf)
-$-spawn [10,4] (wolf)
-$-spawn [8,3] (skeleton)
+$-spawn [11,5] (skeleton)
+$-spawn [8,5] (skeleton)
+$-spawn [12,1] (fireSpirit)
 
-$-spawn [12,4] (spear)
-$-spawn [19,7] (shield)
-$-spawn [4,2] (spear)
+$-spawn [10,1] (shield)
+$-spawn [10,5] (lightning)
 
-$-spawn [15,5] (levelTrigger)
+$-spawn [10,5] (levelTrigger)

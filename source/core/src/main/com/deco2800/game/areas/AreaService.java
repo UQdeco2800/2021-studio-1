@@ -18,12 +18,7 @@ package com.deco2800.game.areas;
  the point of this is to avoid people shooting themselves in the foot...
  */
 public class AreaService {
-
     private AreaManager manager;
-
-    public AreaService() {
-
-    }
 
     public void setManager(AreaManager man) {
         manager = man;

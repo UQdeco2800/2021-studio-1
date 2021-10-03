@@ -66,7 +66,7 @@ public class TerrainFactory {
       case RAGNAROK_MAIN:
         TextureRegion orthoGrass =
             new TextureRegion(resourceService.getAsset("images/Backgrounds/asgard_bg.png",
-                    Texture.class));
+                Texture.class));
         TextureRegion orthoTuft =
             new TextureRegion(resourceService.getAsset("images/Backgrounds/asgard_bg.png", Texture.class));
         TextureRegion orthoRocks =
@@ -114,9 +114,9 @@ public class TerrainFactory {
   }
 
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
-      Cell cell = new Cell();
-      cell.setTile(tile);
-      layer.setCell(0, mapSize.x/60 - 1, cell);
+    Cell cell = new Cell();
+    cell.setTile(tile);
+    layer.setCell(0, mapSize.x/60 - 1, cell);
   }
 
   /**
