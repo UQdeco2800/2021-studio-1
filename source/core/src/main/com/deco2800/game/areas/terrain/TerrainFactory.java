@@ -20,8 +20,6 @@ import com.deco2800.game.services.ServiceLocator;
 /** Factory for creating game terrains. */
 public class TerrainFactory {
   private static final GridPoint2 MAP_SIZE = new GridPoint2(60, 60);
-//  private static final int TUFT_TILE_COUNT = 20;
-//  private static final int ROCK_TILE_COUNT = 20;
 
   private final OrthographicCamera camera;
   private final CameraComponent cameraComponent;
@@ -62,19 +60,17 @@ public class TerrainFactory {
 
   public TerrainComponent createTerrain(TerrainType terrainType) {
     ResourceService resourceService = ServiceLocator.getResourceService();
-    switch (terrainType) {
-      case RAGNAROK_MAIN:
-        TextureRegion orthoGrass =
-            new TextureRegion(resourceService.getAsset("images/Backgrounds/asgard_bg.png",
-                Texture.class));
-        TextureRegion orthoTuft =
-            new TextureRegion(resourceService.getAsset("images/Backgrounds/asgard_bg.png", Texture.class));
-        TextureRegion orthoRocks =
-            new TextureRegion(resourceService.getAsset("images/Backgrounds/asgard_bg.png", Texture.class));
-        return createRagnarockTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
-      default:
-        return null;
+    if (terrainType == TerrainType.RAGNAROK_MAIN) {
+      String bgPath = "images/Backgrounds/asgard_bg.png";
+      TextureRegion orthoGrass =
+              new TextureRegion(resourceService.getAsset(bgPath, Texture.class));
+      TextureRegion orthoTuft =
+              new TextureRegion(resourceService.getAsset(bgPath, Texture.class));
+      TextureRegion orthoRocks =
+              new TextureRegion(resourceService.getAsset(bgPath, Texture.class));
+      return createRagnarockTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
     }
+    return null;
   }
 
   private TerrainComponent createRagnarockTerrain(

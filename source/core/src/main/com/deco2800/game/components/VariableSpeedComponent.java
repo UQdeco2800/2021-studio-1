@@ -12,7 +12,7 @@ public class VariableSpeedComponent extends Component {
     private Entity sfx;
 
     /**
-     * Class to shake the camera and start event listener for animation
+     * Class to change the speed of the entity depending on the distance of target
      *
      * @param target     the target of the camera
      * @param deathGiant the death giant whose speed is changing
@@ -40,6 +40,7 @@ public class VariableSpeedComponent extends Component {
      */
     private void onCollisionStart(Fixture me, Fixture other) {
 
+        float yPos = target.getPosition().y;
         float distance = entity.getPosition().dst(target.getPosition());
 
         if (distance < 32f) {
