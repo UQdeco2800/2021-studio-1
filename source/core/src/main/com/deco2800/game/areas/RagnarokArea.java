@@ -2,13 +2,13 @@ package com.deco2800.game.areas;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
-import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -20,17 +20,16 @@ import com.deco2800.game.components.VariableSpeedComponent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Random;
+import java.util.function.Function;
 
 public class RagnarokArea extends GameArea {
 
     private static final Logger logger = LoggerFactory.getLogger(RagnarokArea.class);
 
     private static final float WALL_HEIGHT = 0.1f;
-    private final String name; //initiliase in the loader
-    private Vector2 lastPos;
+    private final String name; //initialise in the loader
 
-    private HashMap<GridPoint2, LinkedList<Entity>> entitySignUp;
+    private final HashMap<GridPoint2, LinkedList<Entity>> entitySignUp;
 
     protected Entity player;
 
@@ -63,7 +62,9 @@ public class RagnarokArea extends GameArea {
             "images/floors/jotunheimr.png",
             "images/powerup-shield.png",
             "images/powerup-spear.png",
-            "images/blue_bck.png"
+            "images/blue_bck.png",
+            "images/Backgrounds/black_back.png",
+            "images/Backgrounds/asgard_bg.png"
     };
 
     //TODO: make Json,
@@ -80,18 +81,18 @@ public class RagnarokArea extends GameArea {
 
     // get the sounds to work and then move the music & sounds to a json
     //TODO: make Json
-    private static final String[] racerSounds = {"sounds/Impact4.ogg"};
-    private static final String mainMusic = "sounds/main.mp3";
-    private static final String townMusic = "sounds/town.mp3";
-    private static final String raiderMusic = "sounds/raider.mp3";
+    private static final String[] RACER_SOUNDS = {"sounds/Impact4.ogg"};
+    private static final String MAIN_MUSIC = "sounds/main.mp3";
+    private static final String TOWN_MUSIC = "sounds/town.mp3";
+    private static final String RAIDER_MUSIC = "sounds/raider.mp3";
     // sound effect of fire/burning behind giant *fwoom* *crackle*
-    private static final String fireMusic = "sounds/fire.mp3";
+    private static final String FIRE_MUSIC = "sounds/fire.mp3";
     // sound effects of giant walking (still to be tested)
-    private static final String walkMusic = "sounds/walk.mp3";
-    private static final String loudWalkMusic = "sounds/giant_walk.mp3";
-    private static final String roarMusic = "sounds/roar.mp3";
-    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, loudWalkMusic,
-                                                roarMusic};
+    private static final String WALK_MUSIC = "sounds/walk.mp3";
+    private static final String LOUD_WALK_MUSIC = "sounds/giant_walk.mp3";
+    private static final String ROAR_MUSIC = "sounds/roar.mp3";
+    private static final String[] RACER_MUSIC = {MAIN_MUSIC, TOWN_MUSIC, RAIDER_MUSIC, FIRE_MUSIC,
+            WALK_MUSIC, LOUD_WALK_MUSIC, ROAR_MUSIC};
 
     private final TerrainFactory terrainFactory;
 
@@ -122,9 +123,6 @@ public class RagnarokArea extends GameArea {
         logger.debug("Creating new RagnarokArea");
     }
 
-    public void setManager(AreaManager manager) {
-    }
-
     private void displayUI() {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Ragnarok Area: " + name));
@@ -136,8 +134,8 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(racerTextures);
         resourceService.loadTextureAtlases(racerTextureAtlases);
-        resourceService.loadSounds(racerSounds);
-        resourceService.loadMusic(racerMusic);
+        resourceService.loadSounds(RACER_SOUNDS);
+        resourceService.loadMusic(RACER_MUSIC);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -271,76 +269,64 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
-     * Spawn a line of platforms from x[0] to x[end] having only a single collision entity and their
-     * texture given by world.
+     * * Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
+     * * spans from x[1] to x[n].
+     * * <p>
+     * * On disposal of the overarching collision entity, all floors created are disposed of.
+     * *
+     * * @param x     array of x coordinates to spawn floors at
+     * * @param y     the y coordinate to spawn all floors at
+     * * @param world the world type to load in. Must match the name of a .png file in
+     * *              assets/images (e.g. assets/images/world.png)
+     * Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
+     * spans from x[0] to the end of the map chunk at x[n + 3].
      * <p>
-     * On disposal of the overarching collision entity, all platforms created are disposed of.
+     * On disposal of the single collision entity, all map pieces created are disposed of.
      *
-     * @param x     array of x coordinates to spawn floors at
-     * @param y     the y coordinate to spawn all platforms at
+     * @param x     game x coordinates to spawn floors at
+     * @param y     game y coordinates to spawn floors at
+     * @param type  type of map piece, should only be either 'floor' or 'platform'
      * @param world the world type to load in. Must match the name of a .png file in
-     *              assets/images (e.g. assets/images/world.png)
+     *              assets/images/worlds (e.g. assets/images/worlds/world.png)
      */
-    protected void spawnPlatformChunk(int[] x, int y, String world) {
-        Entity[] platforms = new Entity[x.length];
+    protected void spawnMapChunk(int[] x, int y, String type, String world) {
+        // Define a functional interface to create an entity of either a floor or platform type.
+        Function<String, Entity> createMapEntity;
+        // The height of the map piece.
+        int height;
+        if (type.equals("floor")) {
+            createMapEntity = ObstacleFactory::createFloorNoCollider;
+            height = 3;
+        } else if (type.equals("platform")) {
+            createMapEntity = ObstacleFactory::createPlatformNoCollider;
+            height = 1;
+            // Platforms should be sitting at the top of a tile.
+            y += 2;
+        } else {
+            logger.error("Tried to spawn map chunk with incorrect type {}", type);
+            return;
+        }
 
-        // y + 2 so that the platforms are at the top of a terrain tile, not the bottom
-        y += 2;
-
+        Entity[] entities = new Entity[x.length];
         for (int i = 0; i < x.length; i++) {
-            Entity platform = ObstacleFactory.createPlatformNoCollider(world);
-            // add to array of entities so that they can all be disposed of at once
-            platforms[i] = platform;
+            Entity mapPart = createMapEntity.apply(world);
+            // Add to array of entities so that they can all be disposed of at once.
+            entities[i] = mapPart;
             GridPoint2 pos = new GridPoint2(x[i], y);
-            spawnEntityAt(platform, pos, false, false);
-            signup(pos, platform);
+            spawnEntityAt(mapPart, pos, false, false);
+            signup(pos, mapPart);
         }
 
         // Calculate width by getting taking away the starting position of the first platform from
-        // the starting position of the last platform. This is still one platform too short, so
+        // the starting position of the last platform. This is still one map piece too short, so
         // add 3 which is the width of a single tile.
         int width = x[x.length - 1] - x[0] + 3;
-        Entity collider = ObstacleFactory.createCollider(width, 1);
-        collider.addComponent(new GroupDisposeComponent(platforms));
+        Entity collider = ObstacleFactory.createCollider(width, height);
+        collider.addComponent(new GroupDisposeComponent(entities));
 
         GridPoint2 pos = new GridPoint2(x[0], y);
         spawnEntityAt(collider, pos, false, false);
         signup(pos, collider);
-    }
-
-    /**
-     * Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
-     * spans from x[1] to x[n].
-     * <p>
-     * On disposal of the overarching collision entity, all floors created are disposed of.
-     *
-     * @param x     array of x coordinates to spawn floors at
-     * @param y     the y coordinate to spawn all floors at
-     * @param world the world type to load in. Must match the name of a .png file in
-     *              assets/images (e.g. assets/images/world.png)
-     */
-    protected void spawnFloorChunk(int[] x, int y, String world) {
-        Entity[] floors = new Entity[x.length];
-        for (int i = 0; i < x.length; i++) {
-            Entity floor = ObstacleFactory.createFloorNoCollider(world);
-            // add to array of entities so that they can all be disposed of at once
-            floors[i] = floor;
-            GridPoint2 pos = new GridPoint2(x[i], y);
-            spawnEntityAt(floor, pos, false, false);
-            signup(pos, floor);
-        }
-
-        // Calculate width by getting taking away the starting position of the first platform from
-        // the starting position of the last platform. This is still one platform too short, so
-        // add 3 which is the width of a single tile.
-        int width = x[x.length - 1] - x[0] + 3;
-        Entity collider = ObstacleFactory.createCollider(width, 3);
-        collider.addComponent(new GroupDisposeComponent(floors));
-
-        GridPoint2 pos = new GridPoint2(x[0], y);
-        spawnEntityAt(collider, pos, false, false);
-        signup(pos, collider);
-
     }
 
     protected void spawnRocks(int x, int y) {
@@ -453,20 +439,19 @@ public class RagnarokArea extends GameArea {
 
         String witchMusic;
 
-        Random rand = new Random();
-        switch (rand.nextInt(3)) {
+        switch (MathUtils.random(2)) {
             case 1:
-                witchMusic = townMusic;
+                witchMusic = TOWN_MUSIC;
                 break;
             case 2:
-                witchMusic = raiderMusic;
+                witchMusic = RAIDER_MUSIC;
                 break;
             default:
-                witchMusic = mainMusic;
+                witchMusic = MAIN_MUSIC;
         }
         Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
-        Music fire = ServiceLocator.getResourceService().getAsset(fireMusic, Music.class);
-        Music walk = ServiceLocator.getResourceService().getAsset(walkMusic, Music.class);
+        Music fire = ServiceLocator.getResourceService().getAsset(FIRE_MUSIC, Music.class);
+        Music walk = ServiceLocator.getResourceService().getAsset(WALK_MUSIC, Music.class);
         music.setLooping(true);
         fire.setLooping(true);
         walk.setLooping(true);
@@ -483,14 +468,14 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(racerTextures);
         resourceService.unloadAssets(racerTextureAtlases);
-        resourceService.unloadAssets(racerSounds);
-        resourceService.unloadAssets(racerMusic);
+        resourceService.unloadAssets(RACER_SOUNDS);
+        resourceService.unloadAssets(RACER_MUSIC);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(mainMusic, Music.class).stop();
+        ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class).stop();
         this.unloadAssets();
     }
 

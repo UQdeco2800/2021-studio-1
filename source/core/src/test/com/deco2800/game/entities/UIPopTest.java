@@ -99,6 +99,7 @@ public class UIPopTest {
         namesSet.add("Help Screen");
         namesSet.add("Score Screen");
         namesSet.add("Pause Menu");
+        namesSet.add("Leaderboard");
 
         assertEquals(UIPop.GetPossibleUIScreens(), namesSet);
         assertEquals(pop.GetPossibleUIScreens(), namesSet);

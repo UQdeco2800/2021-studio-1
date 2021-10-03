@@ -16,6 +16,7 @@ import com.deco2800.game.ui.UIComponent;
  * Displays the name of the current game area.
  */
 public class EntityIDDisplay extends UIComponent {
+  private final static String ID_FORMAT = "id: %d, x: %f, y: %f"; // Satisfy SonarCloud.
   private String gameAreaName = "";
   private Label title;
 
@@ -94,7 +95,7 @@ public class EntityIDDisplay extends UIComponent {
       if (e.getComponent(PlayerStatsDisplay.class) != null) {
 
         debugString.append("Player :: ");
-        debugString.append(String.format("id: %d, x: %f, y: %f", e.getId(),
+        debugString.append(String.format(ID_FORMAT, e.getId(),
                 e.getCenterPosition().x, e.getCenterPosition().y));
         debugString.append("\n");
         sortedArray.removeValue(e, true);
@@ -103,7 +104,7 @@ public class EntityIDDisplay extends UIComponent {
 
       if (e.getComponent(AbstractPlayerMovementComponent.class) != null) {
         debugString.append("Abstract Player :: ");
-        debugString.append(String.format("id: %d, x: %f, y: %f", e.getId(),
+        debugString.append(String.format(ID_FORMAT, e.getId(),
                 e.getCenterPosition().x, e.getCenterPosition().y));
         debugString.append("\n");
         sortedArray.removeValue(e, true);
@@ -137,7 +138,7 @@ public class EntityIDDisplay extends UIComponent {
       for (Entity e : sortedArray) {
 
         debugString.append("Other :: ");
-        debugString.append(String.format("id: %d, x: %f, y: %f", e.getId(),
+        debugString.append(String.format(ID_FORMAT, e.getId(),
                 e.getCenterPosition().x, e.getCenterPosition().y));
         debugString.append("\n");
 
@@ -147,7 +148,7 @@ public class EntityIDDisplay extends UIComponent {
 
     /*for (Entity e : ServiceLocator.getEntityService().getEntityArray()) {
 
-      debugString.append(String.format("id: %d, x: %f, y: %f", e.getId(),
+      debugString.append(String.format(ID_FORMAT, e.getId(),
               e.getCenterPosition().x, e.getCenterPosition().y));
       debugString.append("\n");
 

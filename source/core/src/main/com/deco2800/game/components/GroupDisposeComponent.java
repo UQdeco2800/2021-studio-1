@@ -29,10 +29,6 @@ public class GroupDisposeComponent extends Component {
         this.entities = entities;
     }
 
-    @Override
-    public void create() {
-    }
-
     /**
      * Dispose of all entities held in this component.
      */
