@@ -212,6 +212,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The AreaManager class models the persistant aspects of the game, such as the player and the wall of death.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/AreaManager.html#%3Cinit%3E(com.deco2800.game.areas.terrain.TerrainFactory,com.deco2800.game.areas.RagnarokArea)">AreaManager(TerrainFactory, RagnarokArea)</a></span> - Constructor for class com.deco2800.game.areas.<a href="com/deco2800/game/areas/AreaManager.html" title="class in com.deco2800.game.areas">AreaManager</a></dt>
+<dd>
+<div class="block">Construct a new AreaManager with the given terrainFactory and ragnarokArea.</div>
+</dd>
 <dt><a href="com/deco2800/game/areas/AreaService.html" title="class in com.deco2800.game.areas"><span class="typeNameLink">AreaService</span></a> - Class in <a href="com/deco2800/game/areas/package-summary.html">com.deco2800.game.areas</a></dt>
 <dd>
 <div class="block">Facilitates the identifying, changing, and modifying of areas.</div>
@@ -425,6 +429,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/Component.html#create()">create()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/Component.html" title="class in com.deco2800.game.components">Component</a></dt>
 <dd>
 <div class="block">Called when the entity is created and registered.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/FallDamageComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/FallDamageComponent.html" title="class in com.deco2800.game.components">FallDamageComponent</a></dt>
+<dd>
+<div class="block">Create event listener for collision</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/gamearea/EntityIDDisplay.html#create()">create()</a></span> - Method in class com.deco2800.game.components.gamearea.<a href="com/deco2800/game/components/gamearea/EntityIDDisplay.html" title="class in com.deco2800.game.components.gamearea">EntityIDDisplay</a></dt>
 <dd>&nbsp;</dd>
@@ -940,6 +948,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ai/tasks/Task.Status.html#FAILED">FAILED</a></span> - com.deco2800.game.ai.tasks.<a href="com/deco2800/game/ai/tasks/Task.Status.html" title="enum in com.deco2800.game.ai.tasks">Task.Status</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/FallDamageComponent.html" title="class in com.deco2800.game.components"><span class="typeNameLink">FallDamageComponent</span></a> - Class in <a href="com/deco2800/game/components/package-summary.html">com.deco2800.game.components</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/FallDamageComponent.html#%3Cinit%3E(com.deco2800.game.entities.Entity)">FallDamageComponent(Entity)</a></span> - Constructor for class com.deco2800.game.components.<a href="com/deco2800/game/components/FallDamageComponent.html" title="class in com.deco2800.game.components">FallDamageComponent</a></dt>
+<dd>
+<div class="block">Class to cause the player to die when below a certain height position</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/configs/PlayerConfig.html#favouriteColour">favouriteColour</a></span> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/PlayerConfig.html" title="class in com.deco2800.game.entities.configs">PlayerConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/files/FileLoader.html" title="class in com.deco2800.game.files"><span class="typeNameLink">FileLoader</span></a> - Class in <a href="com/deco2800/game/files/package-summary.html">com.deco2800.game.files</a></dt>
@@ -1884,6 +1898,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Iterates over registered input handlers in descending priority and stops as soon as the input is
  processed</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/files/RagLoader.html#parseLine(java.lang.String)">parseLine(String)</a></span> - Static method in class com.deco2800.game.files.<a href="com/deco2800/game/files/RagLoader.html" title="class in com.deco2800.game.files">RagLoader</a></dt>
+<dd>
+<div class="block">Send command from this line to the terminal.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/screens/MainGameScreen.html#pause()">pause()</a></span> - Method in class com.deco2800.game.screens.<a href="com/deco2800/game/screens/MainGameScreen.html" title="class in com.deco2800.game.screens">MainGameScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/screens/MainMenuScreen.html#pause()">pause()</a></span> - Method in class com.deco2800.game.screens.<a href="com/deco2800/game/screens/MainMenuScreen.html" title="class in com.deco2800.game.screens">MainMenuScreen</a></dt>
@@ -2377,8 +2395,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Set density</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/physics/components/AbstractPlayerMovementComponent.html#setDifficulty(float)">setDifficulty(float)</a></span> - Method in class com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/AbstractPlayerMovementComponent.html" title="class in com.deco2800.game.physics.components">AbstractPlayerMovementComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/Component.html#setEnabled(boolean)">setEnabled(boolean)</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/Component.html" title="class in com.deco2800.game.components">Component</a></dt>
 <dd>
 <div class="block">Enable or disable the component.</div>
@@ -2421,7 +2437,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/AreaService.html#setManager(com.deco2800.game.areas.AreaManager)">setManager(AreaManager)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/AreaService.html" title="class in com.deco2800.game.areas">AreaService</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/physics/components/PhysicsMovementComponent.html#setMaxSpeed(int)">setMaxSpeed(int)</a></span> - Method in class com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/PhysicsMovementComponent.html" title="class in com.deco2800.game.physics.components">PhysicsMovementComponent</a></dt>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/physics/components/PhysicsMovementComponent.html#setMaxSpeed(int)">setMaxSpeed(int)</a></span> - Static method in class com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/PhysicsMovementComponent.html" title="class in com.deco2800.game.physics.components">PhysicsMovementComponent</a></dt>
 <dd>
 <div class="block">Sets the maxSpeed</div>
 </dd>
@@ -2527,8 +2543,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets the type of this entity</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/physics/components/AbstractPlayerMovementComponent.html#setVelocity(float)">setVelocity(float)</a></span> - Method in class com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/AbstractPlayerMovementComponent.html" title="class in com.deco2800.game.physics.components">AbstractPlayerMovementComponent</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/EntityTypes.html#SHIELDPOWERUP">SHIELDPOWERUP</a></span> - com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/EntityTypes.html" title="enum in com.deco2800.game.entities.factories">EntityTypes</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/powerups/ShieldPowerUpComponent.html" title="class in com.deco2800.game.components.powerups"><span class="typeNameLink">ShieldPowerUpComponent</span></a> - Class in <a href="com/deco2800/game/components/powerups/package-summary.html">com.deco2800.game.components.powerups</a></dt>
@@ -3121,7 +3135,7 @@ the order they are declared.</div>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/VariableSpeedComponent.html#%3Cinit%3E(com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity,com.deco2800.game.entities.Entity)">VariableSpeedComponent(Entity, Entity, Entity)</a></span> - Constructor for class com.deco2800.game.components.<a href="com/deco2800/game/components/VariableSpeedComponent.html" title="class in com.deco2800.game.components">VariableSpeedComponent</a></dt>
 <dd>
-<div class="block">Class to shake the camera and start event listener for animation</div>
+<div class="block">Class to change the speed of the entity depending on the distance of target</div>
 </dd>
 <dt><a href="com/deco2800/game/utils/math/Vector2Utils.html" title="class in com.deco2800.game.utils.math"><span class="typeNameLink">Vector2Utils</span></a> - Class in <a href="com/deco2800/game/utils/math/package-summary.html">com.deco2800.game.utils.math</a></dt>
 <dd>

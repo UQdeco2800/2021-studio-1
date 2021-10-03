@@ -149,6 +149,13 @@ extends <a href="RagnarokArea.html" title="class in com.deco2800.game.areas">Rag
 <div class="block">The AreaManager class models the persistant aspects of the game, such as the player and the wall of death.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.deco2800.game.areas.terrain.TerrainFactory,com.deco2800.game.areas.RagnarokArea)">AreaManager</a></span>&#8203;(<a href="terrain/TerrainFactory.html" title="class in com.deco2800.game.areas.terrain">TerrainFactory</a>&nbsp;terrainFactory,
+<a href="RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a>&nbsp;ragnarokArea)</code></th>
+<td class="colLast">
+<div class="block">Construct a new AreaManager with the given terrainFactory and ragnarokArea.</div>
+</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -294,6 +301,20 @@ java.lang.String&nbsp;spawnType)</code></th>
 </dl>
 </section>
 </li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="&lt;init&gt;(com.deco2800.game.areas.terrain.TerrainFactory,com.deco2800.game.areas.RagnarokArea)">AreaManager</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">AreaManager</span>&#8203;(<span class="arguments"><a href="terrain/TerrainFactory.html" title="class in com.deco2800.game.areas.terrain">TerrainFactory</a>&nbsp;terrainFactory,
+<a href="RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a>&nbsp;ragnarokArea)</span></div>
+<div class="block">Construct a new AreaManager with the given terrainFactory and ragnarokArea.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>terrainFactory</code> - the terrainFactory to be initilaised in the GameArea class. It is passed the
+                       mainInstace.</dd>
+<dd><code>ragnarokArea</code> - ragnarokArea to spawn entities into, has already been created()</dd>
+</dl>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -433,7 +454,7 @@ java.lang.String&nbsp;value)</span></div>
 <h3><a id="makeBufferedPlace(com.deco2800.game.areas.RagnarokArea)">makeBufferedPlace</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">makeBufferedPlace</span>&#8203;(<span class="arguments"><a href="RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a>&nbsp;area)</span></div>
 <div class="block">Spawn in all entities listed in this.bufferedPlaces to area.
-
+ <p>
  This is called after the terrain in a ragFile has been fully read and a -config line has
  been reached. Meaning, map parts are all spawned at one time after parsing a file.</div>
 <dl>
