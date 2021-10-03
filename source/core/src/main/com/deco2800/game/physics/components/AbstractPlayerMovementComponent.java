@@ -30,15 +30,4 @@ public class AbstractPlayerMovementComponent extends PhysicsMovementComponent {
             updateDirection(body);
         }
     }
-
-    public void setVelocity(float velocity) {
-
-    }
-
-    public void setDifficulty(float difficulty) {
-
-
-
-    }
-
 }

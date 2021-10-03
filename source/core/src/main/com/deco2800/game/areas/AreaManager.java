@@ -1,7 +1,6 @@
 package com.deco2800.game.areas;
 
 import com.deco2800.game.areas.terrain.TerrainFactory;
-import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.files.RagLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +90,6 @@ public class AreaManager extends RagnarokArea {
      *                       mainInstace.
      */
     public AreaManager(TerrainFactory terrainFactory) {
-
         super("Manager", terrainFactory);
         this.mainTerrainFactory = terrainFactory;
         this.areaInstances = new LinkedList<>();
@@ -161,7 +159,7 @@ public class AreaManager extends RagnarokArea {
         int gx = x * GRID_SCALE;
         int gy = y * GRID_SCALE;
         switch (placeType) {
-            case "floor":
+            case FLOOR:
                 area.spawnFloor(gx, gy, this.currentWorld);
                 break;
             case PLATFORM:
@@ -180,7 +178,6 @@ public class AreaManager extends RagnarokArea {
             default:
                 logger.error("place() called in AreaManager without valid placeType");
                 break;
-
         }
     }
 
@@ -290,6 +287,7 @@ public class AreaManager extends RagnarokArea {
                     default:
                         logger.error("Unknown value in rag: {} {}", argument, value);
                 }
+                break;
             default:
                 logger.error("Unknown argument in rag: {} {}", argument, value);
         }
