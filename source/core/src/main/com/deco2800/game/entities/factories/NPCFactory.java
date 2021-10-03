@@ -83,7 +83,7 @@ public class NPCFactory {
         skeleton.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
 
         for(Fixture fixture : skeleton.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
-            fixture.setSensor(true);
+            fixture.setSensor(false);
         }
 
         skeleton.setType(EntityTypes.SKELETON);
@@ -137,7 +137,7 @@ public class NPCFactory {
         wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck,1.0f);
 
         for(Fixture fixture : wolf.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
-            fixture.setSensor(true);
+            fixture.setSensor(false);
         }
 
         wolf.getComponent(AnimationRenderComponent.class).startAnimation("run");
@@ -171,7 +171,7 @@ public class NPCFactory {
         fireSpirit.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
 
         for(Fixture fixture : fireSpirit.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
-            fixture.setSensor(true);
+            fixture.setSensor(false);
         }
 
         fireSpirit.setType(EntityTypes.FIRESPIRIT);
@@ -282,7 +282,7 @@ public class NPCFactory {
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 10f))
                         .addComponent(aiComponent);
         PhysicsUtils.setScaledCollider(npc, 0f, 0f);
         npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
@@ -307,7 +307,7 @@ public class NPCFactory {
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 10f))
                         .addComponent(aiComponent);
         PhysicsUtils.setScaledCollider(npc, 0f, 0f);
         npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
@@ -334,7 +334,7 @@ public class NPCFactory {
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 10f))
                         .addComponent(aiComponent);
 
         PhysicsUtils.setScaledCollider(npc, 0f, 0f);
@@ -362,7 +362,7 @@ public class NPCFactory {
                         .addComponent(aiComponent);
 
         //set the NPC as a sensor so other object will not collide
-        npc.getComponent(ColliderComponent.class).setSensor(true);
+        npc.getComponent(ColliderComponent.class).setSensor(false);
         npc.setType(EntityTypes.ENEMY);
         return npc;
     }
