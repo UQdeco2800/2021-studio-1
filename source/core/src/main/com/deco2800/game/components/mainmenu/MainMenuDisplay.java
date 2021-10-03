@@ -28,7 +28,7 @@ public class MainMenuDisplay extends UIComponent {
     private Table highScoreTable;
     private Table muteTable;
     private static int[] scoreValues = {0, 0, 0, 0, 0};
-    private final static String PLAY_LINE = "Play to get here!";
+    private static final String PLAY_LINE = "Play to get here!";
     private static String[] scoreNames = {PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE};
     private static String highScoreName = "";
     private static int highScorevalue = 0;

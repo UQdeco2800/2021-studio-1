@@ -41,13 +41,12 @@ public class RagLoader {
         }
     }
 
-    /*
-     * Parse a line from a rag file. Send commands to the terminal from the information in the
-     * line.
-     * This is removed from createFromFile() because sonarCloud said its cognitive complexity was
-     * too high.
+    /**
+     * Send command from this line to the terminal.
+     *
+     * @param line line of a .rag file
      */
-    private static void parseLine(String line) {
+    public static void parseLine(String line) {
         if (line.startsWith("_")) { // config line
             inConfig = true;
             String[] args = line.split(" ");
