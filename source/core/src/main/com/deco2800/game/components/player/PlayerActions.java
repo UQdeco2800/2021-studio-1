@@ -29,7 +29,6 @@ public class PlayerActions extends Component {
   private SpeedTypes playerSpeed;
   private long walkTime;
   private long gameTime;
-  private long jumpDelay;
   private Vector2 maxSpeed = new Vector2(8f, 1f); // Metres
   // per second
   private Vector2 mediumSpeed = new Vector2(6f, 1f);
@@ -121,13 +120,12 @@ public class PlayerActions extends Component {
    * Applies an upwards force to the player
    */
   private void applyJumpForce() {
-    if (ServiceLocator.getTimeSource().getTimeSince(jumpDelay) >= 500L) {
-      Body body = physicsComponent.getBody();
-      body.applyLinearImpulse(new Vector2(0f, 40f).scl(body.getMass()),
-              body.getWorldCenter(), true);
-      falling = true;
-      jumping = false;
-    }
+    Body body = physicsComponent.getBody();
+    body.applyLinearImpulse(new Vector2(0f, 40f).scl(body.getMass()),
+            body.getWorldCenter(), true);
+    falling = true;
+    jumping = false;
+    whichAnimation();
   }
 
   /**
@@ -198,7 +196,6 @@ public class PlayerActions extends Component {
     if (entity.getComponent(PhysicsComponent.class).getBody()
             .getLinearVelocity().y == 0) {
       jumping = true;
-      jumpDelay = ServiceLocator.getTimeSource().getTime();
     }
     //Determine which animation to play
     whichAnimation();

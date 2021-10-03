@@ -80,9 +80,9 @@ public class PlayerFactory {
     animator.addAnimation("still-left-spear", 1f,
             Animation.PlayMode.LOOP);
 
-    animator.addAnimation("jump-left", 0.1f,
+    animator.addAnimation("jump-left", 0.05f,
             Animation.PlayMode.NORMAL);
-    animator.addAnimation("jump-right", 0.1f,
+    animator.addAnimation("jump-right", 0.5f,
             Animation.PlayMode.NORMAL);
     animator.addAnimation("jump-left-shield", 0.1f,
             Animation.PlayMode.NORMAL);
