@@ -252,10 +252,8 @@ public class MainMenuDisplay extends UIComponent {
                     scoreNames[i] = readName;
                     break;
                     }
-            //logger.info(scoreNames[numberScoreRead]);
             numberScoreRead += 1;
             }
-            logger.info(scoreNames[numberScoreRead]);
             numberScoreRead += 1;
         }
 
