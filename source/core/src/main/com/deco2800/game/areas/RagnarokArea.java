@@ -41,6 +41,7 @@ public class RagnarokArea extends GameArea {
             "images/fire_spirit.png",
             "images/skeleton.png",
             "images/Spear_1.png",
+            "images/fireball.png",
             "images/Rock_1.png",
             "images/Spike_1.png",
             "images/deathGiant.png",
