@@ -206,8 +206,8 @@ public class MainGameScreen extends ScreenAdapter {
 
     private void recordHighScore(String currentScore) {
 
-      String[] availableNames = {"Zebra", "Fox", "Hound", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
-      String[] availableAdjectives = {"Tiny", "Spirited", "Curious", "Trained", "Colourful", "Triumphant", "Extraordinary", "Fierce", "Unbeatable", "Unique"};
+      String[] availableNames = {"Zebra", "Fox", "Dire Wolf", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
+      String[] availableAdjectives = {"Tiny", "Spirited", "Curious", "Colourful", "Trained", "Triumphant", "Extraordinary", "Fierce", "Unbeatable", "Unique"};
       char[] scoreIntegers = currentScore.toCharArray();
       String firstCharacter = scoreIntegers[0] + "";
       String randValue = "" + scoreIntegers[scoreIntegers.length - 1];
@@ -224,7 +224,14 @@ public class MainGameScreen extends ScreenAdapter {
           adjective = availableAdjectives[((scoreIntegers.length - 1) * 2) + section];
       }
 
-      String name = adjective + " " + availableNames[Integer.parseInt(randValue)];
+      String selectedName = MainMenuDisplay.getPlayeName();
+      String name;
+
+      if (!selectedName.equals("Random")) {
+          name = adjective + " " + selectedName;
+      } else {
+          name = adjective + " " + availableNames[Integer.parseInt(randValue)] + "";
+      }
 
       FileWriter highScoreFile = null;
 

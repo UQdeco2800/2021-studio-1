@@ -1,6 +1,7 @@
 package com.deco2800.game.areas;
 
 import com.deco2800.game.areas.terrain.TerrainFactory;
+import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.files.RagLoader;
 import org.slf4j.Logger;
@@ -109,16 +110,19 @@ public class AreaManager extends RagnarokArea {
     @Override
     public void create() {
 
-        RagnarokArea persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
-        persistentInstance.setManager(this);
-        persistentInstance.create();
-        persistentInstance.makePlayer(10, 5);
+        //RagnarokArea persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
+        //persistentInstance.setManager(this);
+        //persistentInstance.create();
+        //persistentInstance.makePlayer(10, 5);
 
-        persistentInstance.spawnWallOfDeath();
+        //terrainInstance.spawnWallOfDeath();
 
-        this.player = persistentInstance.getPlayer();
-
+        //if above code is uncommented load can introduce duplicate instances
+        //conflict with load not above code I don't think
         load("asg1");
+        terrainInstance.makePlayer(10, 5);
+        this.player = terrainInstance.getPlayer();
+        terrainInstance.spawnWallOfDeath();
 
         logger.debug("Creating AreaManager");
 
@@ -244,6 +248,7 @@ public class AreaManager extends RagnarokArea {
             terrainInstance = new RagnarokArea("load test", mainTerrainFactory);
             terrainInstance.setManager(this);
             terrainInstance.create();
+            player = terrainInstance.getPlayer();
         }
         RagLoader.createFromFile(level);
         startNextArea += bPWidth; // Set this value to reflect the start of the next area.

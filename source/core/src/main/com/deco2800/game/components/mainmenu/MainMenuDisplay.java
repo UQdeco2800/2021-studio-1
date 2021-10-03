@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ public class MainMenuDisplay extends UIComponent {
   private Table helpTable;
   private Table highScoreTable;
   private Table muteTable;
+  private static String playerName = "";
   private static int[] scoreValues = {0, 0, 0, 0, 0};
   private static String[] scoreNames = {"Play to get here!", "Play to get here!", "Play to get here!", "Play to get here!", "Play to get here!"};
   private static String highScoreName = "";
@@ -68,9 +70,12 @@ public class MainMenuDisplay extends UIComponent {
                     "images/mute_button_on.png", Texture.class)));
 
     highScoreName = readHighScores();
+    Label selectionDescription = new Label("Select a Name", skin, "popUpFont");
     Label highScorePreText = new Label("Best Runner", skin, "popUpFont");
     Label highScoreNameText = new Label(highScoreName, skin, "popUpFont");
     Label highScoreValueText = new Label("" + highScorevalue , skin, "popUpFont");
+    SelectBox<String> characterSelections = new SelectBox<String>(skin);
+    addCharacterSelections(characterSelections);
 
     // Triggers an event when the button is pressed
 
@@ -145,7 +150,11 @@ public class MainMenuDisplay extends UIComponent {
 
     rootTable.add(title);
     rootTable.setBackground(new TextureRegionDrawable(new Texture("images/plainBack.png")));
-    table.add(startBtn).padTop(70f);
+    table.add(selectionDescription).padTop(70f);
+    table.row();
+    table.add(characterSelections).padTop(10f);
+    table.row();
+    table.add(startBtn).padTop(30f);
     table.row();
     table.row();
     table.add(settingsBtn).padTop(30f);
@@ -167,6 +176,26 @@ public class MainMenuDisplay extends UIComponent {
     stage.addActor(helpTable);
     stage.addActor(muteTable);
     stage.addActor(highScoreTable);
+  }
+
+  private void addCharacterSelections(SelectBox<String> characterSelections) {
+
+      String[] selections = new String[] {"Random",  "Thor", "Loki", "Bjorn", "Floki", "Ironside", "Uber", "Frejya", "Njoror", "Aesir", "Mjolnir"};
+      Array<String> selectionText = new Array<String>();
+
+      for (String selection : selections) {
+
+          selectionText.add(selection);
+      }
+
+      characterSelections.setItems(selectionText);
+
+      characterSelections.addListener(new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+              playerName = characterSelections.getSelected();
+          }
+      });
   }
 
     /*
@@ -226,6 +255,14 @@ public class MainMenuDisplay extends UIComponent {
             highScoresScanner.close();
 
             return name;
+    }
+
+    /*
+     * Returns the players selected name
+     */
+    public static String getPlayeName () {
+
+        return playerName;
     }
 
     /*
