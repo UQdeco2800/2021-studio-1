@@ -9,6 +9,7 @@ import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -217,6 +218,21 @@ public class RagnarokArea extends GameArea {
         // in GameArea
 
         return newPlayer;
+    }
+
+    /**
+     * Spawn a background image starting at x.
+     *
+     * @param x     starting coordinate
+     * @param width width of the image using scaleWidth(width)
+     * @param world world type, must match the first word of a .png file in
+     *              assets/images/Backgrounds/'world'_bg.png, any information after an underscore
+     *              in world is ignored i.e. asgard and asgard_3 are both the same.
+     */
+    protected void spawnBackground(int x, int width, String world) {
+        Entity background = ObstacleFactory.createBackground(world, width);
+        GridPoint2 pos = new GridPoint2(x, 0);
+        spawnEntityAt(background, pos, false, false);
     }
 
     /**
