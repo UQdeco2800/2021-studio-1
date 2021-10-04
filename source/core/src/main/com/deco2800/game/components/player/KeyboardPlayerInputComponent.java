@@ -68,6 +68,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   @Override
   public boolean keyUp(int keycode) {
 
+    triggerAnyMovement();
     switch (keycode) {
       case Keys.W:
         isDirection = 1;
@@ -130,5 +131,9 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   private void triggerSpearEvent() {
     entity.getEvents().trigger("usePowerUp", EntityTypes.SPEARPOWERUP);
     entity.getEvents().trigger("updatePowerUps");
+  }
+
+  private void triggerAnyMovement() {
+    entity.getEvents().trigger("anyMovement");
   }
 }

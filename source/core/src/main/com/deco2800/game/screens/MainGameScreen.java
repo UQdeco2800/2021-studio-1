@@ -187,7 +187,6 @@ public class MainGameScreen extends ScreenAdapter {
         resourceService.loadTextures(mainGameTextures);
         ServiceLocator.getResourceService().loadAll();
     }
-
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -222,10 +221,34 @@ public class MainGameScreen extends ScreenAdapter {
 
     private void recordHighScore(String currentScore) {
 
-        String[] availableNames = {"Zebra", "Fox", "Hound", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
+        String[] availableNames = {"Zebra", "Fox", "Dire Wolf", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
+        String[] availableAdjectives = {"Tiny", "Spirited", "Curious", "Colourful", "Trained", "Triumphant", "Extraordinary", "Fierce", "Unbeatable", "Unique"};
         char[] scoreIntegers = currentScore.toCharArray();
+        String firstCharacter = scoreIntegers[0] + "";
         String randValue = "" + scoreIntegers[scoreIntegers.length - 1];
-        String name = availableNames[Integer.parseInt(randValue)];
+        String adjective = "Wandering";
+
+        int lengthScore = scoreIntegers.length;
+        if (lengthScore < availableAdjectives.length) {
+
+            int section = 0;
+
+            if (Integer.parseInt(firstCharacter) > 5) {
+                section = 1;
+            }
+            adjective = availableAdjectives[((scoreIntegers.length - 1) * 2) + section];
+        }
+
+        String selectedName = MainMenuDisplay.getPlayeName();
+        String name;
+
+        if (!selectedName.equals("Random")) {
+            name = adjective + " " + selectedName;
+        } else {
+            name = adjective + " " + availableNames[Integer.parseInt(randValue)] + "";
+        }
+
+        FileWriter highScoreFile = null;
 
         int[] highScoreValues = MainMenuDisplay.getHighScoreValues();
         String[] highScoreNames = MainMenuDisplay.getHighScoreNames();
@@ -233,10 +256,14 @@ public class MainGameScreen extends ScreenAdapter {
         highScoreNames[4] = name;
         highScoreValues[4] = Integer.parseInt(currentScore);
 
-        try (FileWriter highScoreFile = new FileWriter("gameinfo/highScores.txt")) {
-            for (int i = 0; i < highScoreNames.length; i++) {
+        try {
+            highScoreFile = new FileWriter("gameinfo/highScores.txt");
+
+            for (int i = 0; i < highScoreNames.length;  i++) {
                 highScoreFile.write(highScoreNames[i] + "," + highScoreValues[i] + "\n");
             }
+
+            highScoreFile.close();
         } catch (IOException e) {
             logger.info("Could not record high score");
         }

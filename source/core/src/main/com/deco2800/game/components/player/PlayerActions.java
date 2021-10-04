@@ -36,9 +36,79 @@ public class PlayerActions extends Component {
   private Vector2 walkSpeed = new Vector2(4f, 1f);
   // Metres per second
 
-  private PhysicsComponent physicsComponent;
+    // These are some constants to hold the animations in.
+    // To access for example, the animation for jumping right with a spear, call
+    // animations[SPEAR][JUMPING][NOT_CROUCHING][RIGHT].
+    private static final int SHIELD = 0;
+    private static final int SPEAR = 1;
+    private static final int PLAYER = 2;
 
-  private KeyboardPlayerInputComponent playerInputComponent;
+    private static final int JUMPING = 0;
+    private static final int MOVING = 1;
+    private static final int STILL = 2;
+
+    private static final int CROUCHING = 0;
+    private static final int NOT_CROUCHING = 1;
+
+    private static final int RIGHT = 0;
+    private static final int LEFT = 1;
+
+    private static final String[][][][] animations = new String[3][3][2][2];
+
+    // Set animation array. Change these values to change animation names.
+    static {
+        // Shield
+        animations[SHIELD][JUMPING][CROUCHING][RIGHT] = null;
+        animations[SHIELD][JUMPING][CROUCHING][LEFT] = null;
+        animations[SHIELD][JUMPING][NOT_CROUCHING][RIGHT] = "shield-jump-right";
+        animations[SHIELD][JUMPING][NOT_CROUCHING][LEFT] = "shield-jump-right";
+
+        animations[SHIELD][MOVING][CROUCHING][RIGHT] = "shield-crouch-right";
+        animations[SHIELD][MOVING][CROUCHING][LEFT] = "shield-crouch-left";
+        animations[SHIELD][MOVING][NOT_CROUCHING][RIGHT] = "shield-run-right";
+        animations[SHIELD][MOVING][NOT_CROUCHING][LEFT] = "shield-run-left";
+
+        animations[SHIELD][STILL][CROUCHING][RIGHT] = "shield-crouch-still-right";
+        animations[SHIELD][STILL][CROUCHING][LEFT] = "shield-crouch-still-left";
+        animations[SHIELD][STILL][NOT_CROUCHING][RIGHT] = "shield-still-right";
+        animations[SHIELD][STILL][NOT_CROUCHING][LEFT] = "shield-still-left";
+
+        // Spear
+        animations[SPEAR][JUMPING][CROUCHING][RIGHT] = null;
+        animations[SPEAR][JUMPING][CROUCHING][LEFT] = null;
+        animations[SPEAR][JUMPING][NOT_CROUCHING][RIGHT] = "spear-jump-right";
+        animations[SPEAR][JUMPING][NOT_CROUCHING][LEFT] = "spear-jump-left";
+
+        animations[SPEAR][MOVING][CROUCHING][RIGHT] = "spear-crouch-right";
+        animations[SPEAR][MOVING][CROUCHING][LEFT] = "spear-crouch-left";
+        animations[SPEAR][MOVING][NOT_CROUCHING][RIGHT] = "spear-run-right";
+        animations[SPEAR][MOVING][NOT_CROUCHING][LEFT] = "spear-run-left";
+
+        animations[SPEAR][STILL][CROUCHING][RIGHT] = "crouch-still-right";
+        animations[SPEAR][STILL][CROUCHING][LEFT] = "spear-crouch-still-left";
+        animations[SPEAR][STILL][NOT_CROUCHING][RIGHT] = "spear-still-right";
+        animations[SPEAR][STILL][NOT_CROUCHING][LEFT] = "spear-still-left";
+
+        // Player
+        animations[PLAYER][JUMPING][CROUCHING][RIGHT] = null;
+        animations[PLAYER][JUMPING][CROUCHING][LEFT] = null;
+        animations[PLAYER][JUMPING][NOT_CROUCHING][RIGHT] = "jump-right";
+        animations[PLAYER][JUMPING][NOT_CROUCHING][LEFT] = "jump-left";
+
+        animations[PLAYER][MOVING][CROUCHING][RIGHT] = "crouch-right";
+        animations[PLAYER][MOVING][CROUCHING][LEFT] = "crouch-left";
+        animations[PLAYER][MOVING][NOT_CROUCHING][RIGHT] = "run-right";
+        animations[PLAYER][MOVING][NOT_CROUCHING][LEFT] = "run-left";
+
+        animations[PLAYER][STILL][CROUCHING][RIGHT] = "crouch-still-right";
+        animations[PLAYER][STILL][CROUCHING][LEFT] = "crouch-still-left";
+        animations[PLAYER][STILL][NOT_CROUCHING][RIGHT] = "still-right";
+        animations[PLAYER][STILL][NOT_CROUCHING][LEFT] = "still-left";
+    }
+
+    private PhysicsComponent physicsComponent;
+
+    private KeyboardPlayerInputComponent playerInputComponent;
 
   private Vector2 runDirection = Vector2.Zero.cpy();
   private Vector2 previousDirection = Vector2.Zero.cpy();
@@ -192,38 +262,38 @@ public class PlayerActions extends Component {
     whichAnimation();
   }
 
-  void jump() {
-    if (entity.getComponent(PhysicsComponent.class).getBody()
-            .getLinearVelocity().y == 0) {
-      jumping = true;
+    void jump() {
+        if (entity.getComponent(PhysicsComponent.class).getBody()
+                .getLinearVelocity().y == 0) {
+            jumping = true;
+        }
+        //Determine which animation to play
+        whichAnimation();
     }
-    //Determine which animation to play
-    whichAnimation();
-  }
 
   public void obtainPowerUp(Fixture playerFixture, Fixture other) {
     BodyUserData otherBody = (BodyUserData) other.getBody().getUserData();
 
-    if (otherBody.entity.getType() == EntityTypes.SPEARPOWERUP
-          || otherBody.entity.getType() == EntityTypes.LIGHTNINGPOWERUP
-          || otherBody.entity.getType() == EntityTypes.SHIELDPOWERUP) {
+        if (otherBody.entity.getType() == EntityTypes.SPEARPOWERUP
+                || otherBody.entity.getType() == EntityTypes.LIGHTNINGPOWERUP
+                || otherBody.entity.getType() == EntityTypes.SHIELDPOWERUP) {
 
-      Entity powerUp = otherBody.entity;
+            Entity powerUp = otherBody.entity;
 
-      switch (powerUp.getType()) {
-        case LIGHTNINGPOWERUP:
-          entity.getComponent(LightningPowerUpComponent.class).setEnabled(true);
-          break;
+            switch (powerUp.getType()) {
+                case LIGHTNINGPOWERUP:
+                    entity.getComponent(LightningPowerUpComponent.class).setEnabled(true);
+                    break;
 
-        case SPEARPOWERUP:
-          entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
-          entity.getComponent(SpearPowerUpComponent.class).obtainSpear();
-          break;
+                case SPEARPOWERUP:
+                    entity.getComponent(SpearPowerUpComponent.class).setEnabled(true);
+                    entity.getComponent(SpearPowerUpComponent.class).obtainSpear();
+                    break;
 
-        case SHIELDPOWERUP:
-          entity.getEvents().trigger("pickUpShield");
-          entity.getComponent(ShieldPowerUpComponent.class).setEnabled(true);
-          break;
+                case SHIELDPOWERUP:
+                    entity.getEvents().trigger("pickUpShield");
+                    entity.getComponent(ShieldPowerUpComponent.class).setEnabled(true);
+                    break;
 
         default:
           break;
@@ -232,39 +302,39 @@ public class PlayerActions extends Component {
     }
   }
 
-  public void usePowerUp(EntityTypes powerUp) {
-    switch (powerUp) {
-      case LIGHTNINGPOWERUP:
-        if (entity.getComponent(LightningPowerUpComponent.class).getEnabled()) {
-          entity.getComponent(LightningPowerUpComponent.class).activate();
-        }
-        break;
+    public void usePowerUp(EntityTypes powerUp) {
+        switch (powerUp) {
+            case LIGHTNINGPOWERUP:
+                if (entity.getComponent(LightningPowerUpComponent.class).getEnabled()) {
+                    entity.getComponent(LightningPowerUpComponent.class).activate();
+                }
+                break;
 
-      case SPEARPOWERUP:
-        if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
-          entity.getComponent(SpearPowerUpComponent.class).activate();
-          whichAnimation();
-        }
-        break;
+            case SPEARPOWERUP:
+                if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
+                    entity.getComponent(SpearPowerUpComponent.class).activate();
+                    whichAnimation();
+                }
+                break;
 
-      case SHIELDPOWERUP:
-        if (entity.getComponent(ShieldPowerUpComponent.class).getEnabled()) {
-          entity.getComponent(ShieldPowerUpComponent.class).activate();
-        }
-        break;
+            case SHIELDPOWERUP:
+                if (entity.getComponent(ShieldPowerUpComponent.class).getEnabled()) {
+                    entity.getComponent(ShieldPowerUpComponent.class).activate();
+                }
+                break;
 
-      default:
-        break;
+            default:
+                break;
+        }
     }
-  }
 
   public Vector2 getPreviousDirection() {
     return previousDirection.cpy();
   }
 
-  public boolean isMoving() {
-    return moving;
-  }
+    public boolean isMoving() {
+        return moving;
+    }
 
   public boolean isJumping() {
     return jumping;
@@ -278,78 +348,77 @@ public class PlayerActions extends Component {
    * Determine which animation to play based off of which triggers are active
    */
   private void whichAnimation() {
-    entity.getComponent(AnimationRenderComponent.class).stopAnimation();
-    if(entity.getComponent(ShieldPowerUpComponent.class).getActive()
-      && entity.getComponent(SpearPowerUpComponent.class).getEnabled()){
-      if (isJumping()) {
-        spearShieldJumpingAnimations();
-      } else if (isFalling()) {
-        spearShieldFallingAnimations();
-      }else if (isMoving()) {
-        spearShieldMovingAnimations();
+      entity.getComponent(AnimationRenderComponent.class).stopAnimation();
+      if (entity.getComponent(ShieldPowerUpComponent.class).getActive()
+              && entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
+          if (isJumping()) {
+              spearShieldJumpingAnimations();
+          } else if (isFalling()) {
+              spearShieldFallingAnimations();
+          } else if (isMoving()) {
+              spearShieldMovingAnimations();
+          } else {
+              spearShieldStillAnimations();
+          }
+      } else if (entity.getComponent(ShieldPowerUpComponent.class).getActive()) {
+          if (isJumping()) {
+              shieldJumpingAnimations();
+          } else if (isFalling()) {
+              shieldFallingAnimations();
+          } else if (isMoving()) {
+              shieldMovingAnimations();
+          } else {
+              shieldStillAnimations();
+          }
+      } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()
+              && !entity.getComponent(SpearPowerUpComponent.class).getActive()) {
+          if (isJumping()) {
+              spearJumpingAnimations();
+          } else if (isFalling()) {
+              spearFallingAnimations();
+          } else if (isMoving()) {
+              spearMovingAnimations();
+          } else {
+              spearStillAnimations();
+          }
       } else {
-        spearShieldStillAnimations();
+          if (isJumping()) {
+              jumpingAnimations();
+          } else if (isFalling()) {
+              fallingAnimations();
+          } else if (isMoving()) {
+              movingAnimations();
+          } else {
+              stillAnimations();
+          }
       }
-    }
-    else if (entity.getComponent(ShieldPowerUpComponent.class).getActive()) {
-      if (isJumping()) {
-        shieldJumpingAnimations();
-      } else if (isFalling()) {
-        shieldFallingAnimations();
-      } else if (isMoving()) {
-        shieldMovingAnimations();
-      } else {
-        shieldStillAnimations();
-      }
-    } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()
-            && !entity.getComponent(SpearPowerUpComponent.class).getActive()) {
-      if (isJumping()) {
-        spearJumpingAnimations();
-      } else if (isFalling()) {
-        spearFallingAnimations();
-      } else if (isMoving()) {
-        spearMovingAnimations();
-      } else {
-        spearStillAnimations();
-      }
-    } else {
-      if (isJumping()) {
-        jumpingAnimations();
-      } else if (isFalling()) {
-        fallingAnimations();
-      } else if (isMoving()) {
-        movingAnimations();
-      } else {
-        stillAnimations();
-      }
-    }
   }
 
   /**
    * Determine which animation to play if the player is standing still
    */
   private void stillAnimations() {
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("still-right");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("still-left");
-    }
-  }
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+              entity.getComponent(AnimationRenderComponent.class)
+                      .startAnimation("still-right");
+          } else {
+              entity.getComponent(AnimationRenderComponent.class)
+                      .startAnimation("still-left");
+          }
+      }
 
   /**
    * Determine which animation to play if the player is moving
    */
   private void movingAnimations() {
-    if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("run-right");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("run-left");
-    }
-  }
+              if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+                  entity.getComponent(AnimationRenderComponent.class)
+                          .startAnimation("run-right");
+              } else {
+                  entity.getComponent(AnimationRenderComponent.class)
+                          .startAnimation("run-left");
+              }
+          }
 
   /**
    * Determine which animation to play if the player is jumping
@@ -508,13 +577,13 @@ public class PlayerActions extends Component {
    * power up
    */
   private void spearShieldMovingAnimations() {
-    if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
+      if (this.runDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+          entity.getComponent(AnimationRenderComponent.class)
               .startAnimation("run-right-spear-shield");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
+      } else {
+          entity.getComponent(AnimationRenderComponent.class)
               .startAnimation("run-left-spear-shield");
-    }
+      }
   }
 
   /**
@@ -522,13 +591,13 @@ public class PlayerActions extends Component {
    * power up
    */
   private void spearShieldJumpingAnimations() {
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+          entity.getComponent(AnimationRenderComponent.class)
               .startAnimation("jump-right-spear-shield");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
+      } else {
+          entity.getComponent(AnimationRenderComponent.class)
               .startAnimation("jump-left-spear-shield");
-    }
+      }
   }
 
   /**
@@ -536,13 +605,13 @@ public class PlayerActions extends Component {
    * power up
    */
   private void spearShieldFallingAnimations() {
-    if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("fall-right-spear-shield");
-    } else {
-      entity.getComponent(AnimationRenderComponent.class)
-              .startAnimation("fall-left-spear-shield");
-    }
+      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+          entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("fall-right-spear-shield");
+      } else {
+          entity.getComponent(AnimationRenderComponent.class)
+                .startAnimation("fall-left-spear-shield");
+      }
   }
 
   /**
@@ -550,25 +619,25 @@ public class PlayerActions extends Component {
    * power up
    */
   private void useSpearAttack() {
-    if(entity.getComponent(ShieldPowerUpComponent.class).getActive()
-            && entity.getComponent(SpearPowerUpComponent.class).getEnabled()){
-      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("throwing-spear-with-shield-right");
-      } else {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("throwing-spear-with-shield-left");
-      }
+      if (entity.getComponent(ShieldPowerUpComponent.class).getActive()
+              && entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+              entity.getComponent(AnimationRenderComponent.class)
+                      .startAnimation("throwing-spear-with-shield-right");
+          } else {
+              entity.getComponent(AnimationRenderComponent.class)
+                      .startAnimation("throwing-spear-with-shield-left");
+          }
 
-    } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
-      if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("throwing-spear-right");
-      } else {
-        entity.getComponent(AnimationRenderComponent.class)
-                .startAnimation("throwing-spear-left");
+      } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
+          if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+              entity.getComponent(AnimationRenderComponent.class)
+                      .startAnimation("throwing-spear-right");
+          } else {
+              entity.getComponent(AnimationRenderComponent.class)
+                      .startAnimation("throwing-spear-left");
+          }
       }
-    }
   }
 }
 

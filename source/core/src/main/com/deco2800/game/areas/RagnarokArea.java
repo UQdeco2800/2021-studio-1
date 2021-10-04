@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.VariableSpeedComponent;
+import com.deco2800.game.components.FallDamageComponent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -193,6 +194,7 @@ public class RagnarokArea extends GameArea {
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
         wallOfDeath.addComponent(new CameraShakeComponent(getPlayer(), this.terrainFactory.getCameraComponent(), sfx));
+        wallOfDeath.addComponent(new FallDamageComponent(getPlayer()));
 
         GridPoint2 leftPos3 = new GridPoint2(-15, 13);
         Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());

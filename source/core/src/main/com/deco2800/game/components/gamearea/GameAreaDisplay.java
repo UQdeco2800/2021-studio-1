@@ -16,7 +16,7 @@ import com.deco2800.game.ui.UIComponent;
  * Displays the name of the current game area.
  */
 public class GameAreaDisplay extends UIComponent {
-  private final static String ID_FORMAT = "id: %d, x: %f, y: %f"; // Satisfy SonarCloud.
+  private static final String ID_FORMAT = "id: %d, x: %f, y: %f"; // Satisfy SonarCloud.
   private String gameAreaName;
   private Label title;
 
