@@ -52,11 +52,11 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     movementTask.start();
     currentTask = movementTask;
 
-    //change animation based on movement direction
-//    if (newPos.x < startPos.x) {
-//      this.owner.getEntity().getEvents().trigger("wanderStart");
-//    } else {this.owner.getEntity().getEvents().trigger("move_right");}
-    this.owner.getEntity().getEvents().trigger("wanderStart");
+//    change animation based on movement direction
+    if (newPos.x < startPos.x) {
+      this.owner.getEntity().getEvents().trigger("wanderStart");
+    } else {this.owner.getEntity().getEvents().trigger("move_right");}
+//    this.owner.getEntity().getEvents().trigger("wanderStart");
   }
 
   @Override
