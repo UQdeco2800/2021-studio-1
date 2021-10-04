@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.SpearComponent;
 import com.deco2800.game.gameScore.gameScore;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
@@ -20,6 +21,9 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label healthLabel;
   private Label scoreLabel;
   gameScore scoring = new gameScore();
+  public static boolean deadFlag = false;
+  public static boolean spearHitFlag = false;
+
 
 
 
@@ -88,6 +92,13 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void update(){
     entity.getEvents().trigger("updateScore", scoring.getCurrentScore());
+    if (entity.getComponent(CombatStatsComponent.class).isDead() == true){
+      deadFlag = true;
+    }
+    //if(entity.getComponent(CombatStatsComponent.class).getEntity().getComponent(SpearComponent.class).hasHit()){
+      //spearHitFlag = true;
+    //}
+
   }
 
 
@@ -103,6 +114,7 @@ public class PlayerStatsDisplay extends UIComponent {
   public void updatePlayerScoreUI(long score){
     CharSequence text = String.format("Score %d",score);
     scoreLabel.setText(text);
+
 
   }
 
