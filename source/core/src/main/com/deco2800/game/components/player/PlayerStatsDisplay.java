@@ -17,6 +17,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image heartImage;
   private Label healthLabel;
   private Label scoreLabel;
+  public static boolean deadFlag = false;
   gameScore scoring = new gameScore();
   private int health;
 
@@ -85,6 +86,9 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void update(){
     entity.getEvents().trigger("updateScore", scoring.getCurrentScore());
+    if (entity.getComponent(CombatStatsComponent.class).isDead() == true){
+      deadFlag = true;
+    }
   }
 
   /**
