@@ -52,7 +52,6 @@ public class KeyboardTerminalInputComponent extends InputComponent {
 
     if(!terminal.isOpen()) {
       if (keycode == Input.Keys.P) {
-<<<<<<< HEAD
         entity.getEvents().trigger("Pause Menu");
         return true;
       }
@@ -65,10 +64,6 @@ public class KeyboardTerminalInputComponent extends InputComponent {
       if (keycode == Input.Keys.I) {
         entity.getEvents().trigger("Score Screen");
         return true;
-=======
-          entity.getEvents().trigger("Pause Menu");
-          return true;
->>>>>>> c1550b9b736e4a3486f9ada7f1ad45c8cf4d5b9d
       }
 
       if (keycode == TOGGLE_COMMAND_KEY) {

@@ -39,17 +39,10 @@ public class UIPop extends UIComponent {
 
     static {
         //background images should ideally be 800 * 500 pixels
-<<<<<<< HEAD
-        backGroundImages.put("Help Screen", "images/popPauseBack.png");
-        backGroundImages.put("Score Screen", "images/popPauseBack.png");
-        backGroundImages.put("Pause Menu", "images/popPauseBack.png");
-        backGroundImages.put("Game Over", "images/popPauseBack.png");
-=======
         backGroundImages.put(HELP, PAUSE_BACKGROUND);
         backGroundImages.put(SCORE, PAUSE_BACKGROUND);
         backGroundImages.put(PAUSE, PAUSE_BACKGROUND);
         backGroundImages.put(LEADERBOARD, PAUSE_BACKGROUND);
->>>>>>> c1550b9b736e4a3486f9ada7f1ad45c8cf4d5b9d
     }
 
     //the game the popUp will pop onto
@@ -77,6 +70,8 @@ public class UIPop extends UIComponent {
     private Slider volumeSlider;
     private CheckBox fullScreenCheck;
     private Music music;
+    private Music music2;
+    private Music music3;
     private Music fire;
     private Music walk;
 
@@ -92,14 +87,22 @@ public class UIPop extends UIComponent {
     public UIPop(String screenName, Entity game) {
 
         music = ServiceLocator.getResourceService().getAsset("sounds/main.mp3", Music.class);
+        music2 = ServiceLocator.getResourceService().getAsset("sounds/town.mp3", Music.class);
+        music3 = ServiceLocator.getResourceService().getAsset("sounds/raider.mp3", Music.class);
         fire = ServiceLocator.getResourceService().getAsset("sounds/fire.mp3", Music.class);
         walk = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
         music.setLooping(true);
         fire.setLooping(true);
         walk.setLooping(true);
+        music2.setLooping(true);
+        music3.setLooping(true);
         music.setVolume(volume);
         fire.setVolume(volume);
         walk.setVolume(volume);
+        music2.setVolume(volume);
+        music3.setVolume(volume);
+        music2.play();
+        music3.play();
         music.play();
         fire.play();
         walk.play();
@@ -172,6 +175,8 @@ public class UIPop extends UIComponent {
         volume = volumeSlider.getValue();
         volumeSlider.setValue(volume);
         music.setVolume(volume);
+        music2.setVolume(volume);
+        music3.setVolume(volume);
         fire.setVolume(volume);
         walk.setVolume(volume);
         UserSettings.set(settings, true);
@@ -240,7 +245,6 @@ public class UIPop extends UIComponent {
         setting.add(settingTitle).top();
         setting.row().padTop(5f);
 
-<<<<<<< HEAD
         Label fullScreenLabel = new Label("Fullscreen:", skin);
         fullScreenCheck = new CheckBox("", skin);
         fullScreenCheck.setChecked(settings.fullscreen);
@@ -253,21 +257,6 @@ public class UIPop extends UIComponent {
         setting.add(new Label("Volume :", skin, "popUpFont")).left();
 
         setting.add(volumeSlider).right();
-=======
-        for (int i = 0; i < 3; i++) {
-            Label infoTitle = new Label(getInformation(screenName, i), skin, POP_UP_FONT);
-            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin, POP_UP_FONT);
-            infoTitle.setFontScale(1.5f);
-            info.setFontScale(1.5f);
-            setting.add(infoTitle).left();
-            setting.add(info).right();
-            setting.row().padTop(20f);
-        }
-
-        setting.row().padTop(20f);
-        setting.add(new Label("Volume :", skin, POP_UP_FONT)).left();
-        setting.add(ScreenSpecialElement(screenName)).right();
->>>>>>> c1550b9b736e4a3486f9ada7f1ad45c8cf4d5b9d
 
         setting.row().padTop(20f);
         setting.add(closeButton).padRight(30f).left();
@@ -302,7 +291,6 @@ public class UIPop extends UIComponent {
      * Formats the Pause table
      */
     private Table formatPauseScreen() {
-<<<<<<< HEAD
             // Image button - Setting
             TextButton settingButton;
             // Image button - Resume
@@ -345,57 +333,6 @@ public class UIPop extends UIComponent {
             popUp.add(quitButton).center().padTop(30f);
             stage.addActor(root);
             return popUp;
-=======
-
-        // texture for button image - Setting
-        Texture popUpSettingImage;
-        // texture for button image - Resume
-        Texture popUpResumeImage;
-        // texture for button image - Quit;
-        Texture popUpQuitImage;
-        popUpSettingImage = new Texture("images/setting.png");
-        popUpResumeImage = new Texture("images/resume.png");
-        popUpQuitImage = new Texture("images/quit.png");
-        // Image button - Setting
-        ImageButton settingButton;
-        // Image button - Resume
-        ImageButton resumeButton;
-        // Image button - Quit
-        ImageButton quitButton;
-
-        settingButton = new ImageButton(new TextureRegionDrawable(popUpSettingImage));
-        resumeButton = new ImageButton(new TextureRegionDrawable(popUpResumeImage));
-        quitButton = new ImageButton(new TextureRegionDrawable(popUpQuitImage));
-
-        resumeButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                game.getEvents().trigger(PAUSE);
-            }
-        });
-
-        quitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                game.getEvents().trigger("exit");
-            }
-        });
-
-        settingButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                root.reset();
-                root.add(formatSettingsScreen()).expandX().expandY();
-            }
-        });
-
-        popUp.add(resumeButton).center();
-        popUp.row().padTop(2.5f);
-        popUp.add(settingButton).center();
-        popUp.row().padTop(2.5f);
-        popUp.add(quitButton).center();
-        stage.addActor(root);
-        return popUp;
     }
 
     /*
@@ -418,7 +355,6 @@ public class UIPop extends UIComponent {
             popUp.add(scoreValue);
         }
         return popUp;
->>>>>>> c1550b9b736e4a3486f9ada7f1ad45c8cf4d5b9d
     }
 
     /*

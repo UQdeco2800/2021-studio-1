@@ -24,7 +24,7 @@ public class MainGameActions extends Component {
         this.game = game;
     }
 
-<<<<<<< HEAD
+
   @Override
   public void create() {
     entity.getEvents().addListener("exit", this::onExit);
@@ -43,24 +43,6 @@ public class MainGameActions extends Component {
     game.scoreShown = false;
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
-=======
-    @Override
-    public void create() {
-        entity.getEvents().addListener("exit", this::onExit);
-        entity.getEvents().addListener("Pause Menu", this::onPause);
-        entity.getEvents().addListener("Score Screen", this::showScore);
-    }
-
-    /**
-     * Swaps to the Main Menu screen.
-     */
-    public void onExit() {
-        logger.info("Exiting main game screen");
-        game.paused = false;
-        game.scoreShown = false;
-        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-    }
->>>>>>> c1550b9b736e4a3486f9ada7f1ad45c8cf4d5b9d
 
     /**
      * Pauses the game -- the trigger function for the event.
@@ -149,5 +131,4 @@ public class MainGameActions extends Component {
         gameOverSound.play();
 
     }
-
 }

@@ -48,19 +48,12 @@ public class MainGameScreen extends ScreenAdapter {
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
-<<<<<<< HEAD
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
   private AreaManager ragnarokManager;
-  
+
   private Entity endGame;
-=======
-    private final GdxGame game;
-    private final Renderer renderer;
-    private final PhysicsEngine physicsEngine;
-    private AreaManager ragnarokManager;
->>>>>>> c1550b9b736e4a3486f9ada7f1ad45c8cf4d5b9d
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
@@ -129,13 +122,6 @@ public class MainGameScreen extends ScreenAdapter {
             if (player.getComponent(CombatStatsComponent.class).getHealth() == 0) {
 
                 long currentScore = player.getComponent(PlayerStatsDisplay.class).getPlayerScore();
-
-<<<<<<< HEAD
-        if (currentScore > MainMenuDisplay.getHighScore()) {
-            recordHighScore("" + currentScore);
-        }
-      }
-=======
                 if (currentScore > MainMenuDisplay.getHighScoreValues()[4]) {
 
                     recordHighScore("" + currentScore);
@@ -149,7 +135,6 @@ public class MainGameScreen extends ScreenAdapter {
 
         //TODO: do terminal requests
 
->>>>>>> c1550b9b736e4a3486f9ada7f1ad45c8cf4d5b9d
     }
 
     @Override
