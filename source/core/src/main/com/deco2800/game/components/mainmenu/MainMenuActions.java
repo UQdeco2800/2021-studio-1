@@ -1,8 +1,10 @@
 package com.deco2800.game.components.mainmenu;
 
+import com.badlogic.gdx.audio.Music;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIPop;
 import org.slf4j.Logger;
@@ -16,6 +18,8 @@ public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
   private GdxGame game;
   private Entity mainMenuPop;
+  private static final String MAIN_MUSIC = "sounds/main.mp3";
+  private static final String[] MUSIC = {MAIN_MUSIC};
 
   public MainMenuActions(GdxGame game) {
     this.game = game;
@@ -30,6 +34,9 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("Help Screen", this::onHelp);
     entity.getEvents().addListener("Leaderboard", this::onLeaderBoard);
     entity.getEvents().addListener("mute", this::onMute);
+
+    loadAssets();
+    //playMusic(); <-- LINE THAT CRASHES CODE
   }
 
   /**
@@ -95,6 +102,19 @@ public class MainMenuActions extends Component {
             mainMenuPop = null;
             ServiceLocator.getEntityService().unregister(mainMenuPop);
         }
+    }
+
+    private void loadAssets() {
+        logger.debug("Loading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadSounds(MUSIC);
+    }
+
+    private void playMusic() {
+        Music music = ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class);
+        music.setLooping(true);
+        music.setVolume(0.7f);
+        music.play();
     }
 
   /**
