@@ -1,166 +1,265 @@
 
 skeleton.png
-size: 2048, 1024
+size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
+repeat: none
+death
+  rotate: false
+  xy: 556, 1290
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 0
+death
+  rotate: false
+  xy: 556, 1612
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 9
+death
+  rotate: false
+  xy: 2, 1290
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 10
+death
+  rotate: false
+  xy: 833, 1612
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 11
+death
+  rotate: false
+  xy: 279, 1290
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 12
+death
+  rotate: false
+  xy: 279, 1290
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 13
+death
+  rotate: false
+  xy: 279, 1290
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 14
+death
+  rotate: false
+  xy: 279, 1612
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 1
+death
+  rotate: false
+  xy: 279, 646
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 2
+death
+  rotate: false
+  xy: 2, 646
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 3
+death
+  rotate: false
+  xy: 2, 1612
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 4
+death
+  rotate: false
+  xy: 2, 324
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 5
+death
+  rotate: false
+  xy: 2, 968
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 6
+death
+  rotate: false
+  xy: 556, 968
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 7
+death
+  rotate: false
+  xy: 279, 968
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: 8
 float
   rotate: false
-  xy: 1484, 324
+  xy: 1327, 968
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
-  index: 1
+  index: 9
+float
+  rotate: false
+  xy: 803, 646
+  size: 245, 320
+  orig: 245, 320
+  offset: 0, 0
+  index: 10
 float
   rotate: false
   xy: 743, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
+  index: 1
+float
+  rotate: false
+  xy: 1327, 1290
+  size: 245, 320
+  orig: 245, 320
+  offset: 0, 0
   index: 2
 float
   rotate: false
-  xy: 496, 646
+  xy: 556, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 3
 float
   rotate: false
-  xy: 1484, 646
+  xy: 1574, 1290
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 4
 float
   rotate: false
-  xy: 496, 2
+  xy: 526, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 5
 float
   rotate: false
-  xy: 249, 646
+  xy: 1110, 1612
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 6
-default
+float
   rotate: false
-  xy: 249, 646
+  xy: 1110, 1612
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 0
 float
   rotate: false
-  xy: 249, 646
-  size: 245, 320
-  orig: 245, 320
-  offset: 0, 0
-  index: 0
-float
-  rotate: false
-  xy: 990, 2
+  xy: 773, 324
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 7
 float
   rotate: false
-  xy: 496, 324
+  xy: 1357, 1612
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 8
-float
+float_back
   rotate: false
-  xy: 1237, 646
+  xy: 279, 324
+  size: 245, 320
+  orig: 245, 320
+  offset: 0, 0
+  index: 0
+float_back
+  rotate: false
+  xy: 279, 324
+  size: 245, 320
+  orig: 245, 320
+  offset: 0, 0
+  index: 6
+float_back
+  rotate: false
+  xy: 496, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 9
-float
+float_back
   rotate: false
-  xy: 2, 2
+  xy: 1080, 1290
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 10
 float_back
   rotate: false
-  xy: 2, 324
+  xy: 1050, 646
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 1
 float_back
   rotate: false
-  xy: 990, 324
+  xy: 249, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 2
 float_back
   rotate: false
-  xy: 249, 2
+  xy: 833, 1290
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 3
 float_back
   rotate: false
-  xy: 1237, 2
+  xy: 1604, 1612
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 4
 float_back
   rotate: false
-  xy: 743, 324
+  xy: 833, 968
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 5
 float_back
   rotate: false
-  xy: 249, 324
-  size: 245, 320
-  orig: 245, 320
-  offset: 0, 0
-  index: 6
-float_back
-  rotate: false
-  xy: 249, 324
-  size: 245, 320
-  orig: 245, 320
-  offset: 0, 0
-  index: 0
-float_back
-  rotate: false
-  xy: 1237, 324
+  xy: 1080, 968
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 7
 float_back
   rotate: false
-  xy: 743, 646
+  xy: 2, 2
   size: 245, 320
   orig: 245, 320
   offset: 0, 0
   index: 8
-float_back
-  rotate: false
-  xy: 2, 646
-  size: 245, 320
-  orig: 245, 320
-  offset: 0, 0
-  index: 9
-float_back
-  rotate: false
-  xy: 990, 646
-  size: 245, 320
-  orig: 245, 320
-  offset: 0, 0
-  index: 10
