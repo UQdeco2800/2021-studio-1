@@ -86,27 +86,6 @@ public class UIPop extends UIComponent {
      */
     public UIPop(String screenName, Entity game) {
 
-        music = ServiceLocator.getResourceService().getAsset("sounds/main.mp3", Music.class);
-        music2 = ServiceLocator.getResourceService().getAsset("sounds/town.mp3", Music.class);
-        music3 = ServiceLocator.getResourceService().getAsset("sounds/raider.mp3", Music.class);
-        fire = ServiceLocator.getResourceService().getAsset("sounds/fire.mp3", Music.class);
-        walk = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
-        music.setLooping(true);
-        fire.setLooping(true);
-        walk.setLooping(true);
-        music2.setLooping(true);
-        music3.setLooping(true);
-        music.setVolume(volume);
-        fire.setVolume(volume);
-        walk.setVolume(volume);
-        music2.setVolume(volume);
-        music3.setVolume(volume);
-        music2.play();
-        music3.play();
-        music.play();
-        fire.play();
-        walk.play();
-
         this.game = game;
 
         if (!backGroundImages.containsKey(screenName)) {
@@ -169,17 +148,21 @@ public class UIPop extends UIComponent {
         addActors(screenName);
     }
 
+    /*
+     * Applies changes on the user settings menu
+     */
     private void applyChange() {
-        UserSettings.Settings settings = UserSettings.get();
-        settings.fullscreen = fullScreenCheck.isChecked();
-        volume = volumeSlider.getValue();
-        volumeSlider.setValue(volume);
-        music.setVolume(volume);
-        music2.setVolume(volume);
-        music3.setVolume(volume);
-        fire.setVolume(volume);
-        walk.setVolume(volume);
-        UserSettings.set(settings, true);
+        // Currently not used
+        //UserSettings.Settings settings = UserSettings.get();
+        //settings.fullscreen = fullScreenCheck.isChecked();
+        //volume = volumeSlider.getValue();
+        //volumeSlider.setValue(volume);
+        //music.setVolume(volume);
+        //music2.setVolume(volume);
+        //music3.setVolume(volume);
+        //fire.setVolume(volume);
+        //walk.setVolume(volume);
+        //UserSettings.set(settings, true);
     }
 
     // Adds actors based on screen name

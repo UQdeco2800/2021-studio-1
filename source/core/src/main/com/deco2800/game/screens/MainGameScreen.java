@@ -4,10 +4,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
-import com.deco2800.game.ui.UIPop;
 import com.deco2800.game.areas.AreaManager;
 import com.deco2800.game.areas.AreaService;
-import com.deco2800.game.components.Component;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
@@ -30,7 +28,6 @@ import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.maingame.MainGamePannelDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
-import com.sun.tools.javac.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +41,7 @@ import java.io.IOException;
  */
 public class MainGameScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-    private static final String[] mainGameTextures = {};
+    private static final String[] mainGameTextures = {"images/disp_back.png"};
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
@@ -251,6 +248,12 @@ public class MainGameScreen extends ScreenAdapter {
             highScoreFile.close();
         } catch (IOException e) {
             logger.info("Could not record high score");
+        } finally {
+            try {
+                highScoreFile.close();
+            } catch (IOException i) {
+                logger.info("Could not close high score file");
+            }
         }
     }
 }
