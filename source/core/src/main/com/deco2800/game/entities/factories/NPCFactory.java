@@ -12,10 +12,7 @@ import com.deco2800.game.components.npc.DeathGiantAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ScreenFXAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.tasks.MoveRightTask;
-import com.deco2800.game.components.tasks.WanderTask;
-import com.deco2800.game.components.tasks.MoveLeftTask;
-import com.deco2800.game.components.tasks.ShootTask;
+import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
@@ -282,7 +279,7 @@ public class NPCFactory {
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 7.5f))
                         .addComponent(aiComponent);
         PhysicsUtils.setScaledCollider(npc, 0f, 0f);
         npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
@@ -300,14 +297,14 @@ public class NPCFactory {
     private static Entity createWolfNPC(Entity target) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new MoveLeftTask());
+                        .addTask(new ChaseTask(target, 2, true, 100, 10));
         Entity npc =
                 new Entity()
                         .addComponent(new PhysicsComponent())
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 7.5f))
                         .addComponent(aiComponent);
         PhysicsUtils.setScaledCollider(npc, 0f, 0f);
         npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,
@@ -334,7 +331,7 @@ public class NPCFactory {
                         .addComponent(new PhysicsMovementComponent())
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
-                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 1.5f))
+                        .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 7.5f))
                         .addComponent(aiComponent);
 
         PhysicsUtils.setScaledCollider(npc, 0f, 0f);

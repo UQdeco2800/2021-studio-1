@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -19,58 +20,75 @@ import java.util.Scanner;
  * A ui component for displaying the Main menu.
  */
 public class MainMenuDisplay extends UIComponent {
-    private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
-    private static final float Z_INDEX = 2f;
-    private static final String POP_UP_FONT = "popUpFont";
-    private Table rootTable;
-    private Table table;
-    private Table helpTable;
-    private Table highScoreTable;
-    private Table muteTable;
-    private static int[] scoreValues = {0, 0, 0, 0, 0};
-    private static final String PLAY_LINE = "Play to get here!";
-    private static String[] scoreNames = {PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE};
-    private static String highScoreName = "";
-    private static int highScorevalue = 0;
+  private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
+  private static final float Z_INDEX = 2f;
+  private Table rootTable;
+  private Table table;
+  private Table helpTable;
+  private Table highScoreTable;
+  private Table muteTable;
+  private static String playerName = "";
+  private static final String POP_UP_FONT = "popUpFont";
+  private static int[] scoreValues = {0, 0, 0, 0, 0};
+  private static final String PLAY_LINE = "Play to get here!";
+  private static String[] scoreNames = {PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE};
+  private static String highScoreName = "";
+  private static int highScorevalue = 0;
 
-    @Override
-    public void create() {
-        super.create();
-        addActors();
-    }
 
-    private void addActors() {
-        rootTable = new Table();
-        table = new Table();
-        helpTable = new Table();
-        highScoreTable = new Table();
-        muteTable = new Table();
-        rootTable.setFillParent(true);
-        table.setFillParent(true);
-        helpTable.setFillParent(true);
-        muteTable.setFillParent(true);
-        highScoreTable.setFillParent(true);
+  @Override
+  public void create() {
+    super.create();
+    addActors();
+  }
 
-        Image title = new Image(ServiceLocator.getResourceService()
+  private void addActors() {
+    rootTable = new Table();
+    table = new Table();
+    helpTable = new Table();
+    highScoreTable = new Table();
+    muteTable = new Table();
+    rootTable.setFillParent(true);
+    table.setFillParent(true);
+    helpTable.setFillParent(true);
+    muteTable.setFillParent(true);
+    highScoreTable.setFillParent(true);
+
+    Image title =
+        new Image(
+            ServiceLocator.getResourceService()
                 .getAsset("images/main_back.png", Texture.class));
 
-        TextButton startBtn = new TextButton("Run!", skin);
-        //This and its descendants are commented out since it could be a button we use in future
-        //TextButton loadBtn = new TextButton("Load", skin);
-        TextButton settingsBtn = new TextButton("Settings", skin);
-        TextButton exitBtn = new TextButton("Exit", skin);
-        TextButton helpBtn = new TextButton("Help", skin);
-        TextButton leaderBoardButton = new TextButton("Leaderboard", skin);
+    TextButton startBtn = new TextButton("Run!", skin);
+    //This and its descendants are commented out since it could be a button we use in future
+    //TextButton loadBtn = new TextButton("Load", skin);
+    TextButton settingsBtn = new TextButton("Settings", skin);
+    TextButton exitBtn = new TextButton("Exit", skin);
+    TextButton helpBtn = new TextButton("Help", skin);
+    TextButton leaderBoardButton = new TextButton("Leaderboard", skin);
 
-        ImageButton muteButton = new ImageButton(new TextureRegionDrawable(
-                ServiceLocator.getResourceService().getAsset(
-                        "images/mute_button_on.png", Texture.class)));
+    ImageButton muteButton = new ImageButton(new TextureRegionDrawable(
+            ServiceLocator.getResourceService().getAsset(
+                    "images/mute_button_on.png", Texture.class)));
 
-        highScoreName = readHighScores();
-        Label highScorePreText = new Label("Best Runner", skin, POP_UP_FONT);
-        Label highScoreNameText = new Label(highScoreName, skin, POP_UP_FONT);
-        Label highScoreValueText = new Label("" + highScorevalue, skin, POP_UP_FONT);
+    highScoreName = readHighScores();
+    Label selectionDescription = new Label("Select a Name", skin, POP_UP_FONT);
+    Label highScorePreText = new Label("Best Runner", skin, POP_UP_FONT);
+    Label highScoreNameText = new Label(highScoreName, skin, POP_UP_FONT);
+    Label highScoreValueText = new Label("" + highScorevalue , skin, POP_UP_FONT);
+    SelectBox<String> characterSelections = new SelectBox<String>(skin);
+    addCharacterSelections(characterSelections);
 
+    // Triggers an event when the button is pressed
+
+    startBtn.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+            logger.debug("Start button clicked");
+            entity.getEvents().trigger("start");
+          }
+        });
         // Triggers an event when the button is pressed
 
         startBtn.addListener(
@@ -119,53 +137,78 @@ public class MainMenuDisplay extends UIComponent {
         });
     */
 
-        muteTable.bottom().left();
-        helpTable.bottom().right();
-        highScoreTable.top().right();
+    muteTable.bottom().left();
+    helpTable.bottom().right();
+    highScoreTable.top().right();
 
-        settingsBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Settings button clicked");
-                        entity.getEvents().trigger("settings");
-                    }
-                });
+    settingsBtn.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+            logger.debug("Settings button clicked");
+            entity.getEvents().trigger("settings");
+          }
+        });
 
-        exitBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
+    exitBtn.addListener(
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
 
-                        logger.debug("Exit button clicked");
-                        entity.getEvents().trigger("exit");
-                    }
-                });
+            logger.debug("Exit button clicked");
+            entity.getEvents().trigger("exit");
+          }
+        });
 
-        rootTable.add(title);
-        table.add(startBtn).padTop(70f);
-        table.row();
-        table.row();
-        table.add(settingsBtn).padTop(30f);
-        table.row();
-        table.add(exitBtn).padTop(30f);
+    rootTable.add(title);
+    rootTable.setBackground(new TextureRegionDrawable(new Texture("images/plainBack.png")));
+    table.add(selectionDescription).padTop(70f);
+    table.row();
+    table.add(characterSelections).padTop(10f);
+    table.row();
+    table.add(startBtn).padTop(30f);
+    table.row();
+    table.row();
+    table.add(settingsBtn).padTop(30f);
+    table.row();
+    table.add(exitBtn).padTop(30f);
 
-        helpTable.add(helpBtn);
-        muteTable.add(muteButton);
-        highScoreTable.add(highScorePreText);
-        highScoreTable.row();
-        highScoreTable.add(highScoreNameText).bottom().right();
-        highScoreTable.row();
-        highScoreTable.add(highScoreValueText).bottom().right();
-        highScoreTable.row();
-        highScoreTable.add(leaderBoardButton).bottom().right();
+    helpTable.add(helpBtn);
+    muteTable.add(muteButton);
+    highScoreTable.add(highScorePreText);
+    highScoreTable.row();
+    highScoreTable.add(highScoreNameText).bottom().right();
+    highScoreTable.row();
+    highScoreTable.add(highScoreValueText).bottom().right();
+    highScoreTable.row();
+    highScoreTable.add(leaderBoardButton).bottom().right();
 
-        stage.addActor(rootTable);
-        stage.addActor(table);
-        stage.addActor(helpTable);
-        stage.addActor(muteTable);
-        stage.addActor(highScoreTable);
-    }
+    stage.addActor(rootTable);
+    stage.addActor(table);
+    stage.addActor(helpTable);
+    stage.addActor(muteTable);
+    stage.addActor(highScoreTable);
+  }
+
+  private void addCharacterSelections(SelectBox<String> characterSelections) {
+
+      String[] selections = new String[] {"Random",  "Thor", "Loki", "Bjorn", "Floki", "Ironside", "Uber", "Frejya", "Njoror", "Aesir", "Mjolnir"};
+      Array<String> selectionText = new Array<String>();
+
+      for (String selection : selections) {
+
+          selectionText.add(selection);
+      }
+
+      characterSelections.setItems(selectionText);
+
+      characterSelections.addListener(new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+              playerName = characterSelections.getSelected();
+          }
+      });
+  }
 
     /*
      * Reads the high scores from highScores.txt in gameinfo folder
@@ -208,10 +251,9 @@ public class MainMenuDisplay extends UIComponent {
                     scoreValues[i] = scoreValue;
                     scoreNames[i] = readName;
                     break;
-                }
-
+                    }
+            numberScoreRead += 1;
             }
-            // logger.info(scoreNames[numberScoreRead]);
             numberScoreRead += 1;
         }
 
@@ -220,6 +262,14 @@ public class MainMenuDisplay extends UIComponent {
         highScoresScanner.close();
 
         return highScoreName;
+    }
+
+    /*
+     * Returns the players selected name
+     */
+    public static String getPlayeName () {
+
+        return playerName;
     }
 
     /*

@@ -3,6 +3,7 @@ package com.deco2800.game.components.tasks;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
+import com.deco2800.game.areas.RagnarokArea;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -12,13 +13,14 @@ import com.deco2800.game.services.ServiceLocator;
 
 /** Chases a target entity until they get too far away or line of sight is lost */
 public class ChaseTask extends DefaultTask implements PriorityTask {
-  private final Entity target;
+  private Entity target;
   private final int priority;
   private final float viewDistance;
   private final float maxChaseDistance;
   private final PhysicsEngine physics;
   private final DebugRenderer debugRenderer;
   private final RaycastHit hit = new RaycastHit();
+  private boolean chaseHorizontal = false;
   private MovementTask movementTask;
 
   /**
@@ -36,9 +38,31 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     debugRenderer = ServiceLocator.getRenderService().getDebug();
   }
 
+    /**
+     * @param target The area of the game.
+     * @param priority Task priority when chasing (0 when not chasing).
+     * @param viewDistance Maximum distance from the entity at which chasing can start.
+     * @param maxChaseDistance Maximum distance from the entity while chasing before giving up.
+     * @param horizontal Boolean representing only horizontal movement
+     */
+    public ChaseTask(Entity target, int priority, boolean horizontal,  float viewDistance, float maxChaseDistance) {
+        this.target = target;
+        this.priority = priority;
+        this.viewDistance = viewDistance;
+        this.chaseHorizontal = horizontal;
+        this.maxChaseDistance = maxChaseDistance;
+        physics = ServiceLocator.getPhysicsService().getPhysics();
+        debugRenderer = ServiceLocator.getRenderService().getDebug();
+    }
+
   @Override
   public void start() {
     super.start();
+
+    Vector2 targetPosition = target.getPosition();
+    if (chaseHorizontal) {
+        targetPosition = new Vector2(targetPosition.x, 0);
+    }
     movementTask = new MovementTask(target.getPosition());
     movementTask.create(owner);
     movementTask.start();
@@ -48,7 +72,14 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
 
   @Override
   public void update() {
-    movementTask.setTarget(target.getPosition());
+
+
+    Vector2 targetPosition = target.getPosition();
+    if (chaseHorizontal) {
+      targetPosition = new Vector2(targetPosition.x, 0);
+    }
+
+    movementTask.setTarget(targetPosition);
     movementTask.update();
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
@@ -71,7 +102,10 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   }
 
   private float getDistanceToTarget() {
-    return owner.getEntity().getPosition().dst(target.getPosition());
+    if (target != null) {
+        return owner.getEntity().getPosition().dst(target.getPosition());
+    }
+    return 100; // out of range
   }
 
   private int getActivePriority() {
