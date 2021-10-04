@@ -4,8 +4,10 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
+import com.deco2800.game.ui.UIPop;
 import com.deco2800.game.areas.AreaManager;
 import com.deco2800.game.areas.AreaService;
+import com.deco2800.game.components.Component;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
@@ -48,6 +50,8 @@ public class MainGameScreen extends ScreenAdapter {
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
   private AreaManager ragnarokManager;
+  
+  private Entity endGame;
 
   public MainGameScreen(GdxGame game) {
     this.game = game;
@@ -121,11 +125,8 @@ public class MainGameScreen extends ScreenAdapter {
         long currentScore = player.getComponent(PlayerStatsDisplay.class).getPlayerScore();
 
         if (currentScore > MainMenuDisplay.getHighScore()) {
-
             recordHighScore("" + currentScore);
-
         }
-        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
       }
     }
     

@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.gameScore.gameScore;
+import com.deco2800.game.files.UserSettings;
+import com.deco2800.game.services.ServiceLocator;
+import com.badlogic.gdx.audio.Music;
 
 import java.util.*;
 
@@ -32,6 +35,7 @@ public class UIPop extends UIComponent {
         backGroundImages.put("Help Screen", "images/popPauseBack.png");
         backGroundImages.put("Score Screen", "images/popPauseBack.png");
         backGroundImages.put("Pause Menu", "images/popPauseBack.png");
+        backGroundImages.put("Game Over", "images/popPauseBack.png");
     }
 
     //the game the popUp will pop onto
@@ -54,6 +58,14 @@ public class UIPop extends UIComponent {
     //Back button
     private Button backButton;
 
+    private float volume = 0.8f;
+    private Button apply;
+    private Slider volumeSlider;
+    private CheckBox fullScreenCheck;
+    private Music music;
+    private Music fire;
+    private Music walk;
+
     // the skin for the popup
     private Skin popUpSkin;
 
@@ -64,6 +76,19 @@ public class UIPop extends UIComponent {
      *                      Every popUp will have a game entity active.
      */
     public UIPop(String screenName, Entity game) {
+
+        music = ServiceLocator.getResourceService().getAsset("sounds/main.mp3", Music.class);
+        fire = ServiceLocator.getResourceService().getAsset("sounds/fire.mp3", Music.class);
+        walk = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
+        music.setLooping(true);
+        fire.setLooping(true);
+        walk.setLooping(true);
+        music.setVolume(volume);
+        fire.setVolume(volume);
+        walk.setVolume(volume);
+        music.play();
+        fire.play();
+        walk.play();
 
         this.game = game;
 
@@ -84,6 +109,20 @@ public class UIPop extends UIComponent {
 
         // every pop up must have a close button
         closeButton = new TextButton("Close", skin);
+        apply = new TextButton("Apply", skin);
+
+        volumeSlider = new Slider(0.2f, 2f, 0.1f, false, skin);
+        volumeSlider.setValue(volume);
+
+
+
+        apply.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                //there should be an associated trigger event in main game actions
+                applyChange();
+            }
+        });
 
         closeButton.addListener(new ChangeListener() {
             @Override
@@ -111,6 +150,17 @@ public class UIPop extends UIComponent {
     public void create() {
         super.create();
         addActors(screenName);
+    }
+
+    private void applyChange() {
+        UserSettings.Settings settings = UserSettings.get();
+        settings.fullscreen = fullScreenCheck.isChecked();
+        volume = volumeSlider.getValue();
+        volumeSlider.setValue(volume);
+        music.setVolume(volume);
+        fire.setVolume(volume);
+        walk.setVolume(volume);
+        UserSettings.set(settings, true);
     }
 
     // Adds actors based on screen name
@@ -148,6 +198,10 @@ public class UIPop extends UIComponent {
             popUp.add(closeButton);
         }
 
+        if (screenName.equals("Game Over")) {
+            popUp = formatGameEndScreen();
+        }
+
         stage.addActor(root);
         return popUp;
     }
@@ -156,7 +210,7 @@ public class UIPop extends UIComponent {
      * Formats the Settings table
      */
     private Table formatSettingsScreen() {
-
+        UserSettings.Settings settings = UserSettings.get();
         //Setting screen
         Table setting = new Table();
         setting.setBackground(new TextureRegionDrawable(popUpBackGround));
@@ -167,52 +221,62 @@ public class UIPop extends UIComponent {
         setting.add(settingTitle).top();
         setting.row().padTop(5f);
 
-        for (int i = 0; i < 3; i++) {
-            Label infoTitle = new Label(getInformation(screenName, i), skin, "popUpFont");
-            Label info = new Label(String.valueOf(getInfoValues(screenName, i)), skin, "popUpFont");
-            infoTitle.setFontScale(1.5f);
-            info.setFontScale(1.5f);
-            setting.add(infoTitle).left();
-            setting.add(info).right();
-            setting.row().padTop(20f);
-        }
+        Label fullScreenLabel = new Label("Fullscreen:", skin);
+        fullScreenCheck = new CheckBox("", skin);
+        fullScreenCheck.setChecked(settings.fullscreen);
+        setting.add(fullScreenLabel).left();
+        setting.add(fullScreenCheck).right();
+        setting.row().padTop(20f);
+
 
         setting.row().padTop(20f);
         setting.add(new Label("Volume :", skin, "popUpFont")).left();
-        setting.add(ScreenSpecialElement(screenName)).right();
+
+        setting.add(volumeSlider).right();
 
         setting.row().padTop(20f);
-        setting.add(closeButton).bottom().right();
-        setting.add(backButton).bottom().left();
+        setting.add(closeButton).padRight(30f).left();
+        setting.add(apply).padRight(30f).center();
+        setting.add(backButton);
 
         setting.setZIndex(0);
         return setting;
+    }
+
+    private Table formatGameEndScreen() {
+        //Button - return to main menu
+        TextButton returnButton;
+        //Button - new game
+        TextButton restartButton;
+
+        returnButton = new TextButton("Return to main menu", skin);
+
+        returnButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                game.getEvents().trigger("exit");
+            }
+        });
+
+        popUp.add(returnButton).center().padTop(30f);
+
+        return popUp;
     }
 
     /*
      * Formats the Pause table
      */
     private Table formatPauseScreen() {
-
-            // texture for button image - Setting
-            Texture popUpSettingImage;
-            // texture for button image - Resume
-            Texture popUpResumeImage;
-            // texture for button image - Quit;
-            Texture popUpQuitImage;
-            popUpSettingImage = new Texture("images/setting.png");
-            popUpResumeImage = new Texture("images/resume.png");
-            popUpQuitImage = new Texture("images/quit.png");
             // Image button - Setting
-            ImageButton settingButton;
+            TextButton settingButton;
             // Image button - Resume
-            ImageButton resumeButton;
+            TextButton resumeButton;
             // Image button - Quit
-            ImageButton quitButton;
+            TextButton quitButton;
 
-            settingButton = new ImageButton(new TextureRegionDrawable(popUpSettingImage));
-            resumeButton = new ImageButton(new TextureRegionDrawable(popUpResumeImage));
-            quitButton = new ImageButton(new TextureRegionDrawable(popUpQuitImage));
+            settingButton = new TextButton("Setting", skin);
+            resumeButton = new TextButton("Resume", skin);
+            quitButton = new TextButton("Return to main menu", skin);
 
             resumeButton.addListener(new ChangeListener() {
                 @Override
@@ -236,11 +300,13 @@ public class UIPop extends UIComponent {
                 }
             });
 
-            popUp.add(resumeButton).center();
-            popUp.row().padTop(2.5f);
-            popUp.add(settingButton).center();
-            popUp.row().padTop(2.5f);
-            popUp.add(quitButton).center();
+            popUp.add(resumeButton).center().padTop(30f);
+            popUp.row();
+            popUp.row();
+            popUp.add(settingButton).center().padTop(30f);
+            popUp.row();
+            popUp.row();
+            popUp.add(quitButton).center().padTop(30f);
             stage.addActor(root);
             return popUp;
     }

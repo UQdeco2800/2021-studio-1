@@ -22,6 +22,7 @@ public class GdxGame extends Game {
   //reference to whether the game is paused
   public boolean paused = false;
   public boolean scoreShown = false;
+  public boolean over = false;
 
     @Override
   public void create() {

@@ -56,6 +56,11 @@ public class KeyboardTerminalInputComponent extends InputComponent {
         return true;
       }
 
+      if (keycode == Input.Keys.O) {
+        entity.getEvents().trigger("Game Over");
+        return true;
+      }
+
       if (keycode == Input.Keys.I) {
         entity.getEvents().trigger("Score Screen");
         return true;
