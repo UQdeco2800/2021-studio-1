@@ -30,8 +30,10 @@ import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.maingame.MainGamePannelDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
+import com.sun.tools.javac.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -41,184 +43,229 @@ import java.io.IOException;
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class MainGameScreen extends ScreenAdapter {
-  private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {};
+    private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
+    private static final String[] mainGameTextures = {};
 
-  private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
+    private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
+<<<<<<< HEAD
   private final GdxGame game;
   private final Renderer renderer;
   private final PhysicsEngine physicsEngine;
   private AreaManager ragnarokManager;
   
   private Entity endGame;
+=======
+    private final GdxGame game;
+    private final Renderer renderer;
+    private final PhysicsEngine physicsEngine;
+    private AreaManager ragnarokManager;
+>>>>>>> c1550b9b736e4a3486f9ada7f1ad45c8cf4d5b9d
 
-  public MainGameScreen(GdxGame game) {
-    this.game = game;
-    logger.debug("Initialising main game screen services");
-    ServiceLocator.registerTimeSource(new GameTime());
+    public MainGameScreen(GdxGame game) {
+        this.game = game;
+        logger.debug("Initialising main game screen services");
+        ServiceLocator.registerTimeSource(new GameTime());
 
-    PhysicsService physicsService = new PhysicsService();
-    ServiceLocator.registerPhysicsService(physicsService);
-    physicsEngine = physicsService.getPhysics();
+        PhysicsService physicsService = new PhysicsService();
+        ServiceLocator.registerPhysicsService(physicsService);
+        physicsEngine = physicsService.getPhysics();
 
-    ServiceLocator.registerInputService(new InputService());
-    ServiceLocator.registerResourceService(new ResourceService());
+        ServiceLocator.registerInputService(new InputService());
+        ServiceLocator.registerResourceService(new ResourceService());
 
-    ServiceLocator.registerEntityService(new EntityService());
-    ServiceLocator.registerRenderService(new RenderService());
-    ServiceLocator.registerAreaService(new AreaService());
+        ServiceLocator.registerEntityService(new EntityService());
+        ServiceLocator.registerRenderService(new RenderService());
+        ServiceLocator.registerAreaService(new AreaService());
 
-    renderer = RenderFactory.createRenderer();
-    renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
-    renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
+        renderer = RenderFactory.createRenderer();
+        renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
+        renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
 
-    loadAssets();
-    createUI();
+        loadAssets();
+        createUI();
 
-    logger.debug("Initialising main game screen entities");
-    TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
+        logger.debug("Initialising main game screen entities");
+        TerrainFactory terrainFactory = new TerrainFactory(renderer.getCamera());
 
-    ragnarokManager = new AreaManager(terrainFactory);
+        ragnarokManager = new AreaManager(terrainFactory);
 
-    ServiceLocator.getAreaService().setManager(ragnarokManager);
-    ServiceLocator.getAreaService().run(); //TODO: call run on manager from terminal line
+        ServiceLocator.getAreaService().setManager(ragnarokManager);
+        ServiceLocator.getAreaService().run(); //TODO: call run on manager from terminal line
 
-    //ragnarokManager.create();
+        //ragnarokManager.create();
 
-    //boolean isObstacle = false;
-    //if (isObstacle) {
-      //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-      //obstacleArea.create();
-    //} else if (!isObstacle) {
+        //boolean isObstacle = false;
+        //if (isObstacle) {
+        //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
+        //obstacleArea.create();
+        //} else if (!isObstacle) {
 
-      //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-      //obstacleArea.create()
+        //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
+        //obstacleArea.create()
 
-      //ragnarokArea = new RagnarokArea("the og", terrainFactory);
+        //ragnarokArea = new RagnarokArea("the og", terrainFactory);
 
-      //TODO: abstract commands from RacerArea to GameArea
-      //TODO: so that they can be called from any GameArea
-      //ServiceLocator.getAreaService().setMainRacerArea(ragnarokArea);
+        //TODO: abstract commands from RacerArea to GameArea
+        //TODO: so that they can be called from any GameArea
+        //ServiceLocator.getAreaService().setMainRacerArea(ragnarokArea);
 
-      //ragnarokArea.create();
-    //}
-  }
-
-  @Override
-  public void render(float delta) {
-    
-    ServiceLocator.getTerminalService().processMessageBuffer();
-    ServiceLocator.getEntityService().update();
-
-    physicsEngine.update();
-
-    if (ragnarokManager != null) {
-      renderer.updateCameraPosition(ragnarokManager.getPlayer());
+        //ragnarokArea.create();
+        //}
     }
 
-    if (ragnarokManager.getPlayer() != null) {
-        Entity player = ragnarokManager.getPlayer();
+    @Override
+    public void render(float delta) {
 
-        if (player.getComponent(CombatStatsComponent.class).getHealth() == 0) {
+        ServiceLocator.getTerminalService().processMessageBuffer();
+        ServiceLocator.getEntityService().update();
 
-        long currentScore = player.getComponent(PlayerStatsDisplay.class).getPlayerScore();
+        physicsEngine.update();
+        renderer.updateCameraPosition(ragnarokManager.getPlayer());
 
+        if (ragnarokManager.getPlayer() != null) {
+            Entity player = ragnarokManager.getPlayer();
+
+            if (player.getComponent(CombatStatsComponent.class).getHealth() == 0) {
+
+                long currentScore = player.getComponent(PlayerStatsDisplay.class).getPlayerScore();
+
+<<<<<<< HEAD
         if (currentScore > MainMenuDisplay.getHighScore()) {
             recordHighScore("" + currentScore);
         }
       }
+=======
+                if (currentScore > MainMenuDisplay.getHighScoreValues()[4]) {
+
+                    recordHighScore("" + currentScore);
+
+                }
+                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+            }
+        }
+
+        renderer.render();
+
+        //TODO: do terminal requests
+
+>>>>>>> c1550b9b736e4a3486f9ada7f1ad45c8cf4d5b9d
     }
-    
-    renderer.render();
-
-    //TODO: do terminal requests
-
-  }
 
     @Override
-  public void resize(int width, int height) {
-    renderer.resize(width, height);
-    logger.trace("Resized renderer: ({} x {})", width, height);
-  }
+    public void resize(int width, int height) {
+        renderer.resize(width, height);
+        logger.trace("Resized renderer: ({} x {})", width, height);
+    }
 
-  @Override
-  public void pause() {
-    logger.info("Game paused");
-  }
+    @Override
+    public void pause() {
+        logger.info("Game paused");
+    }
 
-  @Override
-  public void resume() {
-    logger.info("Game resumed");
-  }
+    @Override
+    public void resume() {
+        logger.info("Game resumed");
+    }
 
-  @Override
-  public void dispose() {
-    logger.debug("Disposing main game screen");
+    @Override
+    public void dispose() {
+        logger.debug("Disposing main game screen");
 
-    renderer.dispose();
-    unloadAssets();
+        renderer.dispose();
+        unloadAssets();
 
-    ServiceLocator.getEntityService().dispose();
-    ServiceLocator.getRenderService().dispose();
-    ServiceLocator.getResourceService().dispose();
+        ServiceLocator.getEntityService().dispose();
+        ServiceLocator.getRenderService().dispose();
+        ServiceLocator.getResourceService().dispose();
 
-    ServiceLocator.clear();
-  }
+        ServiceLocator.clear();
+    }
 
-  private void loadAssets() {
-    logger.debug("Loading assets");
-    ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.loadTextures(mainGameTextures);
-    ServiceLocator.getResourceService().loadAll();
-  }
+    private void loadAssets() {
+        logger.debug("Loading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.loadTextures(mainGameTextures);
+        ServiceLocator.getResourceService().loadAll();
+    }
+    private void unloadAssets() {
+        logger.debug("Unloading assets");
+        ResourceService resourceService = ServiceLocator.getResourceService();
+        resourceService.unloadAssets(mainGameTextures);
+    }
 
-  private void unloadAssets() {
-    logger.debug("Unloading assets");
-    ResourceService resourceService = ServiceLocator.getResourceService();
-    resourceService.unloadAssets(mainGameTextures);
-  }
+    /**
+     * Creates the main game's ui including components for rendering ui elements to the screen and
+     * capturing and handling ui input.
+     */
+    private void createUI() {
+        logger.debug("Creating ui");
+        Stage stage = ServiceLocator.getRenderService().getStage();
+        InputComponent inputComponent =
+                ServiceLocator.getInputService().getInputFactory().createForTerminal();
 
-  /**
-   * Creates the main game's ui including components for rendering ui elements to the screen and
-   * capturing and handling ui input.
-   */
-  private void createUI() {
-    logger.debug("Creating ui");
-    Stage stage = ServiceLocator.getRenderService().getStage();
-    InputComponent inputComponent =
-        ServiceLocator.getInputService().getInputFactory().createForTerminal();
+        Terminal theOg = new Terminal();
+        ServiceLocator.registerTerminalService(theOg);
 
-    Terminal theOg = new Terminal();
-    ServiceLocator.registerTerminalService(theOg);
+        Entity ui = new Entity();
+        ui.addComponent(new InputDecorator(stage, 10))
+                .addComponent(new PerformanceDisplay())
+                .addComponent(new MainGameActions(this.game))
+                .addComponent(new MainGamePannelDisplay())
+                .addComponent(theOg)
+                .addComponent(inputComponent)
+                .addComponent(new TerminalDisplay());
 
-    Entity ui = new Entity();
-    ui.addComponent(new InputDecorator(stage, 10))
-        .addComponent(new PerformanceDisplay())
-        .addComponent(new MainGameActions(this.game))
-        .addComponent(new MainGamePannelDisplay())
-        .addComponent(theOg)
-        .addComponent(inputComponent)
-        .addComponent(new TerminalDisplay());
-
-    ServiceLocator.getEntityService().register(ui);
-  }
+        ServiceLocator.getEntityService().register(ui);
+    }
 
     private void recordHighScore(String currentScore) {
 
-      String availableNames[] = {"Zebra", "Fox", "Hound", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
-      char[] scoreIntegers = currentScore.toCharArray();
-      String randValue = "" + scoreIntegers[scoreIntegers.length - 1];
-      String name = availableNames[Integer.parseInt(randValue)];
+        String[] availableNames = {"Zebra", "Fox", "Dire Wolf", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
+        String[] availableAdjectives = {"Tiny", "Spirited", "Curious", "Colourful", "Trained", "Triumphant", "Extraordinary", "Fierce", "Unbeatable", "Unique"};
+        char[] scoreIntegers = currentScore.toCharArray();
+        String firstCharacter = scoreIntegers[0] + "";
+        String randValue = "" + scoreIntegers[scoreIntegers.length - 1];
+        String adjective = "Wandering";
 
-      FileWriter highScoreFile = null;
+        int lengthScore = scoreIntegers.length;
+        if (lengthScore < availableAdjectives.length) {
 
-      try {
-          highScoreFile = new FileWriter("gameinfo/highScores.txt");
-          highScoreFile.write(name + "," + currentScore);
-          highScoreFile.close();
-      } catch (IOException e) {
-          logger.info("Could not record high score");
-      }
-  }
+            int section = 0;
+
+            if (Integer.parseInt(firstCharacter) > 5) {
+                section = 1;
+            }
+            adjective = availableAdjectives[((scoreIntegers.length - 1) * 2) + section];
+        }
+
+        String selectedName = MainMenuDisplay.getPlayeName();
+        String name;
+
+        if (!selectedName.equals("Random")) {
+            name = adjective + " " + selectedName;
+        } else {
+            name = adjective + " " + availableNames[Integer.parseInt(randValue)] + "";
+        }
+
+        FileWriter highScoreFile = null;
+
+        int[] highScoreValues = MainMenuDisplay.getHighScoreValues();
+        String[] highScoreNames = MainMenuDisplay.getHighScoreNames();
+
+        highScoreNames[4] = name;
+        highScoreValues[4] = Integer.parseInt(currentScore);
+
+        try {
+            highScoreFile = new FileWriter("gameinfo/highScores.txt");
+
+            for (int i = 0; i < highScoreNames.length;  i++) {
+                highScoreFile.write(highScoreNames[i] + "," + highScoreValues[i] + "\n");
+            }
+
+            highScoreFile.close();
+        } catch (IOException e) {
+            logger.info("Could not record high score");
+        }
+    }
 }

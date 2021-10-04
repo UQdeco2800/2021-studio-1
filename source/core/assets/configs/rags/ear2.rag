@@ -1,0 +1,31 @@
+$_title earth1
+$_width 15
+$_height 10
+$_world earth_1
+
+$#.........F
+$#.PPP.....F
+$#.PP......F
+$#.P.......F
+$#.......P.F
+$#.PPP...F.F
+$#...P..RF.F
+$#.PPP.FFF.F
+$#.....P...F
+$#.PPP.P..SF
+$#.P.P.P...F
+$#.P.P.P...F
+$#.....P...F
+$#....RFFF.F
+$#..........
+
+$@player set [2,8]
+
+$-spawn [11,5] (skeleton)
+$-spawn [8,5] (skeleton)
+$-spawn [12,1] (fireSpirit)
+
+$-spawn [10,1] (shield)
+$-spawn [10,5] (lightning)
+
+$-spawn [10,5] (levelTrigger)

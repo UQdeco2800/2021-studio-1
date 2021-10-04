@@ -1,16 +1,19 @@
 package com.deco2800.game.components;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
-import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.*;
-import java.nio.file.*;
+
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -42,18 +45,12 @@ public class LevelLoadTriggerComponent extends Component {
             return;
         }
 
-        
-
-
         if (PhysicsLayer.contains(PhysicsLayer.PLAYER, other.getFilterData().categoryBits)) {
             // HAS COLLIDED WITH PLAYER so load in next level
-            ServiceLocator.getAreaService().load(getNextArea());
+            ServiceLocator.getTerminalService().sendTerminal("-load " + getNextArea());
             // Dispose the load trigger after the physics step
-            Entity target = ((BodyUserData) me.getBody().getUserData()).entity;
-            entityService.disposeAfterStep(target);
+            entity.flagDelete();
         }
-
-
     }
 
     private String getNextArea() {
@@ -67,11 +64,9 @@ public class LevelLoadTriggerComponent extends Component {
             logger.error("File rags files could not be loaded");
         }
 
-        Random rand = new Random();
-        String RagFile = pathList.get(rand.nextInt(pathList.size())).getFileName().toString();
+        String RagFile =
+                pathList.get(MathUtils.random(pathList.size() - 1)).getFileName().toString();
         logger.debug("Loading Level : " + RagFile);
         return RagFile.substring(0, RagFile.lastIndexOf('.'));
-
-
     }
 }

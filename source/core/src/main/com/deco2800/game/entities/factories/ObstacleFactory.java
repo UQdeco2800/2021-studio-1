@@ -72,9 +72,10 @@ public class ObstacleFactory {
         levelLoadTrigger.addComponent(new PhysicsComponent());
         levelLoadTrigger.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         Vector2 size = new Vector2(1, 20);
-        levelLoadTrigger.addComponent(new HitboxComponent());
+        levelLoadTrigger.addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
         levelLoadTrigger.getComponent(HitboxComponent.class).setAsBox(size);
         levelLoadTrigger.addComponent(new LevelLoadTriggerComponent());
+        levelLoadTrigger.setType(EntityTypes.OBSTACLE);
 
         return levelLoadTrigger;
     }
@@ -106,74 +107,122 @@ public class ObstacleFactory {
     }
 
     /**
-     * Creates a platform entity.
+     * Create and return a platform entity.
      *
-     * @param world the world type to load in. Must match the name of a .rag file (e.g. world.rag)
-     * @return entity
+     * @param world the world type to load in. Must match the name of a .png file in
+     *              assets/images (e.g. assets/images/world.png)
+     * @return platform entity
      */
     public static Entity createPlatform(String world) {
-        Entity platform =
-                new Entity()
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        Entity platform = createPlatformNoCollider(world)
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        platform.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        return platform;
+    }
+
+    /**
+     * Create and return a platform entity that has no physics or collision component.
+     *
+     * @param world the world type to load in. Must match the name of a .png file in
+     *              assets/images (e.g. assets/images/world.png)
+     * @return platform entity
+     */
+    public static Entity createPlatformNoCollider(String world) {
+        Entity platform = new Entity();
         if (world == null) {
             platform.addComponent(new TextureRenderComponent("images/platform_gradient.png"));
         } else {
-            platform.addComponent(new TextureRenderComponent("images/" + world + ".png"));
+            platform.addComponent(new TextureRenderComponent("images/worlds/" + world + ".png"));
         }
-        platform.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         platform.getComponent(TextureRenderComponent.class).scaleEntity();
-        // Be warned, this scale height makes a few of the calculations in RacerArea.spawnPlatform()
-        // difficult.
         platform.scaleHeight(0.5f);
         platform.setType(EntityTypes.OBSTACLE);
         return platform;
     }
 
     /**
-     * Creates a floor entity
+     * Creates a platform entity with the default world type.
      *
-     * @return entity
+     * @return platform entity
      */
     public static Entity createPlatform() {
         return createPlatform(null);
     }
 
     /**
-     * Creates a floor entity.
+     * Creates a floor entity with Physics and Collider components.
      *
-     * @param world String for to a world name
-     * @return entity
+     * @param world the world type corresponding the art style that the platform will mimic. Must
+     *              be the same as the name of an image in assets/images/'world'.png.
+     * @return floor entity
      */
     public static Entity createFloor(String world) {
-        Entity floor =
-                new Entity()
-                        .addComponent(new PhysicsComponent())
-                        .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        Entity floor = createFloorNoCollider(world)
+                .addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
+        return floor;
+    }
+
+    /**
+     * Create and return a floor entity that has no Physics or Collider component.
+     * <p>
+     * The value of 'world' must be the same as the name of a world style with any content following
+     * an underscore afterwards. E.g. as of 22/9 the following values are all valid: 'asgard',
+     * 'hel_1', 'hel_fdsagdsa', 'jotunheimr', 'earth'. This is to allow variations on platform types
+     * while keeping a single floor type.
+     *
+     * @param world the world type corresponding the art style that the floor will mimic.
+     * @return floor entity
+     */
+    public static Entity createFloorNoCollider(String world) {
+        Entity floor = new Entity();
         if (world == null) {
             floor.addComponent(new TextureRenderComponent("images/floor.png"));
         } else {
-            floor.addComponent(new TextureRenderComponent("images/" + world + ".png"));
+            // Strip any information including and after an underscore.
+            String specificWorld = world.split("_", 2)[0];
+            floor.addComponent(new TextureRenderComponent(
+                    "images/floors/" + specificWorld + ".png"));
         }
-        floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         floor.getComponent(TextureRenderComponent.class).scaleEntity();
-        floor.scaleHeight(0.5f);
+        floor.scaleHeight(1.5f);
         floor.setType(EntityTypes.OBSTACLE);
         return floor;
     }
 
     /**
-     * Creates a floor entity
+     * Create and return a floor entity with default world type.
      *
-     * @return entity
+     * @return floor entity
      */
     public static Entity createFloor() {
         return createFloor(null);
     }
 
+    /**
+     * Create and return an entity that has a collision hitbox with position given by parameters.
+     *
+     * @param width  width of the hitbox
+     * @param height height of the hitbox
+     * @return entity having only PhysicsComponent and ColliderComponent
+     */
+    public static Entity createCollider(int width, int height) {
+        Vector2 scale = new Vector2(0.5f, 0.5f);
+        Vector2 size = new Vector2(width, height).scl(scale);
+        Entity collider = new Entity()
+                .addComponent(new PhysicsComponent().setBodyType(BodyType.StaticBody))
+                .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        collider.setScale(scale);
+        collider.getComponent(ColliderComponent.class).setAsBoxAligned(size,
+                PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM);
+        collider.setType(EntityTypes.OBSTACLE);
+        return collider;
+    }
 
     /**
-     * Creates an invisible physics wall.
+     * Create an invisible physics wall.
      *
      * @param width  Wall width in world units
      * @param height Wall height in world units

@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 Puma,274
+=======
+Mouse,2946
+Sam,2044
+Mouse,1796
+Dragonfly,1348
+Extraordinary Thor,1091
+>>>>>>> c1550b9b736e4a3486f9ada7f1ad45c8cf4d5b9d

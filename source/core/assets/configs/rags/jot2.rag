@@ -1,0 +1,30 @@
+$_title jot2
+$_width 15
+$_height 10
+$_world jotunheimr_2
+
+$#.........F
+$#........SF
+$#........SF
+$#.........F
+$#........SF
+$#........FF
+$#.......FFF
+$#.....RFFFF
+$#......FFFF
+$#.........S
+$#.........S
+$#.........S
+$#........PS
+$#.........S
+$#........FF
+
+$@player set [2,1]
+
+$-spawn [6,3] (skeleton)
+$-spawn [14,2] (skeleton)
+
+$-spawn [13,3] (spear)
+$-spawn [5,2] (lightning)
+
+$-spawn [10,5] (levelTrigger)

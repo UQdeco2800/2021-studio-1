@@ -19,6 +19,8 @@ import static com.badlogic.gdx.Gdx.app;
  */
 public class GdxGame extends Game {
   private static final Logger logger = LoggerFactory.getLogger(GdxGame.class);
+
+  public boolean gameStarted = false;
   //reference to whether the game is paused
   public boolean paused = false;
   public boolean scoreShown = false;

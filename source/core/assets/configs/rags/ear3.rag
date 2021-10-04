@@ -1,0 +1,37 @@
+$_title ear3
+$_width 20
+$_height 10
+$_world earth_1
+
+$#.........F
+$#.........F
+$#...FFFFF.F
+$#......P..F
+$#........PF
+$#......FFFF
+$#......F.FF
+$#.........F
+$#.......P.S
+$#.........S
+$#.........S
+$#.......P.S
+$#.......P.S
+$#.........S
+$#.........S
+$#.........F
+$#........RF
+$#.........F
+$#.........F
+$#.........F
+
+$@player set [2,8]
+
+$-spawn [18,1] (wolf)
+$-spawn [6,4] (skeleton)
+$-spawn [17,1] (wolf)
+$-spawn [19,1] (wolf)
+
+$-spawn [6,2] (lightning)
+$-spawn [3,4] (spear)
+
+$-spawn [15,5] (levelTrigger)

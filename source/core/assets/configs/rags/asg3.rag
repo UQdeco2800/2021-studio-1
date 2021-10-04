@@ -1,0 +1,45 @@
+$_title asg3
+$_width 25
+$_height 10
+$_world asgard_2
+
+$#.........F
+$#.......FFF
+$#......FFFF
+$#........SF
+$#.........F
+$#.........F
+$#........SF
+$#.........F
+$#.........F
+$#........SF
+$#.........F
+$#.........F
+$#.......P.F
+$#.........F
+$#.......P.F
+$#.........F
+$#.......FFF
+$#.....SFFFF
+$#......F.FF
+$#........FF
+$#......F.FF
+$#.....SFFFF
+$#......F.FF
+$#.........F
+$#.........F
+
+$@player set [2,1]
+
+$-spawn [14,1] (wolf)
+$-spawn [7,1] (skeleton)
+$-spawn [24,1] (skeleton)
+$-spawn [12,1] (wolf)
+$-spawn [5,1] (skeleton)
+$-spawn [23,1] (skeleton)
+
+$-spawn [20,2] (spear)
+$-spawn [19,2] (spear)
+$-spawn [18,2] (lightning)
+
+$-spawn [20,5] (levelTrigger)

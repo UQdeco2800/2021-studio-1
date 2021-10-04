@@ -8,6 +8,7 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
      * the player blocks an attack
      */
     public void create() {
+        setEnabled(false);
         blocks = 0;
         entity.getEvents().addListener("block", this::activate);
         entity.getEvents().addListener("pickUpShield", this::pickedUpShield);
@@ -20,6 +21,7 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
      */
     public void pickedUpShield() {
         blocks = 3;
+        enabled = true;
     }
 
     /**

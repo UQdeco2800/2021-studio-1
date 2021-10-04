@@ -4,9 +4,6 @@ import com.badlogic.gdx.utils.Array;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Provides a global access point for entities to register themselves. This allows for iterating
  * over entities to perform updates each loop. All game entities should be registered here.
@@ -19,7 +16,6 @@ public class EntityService {
   private static final int INITIAL_CAPACITY = 16;
 
   private final Array<Entity> entities = new Array<>(false, INITIAL_CAPACITY);
-  private List<Entity> toDispose = new ArrayList<>();
 
   /**
    * Register a new entity with the entity service. The entity will be created and start updating.
@@ -44,9 +40,6 @@ public class EntityService {
    * Update all registered entities. Should only be called from the main game loop.
    */
   public void update() {
-    List<Entity> copy = new ArrayList<>(toDispose);
-    toDispose.clear();
-    copy.forEach(Entity::dispose);
     for (Entity entity : entities) {
       entity.earlyUpdate();
       entity.update();
@@ -68,15 +61,5 @@ public class EntityService {
    */
   public Array<Entity> getEntityArray() {
     return entities;
-  }
-
-  /**
-   * Adds entity to a list of entities which will be disposed of after the physics step is
-   * completed.
-   *
-   * @param entity entity to be disposed of
-   */
-  public void disposeAfterStep(Entity entity) {
-    toDispose.add(entity);
   }
 }
