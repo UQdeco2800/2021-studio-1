@@ -95,7 +95,7 @@ public class AreaManager extends RagnarokArea {
         this.areaInstances = new LinkedList<>();
 
         bufferedSpawns = new HashMap<>();
-        this.startNextArea = 0;
+        this.startNextArea = -5;
         // eventually moved to terminal?
         // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
 
@@ -137,7 +137,7 @@ public class AreaManager extends RagnarokArea {
 
         this.player = persistentInstance.getPlayer();
 
-        load("asg1");
+        load("start");
 
         logger.debug("Creating AreaManager");
 
@@ -224,6 +224,9 @@ public class AreaManager extends RagnarokArea {
         int gx = (startNextArea + x) * GRID_SCALE;
         int gy = y * GRID_SCALE;
 
+        // System.out.println("Spawning  " + spawnType);
+
+
         switch (spawnType) {
             case "skeleton":
                 area.spawnSkeleton(gx, gy);
@@ -245,6 +248,10 @@ public class AreaManager extends RagnarokArea {
                 break;
             case "lightning":
                 area.spawnLightning(gx, gy);
+                break;
+            case "tutorial":
+                System.out.println("Creating tutorial");
+                area.spawnTutorial(gx, gy);
                 break;
             default:
                 logger.error("spawn() called in AreaManger without valid spawnType");
