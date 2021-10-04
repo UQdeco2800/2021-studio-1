@@ -35,5 +35,6 @@ $@player set [2,1]
 
 $-spawn [10,1] (tutorial)
 
-$-spawn [13,5] (levelTrigger)
+
+$-spawn [11,5] (levelTrigger)
 

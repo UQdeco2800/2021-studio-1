@@ -65,7 +65,10 @@ public class RagnarokArea extends GameArea {
             "images/powerup-spear.png",
             "images/blue_bck.png",
             "images/Backgrounds/black_back.png",
-            "images/Backgrounds/asgard_bg.png"
+            "images/Backgrounds/asgard_bg.png",
+            "images/tutorial/lightningTutorial.png",
+            "images/tutorial/shieldTutorial.png",
+            "images/tutorial/spearTutorial.png"
     };
 
     //TODO: make Json,
@@ -173,6 +176,37 @@ public class RagnarokArea extends GameArea {
         }
     }
 
+
+    protected void spawnTutorial(int x, int y) {
+        GridPoint2 spearSpawn = new GridPoint2(x, y+3);
+        GridPoint2 lightningSpawn = new GridPoint2(x+18,y+3);
+        // GridPoint2 shieldSpawn = new GridPoint2(x+12, y+3);
+
+        
+        
+        spawnSpear(spearSpawn.x, spearSpawn.y-3);
+        Entity spearTutorial = ObstacleFactory.createTutorialSpear();
+        spawnEntityAt(spearTutorial, spearSpawn, true, false);
+
+        // Spawn enemies to test spear on
+        spawnWolf(spearSpawn.x+8, spearSpawn.y-3);
+        spawnWolf(spearSpawn.x+12, spearSpawn.y-3);
+        // spawnShield(shieldSpawn.x, shieldSpawn.y-3);
+
+        spawnLightning(lightningSpawn.x, lightningSpawn.y-3);
+        Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
+        spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
+        
+        // Spawn enemies to test lightning on
+        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y-3);
+        spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y-3);
+        spawnSkeleton(lightningSpawn.x+16, lightningSpawn.y-3);
+
+
+        // Entity shieldTutorial = ObstacleFactory.createTutorialShield();
+        // spawnEntityAt(shieldTutorial, shieldSpawn, true, false);
+    }
+
     protected Entity spawnPlayer(int x, int y) {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(x, y); /*Math.round(lane.y - newPlayer.getScale().y));*/
@@ -189,14 +223,14 @@ public class RagnarokArea extends GameArea {
      * This spawns the Wall of Death
      */
     protected void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-40, 13);
-        GridPoint2 leftPos2 = new GridPoint2(-5, 13);
+        GridPoint2 leftPos = new GridPoint2(-30, 13);
+        GridPoint2 leftPos2 = new GridPoint2(5, 13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
         wallOfDeath.addComponent(new CameraShakeComponent(getPlayer(), this.terrainFactory.getCameraComponent(), sfx));
         wallOfDeath.addComponent(new FallDamageComponent(getPlayer()));
 
-        GridPoint2 leftPos3 = new GridPoint2(-15, 13);
+        GridPoint2 leftPos3 = new GridPoint2(-5, 13);
         Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
 
         wallOfDeath.addComponent(new VariableSpeedComponent(getPlayer(), deathGiant, sfx));

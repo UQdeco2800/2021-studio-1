@@ -237,6 +237,26 @@ public class ObstacleFactory {
         return wall;
     }
 
+
+    public static Entity createTutorialLightning() {
+        Entity TutorialLightning = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/lightningTutorial.png"));
+        return TutorialLightning;
+    }
+
+    public static Entity createTutorialSpear() {
+        Entity TutorialSpear = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/spearTutorial.png"));
+        return TutorialSpear;
+    }
+
+    public static Entity createTutorialShield() {
+        Entity TutorialShield = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/shieldTutorial.png"));
+        return TutorialShield;
+    }
+
+
     private ObstacleFactory() {
         throw new IllegalStateException("Instantiating static util class");
     }
