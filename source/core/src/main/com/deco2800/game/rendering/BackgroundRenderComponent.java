@@ -21,6 +21,6 @@ public class BackgroundRenderComponent extends TextureRenderComponent {
     @Override
     public float getZIndex() {
         // Have this sitting as far back as possible.
-        return -1000000f;
+        return -Float.MAX_VALUE;
     }
 }
