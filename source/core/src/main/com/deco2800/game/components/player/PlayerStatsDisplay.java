@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 import com.deco2800.game.gameScore.gameScore;
 import com.deco2800.game.ui.UIComponent;
 
@@ -18,6 +20,8 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label healthLabel;
   private Label scoreLabel;
   public static boolean deadFlag = false;
+  public static boolean lightningActive = false;
+
   gameScore scoring = new gameScore();
   private int health;
 
@@ -89,6 +93,11 @@ public class PlayerStatsDisplay extends UIComponent {
     // flags that the player is dead
     if (entity.getComponent(CombatStatsComponent.class).isDead() == true){
       deadFlag = true;
+    }
+    if(entity.getComponent(LightningPowerUpComponent.class).getActive()){
+      lightningActive = true;
+    }else{
+      lightningActive = false;
     }
   }
 

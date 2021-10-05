@@ -141,7 +141,7 @@ public class AreaManager extends RagnarokArea {
         load("asg1");
         terrainInstance.makePlayer(10, 5);
         this.player = terrainInstance.getPlayer();
-        terrainInstance.spawnWallOfDeath();
+        //terrainInstance.spawnWallOfDeath();
 
         logger.debug("Creating AreaManager");
 
