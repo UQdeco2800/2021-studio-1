@@ -18,8 +18,9 @@ public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
   private GdxGame game;
   private Entity mainMenuPop;
+  private boolean muted = false;
+  private Music music;
   private static final String MAIN_MUSIC = "sounds/main.mp3";
-  private static final String[] MUSIC = {MAIN_MUSIC};
 
   public MainMenuActions(GdxGame game) {
     this.game = game;
@@ -35,8 +36,9 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("Leaderboard", this::onLeaderBoard);
     entity.getEvents().addListener("mute", this::onMute);
 
-    loadAssets();
-    //playMusic(); <-- LINE THAT CRASHES CODE
+    music = ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class);
+    music.setLooping(true);
+    playMusic();
   }
 
   /**
@@ -104,17 +106,13 @@ public class MainMenuActions extends Component {
         }
     }
 
-    private void loadAssets() {
-        logger.debug("Loading assets");
-        ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.loadSounds(MUSIC);
-    }
-
     private void playMusic() {
-        Music music = ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class);
-        music.setLooping(true);
         music.setVolume(0.7f);
         music.play();
+    }
+
+    private void stopMusic() {
+        music.setVolume(0);
     }
 
   /**
@@ -122,5 +120,12 @@ public class MainMenuActions extends Component {
     */
   private void onMute() {
     logger.info("muting game");
+    if (muted) {
+        playMusic();
+        muted = false;
+      } else {
+        stopMusic();
+        muted = true;
+    }
   }
 }
