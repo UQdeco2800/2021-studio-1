@@ -223,9 +223,6 @@ public class AreaManager extends RagnarokArea {
         int gx = (startNextArea + x) * GRID_SCALE;
         int gy = y * GRID_SCALE;
 
-        // System.out.println("Spawning  " + spawnType);
-
-
         switch (spawnType) {
             case "skeleton":
                 area.spawnSkeleton(gx, gy);
@@ -249,7 +246,6 @@ public class AreaManager extends RagnarokArea {
                 area.spawnLightning(gx, gy);
                 break;
             case "tutorial":
-                System.out.println("Creating tutorial");
                 area.spawnTutorial(gx, gy);
                 break;
             default:
