@@ -153,11 +153,20 @@ public class NPCFactory {
         Entity fireSpirit = createFireSpiritNPC(target);
         BaseEntityConfig config = configs.fireSpirit;
 
-        fireSpirit
-                .addComponent(new TextureRenderComponent("images/fire_spirit.png"))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/fire_spirit.atlas", TextureAtlas.class));
+        animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
 
-        fireSpirit.getComponent(TextureRenderComponent.class).scaleEntity();
+        fireSpirit
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
+        fireSpirit.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+        fireSpirit.setScale(1.3f, 1f);
 
         //set body collision box
         fireSpirit.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.6f,
@@ -173,6 +182,13 @@ public class NPCFactory {
         for(Fixture fixture : fireSpirit.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
             fixture.setSensor(true);
         }
+
+        fireSpirit.getComponent(AnimationRenderComponent.class).startAnimation("run");
+        fireSpirit.setType(EntityTypes.WOLF);
+
+        fireSpirit.setScale(1.3f, 1f);
+
+        fireSpirit.getComponent(AnimationRenderComponent.class).startAnimation("run");
 
         fireSpirit.setType(EntityTypes.FIRESPIRIT);
         return fireSpirit;

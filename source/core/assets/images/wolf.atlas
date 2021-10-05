@@ -1,47 +1,139 @@
+
 wolf.png
-size: 512, 512
+size: 2048, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 default
   rotate: false
-  xy: 250, 318
-  size: 246, 156
-  orig: 246, 156
+  xy: 830, 4
+  size: 205, 130
+  orig: 205, 130
   offset: 0, 0
   index: 0
 run
   rotate: false
-  xy: 2, 318
-  size: 246, 156
-  orig: 246, 156
+  xy: 2, 4
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 0
+run
+  rotate: false
+  xy: 209, 4
+  size: 205, 130
+  orig: 205, 130
   offset: 0, 0
   index: 1
 run
   rotate: false
-  xy: 2, 160
-  size: 246, 156
-  orig: 246, 156
-  offset: 0, 0
-  index: 3
-run
-  rotate: false
-  xy: 250, 318
-  size: 246, 156
-  orig: 246, 156
-  offset: 0, 0
-  index: 0
-run
-  rotate: false
-  xy: 2, 2
-  size: 246, 156
-  orig: 246, 156
+  xy: 416, 4
+  size: 205, 130
+  orig: 205, 130
   offset: 0, 0
   index: 2
 run
   rotate: false
-  xy: 250, 160
-  size: 246, 156
-  orig: 246, 156
+  xy: 623, 4
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 830, 4
+  size: 205, 130
+  orig: 205, 130
   offset: 0, 0
   index: 4
+death
+  rotate: false
+  xy: 830, 4
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 0
+run_back
+  rotate: false
+  xy: 1037, 4
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 0
+run_back
+  rotate: false
+  xy: 1244, 4
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 1
+run_back
+  rotate: false
+  xy: 1451, 4
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 2
+run_back
+  rotate: false
+  xy: 1658, 4
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 3
+run_back
+  rotate: false
+  xy: 2, 136
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 4
+death
+  rotate: false
+  xy: 209, 136
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 1
+death
+  rotate: false
+  xy: 416, 136
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 2
+death
+  rotate: false
+  xy: 623, 136
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 3
+death
+  rotate: false
+  xy: 830, 136
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 4
+death
+  rotate: false
+  xy: 1037, 136
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 6
+death
+  rotate: false
+  xy: 1037, 136
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 5
+death
+  rotate: false
+  xy: 1037, 136
+  size: 205, 130
+  orig: 205, 130
+  offset: 0, 0
+  index: 7
