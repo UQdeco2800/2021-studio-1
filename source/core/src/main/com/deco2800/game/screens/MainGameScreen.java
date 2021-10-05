@@ -124,7 +124,7 @@ public class MainGameScreen extends ScreenAdapter {
                     recordHighScore("" + currentScore);
 
                 }
-                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                //game.setScreen(GdxGame.ScreenType.MAIN_MENU);
             }
         }
 

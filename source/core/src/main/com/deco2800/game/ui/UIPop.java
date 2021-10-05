@@ -28,6 +28,7 @@ public class UIPop extends UIComponent {
     private static final String HELP = "Help Screen";
     private static final String SCORE = "Score Screen";
     private static final String PAUSE = "Pause Menu";
+    private static final String GAMEOVER = "Game Over";
     private static final String LEADERBOARD = "Leaderboard";
     private static final String PAUSE_BACKGROUND = "images/popPauseBack.png";
     private static final String POP_UP_FONT = "popUpFont";
@@ -41,6 +42,7 @@ public class UIPop extends UIComponent {
         //background images should ideally be 800 * 500 pixels
         backGroundImages.put(HELP, PAUSE_BACKGROUND);
         backGroundImages.put(SCORE, PAUSE_BACKGROUND);
+        backGroundImages.put(GAMEOVER, PAUSE_BACKGROUND);
         backGroundImages.put(PAUSE, PAUSE_BACKGROUND);
         backGroundImages.put(LEADERBOARD, PAUSE_BACKGROUND);
     }
@@ -204,7 +206,7 @@ public class UIPop extends UIComponent {
             popUp.add(closeButton);
         }
 
-        if (screenName.equals("Game Over")) {
+        if (screenName.equals(GAMEOVER)) {
             popUp = formatGameEndScreen();
         }
 
