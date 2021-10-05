@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 import com.deco2800.game.gameScore.gameScore;
 import com.deco2800.game.ui.UIComponent;
 
@@ -18,10 +20,10 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label healthLabel;
   private Label scoreLabel;
   public static boolean deadFlag = false;
+  public static boolean lightningActive = false;
+
   gameScore scoring = new gameScore();
   private int health;
-
-
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -40,10 +42,6 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   private void addActors() {
     table = new Table();
-
-   // tableTwo = new Table();
-
-
     table.top().left();
     table.setFillParent(true);
     table.padTop(30f).padLeft(-200f);
@@ -86,9 +84,15 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void update(){
     entity.getEvents().trigger("updateScore", scoring.getCurrentScore());
+    // flags that the player is dead
     if (entity.getComponent(CombatStatsComponent.class).isDead() == true){
       deadFlag = true;
       entity.getEvents().trigger("start");
+    }
+    if(entity.getComponent(LightningPowerUpComponent.class).getActive()){
+      lightningActive = true;
+    }else{
+      lightningActive = false;
     }
   }
 

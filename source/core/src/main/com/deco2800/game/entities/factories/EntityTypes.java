@@ -13,5 +13,6 @@ public enum EntityTypes {
     WOLF,
     FIRESPIRIT,
     GIANT,
+    FIREBALL,
     PLAYERSPEAR
 }

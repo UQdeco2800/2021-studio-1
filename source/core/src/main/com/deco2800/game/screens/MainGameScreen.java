@@ -11,6 +11,7 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
+import com.deco2800.game.components.powerups.PowerUpGUIComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -40,8 +41,25 @@ import java.io.IOException;
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class MainGameScreen extends ScreenAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-    private static final String[] mainGameTextures = {"images/disp_back.png"};
+
+  private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
+  private static final String[] mainGameTextures = {
+          "images/PowerUpGUI/Shield.png",
+          "images/PowerUpGUI/Spear.png",
+          "images/PowerUpGUI/Lightning.png",
+          "images/PowerUpGUI/Empty.png",
+          "images/PowerUpGUI/lightning0.png",
+          "images/PowerUpGUI/lightning1.png",
+          "images/PowerUpGUI/shield0.png",
+          "images/PowerUpGUI/shield1.png",
+          "images/PowerUpGUI/shield2.png",
+          "images/PowerUpGUI/shield3.png",
+          "images/PowerUpGUI/spear0.png",
+          "images/PowerUpGUI/spear1.png",
+          "images/PowerUpGUI/spear2.png",
+          "images/PowerUpGUI/spear3.png",
+          "images/disp_back.png"
+  };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
@@ -196,7 +214,8 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new MainGamePannelDisplay())
                 .addComponent(theOg)
                 .addComponent(inputComponent)
-                .addComponent(new TerminalDisplay());
+                .addComponent(new TerminalDisplay())
+                .addComponent(new PowerUpGUIComponent());
 
         ServiceLocator.getEntityService().register(ui);
     }

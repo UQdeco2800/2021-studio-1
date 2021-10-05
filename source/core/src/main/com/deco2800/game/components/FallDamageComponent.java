@@ -12,6 +12,8 @@ public class FallDamageComponent extends Component {
 
     /**
      * Class to cause the player to die when below a certain height position
+     *
+     * @param target - the target to take fall damage
      */
     public FallDamageComponent(Entity target) {
         this.target = target;
@@ -36,7 +38,7 @@ public class FallDamageComponent extends Component {
     private void onCollisionStart(Fixture me, Fixture other) {
 
         float yPos = target.getPosition().y;
-        //System.out.println(yPos);
+        // System.out.println(yPos);
 
 
         //if the y_position is less than -1, than set the health of the target to 0.

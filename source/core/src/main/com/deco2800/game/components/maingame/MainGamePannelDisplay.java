@@ -73,8 +73,8 @@ public class MainGamePannelDisplay extends UIComponent {
           });
 
 
-    table.add(mainMenuBtn).padTop(10f).row();
-    table.add(mainPauseBtn).padTop(10f).padRight(20f).row();
+    table.add(mainMenuBtn).padRight(170).padTop(10f).row();
+    table.add(mainPauseBtn).padRight(150).padTop(10f).row();
     pannelDisplayBack.add(displayBack);
 
     table.add(pannelDisplayBack);

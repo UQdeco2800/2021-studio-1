@@ -61,11 +61,6 @@ public class KeyboardTerminalInputComponent extends InputComponent {
         return true;
       }
 
-      if (keycode == Input.Keys.I) {
-        entity.getEvents().trigger("Score Screen");
-        return true;
-      }
-
       if (keycode == TOGGLE_COMMAND_KEY) {
         terminal.toggleIsOpen();
         //terminal.appendToMessage('-');
