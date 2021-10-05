@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -236,11 +236,20 @@ int&nbsp;y)</code></th>
 </tr>
 <tr class="altColor" id="i8">
 <td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnBackground(int,int,java.lang.String)">spawnBackground</a></span>&#8203;(int&nbsp;x,
+int&nbsp;width,
+java.lang.String&nbsp;world)</code></th>
+<td class="colLast">
+<div class="block">Spawn a background image starting at x.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i9">
+<td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnFireSpirit(int,int)">spawnFireSpirit</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnFloor(int,int,java.lang.String)">spawnFloor</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y,
@@ -249,29 +258,29 @@ java.lang.String&nbsp;world)</code></th>
 <div class="block">Spawn a single floor entity at (x,y) with texture given by world.</div>
 </td>
 </tr>
-<tr class="altColor" id="i10">
+<tr class="rowColor" id="i11">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnLevelLoadTrigger(int)">spawnLevelLoadTrigger</a></span>&#8203;(int&nbsp;x)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i11">
+<tr class="altColor" id="i12">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnLightning(int,int)">spawnLightning</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i12">
+<tr class="rowColor" id="i13">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnMapChunk(int%5B%5D,int,java.lang.String,java.lang.String)">spawnMapChunk</a></span>&#8203;(int[]&nbsp;x,
 int&nbsp;y,
 java.lang.String&nbsp;type,
 java.lang.String&nbsp;world)</code></th>
 <td class="colLast">
-<div class="block">* Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
- * spans from x[1] to x[n].</div>
+<div class="block">Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
+ spans from x[0] to the end of the map chunk at x[n + 3].</div>
 </td>
 </tr>
-<tr class="rowColor" id="i13">
+<tr class="altColor" id="i14">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnPlatform(int,int,java.lang.String)">spawnPlatform</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y,
@@ -280,50 +289,56 @@ java.lang.String&nbsp;world)</code></th>
 <div class="block">Spawn a single platform at (x,y) with texture given by world.</div>
 </td>
 </tr>
-<tr class="altColor" id="i14">
+<tr class="rowColor" id="i15">
 <td class="colFirst"><code>protected <a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnPlayer(int,int)">spawnPlayer</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i15">
+<tr class="altColor" id="i16">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnRocks(int,int)">spawnRocks</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i16">
+<tr class="rowColor" id="i17">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnShield(int,int)">spawnShield</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i17">
+<tr class="altColor" id="i18">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnSkeleton(int,int)">spawnSkeleton</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i18">
+<tr class="rowColor" id="i19">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnSpear(int,int)">spawnSpear</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor" id="i19">
+<tr class="altColor" id="i20">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnSpikes(int,int)">spawnSpikes</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor" id="i20">
+<tr class="rowColor" id="i21">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnTutorial(int,int)">spawnTutorial</a></span>&#8203;(int&nbsp;x,
+int&nbsp;y)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i22">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnWallOfDeath()">spawnWallOfDeath</a></span>()</code></th>
 <td class="colLast">
 <div class="block">This spawns the Wall of Death</div>
 </td>
 </tr>
-<tr class="rowColor" id="i21">
+<tr class="rowColor" id="i23">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spawnWolf(int,int)">spawnWolf</a></span>&#8203;(int&nbsp;x,
 int&nbsp;y)</code></th>
@@ -413,9 +428,33 @@ int&nbsp;y)</code></th>
 </li>
 <li class="blockList">
 <section class="detail">
+<h3><a id="spawnTutorial(int,int)">spawnTutorial</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">spawnTutorial</span>&#8203;(<span class="arguments">int&nbsp;x,
+int&nbsp;y)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
 <h3><a id="spawnPlayer(int,int)">spawnPlayer</a></h3>
 <div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType"><a href="../entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">spawnPlayer</span>&#8203;(<span class="arguments">int&nbsp;x,
 int&nbsp;y)</span></div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="spawnBackground(int,int,java.lang.String)">spawnBackground</a></h3>
+<div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">spawnBackground</span>&#8203;(<span class="arguments">int&nbsp;x,
+int&nbsp;width,
+java.lang.String&nbsp;world)</span></div>
+<div class="block">Spawn a background image starting at x.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>x</code> - starting coordinate</dd>
+<dd><code>width</code> - width of the image using scaleWidth(width)</dd>
+<dd><code>world</code> - world type, must match the first word of a .png file in
+              assets/images/Backgrounds/'world'_bg.png, any information after an underscore
+              in world is ignored i.e. asgard and asgard_3 are both the same.</dd>
+</dl>
 </section>
 </li>
 <li class="blockList">
@@ -468,16 +507,7 @@ java.lang.String&nbsp;world)</span></div>
 int&nbsp;y,
 java.lang.String&nbsp;type,
 java.lang.String&nbsp;world)</span></div>
-<div class="block">* Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
- * spans from x[1] to x[n].
- * <p>
- * On disposal of the overarching collision entity, all floors created are disposed of.
- *
- * @param x     array of x coordinates to spawn floors at
- * @param y     the y coordinate to spawn all floors at
- * @param world the world type to load in. Must match the name of a .png file in
- *              assets/images (e.g. assets/images/world.png)
- Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
+<div class="block">Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
  spans from x[0] to the end of the map chunk at x[n + 3].
  <p>
  On disposal of the single collision entity, all map pieces created are disposed of.</div>

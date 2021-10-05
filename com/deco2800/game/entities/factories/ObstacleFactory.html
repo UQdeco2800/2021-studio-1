@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -124,34 +124,42 @@ extends java.lang.Object</pre>
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createBackground(java.lang.String,int)">createBackground</a></span>&#8203;(java.lang.String&nbsp;world,
+int&nbsp;width)</code></th>
+<td class="colLast">
+<div class="block">Create and return a background entity having only BackgroundRenderComponent.</div>
+</td>
+</tr>
+<tr class="rowColor" id="i1">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCollider(int,int)">createCollider</a></span>&#8203;(int&nbsp;width,
 int&nbsp;height)</code></th>
 <td class="colLast">
 <div class="block">Create and return an entity that has a collision hitbox with position given by parameters.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i1">
+<tr class="altColor" id="i2">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFloor()">createFloor</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Create and return a floor entity with default world type.</div>
 </td>
 </tr>
-<tr class="altColor" id="i2">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFloor(java.lang.String)">createFloor</a></span>&#8203;(java.lang.String&nbsp;world)</code></th>
 <td class="colLast">
 <div class="block">Creates a floor entity with Physics and Collider components.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFloorNoCollider(java.lang.String)">createFloorNoCollider</a></span>&#8203;(java.lang.String&nbsp;world)</code></th>
 <td class="colLast">
 <div class="block">Create and return a floor entity that has no Physics or Collider component.</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createLevelLoadTrigger()">createLevelLoadTrigger</a></span>()</code></th>
 <td class="colLast">
@@ -159,42 +167,57 @@ int&nbsp;height)</code></th>
  This is an invisible entity that commands the loading of more levels to the right when touched for the first time by the player</div>
 </td>
 </tr>
-<tr class="rowColor" id="i5">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPlatform()">createPlatform</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Creates a platform entity with the default world type.</div>
 </td>
 </tr>
-<tr class="altColor" id="i6">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPlatform(java.lang.String)">createPlatform</a></span>&#8203;(java.lang.String&nbsp;world)</code></th>
 <td class="colLast">
 <div class="block">Create and return a platform entity.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="altColor" id="i8">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPlatformNoCollider(java.lang.String)">createPlatformNoCollider</a></span>&#8203;(java.lang.String&nbsp;world)</code></th>
 <td class="colLast">
 <div class="block">Create and return a platform entity that has no physics or collision component.</div>
 </td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createRock()">createRock</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Creates a rock entity.</div>
 </td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSpikes()">createSpikes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Creates a spike entity.</div>
 </td>
 </tr>
-<tr class="altColor" id="i10">
+<tr class="rowColor" id="i11">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createTutorialLightning()">createTutorialLightning</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i12">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createTutorialShield()">createTutorialShield</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor" id="i13">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createTutorialSpear()">createTutorialSpear</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor" id="i14">
 <td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createWall(float,float)">createWall</a></span>&#8203;(float&nbsp;width,
 float&nbsp;height)</code></th>
@@ -224,6 +247,23 @@ float&nbsp;height)</code></th>
 </a>
 <h2>Method Details</h2>
 <ul class="blockList">
+<li class="blockList">
+<section class="detail">
+<h3><a id="createBackground(java.lang.String,int)">createBackground</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createBackground</span>&#8203;(<span class="arguments">java.lang.String&nbsp;world,
+int&nbsp;width)</span></div>
+<div class="block">Create and return a background entity having only BackgroundRenderComponent.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>world</code> - width of the image using scaleWidth(width)</dd>
+<dd><code>width</code> - world type, must match the first word of a .png file in
+              assets/images/Backgrounds/'world'_bg.png, any information after an underscore
+              in world is ignored i.e. asgard and asgard_3 are both the same.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>background entity</dd>
+</dl>
+</section>
+</li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="createRock()">createRock</a></h3>
@@ -368,6 +408,24 @@ float&nbsp;height)</span></div>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Wall entity of given width and height</dd>
 </dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="createTutorialLightning()">createTutorialLightning</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createTutorialLightning</span>()</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="createTutorialSpear()">createTutorialSpear</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createTutorialSpear</span>()</div>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="createTutorialShield()">createTutorialShield</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createTutorialShield</span>()</div>
 </section>
 </li>
 </ul>
