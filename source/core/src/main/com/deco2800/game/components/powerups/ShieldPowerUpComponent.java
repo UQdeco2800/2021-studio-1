@@ -22,6 +22,7 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
     public void pickedUpShield() {
         blocks = 3;
         enabled = true;
+        entity.getEvents().trigger("updatePowerUps");
     }
 
     /**
@@ -36,6 +37,7 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
                 enabled = false;
             }
         }
+        entity.getEvents().trigger("updatePowerUps");
     }
 
     /**

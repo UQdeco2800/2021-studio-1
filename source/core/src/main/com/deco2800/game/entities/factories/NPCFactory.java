@@ -115,7 +115,6 @@ public class NPCFactory {
 
         wolf.setScale(1.3f, 1f);
 
-        // NEED TO CHANGE COLLISION BOXES -> RUN THROUGH ENEMIES
         //create body collision box using collider component
         wolf.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(1f,
                 0.6f), PhysicsComponent.AlignX.CENTER,

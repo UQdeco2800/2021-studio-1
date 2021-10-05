@@ -205,7 +205,6 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(wallOfDeath, leftPos, true, true);
         spawnEntityAt(sfx, leftPos2, true, true);
         spawnEntityAt(deathGiant, leftPos3, true, true);
-
     }
 
     protected void spawnLevelLoadTrigger(int x) {
