@@ -138,6 +138,8 @@ public class AreaManager extends RagnarokArea {
 
         logger.debug("Creating AreaManager");
 
+        terrainInstance.spawnBackground(0, this.bPWidth, "asgard");
+
         //mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
         //this.player = mainInstance.getPlayer();
     }
@@ -298,6 +300,10 @@ public class AreaManager extends RagnarokArea {
                     case "init":
                         bufferedPlaces = new String[bPWidth][bPHeight];
                         bPIndex = 0;
+                        // Spawn a background at the start of the level with width from the rag
+                        // file.
+                        terrainInstance.spawnBackground(this.startNextArea * GRID_SCALE,
+                                this.bPWidth, "asgard");
                         break;
                     case "queue":
                         makeBufferedPlace(terrainInstance);

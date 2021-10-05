@@ -35,9 +35,9 @@ public class PlayerActions extends Component {
     private static final int SPEAR = 1;
     private static final int PLAYER = 2;
 
-    private static final int JUMPING = 0;
-    private static final int MOVING = 1;
-    private static final int STILL = 2;
+    private static final int JUMPING_INT = 0;
+    private static final int MOVING_INT = 1;
+    private static final int STILL_INT = 2;
 
     private static final int CROUCHING = 0;
     private static final int NOT_CROUCHING = 1;
@@ -50,52 +50,52 @@ public class PlayerActions extends Component {
     // Set animation array. Change these values to change animation names.
     static {
         // Shield
-        animations[SHIELD][JUMPING][CROUCHING][RIGHT] = null;
-        animations[SHIELD][JUMPING][CROUCHING][LEFT] = null;
-        animations[SHIELD][JUMPING][NOT_CROUCHING][RIGHT] = "shield-jump-right";
-        animations[SHIELD][JUMPING][NOT_CROUCHING][LEFT] = "shield-jump-right";
+        animations[SHIELD][JUMPING_INT][CROUCHING][RIGHT] = null;
+        animations[SHIELD][JUMPING_INT][CROUCHING][LEFT] = null;
+        animations[SHIELD][JUMPING_INT][NOT_CROUCHING][RIGHT] = "shield-jump-right";
+        animations[SHIELD][JUMPING_INT][NOT_CROUCHING][LEFT] = "shield-jump-right";
 
-        animations[SHIELD][MOVING][CROUCHING][RIGHT] = "shield-crouch-right";
-        animations[SHIELD][MOVING][CROUCHING][LEFT] = "shield-crouch-left";
-        animations[SHIELD][MOVING][NOT_CROUCHING][RIGHT] = "shield-run-right";
-        animations[SHIELD][MOVING][NOT_CROUCHING][LEFT] = "shield-run-left";
+        animations[SHIELD][MOVING_INT][CROUCHING][RIGHT] = "shield-crouch-right";
+        animations[SHIELD][MOVING_INT][CROUCHING][LEFT] = "shield-crouch-left";
+        animations[SHIELD][MOVING_INT][NOT_CROUCHING][RIGHT] = "shield-run-right";
+        animations[SHIELD][MOVING_INT][NOT_CROUCHING][LEFT] = "shield-run-left";
 
-        animations[SHIELD][STILL][CROUCHING][RIGHT] = "shield-crouch-still-right";
-        animations[SHIELD][STILL][CROUCHING][LEFT] = "shield-crouch-still-left";
-        animations[SHIELD][STILL][NOT_CROUCHING][RIGHT] = "shield-still-right";
-        animations[SHIELD][STILL][NOT_CROUCHING][LEFT] = "shield-still-left";
+        animations[SHIELD][STILL_INT][CROUCHING][RIGHT] = "shield-crouch-still-right";
+        animations[SHIELD][STILL_INT][CROUCHING][LEFT] = "shield-crouch-still-left";
+        animations[SHIELD][STILL_INT][NOT_CROUCHING][RIGHT] = "shield-still-right";
+        animations[SHIELD][STILL_INT][NOT_CROUCHING][LEFT] = "shield-still-left";
 
         // Spear
-        animations[SPEAR][JUMPING][CROUCHING][RIGHT] = null;
-        animations[SPEAR][JUMPING][CROUCHING][LEFT] = null;
-        animations[SPEAR][JUMPING][NOT_CROUCHING][RIGHT] = "spear-jump-right";
-        animations[SPEAR][JUMPING][NOT_CROUCHING][LEFT] = "spear-jump-left";
+        animations[SPEAR][JUMPING_INT][CROUCHING][RIGHT] = null;
+        animations[SPEAR][JUMPING_INT][CROUCHING][LEFT] = null;
+        animations[SPEAR][JUMPING_INT][NOT_CROUCHING][RIGHT] = "spear-jump-right";
+        animations[SPEAR][JUMPING_INT][NOT_CROUCHING][LEFT] = "spear-jump-left";
 
-        animations[SPEAR][MOVING][CROUCHING][RIGHT] = "spear-crouch-right";
-        animations[SPEAR][MOVING][CROUCHING][LEFT] = "spear-crouch-left";
-        animations[SPEAR][MOVING][NOT_CROUCHING][RIGHT] = "spear-run-right";
-        animations[SPEAR][MOVING][NOT_CROUCHING][LEFT] = "spear-run-left";
+        animations[SPEAR][MOVING_INT][CROUCHING][RIGHT] = "spear-crouch-right";
+        animations[SPEAR][MOVING_INT][CROUCHING][LEFT] = "spear-crouch-left";
+        animations[SPEAR][MOVING_INT][NOT_CROUCHING][RIGHT] = "spear-run-right";
+        animations[SPEAR][MOVING_INT][NOT_CROUCHING][LEFT] = "spear-run-left";
 
-        animations[SPEAR][STILL][CROUCHING][RIGHT] = "crouch-still-right";
-        animations[SPEAR][STILL][CROUCHING][LEFT] = "spear-crouch-still-left";
-        animations[SPEAR][STILL][NOT_CROUCHING][RIGHT] = "spear-still-right";
-        animations[SPEAR][STILL][NOT_CROUCHING][LEFT] = "spear-still-left";
+        animations[SPEAR][STILL_INT][CROUCHING][RIGHT] = "crouch-still-right";
+        animations[SPEAR][STILL_INT][CROUCHING][LEFT] = "spear-crouch-still-left";
+        animations[SPEAR][STILL_INT][NOT_CROUCHING][RIGHT] = "spear-still-right";
+        animations[SPEAR][STILL_INT][NOT_CROUCHING][LEFT] = "spear-still-left";
 
         // Player
-        animations[PLAYER][JUMPING][CROUCHING][RIGHT] = null;
-        animations[PLAYER][JUMPING][CROUCHING][LEFT] = null;
-        animations[PLAYER][JUMPING][NOT_CROUCHING][RIGHT] = "jump-right";
-        animations[PLAYER][JUMPING][NOT_CROUCHING][LEFT] = "jump-left";
+        animations[PLAYER][JUMPING_INT][CROUCHING][RIGHT] = null;
+        animations[PLAYER][JUMPING_INT][CROUCHING][LEFT] = null;
+        animations[PLAYER][JUMPING_INT][NOT_CROUCHING][RIGHT] = "jump-right";
+        animations[PLAYER][JUMPING_INT][NOT_CROUCHING][LEFT] = "jump-left";
 
-        animations[PLAYER][MOVING][CROUCHING][RIGHT] = "crouch-right";
-        animations[PLAYER][MOVING][CROUCHING][LEFT] = "crouch-left";
-        animations[PLAYER][MOVING][NOT_CROUCHING][RIGHT] = "run-right";
-        animations[PLAYER][MOVING][NOT_CROUCHING][LEFT] = "run-left";
+        animations[PLAYER][MOVING_INT][CROUCHING][RIGHT] = "crouch-right";
+        animations[PLAYER][MOVING_INT][CROUCHING][LEFT] = "crouch-left";
+        animations[PLAYER][MOVING_INT][NOT_CROUCHING][RIGHT] = "run-right";
+        animations[PLAYER][MOVING_INT][NOT_CROUCHING][LEFT] = "run-left";
 
-        animations[PLAYER][STILL][CROUCHING][RIGHT] = "crouch-still-right";
-        animations[PLAYER][STILL][CROUCHING][LEFT] = "crouch-still-left";
-        animations[PLAYER][STILL][NOT_CROUCHING][RIGHT] = "still-right";
-        animations[PLAYER][STILL][NOT_CROUCHING][LEFT] = "still-left";
+        animations[PLAYER][STILL_INT][CROUCHING][RIGHT] = "crouch-still-right";
+        animations[PLAYER][STILL_INT][CROUCHING][LEFT] = "crouch-still-left";
+        animations[PLAYER][STILL_INT][NOT_CROUCHING][RIGHT] = "still-right";
+        animations[PLAYER][STILL_INT][NOT_CROUCHING][LEFT] = "still-left";
     }
 
     private PhysicsComponent physicsComponent;
@@ -376,12 +376,12 @@ public class PlayerActions extends Component {
     private void stillAnimations(int component) {
         if (isCrouching()) {
             animate(this.previousDirection,
-                    animations[component][STILL][CROUCHING][RIGHT],
-                    animations[component][STILL][CROUCHING][LEFT]);
+                    animations[component][STILL_INT][CROUCHING][RIGHT],
+                    animations[component][STILL_INT][CROUCHING][LEFT]);
         } else {
             animate(this.previousDirection,
-                    animations[component][STILL][NOT_CROUCHING][RIGHT],
-                    animations[component][STILL][NOT_CROUCHING][LEFT]);
+                    animations[component][STILL_INT][NOT_CROUCHING][RIGHT],
+                    animations[component][STILL_INT][NOT_CROUCHING][LEFT]);
         }
     }
 
@@ -393,12 +393,12 @@ public class PlayerActions extends Component {
     private void movingAnimations(int component) {
         if (isCrouching()) {
             animate(this.previousDirection,
-                    animations[component][MOVING][CROUCHING][RIGHT],
-                    animations[component][MOVING][CROUCHING][LEFT]);
+                    animations[component][MOVING_INT][CROUCHING][RIGHT],
+                    animations[component][MOVING_INT][CROUCHING][LEFT]);
         } else {
             animate(this.runDirection,
-                    animations[component][MOVING][NOT_CROUCHING][RIGHT],
-                    animations[component][MOVING][NOT_CROUCHING][LEFT]);
+                    animations[component][MOVING_INT][NOT_CROUCHING][RIGHT],
+                    animations[component][MOVING_INT][NOT_CROUCHING][LEFT]);
         }
     }
 
@@ -409,7 +409,7 @@ public class PlayerActions extends Component {
      */
     private void jumpingAnimations(int component) {
         animate(this.previousDirection,
-                animations[component][JUMPING][NOT_CROUCHING][RIGHT],
-                animations[component][JUMPING][NOT_CROUCHING][LEFT]);
+                animations[component][JUMPING_INT][NOT_CROUCHING][RIGHT],
+                animations[component][JUMPING_INT][NOT_CROUCHING][LEFT]);
     }
 }
