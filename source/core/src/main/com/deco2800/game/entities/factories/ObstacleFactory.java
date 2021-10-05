@@ -265,18 +265,24 @@ public class ObstacleFactory {
     public static Entity createTutorialLightning() {
         Entity TutorialLightning = new Entity()
                 .addComponent(new TextureRenderComponent("images/tutorial/lightningTutorial.png"));
+        TutorialLightning.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialLightning.scaleHeight(3f);
         return TutorialLightning;
     }
 
     public static Entity createTutorialSpear() {
         Entity TutorialSpear = new Entity()
                 .addComponent(new TextureRenderComponent("images/tutorial/spearTutorial.png"));
+        TutorialSpear.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialSpear.scaleHeight(3f);
         return TutorialSpear;
     }
 
     public static Entity createTutorialShield() {
         Entity TutorialShield = new Entity()
                 .addComponent(new TextureRenderComponent("images/tutorial/shieldTutorial.png"));
+        TutorialShield.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialShield.scaleHeight(3f);
         return TutorialShield;
     }
 

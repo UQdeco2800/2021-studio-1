@@ -179,29 +179,35 @@ public class RagnarokArea extends GameArea {
 
 
     protected void spawnTutorial(int x, int y) {
-        GridPoint2 spearSpawn = new GridPoint2(x, y+3);
-        GridPoint2 lightningSpawn = new GridPoint2(x+18,y+3);
+        GridPoint2 spearSpawn = new GridPoint2(x, y);
+        GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
+        GridPoint2 textOffset = new GridPoint2(0,5);
         // GridPoint2 shieldSpawn = new GridPoint2(x+12, y+3);
 
         
         
-        spawnSpear(spearSpawn.x, spearSpawn.y-3);
+        spawnSpear(spearSpawn.x, spearSpawn.y);
         Entity spearTutorial = ObstacleFactory.createTutorialSpear();
-        spawnEntityAt(spearTutorial, spearSpawn, true, false);
 
         // Spawn enemies to test spear on
-        spawnWolf(spearSpawn.x+8, spearSpawn.y-3);
-        spawnWolf(spearSpawn.x+12, spearSpawn.y-3);
+        spawnWolf(spearSpawn.x+8, spearSpawn.y);
+        spawnWolf(spearSpawn.x+12, spearSpawn.y);
         // spawnShield(shieldSpawn.x, shieldSpawn.y-3);
 
-        spawnLightning(lightningSpawn.x, lightningSpawn.y-3);
+        spawnLightning(lightningSpawn.x, lightningSpawn.y);
         Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
-        spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
         
         // Spawn enemies to test lightning on
-        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y-3);
-        spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y-3);
-        spawnSkeleton(lightningSpawn.x+16, lightningSpawn.y-3);
+        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y);
+        spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y);
+        spawnSkeleton(lightningSpawn.x+16, lightningSpawn.y);
+
+
+        // Offset text and spawn it in
+        lightningSpawn.add(textOffset);
+        spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
+        spearSpawn.add(textOffset);
+        spawnEntityAt(spearTutorial, spearSpawn, true, false);
 
 
         // Entity shieldTutorial = ObstacleFactory.createTutorialShield();

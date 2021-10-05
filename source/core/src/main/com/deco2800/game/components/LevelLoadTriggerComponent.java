@@ -45,7 +45,7 @@ public class LevelLoadTriggerComponent extends Component {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory, "*.rag")) {
             for (Path path : stream) {
                 // Ignore the file if it is part of the start files
-                if (path.getFileName().toString().equals("start.rag")) {
+                if ((path.getFileName().toString().equals("start.rag")) || (path.getFileName().toString().equals("tutorial.rag")))  {
                     continue;
                 } else {
                     pathList.add(path.getFileName().toString().split(".rag")[0]);

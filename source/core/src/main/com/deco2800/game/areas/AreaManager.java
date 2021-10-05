@@ -129,7 +129,7 @@ public class AreaManager extends RagnarokArea {
     @Override
     public void create() {
 
-        load("start");
+        load("tutorial");
         //if above code is uncommented load can introduce duplicate instances
         //conflict with load not above code I don't think
         terrainInstance.makePlayer(10, 5);
