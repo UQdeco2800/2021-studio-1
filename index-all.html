@@ -108,7 +108,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  are on the players screen</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/PowerUpComponent.html#activate()">activate()</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/PowerUpComponent.html" title="class in com.deco2800.game.components.powerups">PowerUpComponent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Activates power up, is different depending on power up</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/ShieldPowerUpComponent.html#activate()">activate()</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/ShieldPowerUpComponent.html" title="class in com.deco2800.game.components.powerups">ShieldPowerUpComponent</a></dt>
 <dd>
 <div class="block">Called when the player blocks the attack - reduces the amount of
@@ -470,10 +472,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Creates the lightning component</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/PowerUpGUIComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/PowerUpGUIComponent.html" title="class in com.deco2800.game.components.powerups">PowerUpGUIComponent</a></dt>
+<dd>
+<div class="block">Creates and adds actors to stage for PowerUpGUIComponent</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/PowerUpGUIComponent2.html#create()">create()</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/PowerUpGUIComponent2.html" title="class in com.deco2800.game.components.powerups">PowerUpGUIComponent2</a></dt>
+<dd>
+<div class="block">Creates and adds actors to stage for PowerUpGUIComponent</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/ShieldPowerUpComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/ShieldPowerUpComponent.html" title="class in com.deco2800.game.components.powerups">ShieldPowerUpComponent</a></dt>
 <dd>
 <div class="block">Create the shield component - creates a listener that activates when
  the player blocks an attack</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/SpearComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/SpearComponent.html" title="class in com.deco2800.game.components.powerups">SpearComponent</a></dt>
+<dd>
+<div class="block">Add an event to the spear when it is created</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/SpearPowerUpComponent.html#create()">create()</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/SpearPowerUpComponent.html" title="class in com.deco2800.game.components.powerups">SpearPowerUpComponent</a></dt>
 <dd>
@@ -823,6 +837,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerStatsDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw(SpriteBatch)</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerStatsDisplay.html" title="class in com.deco2800.game.components.player">PlayerStatsDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/PowerUpGUIComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw(SpriteBatch)</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/PowerUpGUIComponent.html" title="class in com.deco2800.game.components.powerups">PowerUpGUIComponent</a></dt>
+<dd>
+<div class="block">Draw the renderable.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/PowerUpGUIComponent2.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw(SpriteBatch)</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/PowerUpGUIComponent2.html" title="class in com.deco2800.game.components.powerups">PowerUpGUIComponent2</a></dt>
+<dd>
+<div class="block">Draw the renderable.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/settingsmenu/SettingsMenuDisplay.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw(SpriteBatch)</a></span> - Method in class com.deco2800.game.components.settingsmenu.<a href="com/deco2800/game/components/settingsmenu/SettingsMenuDisplay.html" title="class in com.deco2800.game.components.settingsmenu">SettingsMenuDisplay</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/AnimationRenderComponent.html#draw(com.badlogic.gdx.graphics.g2d.SpriteBatch)">draw(SpriteBatch)</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/AnimationRenderComponent.html" title="class in com.deco2800.game.rendering">AnimationRenderComponent</a></dt>
@@ -1130,7 +1152,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleTypes.html#getDifficulty()">getDifficulty()</a></span> - Method in enum com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleTypes.html" title="enum in com.deco2800.game.entities.factories">ObstacleTypes</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/PowerUpComponent.html#getEnabled()">getEnabled()</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/PowerUpComponent.html" title="class in com.deco2800.game.components.powerups">PowerUpComponent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns whether or not power up is enabled</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/Terminal.html#getEnteredMessage()">getEnteredMessage()</a></span> - Method in class com.deco2800.game.ui.terminal.<a href="com/deco2800/game/ui/terminal/Terminal.html" title="class in com.deco2800.game.ui.terminal">Terminal</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ai/tasks/TaskRunner.html#getEntity()">getEntity()</a></span> - Method in interface com.deco2800.game.ai.tasks.<a href="com/deco2800/game/ai/tasks/TaskRunner.html" title="interface in com.deco2800.game.ai.tasks">TaskRunner</a></dt>
@@ -1282,8 +1306,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/services/ServiceLocator.html#getRenderService()">getRenderService()</a></span> - Static method in class com.deco2800.game.services.<a href="com/deco2800/game/services/ServiceLocator.html" title="class in com.deco2800.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/services/ServiceLocator.html#getResourceService()">getResourceService()</a></span> - Static method in class com.deco2800.game.services.<a href="com/deco2800/game/services/ServiceLocator.html" title="class in com.deco2800.game.services">ServiceLocator</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#getRunDirection()">getRunDirection()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/Entity.html#getScale()">getScale()</a></span> - Method in class com.deco2800.game.entities.<a href="com/deco2800/game/entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></dt>
 <dd>
@@ -1487,13 +1509,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/InventoryComponent.html#%3Cinit%3E(int)">InventoryComponent(int)</a></span> - Constructor for class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/InventoryComponent.html" title="class in com.deco2800.game.components.player">InventoryComponent</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#isCrouching()">isCrouching()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/CombatStatsComponent.html#isDead()">isDead()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/CombatStatsComponent.html" title="class in com.deco2800.game.components">CombatStatsComponent</a></dt>
 <dd>
 <div class="block">Returns true if the entity's has 0 health, otherwise false.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/KeyboardPlayerInputComponent.html#isDirection">isDirection</a></span> - Static variable in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/KeyboardPlayerInputComponent.html" title="class in com.deco2800.game.components.player">KeyboardPlayerInputComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#isFalling()">isFalling()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/AnimationRenderComponent.html#isFinished()">isFinished()</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/AnimationRenderComponent.html" title="class in com.deco2800.game.rendering">AnimationRenderComponent</a></dt>
 <dd>
@@ -2055,6 +2077,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/PowerUpComponent.html#%3Cinit%3E()">PowerUpComponent()</a></span> - Constructor for class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/PowerUpComponent.html" title="class in com.deco2800.game.components.powerups">PowerUpComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/entities/factories/PowerUpFactory.html" title="class in com.deco2800.game.entities.factories"><span class="typeNameLink">PowerUpFactory</span></a> - Class in <a href="com/deco2800/game/entities/factories/package-summary.html">com.deco2800.game.entities.factories</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/powerups/PowerUpGUIComponent.html" title="class in com.deco2800.game.components.powerups"><span class="typeNameLink">PowerUpGUIComponent</span></a> - Class in <a href="com/deco2800/game/components/powerups/package-summary.html">com.deco2800.game.components.powerups</a></dt>
+<dd>
+<div class="block">Class that graphically displays the amount of each power up a player has available.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/PowerUpGUIComponent.html#%3Cinit%3E()">PowerUpGUIComponent()</a></span> - Constructor for class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/PowerUpGUIComponent.html" title="class in com.deco2800.game.components.powerups">PowerUpGUIComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/powerups/PowerUpGUIComponent2.html" title="class in com.deco2800.game.components.powerups"><span class="typeNameLink">PowerUpGUIComponent2</span></a> - Class in <a href="com/deco2800/game/components/powerups/package-summary.html">com.deco2800.game.components.powerups</a></dt>
+<dd>
+<div class="block">Class that graphically displays the amount of each power up a player has available.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/PowerUpGUIComponent2.html#%3Cinit%3E()">PowerUpGUIComponent2()</a></span> - Constructor for class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/PowerUpGUIComponent2.html" title="class in com.deco2800.game.components.powerups">PowerUpGUIComponent2</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/PhysicsContactListener.html#preSolve(com.badlogic.gdx.physics.box2d.Contact,com.badlogic.gdx.physics.box2d.Manifold)">preSolve(Contact, Manifold)</a></span> - Method in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsContactListener.html" title="class in com.deco2800.game.physics">PhysicsContactListener</a></dt>
 <dd>&nbsp;</dd>
@@ -2643,6 +2677,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">This spawns the Wall of Death</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnWolf(int,int)">spawnWolf(int, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/components/powerups/SpearComponent.html" title="class in com.deco2800.game.components.powerups"><span class="typeNameLink">SpearComponent</span></a> - Class in <a href="com/deco2800/game/components/powerups/package-summary.html">com.deco2800.game.components.powerups</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/SpearComponent.html#%3Cinit%3E()">SpearComponent()</a></span> - Constructor for class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/SpearComponent.html" title="class in com.deco2800.game.components.powerups">SpearComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/EntityTypes.html#SPEARPOWERUP">SPEARPOWERUP</a></span> - com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/EntityTypes.html" title="enum in com.deco2800.game.entities.factories">EntityTypes</a></dt>
 <dd>&nbsp;</dd>
