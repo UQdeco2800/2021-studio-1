@@ -26,8 +26,12 @@ public class MainMenuDisplay extends UIComponent {
   private Table table;
   private Table helpTable;
   private Table highScoreTable;
+  private Table backgroundTable;
   private Table muteTable;
-  private static String playerName = "";
+  private ImageButton muteButtonOn;
+  private ImageButton muteButtonOff;
+  private boolean muted = false;
+  private static String playerName = "Random";
   private static final String POP_UP_FONT = "popUpFont";
   private static int[] scoreValues = {0, 0, 0, 0, 0};
   private static final String PLAY_LINE = "Play to get here!";
@@ -47,8 +51,10 @@ public class MainMenuDisplay extends UIComponent {
     table = new Table();
     helpTable = new Table();
     highScoreTable = new Table();
+    backgroundTable = new Table();
     muteTable = new Table();
     rootTable.setFillParent(true);
+    backgroundTable.setFillParent(true);
     table.setFillParent(true);
     helpTable.setFillParent(true);
     muteTable.setFillParent(true);
@@ -67,9 +73,13 @@ public class MainMenuDisplay extends UIComponent {
     TextButton helpBtn = new TextButton("Help", skin);
     TextButton leaderBoardButton = new TextButton("Leaderboard", skin);
 
-    ImageButton muteButton = new ImageButton(new TextureRegionDrawable(
+    muteButtonOn = new ImageButton(new TextureRegionDrawable(
             ServiceLocator.getResourceService().getAsset(
                     "images/mute_button_on.png", Texture.class)));
+
+    muteButtonOff = new ImageButton(new TextureRegionDrawable(
+              ServiceLocator.getResourceService().getAsset(
+                      "images/mute_button_off.png", Texture.class)));
 
     highScoreName = readHighScores();
     Label selectionDescription = new Label("Select a Name", skin, POP_UP_FONT);
@@ -118,14 +128,25 @@ public class MainMenuDisplay extends UIComponent {
                     }
                 });
 
-        muteButton.addListener(
+        muteButtonOn.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent changeEvent, Actor actor) {
                         logger.debug("mute button clicked");
+                        switchMuteGraphic();
                         entity.getEvents().trigger("mute");
                     }
                 });
+
+        muteButtonOff.addListener(
+              new ChangeListener() {
+                  @Override
+                  public void changed(ChangeEvent changeEvent, Actor actor) {
+                      logger.debug("mute button clicked");
+                      switchMuteGraphic();
+                      entity.getEvents().trigger("mute");
+                  }
+              });
 
     /*loadBtn.addListener(
         new ChangeListener() {
@@ -160,8 +181,8 @@ public class MainMenuDisplay extends UIComponent {
           }
         });
 
-    rootTable.add(title);
     rootTable.setBackground(new TextureRegionDrawable(new Texture("images/plainBack.png")));
+    setBackground();
     table.add(selectionDescription).padTop(70f);
     table.row();
     table.add(characterSelections).padTop(10f);
@@ -174,7 +195,9 @@ public class MainMenuDisplay extends UIComponent {
     table.add(exitBtn).padTop(30f);
 
     helpTable.add(helpBtn);
-    muteTable.add(muteButton);
+    muteTable.add(muteButtonOn);
+    muteTable.add(muteButtonOff);
+    muteButtonOff.setVisible(false);
     highScoreTable.add(highScorePreText);
     highScoreTable.row();
     highScoreTable.add(highScoreNameText).bottom().right();
@@ -184,6 +207,7 @@ public class MainMenuDisplay extends UIComponent {
     highScoreTable.add(leaderBoardButton).bottom().right();
 
     stage.addActor(rootTable);
+    stage.addActor(backgroundTable);
     stage.addActor(table);
     stage.addActor(helpTable);
     stage.addActor(muteTable);
@@ -264,6 +288,19 @@ public class MainMenuDisplay extends UIComponent {
         return highScoreName;
     }
 
+    private void switchMuteGraphic() {
+
+        if (muted) {
+            muteButtonOn.setVisible(true);
+            muteButtonOff.setVisible(false);
+            muted = false;
+        } else {
+            muteButtonOn.setVisible(false);
+            muteButtonOff.setVisible(true);
+            muted = true;
+        }
+    }
+
     /*
      * Returns the players selected name
      */
@@ -306,7 +343,6 @@ public class MainMenuDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch) {
-        // draw is handled by the stage
     }
 
     @Override
@@ -322,4 +358,17 @@ public class MainMenuDisplay extends UIComponent {
         highScoreTable.clear();
         super.dispose();
     }
+
+    private void setBackground() {
+
+        double rand = Math.random();
+
+        if (rand <= 0.5) {
+            backgroundTable.setBackground(new TextureRegionDrawable(new Texture("images/main_back.png")));
+        } else {
+            backgroundTable.setBackground(new TextureRegionDrawable(new Texture("images/main_back2.png")));
+        }
+    }
+
 }
+

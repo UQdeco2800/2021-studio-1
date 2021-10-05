@@ -12,7 +12,6 @@ import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.components.powerups.PowerUpGUIComponent;
-import com.deco2800.game.components.powerups.PowerUpGUIComponent2;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -30,7 +29,6 @@ import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.maingame.MainGamePannelDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
-import com.sun.tools.javac.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +41,7 @@ import java.io.IOException;
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class MainGameScreen extends ScreenAdapter {
+
   private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
   private static final String[] mainGameTextures = {
           "images/PowerUpGUI/Shield.png",
@@ -58,15 +57,18 @@ public class MainGameScreen extends ScreenAdapter {
           "images/PowerUpGUI/spear0.png",
           "images/PowerUpGUI/spear1.png",
           "images/PowerUpGUI/spear2.png",
-          "images/PowerUpGUI/spear3.png"
+          "images/PowerUpGUI/spear3.png",
+          "images/disp_back.png"
   };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
-    private final GdxGame game;
-    private final Renderer renderer;
-    private final PhysicsEngine physicsEngine;
-    private AreaManager ragnarokManager;
+  private final GdxGame game;
+  private final Renderer renderer;
+  private final PhysicsEngine physicsEngine;
+  private AreaManager ragnarokManager;
+
+  private Entity endGame;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
@@ -135,13 +137,12 @@ public class MainGameScreen extends ScreenAdapter {
             if (player.getComponent(CombatStatsComponent.class).getHealth() == 0) {
 
                 long currentScore = player.getComponent(PlayerStatsDisplay.class).getPlayerScore();
-
                 if (currentScore > MainMenuDisplay.getHighScoreValues()[4]) {
 
                     recordHighScore("" + currentScore);
 
                 }
-                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                //game.setScreen(GdxGame.ScreenType.MAIN_MENU);
             }
         }
 
@@ -266,6 +267,12 @@ public class MainGameScreen extends ScreenAdapter {
             highScoreFile.close();
         } catch (IOException e) {
             logger.info("Could not record high score");
+        } finally {
+            try {
+                highScoreFile.close();
+            } catch (IOException i) {
+                logger.info("Could not close high score file");
+            }
         }
     }
 }

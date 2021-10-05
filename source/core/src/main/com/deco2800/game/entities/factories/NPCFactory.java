@@ -12,10 +12,7 @@ import com.deco2800.game.components.npc.DeathGiantAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ScreenFXAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.tasks.MoveRightTask;
-import com.deco2800.game.components.tasks.WanderTask;
-import com.deco2800.game.components.tasks.RunningTask;
-import com.deco2800.game.components.tasks.ShootTask;
+import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
@@ -316,7 +313,7 @@ public class NPCFactory {
     private static Entity createWolfNPC(Entity target) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new RunningTask());
+                        .addTask(new ChaseTask(target, 2, true, 100, 10));
         Entity npc =
                 new Entity()
                         .addComponent(new PhysicsComponent())
