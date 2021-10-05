@@ -3,11 +3,13 @@ package com.deco2800.game.components.settingsmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Graphics.Monitor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.GdxGame.ScreenType;
@@ -33,9 +35,14 @@ public class SettingsMenuDisplay extends UIComponent {
   private CheckBox vsyncCheck;
   private Slider uiScaleSlider;
   private SelectBox<StringDecorator<DisplayMode>> displayModeSelect;
+  private Image backGroundImage;
 
   public SettingsMenuDisplay(GdxGame game) {
     super();
+    backGroundImage =
+          new Image(
+                  ServiceLocator.getResourceService()
+                          .getAsset("images/plainBack.png", Texture.class));
     this.game = game;
   }
 
@@ -51,6 +58,7 @@ public class SettingsMenuDisplay extends UIComponent {
     Table menuBtns = makeMenuBtns();
 
     rootTable = new Table();
+    rootTable.setBackground(new TextureRegionDrawable(new Texture("images/plainBack.png")));
     rootTable.setFillParent(true);
 
     rootTable.add(title).expandX().top().padTop(20f);
@@ -69,23 +77,23 @@ public class SettingsMenuDisplay extends UIComponent {
     UserSettings.Settings settings = UserSettings.get();
 
     // Create components
-    Label fpsLabel = new Label("FPS Cap:", skin);
+    Label fpsLabel = new Label("FPS Cap:", skin, "popUpFont");
     fpsText = new TextField(Integer.toString(settings.fps), skin);
 
-    Label fullScreenLabel = new Label("Fullscreen:", skin);
+    Label fullScreenLabel = new Label("Fullscreen:", skin, "popUpFont");
     fullScreenCheck = new CheckBox("", skin);
     fullScreenCheck.setChecked(settings.fullscreen);
 
-    Label vsyncLabel = new Label("VSync:", skin);
+    Label vsyncLabel = new Label("VSync:", skin, "popUpFont");
     vsyncCheck = new CheckBox("", skin);
     vsyncCheck.setChecked(settings.vsync);
 
-    Label uiScaleLabel = new Label("ui Scale (Unused):", skin);
+    Label uiScaleLabel = new Label("ui Scale (Unused):", skin, "popUpFont");
     uiScaleSlider = new Slider(0.2f, 2f, 0.1f, false, skin);
     uiScaleSlider.setValue(settings.uiScale);
-    Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin);
+    Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin, "popUpFont");
 
-    Label displayModeLabel = new Label("Resolution:", skin);
+    Label displayModeLabel = new Label("Resolution:", skin, "popUpFont");
     displayModeSelect = new SelectBox<>(skin);
     Monitor selectedMonitor = Gdx.graphics.getMonitor();
     displayModeSelect.setItems(getDisplayModes(selectedMonitor));
@@ -113,9 +121,10 @@ public class SettingsMenuDisplay extends UIComponent {
     table.add(uiScaleLabel).right().padRight(15f);
     table.add(uiScaleTable).left();
 
-    table.row().padTop(10f);
-    table.add(displayModeLabel).right().padRight(15f);
-    table.add(displayModeSelect).left();
+    // resolution settings
+    //table.row().padTop(10f);
+    //table.add(displayModeLabel).right().padRight(15f);
+    //table.add(displayModeSelect).left();
 
     // Events on inputs
     uiScaleSlider.addListener(

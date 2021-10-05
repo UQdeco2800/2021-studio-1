@@ -1,9 +1,9 @@
 $_title j
 $_width 20
 $_height 10
-$_world earth_1
+$_world jotunheimr_2
 
-$#..FFFFF..F
+$#.....FF..F
 $#......P..F
 $#.........F
 $#.......P.F
@@ -24,7 +24,7 @@ $#.....P...S
 $#.....PPPPS
 $#....SPPRFF
 
-$@player set [2,8]
+$@player set [2,1]
 
 $-spawn [9,5] (skeleton)
 $-spawn [15,5] (wolf)

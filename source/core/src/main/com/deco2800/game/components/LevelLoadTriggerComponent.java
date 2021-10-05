@@ -1,5 +1,6 @@
 package com.deco2800.game.components;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -14,7 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.Collections;
 
 /**
  * When this entity touches the player, an additional level will be loaded at the end of the current level
@@ -25,6 +28,8 @@ public class LevelLoadTriggerComponent extends Component {
     EntityService entityService;
     private static final Logger logger = LoggerFactory.getLogger(LevelLoadTriggerComponent.class);
 
+    List<String> pathList = new ArrayList<>();
+    List<String> randomisedList = new ArrayList<>();
     /**
      * Create a component which disposes entities on collision finish
      */
@@ -36,7 +41,28 @@ public class LevelLoadTriggerComponent extends Component {
     public void create() {
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
         hitboxComponent = entity.getComponent(HitboxComponent.class);
+        Path directory = Paths.get("configs/rags/");
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory, "*.rag")) {
+            for (Path path : stream) {
+                // Ignore the file if it is part of the start files
+                if ((path.getFileName().toString().equals("start.rag")) || (path.getFileName().toString().equals("tutorial.rag")))  {
+                    continue;
+                } else {
+                    pathList.add(path.getFileName().toString().split(".rag")[0]);
+                }
+
+            }
+        } catch (IOException e) {
+            logger.error("File rags files could not be loaded");
+        }
+        if (pathList.isEmpty()) {
+            logger.error("File rags files could not be loaded");
+        }
+        
+        updateRandomisedList();
+
     }
+
 
     private void onCollisionStart(Fixture me, Fixture other) {
         if (hitboxComponent.getFixture() != me) {
@@ -53,19 +79,14 @@ public class LevelLoadTriggerComponent extends Component {
     }
 
     private String getNextArea() {
-        Path directory = Paths.get("configs/rags/");
-        ArrayList<Path> pathList = new ArrayList<>();
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory, "*.rag")) {
-            for (Path path : stream) {
-                pathList.add(path);
-            }
-        } catch (IOException e) {
-            logger.error("File rags files could not be loaded");
+        if (randomisedList.isEmpty()) {
+            updateRandomisedList();
         }
+        return randomisedList.remove(0);
+    }
 
-        Random rand = new Random();
-        String RagFile = pathList.get(rand.nextInt(pathList.size())).getFileName().toString();
-        logger.debug("Loading Level : " + RagFile);
-        return RagFile.substring(0, RagFile.lastIndexOf('.'));
+    private void updateRandomisedList() {
+        randomisedList = new ArrayList<>(pathList);
+        Collections.shuffle(randomisedList);
     }
 }

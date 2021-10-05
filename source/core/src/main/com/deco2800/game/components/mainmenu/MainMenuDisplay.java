@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
@@ -26,6 +27,11 @@ public class MainMenuDisplay extends UIComponent {
   private Table helpTable;
   private Table highScoreTable;
   private Table muteTable;
+  private static String playerName = "";
+  private static final String POP_UP_FONT = "popUpFont";
+  private static int[] scoreValues = {0, 0, 0, 0, 0};
+  private static final String PLAY_LINE = "Play to get here!";
+  private static String[] scoreNames = {PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE};
   private static String highScoreName = "";
   private static int highScorevalue = 0;
 
@@ -59,15 +65,19 @@ public class MainMenuDisplay extends UIComponent {
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
     TextButton helpBtn = new TextButton("Help", skin);
+    TextButton leaderBoardButton = new TextButton("Leaderboard", skin);
 
     ImageButton muteButton = new ImageButton(new TextureRegionDrawable(
             ServiceLocator.getResourceService().getAsset(
                     "images/mute_button_on.png", Texture.class)));
 
-    highScoreName = readHighestScore();
-    Label highScorePreText = new Label("Best Runner", skin, "popUpFont");
-    Label highScoreNameText = new Label(highScoreName, skin, "popUpFont");
-    Label highScoreValueText = new Label("" + highScorevalue , skin, "popUpFont");
+    highScoreName = readHighScores();
+    Label selectionDescription = new Label("Select a Name", skin, POP_UP_FONT);
+    Label highScorePreText = new Label("Best Runner", skin, POP_UP_FONT);
+    Label highScoreNameText = new Label(highScoreName, skin, POP_UP_FONT);
+    Label highScoreValueText = new Label("" + highScorevalue , skin, POP_UP_FONT);
+    SelectBox<String> characterSelections = new SelectBox<String>(skin);
+    addCharacterSelections(characterSelections);
 
     // Triggers an event when the button is pressed
 
@@ -79,24 +89,43 @@ public class MainMenuDisplay extends UIComponent {
             entity.getEvents().trigger("start");
           }
         });
+        // Triggers an event when the button is pressed
 
-    helpBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Help button clicked");
-            entity.getEvents().trigger("Help Screen");
-          }
-        });
+        startBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Start button clicked");
+                        entity.getEvents().trigger("start");
+                    }
+                });
 
-    muteButton.addListener(
-            new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent changeEvent, Actor actor) {
-                    logger.debug("mute button clicked");
-                    entity.getEvents().trigger("mute");
-                }
-            });
+        helpBtn.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("Help button clicked");
+                        entity.getEvents().trigger("Help Screen");
+                    }
+                });
+
+        leaderBoardButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("leaderboard clicked");
+                        entity.getEvents().trigger("Leaderboard");
+                    }
+                });
+
+        muteButton.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent changeEvent, Actor actor) {
+                        logger.debug("mute button clicked");
+                        entity.getEvents().trigger("mute");
+                    }
+                });
 
     /*loadBtn.addListener(
         new ChangeListener() {
@@ -132,7 +161,12 @@ public class MainMenuDisplay extends UIComponent {
         });
 
     rootTable.add(title);
-    table.add(startBtn).padTop(70f);
+    rootTable.setBackground(new TextureRegionDrawable(new Texture("images/plainBack.png")));
+    table.add(selectionDescription).padTop(70f);
+    table.row();
+    table.add(characterSelections).padTop(10f);
+    table.row();
+    table.add(startBtn).padTop(30f);
     table.row();
     table.row();
     table.add(settingsBtn).padTop(30f);
@@ -146,6 +180,8 @@ public class MainMenuDisplay extends UIComponent {
     highScoreTable.add(highScoreNameText).bottom().right();
     highScoreTable.row();
     highScoreTable.add(highScoreValueText).bottom().right();
+    highScoreTable.row();
+    highScoreTable.add(leaderBoardButton).bottom().right();
 
     stage.addActor(rootTable);
     stage.addActor(table);
@@ -154,56 +190,136 @@ public class MainMenuDisplay extends UIComponent {
     stage.addActor(highScoreTable);
   }
 
-    private String readHighestScore() {
+  private void addCharacterSelections(SelectBox<String> characterSelections) {
 
-            String name = "";
+      String[] selections = new String[] {"Random",  "Thor", "Loki", "Bjorn", "Floki", "Ironside", "Uber", "Frejya", "Njoror", "Aesir", "Mjolnir"};
+      Array<String> selectionText = new Array<String>();
 
-            File highScoresFile = new File("gameinfo/highScores.txt");
-            Scanner highScoresScanner = null;
-            try {
-                highScoresScanner = new Scanner(highScoresFile);
-            } catch (FileNotFoundException f) {
-                return "High Score file not found";
+      for (String selection : selections) {
+
+          selectionText.add(selection);
+      }
+
+      characterSelections.setItems(selectionText);
+
+      characterSelections.addListener(new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+              playerName = characterSelections.getSelected();
+          }
+      });
+  }
+
+    /*
+     * Reads the high scores from highScores.txt in gameinfo folder
+     *      @returns - the name of the player with the highest score
+     */
+    private static String readHighScores() {
+        scoreValues = new int[]{0, 0, 0, 0, 0};
+        scoreNames = new String[]{PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE};
+
+
+        File highScoresFile = new File("gameinfo/highScores.txt");
+        Scanner highScoresScanner;
+        try {
+            highScoresScanner = new Scanner(highScoresFile);
+        } catch (FileNotFoundException f) {
+            return "High Score file not found";
+        }
+
+        int numberScoreRead = 0;
+        highScorevalue = 0;
+
+        while (highScoresScanner.hasNextLine()) {
+
+            String line = highScoresScanner.nextLine();
+            String[] lineResult = line.split(",");
+            String readName = lineResult[0];
+            int scoreValue = Integer.parseInt(lineResult[1]);
+
+            logger.info(readName);
+
+            // sort while reading
+            for (int i = 0; i < 5; i++) {
+
+                if (scoreValues[i] <= scoreValue) {
+
+                    for (int j = 4; j > i; j--) {
+                        scoreValues[j] = scoreValues[j - 1];
+                        scoreNames[j] = scoreNames[j - 1];
+                    }
+                    scoreValues[i] = scoreValue;
+                    scoreNames[i] = readName;
+                    break;
+                    }
+            numberScoreRead += 1;
             }
+            numberScoreRead += 1;
+        }
 
-            while(highScoresScanner.hasNextLine()) {
+        highScorevalue = scoreValues[0];
+        highScoreName = scoreNames[0];
+        highScoresScanner.close();
 
-                String line = highScoresScanner.nextLine();
-                String lineResult[] = line.split(",");
-                highScoreName = lineResult[0];
-                highScorevalue = Integer.parseInt(lineResult[1]);
-            }
-
-            name = highScoreName;
-            highScoresScanner.close();
-
-            return name;
+        return highScoreName;
     }
 
+    /*
+     * Returns the players selected name
+     */
+    public static String getPlayeName () {
+
+        return playerName;
+    }
+
+    /*
+     * Returns the highest score value
+     */
     public static int getHighScore() {
-      return highScorevalue;
+        return highScorevalue;
     }
 
+    /*
+     * Returns the name of the player with the highest score
+     */
     public static String getHighScoreName() {
-      return highScoreName;
+        return highScoreName;
+    }
+
+
+    /*
+     * Returns the current high score names in order
+     */
+    public static String[] getHighScoreNames() {
+        //cloning to prevent public modification
+        return scoreNames.clone();
+    }
+
+    /*
+     * Returns the current high score values in order
+     */
+    public static int[] getHighScoreValues() {
+        // cloning to prevent public modification
+        return scoreValues.clone();
+    }
+
+
+    @Override
+    public void draw(SpriteBatch batch) {
+        // draw is handled by the stage
     }
 
     @Override
-  public void draw(SpriteBatch batch) {
-    // draw is handled by the stage
-  }
+    public float getZIndex() {
+        return Z_INDEX;
+    }
 
-  @Override
-  public float getZIndex() {
-    return Z_INDEX;
-  }
-
-  @Override
-  public void dispose() {
-    table.clear();
-    muteTable.clear();
-    helpTable.clear();
-    highScoreTable.clear();
-    super.dispose();
-  }
+    @Override
+    public void dispose() {
+        table.clear();
+        muteTable.clear();
+        helpTable.clear();
+        highScoreTable.clear();
+        super.dispose();
+    }
 }

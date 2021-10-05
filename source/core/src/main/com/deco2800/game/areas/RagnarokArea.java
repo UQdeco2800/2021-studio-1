@@ -2,13 +2,14 @@ package com.deco2800.game.areas;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
-import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -17,10 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.VariableSpeedComponent;
+import com.deco2800.game.components.FallDamageComponent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.function.Function;
 
 public class RagnarokArea extends GameArea {
@@ -28,10 +29,9 @@ public class RagnarokArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(RagnarokArea.class);
 
     private static final float WALL_HEIGHT = 0.1f;
-    private final String name; //initiliase in the loader
-    private Vector2 lastPos;
+    private final String name; //initialise in the loader
 
-    private HashMap<GridPoint2, LinkedList<Entity>> entitySignUp;
+    private final HashMap<GridPoint2, LinkedList<Entity>> entitySignUp;
 
     protected Entity player;
 
@@ -43,6 +43,7 @@ public class RagnarokArea extends GameArea {
             "images/fire_spirit.png",
             "images/skeleton.png",
             "images/Spear_1.png",
+            "images/fireball.png",
             "images/Rock_1.png",
             "images/Spike_1.png",
             "images/deathGiant.png",
@@ -66,7 +67,10 @@ public class RagnarokArea extends GameArea {
             "images/powerup-spear.png",
             "images/blue_bck.png",
             "images/Backgrounds/black_back.png",
-            "images/Backgrounds/asgard_bg.png"
+            "images/Backgrounds/asgard_bg.png",
+            "images/tutorial/lightningTutorial.png",
+            "images/tutorial/shieldTutorial.png",
+            "images/tutorial/spearTutorial.png"
     };
 
     //TODO: make Json,
@@ -83,18 +87,18 @@ public class RagnarokArea extends GameArea {
 
     // get the sounds to work and then move the music & sounds to a json
     //TODO: make Json
-    private static final String[] racerSounds = {"sounds/Impact4.ogg"};
-    private static final String mainMusic = "sounds/main.mp3";
-    private static final String townMusic = "sounds/town.mp3";
-    private static final String raiderMusic = "sounds/raider.mp3";
+    private static final String[] RACER_SOUNDS = {"sounds/Impact4.ogg"};
+    private static final String MAIN_MUSIC = "sounds/main.mp3";
+    private static final String TOWN_MUSIC = "sounds/town.mp3";
+    private static final String RAIDER_MUSIC = "sounds/raider.mp3";
     // sound effect of fire/burning behind giant *fwoom* *crackle*
-    private static final String fireMusic = "sounds/fire.mp3";
+    private static final String FIRE_MUSIC = "sounds/fire.mp3";
     // sound effects of giant walking (still to be tested)
-    private static final String walkMusic = "sounds/walk.mp3";
-    private static final String loudWalkMusic = "sounds/giant_walk.mp3";
-    private static final String roarMusic = "sounds/roar.mp3";
-    private static final String[] racerMusic = {mainMusic, townMusic, raiderMusic, fireMusic, walkMusic, loudWalkMusic,
-            roarMusic};
+    private static final String WALK_MUSIC = "sounds/walk.mp3";
+    private static final String LOUD_WALK_MUSIC = "sounds/giant_walk.mp3";
+    private static final String ROAR_MUSIC = "sounds/roar.mp3";
+    private static final String[] RACER_MUSIC = {MAIN_MUSIC, TOWN_MUSIC, RAIDER_MUSIC, FIRE_MUSIC,
+            WALK_MUSIC, LOUD_WALK_MUSIC, ROAR_MUSIC};
 
     private final TerrainFactory terrainFactory;
 
@@ -125,9 +129,6 @@ public class RagnarokArea extends GameArea {
         logger.debug("Creating new RagnarokArea");
     }
 
-    public void setManager(AreaManager manager) {
-    }
-
     private void displayUI() {
         Entity ui = new Entity();
         ui.addComponent(new GameAreaDisplay("Ragnarok Area: " + name));
@@ -139,8 +140,8 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(racerTextures);
         resourceService.loadTextureAtlases(racerTextureAtlases);
-        resourceService.loadSounds(racerSounds);
-        resourceService.loadMusic(racerMusic);
+        resourceService.loadSounds(RACER_SOUNDS);
+        resourceService.loadMusic(RACER_MUSIC);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -177,6 +178,43 @@ public class RagnarokArea extends GameArea {
         }
     }
 
+
+    protected void spawnTutorial(int x, int y) {
+        GridPoint2 spearSpawn = new GridPoint2(x, y);
+        GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
+        GridPoint2 textOffset = new GridPoint2(0,5);
+        // GridPoint2 shieldSpawn = new GridPoint2(x+12, y+3);
+
+        
+        
+        spawnSpear(spearSpawn.x, spearSpawn.y);
+        Entity spearTutorial = ObstacleFactory.createTutorialSpear();
+
+        // Spawn enemies to test spear on
+        spawnWolf(spearSpawn.x+8, spearSpawn.y);
+        spawnWolf(spearSpawn.x+12, spearSpawn.y);
+        // spawnShield(shieldSpawn.x, shieldSpawn.y-3);
+
+        spawnLightning(lightningSpawn.x, lightningSpawn.y);
+        Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
+        
+        // Spawn enemies to test lightning on
+        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y);
+        spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y);
+        spawnSkeleton(lightningSpawn.x+16, lightningSpawn.y);
+
+
+        // Offset text and spawn it in
+        lightningSpawn.add(textOffset);
+        spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
+        spearSpawn.add(textOffset);
+        spawnEntityAt(spearTutorial, spearSpawn, true, false);
+
+
+        // Entity shieldTutorial = ObstacleFactory.createTutorialShield();
+        // spawnEntityAt(shieldTutorial, shieldSpawn, true, false);
+    }
+
     protected Entity spawnPlayer(int x, int y) {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(x, y); /*Math.round(lane.y - newPlayer.getScale().y));*/
@@ -190,16 +228,32 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
+     * Spawn a background image starting at x.
+     *
+     * @param x     starting coordinate
+     * @param width width of the image using scaleWidth(width)
+     * @param world world type, must match the first word of a .png file in
+     *              assets/images/Backgrounds/'world'_bg.png, any information after an underscore
+     *              in world is ignored i.e. asgard and asgard_3 are both the same.
+     */
+    protected void spawnBackground(int x, int width, String world) {
+        Entity background = ObstacleFactory.createBackground(world, width);
+        GridPoint2 pos = new GridPoint2(x, 0);
+        spawnEntityAt(background, pos, false, false);
+    }
+
+    /**
      * This spawns the Wall of Death
      */
     protected void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-40, 13);
-        GridPoint2 leftPos2 = new GridPoint2(-5, 13);
+        GridPoint2 leftPos = new GridPoint2(-30, 13);
+        GridPoint2 leftPos2 = new GridPoint2(5, 13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
         wallOfDeath.addComponent(new CameraShakeComponent(getPlayer(), this.terrainFactory.getCameraComponent(), sfx));
+        wallOfDeath.addComponent(new FallDamageComponent(getPlayer()));
 
-        GridPoint2 leftPos3 = new GridPoint2(-15, 13);
+        GridPoint2 leftPos3 = new GridPoint2(-5, 13);
         Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
 
         wallOfDeath.addComponent(new VariableSpeedComponent(getPlayer(), deathGiant, sfx));
@@ -207,7 +261,6 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(wallOfDeath, leftPos, true, true);
         spawnEntityAt(sfx, leftPos2, true, true);
         spawnEntityAt(deathGiant, leftPos3, true, true);
-
     }
 
     protected void spawnLevelLoadTrigger(int x) {
@@ -274,15 +327,6 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
-     * * Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
-     * * spans from x[1] to x[n].
-     * * <p>
-     * * On disposal of the overarching collision entity, all floors created are disposed of.
-     * *
-     * * @param x     array of x coordinates to spawn floors at
-     * * @param y     the y coordinate to spawn all floors at
-     * * @param world the world type to load in. Must match the name of a .png file in
-     * *              assets/images (e.g. assets/images/world.png)
      * Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
      * spans from x[0] to the end of the map chunk at x[n + 3].
      * <p>
@@ -369,10 +413,13 @@ public class RagnarokArea extends GameArea {
         //signup(pos, skeleton);
     }
 
-    protected void projectileFromEnemy(GridPoint2 enemy) {
-        Entity fireBall = ProjectileFactory.fireBall();
-        spawnEntityAt(fireBall, enemy, false, false);
+    /*
+    protected void spawnFireBall(int x, int y) {
+        Entity fireball = ProjectileFactory.createFireBall();
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(fireball, pos, false, false);
     }
+    */
 
     public void clearEntitiesAt(int x, int y) {
         // takes the global scale x and y, so mutliply them by 3 in here
@@ -441,20 +488,19 @@ public class RagnarokArea extends GameArea {
 
         String witchMusic;
 
-        Random rand = new Random();
-        switch (rand.nextInt(3)) {
+        switch (MathUtils.random(2)) {
             case 1:
-                witchMusic = townMusic;
+                witchMusic = TOWN_MUSIC;
                 break;
             case 2:
-                witchMusic = raiderMusic;
+                witchMusic = RAIDER_MUSIC;
                 break;
             default:
-                witchMusic = mainMusic;
+                witchMusic = MAIN_MUSIC;
         }
         Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
-        Music fire = ServiceLocator.getResourceService().getAsset(fireMusic, Music.class);
-        Music walk = ServiceLocator.getResourceService().getAsset(walkMusic, Music.class);
+        Music fire = ServiceLocator.getResourceService().getAsset(FIRE_MUSIC, Music.class);
+        Music walk = ServiceLocator.getResourceService().getAsset(WALK_MUSIC, Music.class);
         music.setLooping(true);
         fire.setLooping(true);
         walk.setLooping(true);
@@ -471,14 +517,14 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(racerTextures);
         resourceService.unloadAssets(racerTextureAtlases);
-        resourceService.unloadAssets(racerSounds);
-        resourceService.unloadAssets(racerMusic);
+        resourceService.unloadAssets(RACER_SOUNDS);
+        resourceService.unloadAssets(RACER_MUSIC);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(mainMusic, Music.class).stop();
+        ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class).stop();
         this.unloadAssets();
     }
 

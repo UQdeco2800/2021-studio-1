@@ -65,7 +65,7 @@ public class MainGamePannelDisplay extends UIComponent {
 
 
     table.add(mainMenuBtn).padTop(10f).row();
-    table.add(mainScoreBtn).padTop(10f).padRight(20f).row();
+    //table.add(mainScoreBtn).padTop(10f).padRight(20f).row();
     table.add(mainPauseBtn).padTop(10f).padRight(20f).row();
 
     stage.addActor(table);
