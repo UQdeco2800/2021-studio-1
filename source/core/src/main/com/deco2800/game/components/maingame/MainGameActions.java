@@ -113,7 +113,7 @@ public class MainGameActions extends Component {
             ServiceLocator.getTimeSource().setTimeScale(1f);
             popUp.dispose();
             //resume sound
-            gameOverSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+            gameOverSound = ServiceLocator.getResourceService().getAsset(IMPACT, Sound.class);
         } else {
             ServiceLocator.getTimeSource().setTimeScale(0f);
 

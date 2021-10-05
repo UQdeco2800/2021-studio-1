@@ -2,6 +2,7 @@ package com.deco2800.game.components.mainmenu;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -86,7 +87,7 @@ public class MainMenuDisplay extends UIComponent {
     Label highScorePreText = new Label("Best Runner", skin, POP_UP_FONT);
     Label highScoreNameText = new Label(highScoreName, skin, POP_UP_FONT);
     Label highScoreValueText = new Label("" + highScorevalue , skin, POP_UP_FONT);
-    SelectBox<String> characterSelections = new SelectBox<String>(skin);
+    SelectBox<String> characterSelections = new SelectBox<>(skin);
     addCharacterSelections(characterSelections);
 
     // Triggers an event when the button is pressed
@@ -217,7 +218,7 @@ public class MainMenuDisplay extends UIComponent {
   private void addCharacterSelections(SelectBox<String> characterSelections) {
 
       String[] selections = new String[] {"Random",  "Thor", "Loki", "Bjorn", "Floki", "Ironside", "Uber", "Frejya", "Njoror", "Aesir", "Mjolnir"};
-      Array<String> selectionText = new Array<String>();
+      Array<String> selectionText = new Array<>();
 
       for (String selection : selections) {
 
@@ -304,8 +305,7 @@ public class MainMenuDisplay extends UIComponent {
     /*
      * Returns the players selected name
      */
-    public static String getPlayeName () {
-
+    public static String getPlayerName() {
         return playerName;
     }
 
@@ -343,6 +343,7 @@ public class MainMenuDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch) {
+        // Draw is handled by the stage.
     }
 
     @Override
@@ -360,10 +361,7 @@ public class MainMenuDisplay extends UIComponent {
     }
 
     private void setBackground() {
-
-        double rand = Math.random();
-
-        if (rand <= 0.5) {
+        if (MathUtils.random() <= 0.5) {
             backgroundTable.setBackground(new TextureRegionDrawable(new Texture("images/main_back.png")));
         } else {
             backgroundTable.setBackground(new TextureRegionDrawable(new Texture("images/main_back2.png")));

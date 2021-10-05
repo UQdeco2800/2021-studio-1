@@ -41,34 +41,31 @@ import java.io.IOException;
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class MainGameScreen extends ScreenAdapter {
-
-  private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {
-          "images/PowerUpGUI/Shield.png",
-          "images/PowerUpGUI/Spear.png",
-          "images/PowerUpGUI/Lightning.png",
-          "images/PowerUpGUI/Empty.png",
-          "images/PowerUpGUI/lightning0.png",
-          "images/PowerUpGUI/lightning1.png",
-          "images/PowerUpGUI/shield0.png",
-          "images/PowerUpGUI/shield1.png",
-          "images/PowerUpGUI/shield2.png",
-          "images/PowerUpGUI/shield3.png",
-          "images/PowerUpGUI/spear0.png",
-          "images/PowerUpGUI/spear1.png",
-          "images/PowerUpGUI/spear2.png",
-          "images/PowerUpGUI/spear3.png",
-          "images/disp_back.png"
-  };
+    private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
+    private static final String[] mainGameTextures = {
+            "images/PowerUpGUI/Shield.png",
+            "images/PowerUpGUI/Spear.png",
+            "images/PowerUpGUI/Lightning.png",
+            "images/PowerUpGUI/Empty.png",
+            "images/PowerUpGUI/lightning0.png",
+            "images/PowerUpGUI/lightning1.png",
+            "images/PowerUpGUI/shield0.png",
+            "images/PowerUpGUI/shield1.png",
+            "images/PowerUpGUI/shield2.png",
+            "images/PowerUpGUI/shield3.png",
+            "images/PowerUpGUI/spear0.png",
+            "images/PowerUpGUI/spear1.png",
+            "images/PowerUpGUI/spear2.png",
+            "images/PowerUpGUI/spear3.png",
+            "images/disp_back.png"
+    };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
-  private final GdxGame game;
-  private final Renderer renderer;
-  private final PhysicsEngine physicsEngine;
-  private AreaManager ragnarokManager;
-
-  private Entity endGame;
+    private final GdxGame game;
+    private final Renderer renderer;
+    private final PhysicsEngine physicsEngine;
+    private AreaManager ragnarokManager;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
@@ -100,26 +97,6 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.getAreaService().setManager(ragnarokManager);
         ServiceLocator.getAreaService().run(); //TODO: call run on manager from terminal line
-
-        //ragnarokManager.create();
-
-        //boolean isObstacle = false;
-        //if (isObstacle) {
-        //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-        //obstacleArea.create();
-        //} else if (!isObstacle) {
-
-        //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-        //obstacleArea.create()
-
-        //ragnarokArea = new RagnarokArea("the og", terrainFactory);
-
-        //TODO: abstract commands from RacerArea to GameArea
-        //TODO: so that they can be called from any GameArea
-        //ServiceLocator.getAreaService().setMainRacerArea(ragnarokArea);
-
-        //ragnarokArea.create();
-        //}
     }
 
     @Override
@@ -188,6 +165,7 @@ public class MainGameScreen extends ScreenAdapter {
         resourceService.loadTextures(mainGameTextures);
         ServiceLocator.getResourceService().loadAll();
     }
+
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
@@ -240,7 +218,7 @@ public class MainGameScreen extends ScreenAdapter {
             adjective = availableAdjectives[((scoreIntegers.length - 1) * 2) + section];
         }
 
-        String selectedName = MainMenuDisplay.getPlayeName();
+        String selectedName = MainMenuDisplay.getPlayerName();
         String name;
 
         if (!selectedName.equals("Random")) {
@@ -249,30 +227,18 @@ public class MainGameScreen extends ScreenAdapter {
             name = adjective + " " + availableNames[Integer.parseInt(randValue)] + "";
         }
 
-        FileWriter highScoreFile = null;
-
         int[] highScoreValues = MainMenuDisplay.getHighScoreValues();
         String[] highScoreNames = MainMenuDisplay.getHighScoreNames();
 
         highScoreNames[4] = name;
         highScoreValues[4] = Integer.parseInt(currentScore);
 
-        try {
-            highScoreFile = new FileWriter("gameinfo/highScores.txt");
-
-            for (int i = 0; i < highScoreNames.length;  i++) {
+        try (FileWriter highScoreFile = new FileWriter("gameinfo/highScores.txt")) {
+            for (int i = 0; i < highScoreNames.length; i++) {
                 highScoreFile.write(highScoreNames[i] + "," + highScoreValues[i] + "\n");
             }
-
-            highScoreFile.close();
         } catch (IOException e) {
             logger.info("Could not record high score");
-        } finally {
-            try {
-                highScoreFile.close();
-            } catch (IOException i) {
-                logger.info("Could not close high score file");
-            }
         }
     }
 }

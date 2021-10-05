@@ -1,5 +1,6 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.deco2800.game.areas.ObstacleArea;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
@@ -23,7 +24,6 @@ public class GeneratorComponent extends Component {
     private LinkedList<ObstacleTypes> obstacles;
 
     private static final int SIZE = ObstacleTypes.values().length;
-    private static final Random RANDOM = new Random();
 
     private int ticks;
 
@@ -122,7 +122,7 @@ public class GeneratorComponent extends Component {
 
     private ObstacleTypes getRandomObstacle() {
 
-        int randKey = RANDOM.nextInt(SIZE);
+        int randKey = MathUtils.random(SIZE);
         switch (randKey) {
             case 0:
                 return ObstacleTypes.ROCKS;

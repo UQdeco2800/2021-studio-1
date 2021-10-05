@@ -1,5 +1,6 @@
 package com.deco2800.game.components.tasks;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.ai.tasks.DefaultTask;
 import com.deco2800.game.ai.tasks.PriorityTask;
@@ -62,10 +63,8 @@ public class RandomTask extends DefaultTask implements PriorityTask {
     public void start() {
         super.start();
 
-        double random = Math.random();
-        int type = 0;
-
-        type = random < 0.25f ? 0
+        float random = MathUtils.random();
+        int type = random < 0.25f ? 0
                 : random > 0.25 && random < 0.5 ? 1
                 : random >= 0.5 && random < 0.75 ? 2
                 : 3;
@@ -117,10 +116,8 @@ public class RandomTask extends DefaultTask implements PriorityTask {
 
     private void getNewRandomTask() {
 
-        double random = Math.random();
-        int type = 0;
-
-        type = random < 0.25f ? 0
+        float random = MathUtils.random();
+        int type = random < 0.25f ? 0
                 : random > 0.25 && random < 0.5 ? 1
                 : random >= 0.5 && random < 0.75 ? 2
                 : 3;
