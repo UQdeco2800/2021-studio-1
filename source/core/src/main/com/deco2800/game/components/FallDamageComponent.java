@@ -38,7 +38,6 @@ public class FallDamageComponent extends Component {
     private void onCollisionStart(Fixture me, Fixture other) {
 
         float yPos = target.getPosition().y;
-        // System.out.println(yPos);
 
 
         //if the y_position is less than -1, than set the health of the target to 0.

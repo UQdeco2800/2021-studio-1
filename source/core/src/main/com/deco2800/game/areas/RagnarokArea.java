@@ -9,7 +9,6 @@ import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -111,17 +110,16 @@ public class RagnarokArea extends GameArea {
         this.entitySignUp = new HashMap<>();
     }
 
+    @Override
     public void create() {
         create(0);
     }
 
+    @Override
     public void create(int xOffset) {
         loadAssets();
         displayUI();
         spawnTerrain();
-
-        // TODO: Add power ups to RagEdit and reformat spawn method
-        //generatePowerUps();
 
         playMusic(); //TODO: eventual move to music
         // also this is the cause of all music playing at once, because multiple ragnorok areas
@@ -146,47 +144,13 @@ public class RagnarokArea extends GameArea {
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
-            // logger.info("Loading... {}%", resourceService.getProgress());
         }
     }
 
-    // randomly generates powerups for an area,
-    // used to be spawn power ups
-    private void generatePowerUps() {
-        GridPoint2 start = new GridPoint2(10, 3);
-        GridPoint2 end = new GridPoint2(1000, 3);
-
-        Entity powerUp;
-
-        for (int i = 0; i < 31; i++) {
-            GridPoint2 posLeft = RandomUtils.random(start, end);
-
-            switch (i % 3) {
-                case 0:
-                    powerUp = PowerUpFactory.createLightningPowerUp();
-                    break;
-
-                case 1:
-                    powerUp = PowerUpFactory.createShieldPowerUp();
-                    break;
-
-                default:
-                    powerUp = PowerUpFactory.createSpearPowerUp();
-                    break;
-            }
-
-            spawnEntityAt(powerUp, posLeft, false, false);
-        }
-    }
-
-
-    protected void spawnTutorial(int x, int y) {
+    protected void spawnTutorial(int x, int y) { // TODO: Expand this
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
-        GridPoint2 textOffset = new GridPoint2(0,5);
-        // GridPoint2 shieldSpawn = new GridPoint2(x+12, y+3);
-
-        
+        GridPoint2 textOffset = new GridPoint2(0,5);       
         
         spawnSpear(spearSpawn.x, spearSpawn.y);
         Entity spearTutorial = ObstacleFactory.createTutorialSpear();
@@ -194,7 +158,6 @@ public class RagnarokArea extends GameArea {
         // Spawn enemies to test spear on
         spawnWolf(spearSpawn.x+8, spearSpawn.y);
         spawnWolf(spearSpawn.x+12, spearSpawn.y);
-        // spawnShield(shieldSpawn.x, shieldSpawn.y-3);
 
         spawnLightning(lightningSpawn.x, lightningSpawn.y);
         Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
@@ -210,15 +173,11 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
         spearSpawn.add(textOffset);
         spawnEntityAt(spearTutorial, spearSpawn, true, false);
-
-
-        // Entity shieldTutorial = ObstacleFactory.createTutorialShield();
-        // spawnEntityAt(shieldTutorial, shieldSpawn, true, false);
     }
 
     protected Entity spawnPlayer(int x, int y) {
         Entity newPlayer = PlayerFactory.createPlayer();
-        GridPoint2 pos = new GridPoint2(x, y); /*Math.round(lane.y - newPlayer.getScale().y));*/
+        GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(newPlayer, pos, true, false);
 
         //entitySignUp.
@@ -397,31 +356,20 @@ public class RagnarokArea extends GameArea {
         Entity wolf = NPCFactory.createWolf(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(wolf, pos, false, false);
-        //signup(pos, wolf);
     }
 
     protected void spawnSkeleton(int x, int y) {
         Entity skeleton = NPCFactory.createSkeleton(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(skeleton, pos, false, false);
-        //signup(pos, skeleton);
     }
 
     protected void spawnFireSpirit(int x, int y) {
         Entity fireSpirit = NPCFactory.createFireSpirit(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(fireSpirit, pos, false, false);
-        //signup(pos, skeleton);
     }
-
-    /*
-    protected void spawnFireBall(int x, int y) {
-        Entity fireball = ProjectileFactory.createFireBall();
-        GridPoint2 pos = new GridPoint2(x, y);
-        spawnEntityAt(fireball, pos, false, false);
-    }
-    */
-
+    
     public void clearEntitiesAt(int x, int y) {
         // takes the global scale x and y, so mutliply them by 3 in here
         for (int i = 0; i < 3; i++) {
