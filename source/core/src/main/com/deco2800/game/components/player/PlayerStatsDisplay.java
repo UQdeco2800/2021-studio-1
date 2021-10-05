@@ -34,6 +34,7 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("updateScore", this::updatePlayerScoreUI);
+    deadFlag = false;
   }
 
   /**

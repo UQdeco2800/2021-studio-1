@@ -66,11 +66,14 @@ public class MainGameScreen extends ScreenAdapter {
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
     private AreaManager ragnarokManager;
+    private Entity gameUI;
+    private boolean gameEnded;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
+        this.gameEnded = false;
 
         PhysicsService physicsService = new PhysicsService();
         ServiceLocator.registerPhysicsService(physicsService);
@@ -119,7 +122,10 @@ public class MainGameScreen extends ScreenAdapter {
                     recordHighScore("" + currentScore);
 
                 }
-                //game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                if (!gameEnded) {
+                    gameUI.getEvents().trigger("Game Over");
+                    gameEnded = true;
+                }
             }
         }
 
@@ -185,8 +191,8 @@ public class MainGameScreen extends ScreenAdapter {
         Terminal theOg = new Terminal();
         ServiceLocator.registerTerminalService(theOg);
 
-        Entity ui = new Entity();
-        ui.addComponent(new InputDecorator(stage, 10))
+        gameUI = new Entity();
+        gameUI.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
                 .addComponent(new MainGamePannelDisplay())
@@ -195,7 +201,7 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new PowerUpGUIComponent());
 
-        ServiceLocator.getEntityService().register(ui);
+        ServiceLocator.getEntityService().register(gameUI);
     }
 
     private void recordHighScore(String currentScore) {
