@@ -321,15 +321,6 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
-     * * Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
-     * * spans from x[1] to x[n].
-     * * <p>
-     * * On disposal of the overarching collision entity, all floors created are disposed of.
-     * *
-     * * @param x     array of x coordinates to spawn floors at
-     * * @param y     the y coordinate to spawn all floors at
-     * * @param world the world type to load in. Must match the name of a .png file in
-     * *              assets/images (e.g. assets/images/world.png)
      * Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
      * spans from x[0] to the end of the map chunk at x[n + 3].
      * <p>
