@@ -35,15 +35,15 @@ public class gameScore extends Component  {
             // checks if spear being thrown
             lightningComponent();
 
-            //Incremental on the socre
+            //Incremental on the score
             previous_score += (long) (previous_score * 0.001);
-            //keeping the score to a non decimal value
+            //keeping the score to a non-decimal value
             score += (long) Math.floor(previous_score);
         }
         return score;
     }
     /**
-     * Score decreases on the basis of lightning use
+     * Score increases slightly on the basis of lightning power up used
      */
     public void lightningComponent() {
         if (PlayerStatsDisplay.lightningActive) {
