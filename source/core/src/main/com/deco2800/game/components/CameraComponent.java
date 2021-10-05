@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 public class CameraComponent extends Component {
     private final Camera camera;
     private Vector2 lastPosition;
-    private Vector2 targetCenterPosition;
     private float offset = 0;
 
     public CameraComponent() {
@@ -29,7 +28,6 @@ public class CameraComponent extends Component {
             camera.update();
 
         }
-
     }
 
     /**
@@ -56,32 +54,6 @@ public class CameraComponent extends Component {
     public void resetLastPosition() {
         lastPosition = Vector2.Zero.cpy();
     }
-
-
-     /* Determine whether current player is moving and which direction
-    if (PlayerActions.moving == true ){
-      if(KeyboardPlayerInputComponent.isDirection == 1){
-        position.y = position.y + 3f;
-        camera.position.set(position.x, position.y,0f);
-        camera.update();
-      }
-      if(KeyboardPlayerInputComponent.isDirection == 2){
-        position.x = position.x + 3f;
-        camera.position.set(position.x, position.y,0f);
-        camera.update();
-      }
-      if(KeyboardPlayerInputComponent.isDirection == 3){
-        position.y = position.y - 3f;
-        camera.position.set(position.x, position.y,0f);
-        camera.update();
-      }
-      if(KeyboardPlayerInputComponent.isDirection == 4){
-        position.x = position.x - 3f;
-        camera.position.set(position.x, position.y,0f);
-        camera.update();
-      }
-    }
-      */
 
     public Matrix4 getProjectionMatrix() {
         return camera.combined;

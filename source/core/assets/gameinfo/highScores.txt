@@ -1,5 +1,5 @@
 Extraordinary Unicorn,3249
 Mouse,2946
-Sam,2044
-Extraordinary Bjorn,1939
 Extraordinary Zebra,2090
+Sam,2044
+Extraordinary Dragonfly,3088

@@ -12,21 +12,27 @@ import com.deco2800.game.ui.UIComponent;
  * Component needs to be added to MainGameScreen and to the player in PlayerFatcory to make it visible.
  */
 public class PowerUpGUIComponent extends UIComponent {
+    // Paths to power up images.
+    private static final String SHIELD_IMG = "images/PowerUpGUI/Shield.png";
+    private static final String SPEAR_IMG = "images/PowerUpGUI/Spear.png";
+    private static final String LIGHTNING_IMG = "images/PowerUpGUI/Lightning.png";
+    private static final String EMPTY_IMG = "images/PowerUpGUI/Empty.png";
+
     //Icons used for gui, assets loaded in MainGameScreen
-    private final Image shield1 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Shield.png", Texture.class));
-    private final Image shield2 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Shield.png", Texture.class));
-    private final Image shield3 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Shield.png", Texture.class));
-    private final Image spear1 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Spear.png", Texture.class));
-    private final Image spear2 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Spear.png", Texture.class));
-    private final Image spear3 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Spear.png", Texture.class));
-    private final Image lightning = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Lightning.png", Texture.class));
-    private final Image empty1 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
-    private final Image empty2 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
-    private final Image empty3 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
-    private final Image empty4 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
-    private final Image empty5 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
-    private final Image empty6 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
-    private final Image empty7 = new Image(ServiceLocator.getResourceService().getAsset("images/PowerUpGUI/Empty.png", Texture.class));
+    private final Image shield1 = new Image(ServiceLocator.getResourceService().getAsset(SHIELD_IMG, Texture.class));
+    private final Image shield2 = new Image(ServiceLocator.getResourceService().getAsset(SHIELD_IMG, Texture.class));
+    private final Image shield3 = new Image(ServiceLocator.getResourceService().getAsset(SHIELD_IMG, Texture.class));
+    private final Image spear1 = new Image(ServiceLocator.getResourceService().getAsset(SPEAR_IMG, Texture.class));
+    private final Image spear2 = new Image(ServiceLocator.getResourceService().getAsset(SPEAR_IMG, Texture.class));
+    private final Image spear3 = new Image(ServiceLocator.getResourceService().getAsset(SPEAR_IMG, Texture.class));
+    private final Image lightning = new Image(ServiceLocator.getResourceService().getAsset(LIGHTNING_IMG, Texture.class));
+    private final Image empty1 = new Image(ServiceLocator.getResourceService().getAsset(EMPTY_IMG, Texture.class));
+    private final Image empty2 = new Image(ServiceLocator.getResourceService().getAsset(EMPTY_IMG, Texture.class));
+    private final Image empty3 = new Image(ServiceLocator.getResourceService().getAsset(EMPTY_IMG, Texture.class));
+    private final Image empty4 = new Image(ServiceLocator.getResourceService().getAsset(EMPTY_IMG, Texture.class));
+    private final Image empty5 = new Image(ServiceLocator.getResourceService().getAsset(EMPTY_IMG, Texture.class));
+    private final Image empty6 = new Image(ServiceLocator.getResourceService().getAsset(EMPTY_IMG, Texture.class));
+    private final Image empty7 = new Image(ServiceLocator.getResourceService().getAsset(EMPTY_IMG, Texture.class));
 
 
     /**

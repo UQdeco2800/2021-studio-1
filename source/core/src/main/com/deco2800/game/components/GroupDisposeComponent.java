@@ -16,7 +16,6 @@ import com.deco2800.game.services.ServiceLocator;
  * disposed of, so are all its platforms or floors.
  */
 public class GroupDisposeComponent extends Component {
-    private EntityService entityService;
     private Entity[] entities;
 
     /**
@@ -25,13 +24,13 @@ public class GroupDisposeComponent extends Component {
      * @param entities entities to dispose of with this component's entity
      */
     public GroupDisposeComponent(Entity[] entities) {
-        this.entityService = ServiceLocator.getEntityService();
         this.entities = entities;
     }
 
     /**
      * Dispose of all entities held in this component.
      */
+    @Override
     public void dispose() {
         for (Entity entity : entities) {
             if (entity != null) entity.flagDelete();

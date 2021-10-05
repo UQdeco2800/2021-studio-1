@@ -31,6 +31,7 @@ import com.deco2800.game.services.ServiceLocator;
  * <p> Listen to the Police
  */
 public class GeneratorFactory {
+    private static final String FLOAT_ANIMATION = "float";
 
     private static final NPCConfigs NPC_CONFIGS =
             FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
@@ -63,7 +64,7 @@ public class GeneratorFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
 //    animator.addAnimation("angry_float", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("float", 0.4f, Animation.PlayMode.LOOP);
+        animator.addAnimation(FLOAT_ANIMATION, 0.4f, Animation.PlayMode.LOOP);
 
         skeleton
 //            .addComponent(new TextureRenderComponent("images/skeleton.png"))
@@ -82,7 +83,7 @@ public class GeneratorFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
-        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(FLOAT_ANIMATION, 0.1f, Animation.PlayMode.LOOP);
 
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -101,7 +102,7 @@ public class GeneratorFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/ghostKing.atlas", TextureAtlas.class));
-        animator.addAnimation("float", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(FLOAT_ANIMATION, 0.1f, Animation.PlayMode.LOOP);
 
         fireSpirit
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))

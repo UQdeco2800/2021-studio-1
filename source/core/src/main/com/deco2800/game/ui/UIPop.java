@@ -239,7 +239,7 @@ public class UIPop extends UIComponent {
 
 
         setting.row().padTop(20f);
-        setting.add(new Label("Volume :", skin, "popUpFont")).left();
+        setting.add(new Label("Volume :", skin, POP_UP_FONT)).left();
 
         setting.add(volumeSlider).right();
 
@@ -290,7 +290,7 @@ public class UIPop extends UIComponent {
             resumeButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
-                    game.getEvents().trigger("Pause Menu");
+                    game.getEvents().trigger(PAUSE);
                 }
             });
 
@@ -486,12 +486,10 @@ public class UIPop extends UIComponent {
 
 
     private String getHelpText(int i) {
-
-        String text = i == 0 ? "Hi, welcome to Ragnarok Racer, \nto play the game close this window \nand" + " click Run!":
+        return i == 0 ? "Hi, welcome to Ragnarok Racer, \nto play the game close this window " +
+                "\nand" + " click Run!":
                 i == 1 ? " W - Jump \n S - Crouch \n A - Move left \n D - Move right \n P - Pause \n K - Throw Spear \n L - Cast Lightning \n" :
                         "Last as long as you can! \nDestroy as many enemies as you can! \nAvoid as many obstacles as you can! \n";
-
-        return text;
     }
 
     @Override
