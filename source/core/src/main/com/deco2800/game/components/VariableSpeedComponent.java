@@ -30,6 +30,7 @@ public class VariableSpeedComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
+        target.getEvents().addListener("collisionStart", this::onCollisionStart);
     }
 
     /**
