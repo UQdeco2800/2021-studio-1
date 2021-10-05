@@ -12,6 +12,8 @@ public class FallDamageComponent extends Component {
 
     /**
      * Class to cause the player to die when below a certain height position
+     *
+     * @param target - the target to take fall damage
      */
     public FallDamageComponent(Entity target) {
         this.target = target;
