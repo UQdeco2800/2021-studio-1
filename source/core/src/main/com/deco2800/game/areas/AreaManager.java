@@ -1,7 +1,6 @@
 package com.deco2800.game.areas;
 
 import com.deco2800.game.areas.terrain.TerrainFactory;
-import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.files.RagLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +12,10 @@ public class AreaManager extends RagnarokArea {
     private static final Logger logger = LoggerFactory.getLogger(AreaManager.class);
 
     // Some string constants to satisfy SonarCloud
-    private final static String FLOOR = "floor";
-    private final static String PLATFORM = "platform";
-    private final static String SPIKES = "spikes";
-    private final static String ROCKS = "rocks";
+    private static final String FLOOR = "floor";
+    private static final String PLATFORM = "platform";
+    private static final String SPIKES = "spikes";
+    private static final String ROCKS = "rocks";
 
     /**
      * each block/tile in the world is actually 3x the game's geometry.
@@ -91,7 +90,6 @@ public class AreaManager extends RagnarokArea {
      *                       mainInstace.
      */
     public AreaManager(TerrainFactory terrainFactory) {
-
         super("Manager", terrainFactory);
         this.mainTerrainFactory = terrainFactory;
         this.areaInstances = new LinkedList<>();
@@ -107,6 +105,23 @@ public class AreaManager extends RagnarokArea {
     }
 
     /**
+     * Construct a new AreaManager with the given terrainFactory and ragnarokArea.
+     *
+     * @param terrainFactory the terrainFactory to be initilaised in the GameArea class. It is passed the
+     *                       mainInstace.
+     * @param ragnarokArea   ragnarokArea to spawn entities into, has already been created()
+     */
+    public AreaManager(TerrainFactory terrainFactory, RagnarokArea ragnarokArea) {
+        super("Manager", terrainFactory);
+        this.mainTerrainFactory = terrainFactory;
+        this.areaInstances = new LinkedList<>();
+
+        bufferedSpawns = new HashMap<>();
+        this.startNextArea = 0;
+        this.terrainInstance = ragnarokArea;
+    }
+
+    /**
      * This method is called from outside the class in the MainGameScreen class. The constructor initiliases the real
      * *RAW* stuff of the class. This function is used for clarity.
      * Calls to load and other "set up" functions for the manager should be called here.
@@ -114,15 +129,19 @@ public class AreaManager extends RagnarokArea {
     @Override
     public void create() {
 
-        RagnarokArea persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
-        persistentInstance.create();
-        persistentInstance.makePlayer(10, 5);
+        //RagnarokArea persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
+        //persistentInstance.setManager(this);
+        //persistentInstance.create();
+        //persistentInstance.makePlayer(10, 5);
 
-        persistentInstance.spawnWallOfDeath();
+        //terrainInstance.spawnWallOfDeath();
 
-        this.player = persistentInstance.getPlayer();
-
+        //if above code is uncommented load can introduce duplicate instances
+        //conflict with load not above code I don't think
         load("asg1");
+        terrainInstance.makePlayer(10, 5);
+        this.player = terrainInstance.getPlayer();
+        terrainInstance.spawnWallOfDeath();
 
         logger.debug("Creating AreaManager");
 
@@ -161,7 +180,7 @@ public class AreaManager extends RagnarokArea {
         int gx = x * GRID_SCALE;
         int gy = y * GRID_SCALE;
         switch (placeType) {
-            case "floor":
+            case FLOOR:
                 area.spawnFloor(gx, gy, this.currentWorld);
                 break;
             case PLATFORM:
@@ -180,7 +199,6 @@ public class AreaManager extends RagnarokArea {
             default:
                 logger.error("place() called in AreaManager without valid placeType");
                 break;
-
         }
     }
 
@@ -247,6 +265,7 @@ public class AreaManager extends RagnarokArea {
         if (terrainInstance == null) {
             terrainInstance = new RagnarokArea("load test", mainTerrainFactory);
             terrainInstance.create();
+            player = terrainInstance.getPlayer();
         }
         RagLoader.createFromFile(level);
         startNextArea += bPWidth; // Set this value to reflect the start of the next area.
@@ -290,6 +309,7 @@ public class AreaManager extends RagnarokArea {
                     default:
                         logger.error("Unknown value in rag: {} {}", argument, value);
                 }
+                break;
             default:
                 logger.error("Unknown argument in rag: {} {}", argument, value);
         }
@@ -333,7 +353,7 @@ public class AreaManager extends RagnarokArea {
 
     /**
      * Spawn in all entities listed in this.bufferedPlaces to area.
-     *
+     * <p>
      * This is called after the terrain in a ragFile has been fully read and a -config line has
      * been reached. Meaning, map parts are all spawned at one time after parsing a file.
      *

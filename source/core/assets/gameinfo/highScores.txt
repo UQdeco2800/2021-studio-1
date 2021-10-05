@@ -1,5 +1,5 @@
 Mouse,2946
 Sam,2044
 Mouse,1796
-Zebra,1320
-Hound,1242
+Dragonfly,1348
+Extraordinary Thor,1091
