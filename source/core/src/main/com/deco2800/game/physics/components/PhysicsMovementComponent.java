@@ -34,6 +34,15 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     maxSpeed = new Vector2(speed,speed);
   }
 
+  /**
+   * Returns the maxSpeed
+   * @return maxSpeed
+   */
+  public Vector2 getMaxSpeed() {
+    return maxSpeed;
+  }
+
+
   @Override
   public void update() {
     if (movementEnabled && targetPosition != null) {
