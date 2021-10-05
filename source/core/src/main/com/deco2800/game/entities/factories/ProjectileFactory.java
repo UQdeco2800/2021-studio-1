@@ -34,6 +34,7 @@ public class ProjectileFactory {
     public static Entity fireBall() {
         Entity fireBall = createBaseProjectile();
         fireBall.getComponent(PhysicsMovementComponent.class);
+        fireBall.setType(EntityTypes.FIREBALL);
         return fireBall;
     }
 
@@ -44,20 +45,19 @@ public class ProjectileFactory {
     public static Entity createBaseProjectile() {
 
         Entity baseProjectile = new Entity()
-                .addComponent(new TextureRenderComponent("images/Spear_1.png"))
+                .addComponent(new TextureRenderComponent("images/fireball.png"))
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 7.5f))
-                .addComponent(new CombatStatsComponent(1, 100));
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f))
+                .addComponent(new CombatStatsComponent(1, 20));
 
         baseProjectile.getComponent(PhysicsComponent.class).setGravityScale(5f);
         baseProjectile.getComponent(TextureRenderComponent.class).scaleEntity();
-        baseProjectile.setScale(1f, 0.5f);
-        PhysicsUtils.setScaledCollider(baseProjectile, 1f, 1f);
+        baseProjectile.setScale(0.6f, 0.6f);
+        PhysicsUtils.setScaledCollider(baseProjectile, 0.8f, 0.8f);
         baseProjectile.setType(EntityTypes.PROJECTILE);
-        baseProjectile.getEvents().addListener("collisionStart", baseProjectile::flagDelete);
         return baseProjectile;
     }
 
