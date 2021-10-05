@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -100,8 +100,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">gameScore</span>
 extends <a href="../components/Component.html" title="class in com.deco2800.game.components">Component</a></pre>
-<div class="block">The class handles the scoring of the player the score is increased linearly on the basis of time
- elapsed since the beginning of the start.</div>
+<div class="block">The class handles the scoring of the player the score is increased linearly in a loop and variations
+ are made on the scoring on basis of various interactions</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -170,28 +170,9 @@ extends <a href="../components/Component.html" title="class in com.deco2800.game
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentTime()">getCurrentTime</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor" id="i2">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#obstacleOneHit()">obstacleOneHit</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lightningComponent()">lightningComponent</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Score depletion on the basis of object being hit</div>
-</td>
-</tr>
-<tr class="rowColor" id="i3">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#obstacleTwoHit()">obstacleTwoHit</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Score depletion on the basis of object being hit</div>
-</td>
-</tr>
-<tr class="altColor" id="i4">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setScore()">setScore</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Sets the current score on the basis of timeelapsed since the start of the game</div>
+<div class="block">Score increases slightly on the basis of lightning power up used</div>
 </td>
 </tr>
 </tbody>
@@ -250,29 +231,9 @@ extends <a href="../components/Component.html" title="class in com.deco2800.game
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="getCurrentTime()">getCurrentTime</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">getCurrentTime</span>()</div>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setScore()">setScore</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setScore</span>()</div>
-<div class="block">Sets the current score on the basis of timeelapsed since the start of the game</div>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="obstacleOneHit()">obstacleOneHit</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">obstacleOneHit</span>()</div>
-<div class="block">Score depletion on the basis of object being hit</div>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="obstacleTwoHit()">obstacleTwoHit</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">obstacleTwoHit</span>()</div>
-<div class="block">Score depletion on the basis of object being hit</div>
+<h3><a id="lightningComponent()">lightningComponent</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">lightningComponent</span>()</div>
+<div class="block">Score increases slightly on the basis of lightning power up used</div>
 </section>
 </li>
 </ul>
