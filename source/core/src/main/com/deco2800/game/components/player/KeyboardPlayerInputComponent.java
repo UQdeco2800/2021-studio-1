@@ -52,6 +52,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         return true;
       case Keys.K:
         triggerSpearEvent();
+        entity.getEvents().trigger("useSpearAttack");
         return true;
       default:
         return false;
@@ -124,10 +125,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
   private void triggerLightningEvent() {
     entity.getEvents().trigger("usePowerUp", EntityTypes.LIGHTNINGPOWERUP);
+    entity.getEvents().trigger("updatePowerUps");
   }
 
   private void triggerSpearEvent() {
     entity.getEvents().trigger("usePowerUp", EntityTypes.SPEARPOWERUP);
+    entity.getEvents().trigger("updatePowerUps");
   }
 
   private void triggerAnyMovement() {

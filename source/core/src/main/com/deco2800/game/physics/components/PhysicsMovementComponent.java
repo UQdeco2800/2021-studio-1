@@ -30,6 +30,10 @@ public class PhysicsMovementComponent extends Component implements MovementContr
     maxSpeed = new Vector2(speed,speed);
   }
 
+  public static void setMaxSpeed(float speed) {
+    maxSpeed = new Vector2(speed,speed);
+  }
+
   @Override
   public void update() {
     if (movementEnabled && targetPosition != null) {
