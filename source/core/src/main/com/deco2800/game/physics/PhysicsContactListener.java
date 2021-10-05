@@ -2,6 +2,7 @@ package com.deco2800.game.physics;
 
 import com.badlogic.gdx.physics.box2d.*;
 
+import com.deco2800.game.entities.factories.EntityTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,17 @@ public class PhysicsContactListener implements ContactListener {
 
   @Override
   public void preSolve(Contact contact, Manifold oldManifold) {
-    // Nothing to do before resolving contact
+    BodyUserData userDataA =
+            (BodyUserData) contact.getFixtureA().getBody().getUserData();
+    BodyUserData userDataB =
+            (BodyUserData) contact.getFixtureB().getBody().getUserData();
+    if (userDataA.entity.getType() == EntityTypes.PLAYERSPEAR) {
+      userDataA.entity.getEvents().trigger("collision", contact, userDataA,
+              userDataB);
+    } else if (userDataB.entity.getType() == EntityTypes.PLAYERSPEAR){
+      userDataB.entity.getEvents().trigger("collision", contact, userDataB,
+              userDataA);
+    }
   }
 
   @Override

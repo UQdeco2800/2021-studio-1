@@ -424,17 +424,12 @@ public class UIPop extends UIComponent {
 
 
     private String getHelpText(int i) {
-        switch (i) {
-            case 0:
-                return "Hi, welcome to Ragnarok Racer, \nto play the game close this window \nand" +
-                        " click Run!";
-            case 1:
-                return " W - Jump \n S - Crouch \n A - Move left \n D - Move right \n P - Pause " +
-                        "\n I - Score \n";
-            default:
-                return "Last as long as you can! \nDestroy as many enemies as you can! \nAvoid as" +
-                        " many obstacles as you can! \n";
-        }
+
+        String text = i == 0 ? "Hi, welcome to Ragnarok Racer, \nto play the game close this window \nand" + " click Run!":
+                i == 1 ? " W - Jump \n S - Crouch \n A - Move left \n D - Move right \n P - Pause \n K - Throw Spear \n L - Cast Lightning \n" :
+                        "Last as long as you can! \nDestroy as many enemies as you can! \nAvoid as many obstacles as you can! \n";
+
+        return text;
     }
 
     @Override

@@ -95,7 +95,7 @@ public class AreaManager extends RagnarokArea {
         this.areaInstances = new LinkedList<>();
 
         bufferedSpawns = new HashMap<>();
-        this.startNextArea = 0;
+        this.startNextArea = -5;
         // eventually moved to terminal?
         // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
 
@@ -129,17 +129,16 @@ public class AreaManager extends RagnarokArea {
     @Override
     public void create() {
 
-        RagnarokArea persistentInstance = new RagnarokArea("load test", mainTerrainFactory);
-        persistentInstance.create();
-        persistentInstance.makePlayer(10, 5);
-
-        persistentInstance.spawnWallOfDeath();
-
-        this.player = persistentInstance.getPlayer();
-
-        load("asg1");
+        load("tutorial");
+        //if above code is uncommented load can introduce duplicate instances
+        //conflict with load not above code I don't think
+        terrainInstance.makePlayer(10, 5);
+        this.player = terrainInstance.getPlayer();
+        terrainInstance.spawnWallOfDeath();
 
         logger.debug("Creating AreaManager");
+
+        terrainInstance.spawnBackground(0, this.bPWidth, "asgard");
 
         //mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
         //this.player = mainInstance.getPlayer();
@@ -224,6 +223,9 @@ public class AreaManager extends RagnarokArea {
         int gx = (startNextArea + x) * GRID_SCALE;
         int gy = y * GRID_SCALE;
 
+        // System.out.println("Spawning  " + spawnType);
+
+
         switch (spawnType) {
             case "skeleton":
                 area.spawnSkeleton(gx, gy);
@@ -246,6 +248,10 @@ public class AreaManager extends RagnarokArea {
             case "lightning":
                 area.spawnLightning(gx, gy);
                 break;
+            case "tutorial":
+                System.out.println("Creating tutorial");
+                area.spawnTutorial(gx, gy);
+                break;
             default:
                 logger.error("spawn() called in AreaManger without valid spawnType");
         }
@@ -261,6 +267,7 @@ public class AreaManager extends RagnarokArea {
         if (terrainInstance == null) {
             terrainInstance = new RagnarokArea("load test", mainTerrainFactory);
             terrainInstance.create();
+            player = terrainInstance.getPlayer();
         }
         RagLoader.createFromFile(level);
         startNextArea += bPWidth; // Set this value to reflect the start of the next area.
@@ -293,6 +300,10 @@ public class AreaManager extends RagnarokArea {
                     case "init":
                         bufferedPlaces = new String[bPWidth][bPHeight];
                         bPIndex = 0;
+                        // Spawn a background at the start of the level with width from the rag
+                        // file.
+                        terrainInstance.spawnBackground(this.startNextArea * GRID_SCALE,
+                                this.bPWidth, "asgard");
                         break;
                     case "queue":
                         makeBufferedPlace(terrainInstance);

@@ -19,8 +19,6 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label scoreLabel;
   gameScore scoring = new gameScore();
 
-
-
   /**
    * Creates reusable ui styles and adds actors to the stage.
    */
@@ -38,10 +36,6 @@ public class PlayerStatsDisplay extends UIComponent {
    */
   private void addActors() {
     table = new Table();
-
-   // tableTwo = new Table();
-
-
     table.top().left();
     table.setFillParent(true);
     table.padTop(30f).padLeft(-200f);

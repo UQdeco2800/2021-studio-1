@@ -1,0 +1,104 @@
+
+unnamed.png
+size: 2048, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+skeleton die1
+  rotate: false
+  xy: 833, 646
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die10
+  rotate: false
+  xy: 556, 646
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die11
+  rotate: false
+  xy: 2, 324
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die13
+  rotate: false
+  xy: 279, 324
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die12
+  rotate: false
+  xy: 279, 324
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die14
+  rotate: false
+  xy: 279, 324
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die2
+  rotate: false
+  xy: 279, 646
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die3
+  rotate: false
+  xy: 833, 324
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die4
+  rotate: false
+  xy: 279, 2
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die5
+  rotate: false
+  xy: 2, 646
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die6
+  rotate: false
+  xy: 556, 2
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die7
+  rotate: false
+  xy: 2, 2
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die8
+  rotate: false
+  xy: 1110, 646
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
+skeleton die9
+  rotate: false
+  xy: 556, 324
+  size: 275, 320
+  orig: 275, 320
+  offset: 0, 0
+  index: -1
