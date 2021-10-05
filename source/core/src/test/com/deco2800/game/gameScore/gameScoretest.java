@@ -24,12 +24,6 @@ public class gameScoretest {
         gameTime = new GameTime();
         gameScore = new gameScore();
     }
-}
-  /*  @Test
-    void getCurrentScoreCorrectTest(){
-        long current_score = gameScore.getCurrentScore();
-        assertEquals((gameTime.getTime() + 100)/100, current_score);
-    }
 
     @Test
     void startTimeNotNull(){
@@ -39,5 +33,5 @@ public class gameScoretest {
     }
 }
 
-   */
+
 

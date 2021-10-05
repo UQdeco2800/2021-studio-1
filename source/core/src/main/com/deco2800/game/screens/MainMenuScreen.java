@@ -24,7 +24,11 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private static final String[] mainMenuTextures = {"images/main_back.png", "images/mute_button_on.png", "images/plainBack.png"};
+  private static final String[] mainMenuTextures = {"images/main_back.png" ,
+                                                      "images/main_back2.png",
+                                                      "images/mute_button_on.png",
+                                                      "images/mute_button_off.png",
+                                                      "images/plainBack.png"};
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
