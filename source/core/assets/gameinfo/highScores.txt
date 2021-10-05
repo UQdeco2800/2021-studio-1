@@ -1,12 +1,5 @@
-<<<<<<< Updated upstream
-Unbeatable Orca,31007
-Unbeatable Puma,25124
-Unbeatable Zebra,15730
-Unbeatable Dragonfly,14538
-=======
+Extraordinary Unicorn,3249
 Mouse,2946
 Sam,2044
 Extraordinary Bjorn,1939
-Mouse,1796
-Trained Orca,307
->>>>>>> Stashed changes
+Extraordinary Zebra,2090

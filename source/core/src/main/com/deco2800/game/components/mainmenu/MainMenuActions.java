@@ -35,13 +35,23 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("Help Screen", this::onHelp);
     entity.getEvents().addListener("Leaderboard", this::onLeaderBoard);
     entity.getEvents().addListener("mute", this::onMute);
-
     music = ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class);
     music.setLooping(true);
     playMusic();
   }
 
-  /**
+    private void playMusic() {
+
+      music.setVolume(0.7f);
+      music.play();
+      logger.info(music.isPlaying() + "music playing");
+    }
+
+    private void stopMusic() {
+        music.setVolume(0f);
+    }
+
+    /**
    * Swaps to the Main Game screen.
    */
   private void onStart() {
@@ -104,15 +114,6 @@ public class MainMenuActions extends Component {
             mainMenuPop = null;
             ServiceLocator.getEntityService().unregister(mainMenuPop);
         }
-    }
-
-    private void playMusic() {
-        music.setVolume(0.7f);
-        music.play();
-    }
-
-    private void stopMusic() {
-        music.setVolume(0);
     }
 
   /**
