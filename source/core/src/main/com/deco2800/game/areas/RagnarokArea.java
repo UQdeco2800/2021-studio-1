@@ -79,6 +79,7 @@ public class RagnarokArea extends GameArea {
             "images/odin.atlas",
             "images/wall.atlas",
             "images/deathGiant.atlas",
+            "images/fire_spirit.atlas",
             "images/skeleton.atlas",
             "images/sfx.atlas",
             "images/lightning-animation.atlas",
