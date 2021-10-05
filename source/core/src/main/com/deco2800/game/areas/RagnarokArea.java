@@ -9,6 +9,7 @@ import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -66,7 +67,10 @@ public class RagnarokArea extends GameArea {
             "images/powerup-spear.png",
             "images/blue_bck.png",
             "images/Backgrounds/black_back.png",
-            "images/Backgrounds/asgard_bg.png"
+            "images/Backgrounds/asgard_bg.png",
+            "images/tutorial/lightningTutorial.png",
+            "images/tutorial/shieldTutorial.png",
+            "images/tutorial/spearTutorial.png"
     };
 
     //TODO: make Json,
@@ -174,6 +178,43 @@ public class RagnarokArea extends GameArea {
         }
     }
 
+
+    protected void spawnTutorial(int x, int y) {
+        GridPoint2 spearSpawn = new GridPoint2(x, y);
+        GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
+        GridPoint2 textOffset = new GridPoint2(0,5);
+        // GridPoint2 shieldSpawn = new GridPoint2(x+12, y+3);
+
+        
+        
+        spawnSpear(spearSpawn.x, spearSpawn.y);
+        Entity spearTutorial = ObstacleFactory.createTutorialSpear();
+
+        // Spawn enemies to test spear on
+        spawnWolf(spearSpawn.x+8, spearSpawn.y);
+        spawnWolf(spearSpawn.x+12, spearSpawn.y);
+        // spawnShield(shieldSpawn.x, shieldSpawn.y-3);
+
+        spawnLightning(lightningSpawn.x, lightningSpawn.y);
+        Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
+        
+        // Spawn enemies to test lightning on
+        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y);
+        spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y);
+        spawnSkeleton(lightningSpawn.x+16, lightningSpawn.y);
+
+
+        // Offset text and spawn it in
+        lightningSpawn.add(textOffset);
+        spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
+        spearSpawn.add(textOffset);
+        spawnEntityAt(spearTutorial, spearSpawn, true, false);
+
+
+        // Entity shieldTutorial = ObstacleFactory.createTutorialShield();
+        // spawnEntityAt(shieldTutorial, shieldSpawn, true, false);
+    }
+
     protected Entity spawnPlayer(int x, int y) {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(x, y); /*Math.round(lane.y - newPlayer.getScale().y));*/
@@ -187,17 +228,32 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
+     * Spawn a background image starting at x.
+     *
+     * @param x     starting coordinate
+     * @param width width of the image using scaleWidth(width)
+     * @param world world type, must match the first word of a .png file in
+     *              assets/images/Backgrounds/'world'_bg.png, any information after an underscore
+     *              in world is ignored i.e. asgard and asgard_3 are both the same.
+     */
+    protected void spawnBackground(int x, int width, String world) {
+        Entity background = ObstacleFactory.createBackground(world, width);
+        GridPoint2 pos = new GridPoint2(x, 0);
+        spawnEntityAt(background, pos, false, false);
+    }
+
+    /**
      * This spawns the Wall of Death
      */
     protected void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-40, 13);
-        GridPoint2 leftPos2 = new GridPoint2(-5, 13);
+        GridPoint2 leftPos = new GridPoint2(-30, 13);
+        GridPoint2 leftPos2 = new GridPoint2(5, 13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
         wallOfDeath.addComponent(new CameraShakeComponent(getPlayer(), this.terrainFactory.getCameraComponent(), sfx));
         wallOfDeath.addComponent(new FallDamageComponent(getPlayer()));
 
-        GridPoint2 leftPos3 = new GridPoint2(-15, 13);
+        GridPoint2 leftPos3 = new GridPoint2(-5, 13);
         Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
 
         wallOfDeath.addComponent(new VariableSpeedComponent(getPlayer(), deathGiant, sfx));
@@ -271,15 +327,6 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
-     * * Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
-     * * spans from x[1] to x[n].
-     * * <p>
-     * * On disposal of the overarching collision entity, all floors created are disposed of.
-     * *
-     * * @param x     array of x coordinates to spawn floors at
-     * * @param y     the y coordinate to spawn all floors at
-     * * @param world the world type to load in. Must match the name of a .png file in
-     * *              assets/images (e.g. assets/images/world.png)
      * Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
      * spans from x[0] to the end of the map chunk at x[n + 3].
      * <p>
