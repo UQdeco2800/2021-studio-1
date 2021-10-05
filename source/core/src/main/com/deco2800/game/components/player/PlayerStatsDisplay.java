@@ -85,6 +85,7 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void update(){
     entity.getEvents().trigger("updateScore", scoring.getCurrentScore());
+    // flags that the player is dead
     if (entity.getComponent(CombatStatsComponent.class).isDead() == true){
       deadFlag = true;
     }

@@ -3,26 +3,18 @@ package com.deco2800.game.gameScore;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
-
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 import com.deco2800.game.services.ServiceLocator;
-import net.dermetfan.gdx.physics.box2d.PositionController;
-
-import javax.swing.*;
 
 
 /**
- * The class handles the scoring of the player the score is increased linearly on the basis of time
- * elapsed since the beginning of the start.
+ * The class handles the scoring of the player the score is increased linearly in a loop and variations
+ * are made on the scoring on basis of various interactions
  */
 public class gameScore extends Component  {
-    private GdxGame gdxGame = new GdxGame();
-
-
     private  long score = 0;
     private long previous_score = 1;
-
 
     /**
      * Returns the current score to anywhere in the game
@@ -30,6 +22,7 @@ public class gameScore extends Component  {
      * @return current score
      **/
     public long getCurrentScore() {
+
         if (entity != null) {
             entity.getEvents().trigger("updateScore", score);
         }
@@ -38,18 +31,19 @@ public class gameScore extends Component  {
         if (ServiceLocator.getTimeSource().getDeltaTime() != 0
                 && PlayerStatsDisplay.deadFlag == false
         ) {
+            // checks if spear being thrown
             accurateSpearThrow();
             lightningComponent();
+            //Incremental on the socre
             previous_score += (long) (previous_score * 0.001);
+            //keeping the score to a non decimal value
             score += (long) Math.floor(previous_score);
         }
         return score;
-        // return score;
-
     }
 
     /**
-     * Score depletion on the basis of object being hit
+     * Score increase on the basis of spear being hit correctly
      */
     public void accurateSpearThrow() {
         SpearPowerUpComponent spear = new SpearPowerUpComponent();
@@ -58,21 +52,14 @@ public class gameScore extends Component  {
         }
     }
 
+    /**
+     * Score decreases on the basis of lightning use
+     */
     public void lightningComponent() {
         LightningPowerUpComponent lightning = new LightningPowerUpComponent();
         if (lightning.getActive()) {
             score -= 1000;
         }
-    }
-
-
-    /**
-     * Score depletion on the basis of object being hit
-     */
-
-    public void obstacleTwoHit() {
-        score -= 100;
-
     }
 }
 
