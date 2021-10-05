@@ -43,7 +43,13 @@ public class VariableSpeedComponent extends Component {
         float yPos = target.getPosition().y;
         float distance = entity.getPosition().dst(target.getPosition());
 
-        if (distance < 32f) {
+        if (target.getPosition().x<20) {
+            entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2f);
+            deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+            sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+        }
+
+        else if (distance < 32f) {
 
             entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
             deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);

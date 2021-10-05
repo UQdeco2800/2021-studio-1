@@ -13,6 +13,7 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.rendering.BackgroundRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.LevelLoadTriggerComponent;
 import com.deco2800.game.utils.math.Vector2Utils;
@@ -23,6 +24,29 @@ import com.deco2800.game.utils.math.Vector2Utils;
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
 public class ObstacleFactory {
+
+    /**
+     * Create and return a background entity having only BackgroundRenderComponent.
+     *
+     * @param world width of the image using scaleWidth(width)
+     * @param width world type, must match the first word of a .png file in
+     *              assets/images/Backgrounds/'world'_bg.png, any information after an underscore
+     *              in world is ignored i.e. asgard and asgard_3 are both the same.
+     * @return background entity
+     */
+    public static Entity createBackground(String world, int width) {
+        Entity background = new Entity();
+        if (world == null) {
+            background.addComponent(new BackgroundRenderComponent("images/Backgrounds/black_back" +
+                    ".png"));
+        } else {
+            String specificWorld = world.split("_", 2)[0];
+            background.addComponent(new BackgroundRenderComponent("images/Backgrounds/" + specificWorld +
+                    "_bg.png"));
+        }
+        background.scaleWidth(width);
+        return background;
+    }
 
     /**
      * Creates a rock entity.
@@ -236,6 +260,26 @@ public class ObstacleFactory {
         wall.setType(EntityTypes.OBSTACLE);
         return wall;
     }
+
+
+    public static Entity createTutorialLightning() {
+        Entity TutorialLightning = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/lightningTutorial.png"));
+        return TutorialLightning;
+    }
+
+    public static Entity createTutorialSpear() {
+        Entity TutorialSpear = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/spearTutorial.png"));
+        return TutorialSpear;
+    }
+
+    public static Entity createTutorialShield() {
+        Entity TutorialShield = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/shieldTutorial.png"));
+        return TutorialShield;
+    }
+
 
     private ObstacleFactory() {
         throw new IllegalStateException("Instantiating static util class");

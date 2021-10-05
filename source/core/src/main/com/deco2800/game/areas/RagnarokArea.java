@@ -9,6 +9,7 @@ import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -36,48 +37,51 @@ public class RagnarokArea extends GameArea {
 
     //TODO: make Json
     private static final String[] racerTextures = {
-            "images/floor.png",
-            "images/platform_gradient.png",
-            "images/platform_no_gradient.png",
-            "images/fire_spirit.png",
-            "images/skeleton.png",
-            "images/Spear_1.png",
-            "images/Rock_1.png",
-            "images/Spike_1.png",
-            "images/deathGiant.png",
-            "images/sfx.png",
-            "images/worlds/earth_1.png",
-            "images/worlds/earth_2.png",
-            "images/worlds/earth_3.png",
-            "images/worlds/earth_4.png",
-            "images/worlds/asgard_1.png",
-            "images/worlds/asgard_2.png",
-            "images/worlds/hel_1.png",
-            "images/worlds/hel_2.png",
-            "images/worlds/jotunheimr_1.png",
-            "images/worlds/jotunheimr_2.png",
-            "images/floors/alfheim.png",
-            "images/floors/asgard.png",
-            "images/floors/earth.png",
-            "images/floors/hel.png",
-            "images/floors/jotunheimr.png",
-            "images/powerup-shield.png",
-            "images/powerup-spear.png",
-            "images/blue_bck.png",
-            "images/Backgrounds/black_back.png",
-            "images/Backgrounds/asgard_bg.png"
+        "images/floor.png",
+        "images/platform_gradient.png",
+        "images/platform_no_gradient.png",
+        "images/fire_spirit.png",
+        "images/skeleton.png",
+        "images/Spear_1.png",
+        "images/Rock_1.png",
+        "images/Spike_1.png",
+        "images/deathGiant.png",
+        "images/sfx.png",
+        "images/worlds/earth_1.png",
+        "images/worlds/earth_2.png",
+        "images/worlds/earth_3.png",
+        "images/worlds/earth_4.png",
+        "images/worlds/asgard_1.png",
+        "images/worlds/asgard_2.png",
+        "images/worlds/hel_1.png",
+        "images/worlds/hel_2.png",
+        "images/worlds/jotunheimr_1.png",
+        "images/worlds/jotunheimr_2.png",
+        "images/floors/alfheim.png",
+        "images/floors/asgard.png",
+        "images/floors/earth.png",
+        "images/floors/hel.png",
+        "images/floors/jotunheimr.png",
+        "images/powerup-shield.png",
+        "images/powerup-spear.png",
+        "images/blue_bck.png",
+        "images/Backgrounds/black_back.png",
+        "images/Backgrounds/asgard_bg.png",
+        "images/tutorial/lightningTutorial.png",
+        "images/tutorial/shieldTutorial.png",
+        "images/tutorial/spearTutorial.png"
     };
 
     //TODO: make Json,
     private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
-            "images/wolf.atlas",
-            "images/odin.atlas",
-            "images/wall.atlas",
-            "images/deathGiant.atlas",
-            "images/skeleton.atlas",
-            "images/sfx.atlas",
-            "images/lightning-animation.atlas",
-            "images/player-spear.atlas"
+        "images/wolf.atlas",
+        "images/odin.atlas",
+        "images/wall.atlas",
+        "images/deathGiant.atlas",
+        "images/skeleton.atlas",
+        "images/sfx.atlas",
+        "images/lightning-animation.atlas",
+        "images/player-spear.atlas"
     };
 
     // get the sounds to work and then move the music & sounds to a json
@@ -93,7 +97,7 @@ public class RagnarokArea extends GameArea {
     private static final String LOUD_WALK_MUSIC = "sounds/giant_walk.mp3";
     private static final String ROAR_MUSIC = "sounds/roar.mp3";
     private static final String[] RACER_MUSIC = {MAIN_MUSIC, TOWN_MUSIC, RAIDER_MUSIC, FIRE_MUSIC,
-            WALK_MUSIC, LOUD_WALK_MUSIC, ROAR_MUSIC};
+        WALK_MUSIC, LOUD_WALK_MUSIC, ROAR_MUSIC};
 
     private final TerrainFactory terrainFactory;
 
@@ -173,6 +177,37 @@ public class RagnarokArea extends GameArea {
         }
     }
 
+
+    protected void spawnTutorial(int x, int y) {
+        GridPoint2 spearSpawn = new GridPoint2(x, y+3);
+        GridPoint2 lightningSpawn = new GridPoint2(x+18,y+3);
+        // GridPoint2 shieldSpawn = new GridPoint2(x+12, y+3);
+
+
+
+        spawnSpear(spearSpawn.x, spearSpawn.y-3);
+        Entity spearTutorial = ObstacleFactory.createTutorialSpear();
+        spawnEntityAt(spearTutorial, spearSpawn, true, false);
+
+        // Spawn enemies to test spear on
+        spawnWolf(spearSpawn.x+8, spearSpawn.y-3);
+        spawnWolf(spearSpawn.x+12, spearSpawn.y-3);
+        // spawnShield(shieldSpawn.x, shieldSpawn.y-3);
+
+        spawnLightning(lightningSpawn.x, lightningSpawn.y-3);
+        Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
+        spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
+
+        // Spawn enemies to test lightning on
+        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y-3);
+        spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y-3);
+        spawnSkeleton(lightningSpawn.x+16, lightningSpawn.y-3);
+
+
+        // Entity shieldTutorial = ObstacleFactory.createTutorialShield();
+        // spawnEntityAt(shieldTutorial, shieldSpawn, true, false);
+    }
+
     protected Entity spawnPlayer(int x, int y) {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(x, y); /*Math.round(lane.y - newPlayer.getScale().y));*/
@@ -186,17 +221,32 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
+     * Spawn a background image starting at x.
+     *
+     * @param x     starting coordinate
+     * @param width width of the image using scaleWidth(width)
+     * @param world world type, must match the first word of a .png file in
+     *              assets/images/Backgrounds/'world'_bg.png, any information after an underscore
+     *              in world is ignored i.e. asgard and asgard_3 are both the same.
+     */
+    protected void spawnBackground(int x, int width, String world) {
+        Entity background = ObstacleFactory.createBackground(world, width);
+        GridPoint2 pos = new GridPoint2(x, 0);
+        spawnEntityAt(background, pos, false, false);
+    }
+
+    /**
      * This spawns the Wall of Death
      */
     protected void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-40, 13);
-        GridPoint2 leftPos2 = new GridPoint2(-5, 13);
+        GridPoint2 leftPos = new GridPoint2(-30, 13);
+        GridPoint2 leftPos2 = new GridPoint2(5, 13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
         wallOfDeath.addComponent(new CameraShakeComponent(getPlayer(), this.terrainFactory.getCameraComponent(), sfx));
         wallOfDeath.addComponent(new FallDamageComponent(getPlayer()));
 
-        GridPoint2 leftPos3 = new GridPoint2(-15, 13);
+        GridPoint2 leftPos3 = new GridPoint2(-5, 13);
         Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
 
         wallOfDeath.addComponent(new VariableSpeedComponent(getPlayer(), deathGiant, sfx));
@@ -229,15 +279,15 @@ public class RagnarokArea extends GameArea {
 
         // Top
         spawnEntityAt(
-                ObstacleFactory.createWall(worldBounds.x, WALL_HEIGHT),
-                new GridPoint2(0, tileBounds.y),
-                false,
-                false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_HEIGHT),
+            new GridPoint2(0, tileBounds.y),
+            false,
+            false);
 
         // Bottom
         spawnEntityAt(
-                ObstacleFactory.createWall(worldBounds.x, WALL_HEIGHT),
-                GridPoint2Utils.ZERO, false, false);
+            ObstacleFactory.createWall(worldBounds.x, WALL_HEIGHT),
+            GridPoint2Utils.ZERO, false, false);
 
     }
 
@@ -271,15 +321,6 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
-     * * Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
-     * * spans from x[1] to x[n].
-     * * <p>
-     * * On disposal of the overarching collision entity, all floors created are disposed of.
-     * *
-     * * @param x     array of x coordinates to spawn floors at
-     * * @param y     the y coordinate to spawn all floors at
-     * * @param world the world type to load in. Must match the name of a .png file in
-     * *              assets/images (e.g. assets/images/world.png)
      * Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
      * spans from x[0] to the end of the map chunk at x[n + 3].
      * <p>

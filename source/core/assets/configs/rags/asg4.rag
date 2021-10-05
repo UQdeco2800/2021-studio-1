@@ -1,0 +1,62 @@
+$_title asg4
+$_width 40
+$_height 10
+$_world earth_1
+
+$#.........F
+$#SP.......F
+$#.P.....P.F
+$#.P.....P.F
+$#.......P.F
+$#....P.SP.F
+$#....P..P.F
+$#....P..P.F
+$#....P..P.F
+$#.........F
+$#.........S
+$#.........S
+$#....P....S
+$#...RP....F
+$#....P....F
+$#....P....F
+$#....P.P..F
+$#......P..F
+$#......P..F
+$#..P...P..F
+$#..P...P..F
+$#..P...P..F
+$#..P......F
+$#.RP......F
+$#.SP....P.F
+$#....P..P.F
+$#....P..P.F
+$#...RP..P.F
+$#....P..P.F
+$#....P..P.F
+$#....P....F
+$#.........F
+$#......P..F
+$#......P..F
+$#......P..F
+$#......P.SF
+$#......P..F
+$#.....RP..F
+$#......P..F
+$#.........F
+
+$@player set [2,1]
+
+$-spawn [18,1] (fireSpirit)
+$-spawn [4,1] (skeleton)
+$-spawn [19,4] (wolf)
+$-spawn [30,1] (skeleton)
+$-spawn [25,1] (skeleton)
+$-spawn [27,3] (wolf)
+$-spawn [6,6] (skeleton)
+
+$-spawn [2,9] (lightning)
+$-spawn [14,6] (spear)
+$-spawn [21,8] (shield)
+$-spawn [35,4] (lightning)
+
+$-spawn [35,5] (levelTrigger)
