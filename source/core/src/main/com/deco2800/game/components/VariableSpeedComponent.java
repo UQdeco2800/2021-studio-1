@@ -39,17 +39,13 @@ public class VariableSpeedComponent extends Component {
      * @param other second collision object
      */
     private void onCollisionStart(Fixture me, Fixture other) {
-
-        float yPos = target.getPosition().y;
         float distance = deathGiant.getPosition().dst(target.getPosition());
 
         if (distance > 32f) {
             entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
             deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
             sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
-        }
-
-        else if (target.getPosition().x<40) {
+        } else if (target.getPosition().x<40) {
             entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2f);
             deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2f);
             sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2f);

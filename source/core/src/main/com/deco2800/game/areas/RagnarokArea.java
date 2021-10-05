@@ -12,15 +12,12 @@ import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
-import com.deco2800.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.VariableSpeedComponent;
 import com.deco2800.game.components.FallDamageComponent;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.function.Function;
 
 public class RagnarokArea extends GameArea {
@@ -29,8 +26,6 @@ public class RagnarokArea extends GameArea {
 
     private static final float WALL_HEIGHT = 0.1f;
     private final String name; //initialise in the loader
-
-    private final HashMap<GridPoint2, LinkedList<Entity>> entitySignUp;
 
     protected Entity player;
 
@@ -107,7 +102,6 @@ public class RagnarokArea extends GameArea {
         super();
         this.name = name;
         this.terrainFactory = terrainFactory;
-        this.entitySignUp = new HashMap<>();
     }
 
     @Override
@@ -122,8 +116,6 @@ public class RagnarokArea extends GameArea {
         spawnTerrain();
 
         playMusic(); //TODO: eventual move to music
-        // also this is the cause of all music playing at once, because multiple ragnorok areas
-        // get made...
 
         logger.debug("Creating new RagnarokArea");
     }
@@ -179,10 +171,6 @@ public class RagnarokArea extends GameArea {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(newPlayer, pos, true, false);
-
-        //entitySignUp.
-        // ^ so this will register it to entity service and the activeEntities list
-        // in GameArea
 
         return newPlayer;
     }
@@ -269,7 +257,6 @@ public class RagnarokArea extends GameArea {
         // y + 2 is on this line so the platform spawns at the top of a tile, not the bottom.
         GridPoint2 pos = new GridPoint2(x, y + 2);
         spawnEntityAt(platform, pos, false, false);
-        signup(pos, platform);
     }
 
     /**
@@ -283,7 +270,6 @@ public class RagnarokArea extends GameArea {
         Entity floor = ObstacleFactory.createFloor(world);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(floor, pos, false, false);
-        signup(pos, floor);
     }
 
     /**
@@ -323,33 +309,29 @@ public class RagnarokArea extends GameArea {
             entities[i] = mapPart;
             GridPoint2 pos = new GridPoint2(x[i], y);
             spawnEntityAt(mapPart, pos, false, false);
-            signup(pos, mapPart);
         }
 
-        // Calculate width by getting taking away the starting position of the first platform from
-        // the starting position of the last platform. This is still one map piece too short, so
-        // add 3 which is the width of a single tile.
+        /* Calculate width by getting taking away the starting position of the first platform from
+           the starting position of the last platform. This is still one map piece too short, so
+           add 3 which is the width of a single tile. */
         int width = x[x.length - 1] - x[0] + 3;
         Entity collider = ObstacleFactory.createCollider(width, height);
         collider.addComponent(new GroupDisposeComponent(entities));
 
         GridPoint2 pos = new GridPoint2(x[0], y);
         spawnEntityAt(collider, pos, false, false);
-        signup(pos, collider);
     }
 
     protected void spawnRocks(int x, int y) {
         Entity rocks = ObstacleFactory.createRock();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(rocks, pos, false, false);
-        signup(pos, rocks);
     }
 
     protected void spawnSpikes(int x, int y) {
         Entity spikes = ObstacleFactory.createSpikes();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(spikes, pos, false, false);
-        signup(pos, spikes);
     }
 
     protected void spawnWolf(int x, int y) {
@@ -368,40 +350,6 @@ public class RagnarokArea extends GameArea {
         Entity fireSpirit = NPCFactory.createFireSpirit(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(fireSpirit, pos, false, false);
-    }
-    
-    public void clearEntitiesAt(int x, int y) {
-        // takes the global scale x and y, so mutliply them by 3 in here
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                GridPoint2 index = new GridPoint2(x + i, y + j);
-
-                if (entitySignUp.get(index) != null) {
-                    for (Entity e : entitySignUp.get(index)) {
-                        e.flagDelete();
-                    }
-                }
-
-            }
-        }
-    }
-
-    public void clearAllEntities() {
-        for (GridPoint2 g : entitySignUp.keySet()) {
-            for (Entity e : entitySignUp.get(g)) {
-                e.flagDelete();
-            }
-        }
-    }
-
-    public void signup(GridPoint2 pos, Entity entity) {
-        if (!entitySignUp.containsKey(pos)) {
-
-            LinkedList<Entity> posList = new LinkedList<>();
-            entitySignUp.put(pos, posList);
-        }
-
-        entitySignUp.get(pos).add(entity);
     }
 
     protected void spawnShield(int x, int y) {
