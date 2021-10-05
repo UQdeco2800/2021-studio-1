@@ -12,10 +12,7 @@ import com.deco2800.game.components.npc.DeathGiantAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ScreenFXAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.tasks.MoveRightTask;
-import com.deco2800.game.components.tasks.WanderTask;
-import com.deco2800.game.components.tasks.MoveLeftTask;
-import com.deco2800.game.components.tasks.ShootTask;
+import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
 import com.deco2800.game.entities.configs.NPCConfigs;
@@ -74,7 +71,7 @@ public class NPCFactory {
         //set body collision box
         skeleton.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.6f,
             0.7f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
-        //create head circle collision box
+        //create head circle colilision box
         CircleShape head = new CircleShape();
         head.setRadius(0.2f);
         Vector2 circleOffset = new Vector2(skeleton.getCenterPosition().x + 0.15f,
@@ -105,6 +102,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
+        //animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
 
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -114,7 +112,6 @@ public class NPCFactory {
 
         wolf.setScale(1.3f, 1f);
 
-        // NEED TO CHANGE COLLISION BOXES -> RUN THROUGH ENEMIES
         //create body collision box using collider component
         wolf.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(1f,
                 0.6f), PhysicsComponent.AlignX.CENTER,
@@ -153,11 +150,20 @@ public class NPCFactory {
         Entity fireSpirit = createFireSpiritNPC(target);
         BaseEntityConfig config = configs.fireSpirit;
 
-        fireSpirit
-                .addComponent(new TextureRenderComponent("images/fire_spirit.png"))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/fire_spirit.atlas", TextureAtlas.class));
+        animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
 
-        fireSpirit.getComponent(TextureRenderComponent.class).scaleEntity();
+        fireSpirit
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
+        fireSpirit.getComponent(AnimationRenderComponent.class).scaleEntity();
+
+        fireSpirit.setScale(1.3f, 1f);
 
         //set body collision box
         fireSpirit.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.6f,
@@ -173,6 +179,13 @@ public class NPCFactory {
         for(Fixture fixture : fireSpirit.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
             fixture.setSensor(true);
         }
+
+        fireSpirit.getComponent(AnimationRenderComponent.class).startAnimation("run");
+        fireSpirit.setType(EntityTypes.WOLF);
+
+        fireSpirit.setScale(1.3f, 1f);
+
+        fireSpirit.getComponent(AnimationRenderComponent.class).startAnimation("run");
 
         fireSpirit.setType(EntityTypes.FIRESPIRIT);
         return fireSpirit;
@@ -300,7 +313,7 @@ public class NPCFactory {
     private static Entity createWolfNPC(Entity target) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new MoveLeftTask());
+                        .addTask(new ChaseTask(target, 2, true, 100, 10));
         Entity npc =
                 new Entity()
                         .addComponent(new PhysicsComponent())
@@ -314,7 +327,7 @@ public class NPCFactory {
                 PhysicsComponent.AlignX.CENTER, PhysicsComponent.AlignY.CENTER);
         npc.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
         npc.getComponent(PhysicsComponent.class).getBody().setUserData(EntityTypes.ENEMY);
-        npc.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+        npc.getComponent(PhysicsMovementComponent.class).setMaxSpeed(8);
         return npc;
     }
 
@@ -326,8 +339,9 @@ public class NPCFactory {
     private static Entity createFireSpiritNPC(Entity target) {
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new WanderTask(new Vector2(0f, 0f), 0f))
-                        .addTask(new ShootTask(target, 5f, ProjectileFactory.fireBall()));
+                        .addTask(new ShootTask(target, 5f))
+                        .addTask(new WanderTask(new Vector2(0f, 0f), 0f));
+
         Entity npc =
                 new Entity()
                         .addComponent(new PhysicsComponent())

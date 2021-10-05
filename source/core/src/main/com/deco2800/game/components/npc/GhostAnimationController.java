@@ -17,6 +17,7 @@ public class GhostAnimationController extends Component {
     entity.getEvents().addListener("wanderStart", this::animateWander);
     entity.getEvents().addListener("chaseStart", this::animateChase);
     entity.getEvents().addListener("move_right", this::animateWander_right);
+    entity.getEvents().addListener("death", this::animateDeath);
 
           //test for NPC to face other direction when moving
   }
@@ -27,6 +28,9 @@ public class GhostAnimationController extends Component {
 //  void animateWalk() {
 //    animator.startAnimation("float");
 //  }
+  void animateDeath() {
+    animator.startAnimation("death");
+  }
 
   void animateWander() {
     animator.startAnimation("run");

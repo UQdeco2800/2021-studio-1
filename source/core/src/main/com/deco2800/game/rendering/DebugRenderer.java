@@ -140,6 +140,7 @@ public class DebugRenderer {
           break;
         case TEXT:
           renderText(drawRequests[i]);
+          break;
         default:
           logger.error("Attempting to draw unsupported shape!");
           break;

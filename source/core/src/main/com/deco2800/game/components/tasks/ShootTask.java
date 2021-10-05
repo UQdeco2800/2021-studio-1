@@ -6,8 +6,12 @@ import com.deco2800.game.ai.tasks.PriorityTask;
 import com.deco2800.game.ai.tasks.Task;
 import com.deco2800.game.entities.Entity;
 
+import com.deco2800.game.entities.factories.ProjectileFactory;
+import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.physics.box2d.Body;
 
 /**
  * Fires a projectile at the player. Requires an entity with a PhysicsMovementComponent.
@@ -23,12 +27,12 @@ public class ShootTask extends DefaultTask implements PriorityTask {
     private WaitTask waitTask;
     private ShootTask shootTask;
     private Task currentTask;
+    private Entity fire;
 
 
-    public ShootTask(Entity player, float waitTime, Entity fireball) {
+    public ShootTask(Entity player, float waitTime) { // I removed Entity fireball from here and instead just created the fireball when shoot it called
         this.player = player;
         this.waitTime = waitTime;
-        this.fireball = fireball;
     }
 
     @Override
@@ -44,7 +48,7 @@ public class ShootTask extends DefaultTask implements PriorityTask {
         waitTask = new WaitTask(waitTime);
         waitTask.create(owner);
 
-        shootTask = new ShootTask(player, waitTime, fireball);
+        shootTask = new ShootTask(player, waitTime);
         shootTask.create(owner);
 
         currentTask = shootTask;
@@ -70,9 +74,17 @@ public class ShootTask extends DefaultTask implements PriorityTask {
      */
     private void fire() {
         logger.debug("Shot Fired");
+        Entity fire = ProjectileFactory.fireBall();
+        Body body = fire.getComponent(PhysicsComponent.class).getBody();
+        ServiceLocator.getEntityService().register(fire);
+        fire.setPosition(owner.getEntity().getPosition().x + 1, owner.getEntity().getPosition().y);
+        fire.getComponent(PhysicsComponent.class).getBody().setLinearVelocity(50, 0);
 
-        fireball.create();
-        movementTask.setTarget(new Vector2(player.getPosition()));
+        if (body.getLinearVelocity().X.isZero() || fire.getCenterPosition().y < 0) {
+            fire.flagDelete();
+        }
+
+        //You had movementTask.setTarget(player) but movementTask wasn't defined and it caused a NullPointerException
         swapTask(waitTask);
     }
 

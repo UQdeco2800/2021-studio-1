@@ -24,22 +24,25 @@ public class MainGameActions extends Component {
         this.game = game;
     }
 
-    @Override
-    public void create() {
-        entity.getEvents().addListener("exit", this::onExit);
-        entity.getEvents().addListener("Pause Menu", this::onPause);
-        entity.getEvents().addListener("Score Screen", this::showScore);
-    }
 
-    /**
-     * Swaps to the Main Menu screen.
-     */
-    public void onExit() {
-        logger.info("Exiting main game screen");
-        game.paused = false;
-        game.scoreShown = false;
-        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
-    }
+  @Override
+  public void create() {
+    entity.getEvents().addListener("exit", this::onExit);
+    entity.getEvents().addListener("Pause Menu", this::onPause);
+    entity.getEvents().addListener("Score Screen", this::showScore);
+    entity.getEvents().addListener("Game Over", this::gameOver);
+  }
+
+
+  /**
+   * Swaps to the Main Menu screen.
+   */
+  public void onExit() {
+    logger.info("Exiting main game screen");
+    game.paused = false;
+    game.scoreShown = false;
+    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+  }
 
     /**
      * Pauses the game -- the trigger function for the event.
@@ -103,4 +106,29 @@ public class MainGameActions extends Component {
         scoreScreenSound.play();
     }
 
+    private void gameOver() {
+        Sound gameOverSound;
+
+        if (game.over) {
+            ServiceLocator.getTimeSource().setTimeScale(1f);
+            popUp.dispose();
+            //resume sound
+            gameOverSound = ServiceLocator.getResourceService().getAsset(IMPACT, Sound.class);
+        } else {
+            ServiceLocator.getTimeSource().setTimeScale(0f);
+
+            if (popUp != null) {
+                popUp.dispose();
+            }
+
+            popUp = new Entity();
+            popUp.addComponent(new UIPop("Game Over", entity));
+            ServiceLocator.getEntityService().register(popUp);
+            //pause sound
+            gameOverSound = ServiceLocator.getResourceService().getAsset("sounds/Impact4.ogg", Sound.class);
+        }
+        game.over = !game.over;
+        gameOverSound.play();
+
+    }
 }

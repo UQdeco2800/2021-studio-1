@@ -11,6 +11,7 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
+import com.deco2800.game.components.powerups.PowerUpGUIComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -28,7 +29,6 @@ import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.maingame.MainGamePannelDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
-import com.sun.tools.javac.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +42,23 @@ import java.io.IOException;
  */
 public class MainGameScreen extends ScreenAdapter {
     private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-    private static final String[] mainGameTextures = {};
+    private static final String[] mainGameTextures = {
+            "images/PowerUpGUI/Shield.png",
+            "images/PowerUpGUI/Spear.png",
+            "images/PowerUpGUI/Lightning.png",
+            "images/PowerUpGUI/Empty.png",
+            "images/PowerUpGUI/lightning0.png",
+            "images/PowerUpGUI/lightning1.png",
+            "images/PowerUpGUI/shield0.png",
+            "images/PowerUpGUI/shield1.png",
+            "images/PowerUpGUI/shield2.png",
+            "images/PowerUpGUI/shield3.png",
+            "images/PowerUpGUI/spear0.png",
+            "images/PowerUpGUI/spear1.png",
+            "images/PowerUpGUI/spear2.png",
+            "images/PowerUpGUI/spear3.png",
+            "images/disp_back.png"
+    };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
@@ -81,26 +97,6 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.getAreaService().setManager(ragnarokManager);
         ServiceLocator.getAreaService().run(); //TODO: call run on manager from terminal line
-
-        //ragnarokManager.create();
-
-        //boolean isObstacle = false;
-        //if (isObstacle) {
-        //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-        //obstacleArea.create();
-        //} else if (!isObstacle) {
-
-        //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-        //obstacleArea.create()
-
-        //ragnarokArea = new RagnarokArea("the og", terrainFactory);
-
-        //TODO: abstract commands from RacerArea to GameArea
-        //TODO: so that they can be called from any GameArea
-        //ServiceLocator.getAreaService().setMainRacerArea(ragnarokArea);
-
-        //ragnarokArea.create();
-        //}
     }
 
     @Override
@@ -118,13 +114,12 @@ public class MainGameScreen extends ScreenAdapter {
             if (player.getComponent(CombatStatsComponent.class).getHealth() == 0) {
 
                 long currentScore = player.getComponent(PlayerStatsDisplay.class).getPlayerScore();
-
                 if (currentScore > MainMenuDisplay.getHighScoreValues()[4]) {
 
                     recordHighScore("" + currentScore);
 
                 }
-                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                //game.setScreen(GdxGame.ScreenType.MAIN_MENU);
             }
         }
 
@@ -197,17 +192,40 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new MainGamePannelDisplay())
                 .addComponent(theOg)
                 .addComponent(inputComponent)
-                .addComponent(new TerminalDisplay());
+                .addComponent(new TerminalDisplay())
+                .addComponent(new PowerUpGUIComponent());
 
         ServiceLocator.getEntityService().register(ui);
     }
 
     private void recordHighScore(String currentScore) {
 
-        String[] availableNames = {"Zebra", "Fox", "Hound", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
+        String[] availableNames = {"Zebra", "Fox", "Dire Wolf", "Lion", "Puma", "Kitten", "Mouse", "Orca", "Dragonfly", "Unicorn"};
+        String[] availableAdjectives = {"Tiny", "Spirited", "Curious", "Colourful", "Trained", "Triumphant", "Extraordinary", "Fierce", "Unbeatable", "Unique"};
         char[] scoreIntegers = currentScore.toCharArray();
+        String firstCharacter = scoreIntegers[0] + "";
         String randValue = "" + scoreIntegers[scoreIntegers.length - 1];
-        String name = availableNames[Integer.parseInt(randValue)];
+        String adjective = "Wandering";
+
+        int lengthScore = scoreIntegers.length;
+        if (lengthScore < availableAdjectives.length) {
+
+            int section = 0;
+
+            if (Integer.parseInt(firstCharacter) > 5) {
+                section = 1;
+            }
+            adjective = availableAdjectives[((scoreIntegers.length - 1) * 2) + section];
+        }
+
+        String selectedName = MainMenuDisplay.getPlayerName();
+        String name;
+
+        if (!selectedName.equals("Random")) {
+            name = adjective + " " + selectedName;
+        } else {
+            name = adjective + " " + availableNames[Integer.parseInt(randValue)] + "";
+        }
 
         int[] highScoreValues = MainMenuDisplay.getHighScoreValues();
         String[] highScoreNames = MainMenuDisplay.getHighScoreNames();
