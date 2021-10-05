@@ -19,6 +19,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label scoreLabel;
   public static boolean deadFlag = false;
   gameScore scoring = new gameScore();
+  private int health;
 
 
 
@@ -55,7 +56,7 @@ public class PlayerStatsDisplay extends UIComponent {
     float heartSideLength = 30f;
 
     // Health text
-    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+    health = entity.getComponent(CombatStatsComponent.class).getHealth();
     //int health = 100;
     CharSequence healthText = String.format("Health: %d", health);
     healthLabel = new Label(healthText, skin, "large");
@@ -90,7 +91,6 @@ public class PlayerStatsDisplay extends UIComponent {
       deadFlag = true;
     }
   }
-
 
   /**
    * Updates the player's health on the ui.
