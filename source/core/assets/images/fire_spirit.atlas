@@ -4,6 +4,13 @@ size: 2048, 1024
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+default
+  rotate: false
+  xy: 2, 4
+  size: 375, 320
+  orig: 375, 320
+  offset: 0, 0
+  index: 0
 run
   rotate: false
   xy: 2, 4
@@ -11,6 +18,27 @@ run
   orig: 375, 320
   offset: 0, 0
   index: 0
+run
+  rotate: false
+  xy: 379, 4
+  size: 375, 320
+  orig: 375, 320
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 756, 4
+  size: 375, 320
+  orig: 375, 320
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 1133, 4
+  size: 375, 320
+  orig: 375, 320
+  offset: 0, 0
+  index: 3
 death
   rotate: false
   xy: 2, 4
@@ -116,3 +144,31 @@ death
   orig: 375, 320
   offset: 0, 0
   index: 8
+run_back
+  rotate: false
+  xy: 2, 4
+  size: 375, 320
+  orig: 375, 320
+  offset: 0, 0
+  index: 0
+run_back
+  rotate: false
+  xy: 379, 4
+  size: 375, 320
+  orig: 375, 320
+  offset: 0, 0
+  index: 1
+run_back
+  rotate: false
+  xy: 756, 4
+  size: 375, 320
+  orig: 375, 320
+  offset: 0, 0
+  index: 2
+run_back
+  rotate: false
+  xy: 1133, 4
+  size: 375, 320
+  orig: 375, 320
+  offset: 0, 0
+  index: 3

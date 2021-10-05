@@ -60,6 +60,7 @@ public class NPCFactory {
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
 
@@ -105,6 +106,8 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
 
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -153,11 +156,19 @@ public class NPCFactory {
         Entity fireSpirit = createFireSpiritNPC(target);
         BaseEntityConfig config = configs.fireSpirit;
 
-        fireSpirit
-                .addComponent(new TextureRenderComponent("images/fire_spirit.png"))
-                .addComponent(new CombatStatsComponent(config.health, config.baseAttack));
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/fire_spirit.atlas", TextureAtlas.class));
+        animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
 
-        fireSpirit.getComponent(TextureRenderComponent.class).scaleEntity();
+        fireSpirit
+                .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
+                .addComponent(animator)
+                .addComponent(new GhostAnimationController());
+
+        fireSpirit.setScale(1.3f, 1f);
 
         //set body collision box
         fireSpirit.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.6f,
