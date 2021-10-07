@@ -4,16 +4,15 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.Component;
-import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.physics.BodyUserData;
-import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 
 public class SpearComponent extends Component {
     /**
      * Add an event to the spear when it is created
      */
+    @Override
     public void create() {
         entity.getEvents().addListener("collisionStart",
                 this::handleSpearCollision);
@@ -32,12 +31,12 @@ public class SpearComponent extends Component {
      */
     private void spearCollisionWithPlayer (Contact contact, BodyUserData spear,
                                        BodyUserData other) {
-        if (entity.getComponent(PhysicsComponent.class).getBody().getType() == BodyDef.BodyType.StaticBody) {
-            if (other.entity.getType() == EntityTypes.PLAYER &&
-                    other.entity.getComponent(PhysicsComponent.class)
-                            .getBody().getLinearVelocity().y > 0) {
-                contact.setEnabled(false);
-            }
+        if ((entity.getComponent(PhysicsComponent.class).getBody().getType() ==
+                BodyDef.BodyType.StaticBody) && other.entity.getType() ==
+                EntityTypes.PLAYER && other.entity
+                .getComponent(PhysicsComponent.class).getBody()
+                .getLinearVelocity().y > 0) {
+            contact.setEnabled(false);
         }
     }
 
