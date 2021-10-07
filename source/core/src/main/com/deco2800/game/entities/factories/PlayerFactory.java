@@ -101,17 +101,17 @@ public class PlayerFactory {
             Animation.PlayMode.NORMAL);
     animator.addAnimation("fall-right", 0.1f,
             Animation.PlayMode.NORMAL);
-    animator.addAnimation("fall-left-shield", 1f,
+    animator.addAnimation("fall-left-shield", 0.1f,
             Animation.PlayMode.NORMAL);
-    animator.addAnimation("fall-left-spear", 1f,
+    animator.addAnimation("fall-left-spear", 0.1f,
             Animation.PlayMode.NORMAL);
-    animator.addAnimation("fall-left-spear-shield", 1f,
+    animator.addAnimation("fall-left-spear-shield", 0.1f,
             Animation.PlayMode.NORMAL);
-    animator.addAnimation("fall-right-shield", 1f,
+    animator.addAnimation("fall-right-shield", 0.1f,
             Animation.PlayMode.NORMAL);
-    animator.addAnimation("fall-right-spear", 1f,
+    animator.addAnimation("fall-right-spear", 0.1f,
             Animation.PlayMode.NORMAL);
-    animator.addAnimation("fall-right-spear-shield", 1f,
+    animator.addAnimation("fall-right-spear-shield", 0.1f,
             Animation.PlayMode.NORMAL);
 
 
