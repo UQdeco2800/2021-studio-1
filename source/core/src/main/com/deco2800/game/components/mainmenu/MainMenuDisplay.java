@@ -27,6 +27,16 @@ public class MainMenuDisplay extends UIComponent {
   private Table table;
   private Table helpTable;
   private Table highScoreTable;
+  private Table starOne;
+  private Image shootingStarOne;
+  private Table starTwo;
+  private Table starThree;
+  private float effectsX = -200;
+  private float effectsY = 300;
+  private float frameCount = 0;
+  private float shootSpeed = 25;
+  private boolean starsShot = false;
+  private float shootWait = 1;
   private Table backgroundTable;
   private Table muteTable;
   private ImageButton muteButtonOn;
@@ -53,7 +63,13 @@ public class MainMenuDisplay extends UIComponent {
     helpTable = new Table();
     highScoreTable = new Table();
     backgroundTable = new Table();
+    starOne = new Table();
+    starTwo = new Table();
+    starThree = new Table();
     muteTable = new Table();
+    starOne.setFillParent(true);
+    starTwo.setFillParent(true);
+    starThree.setFillParent(true);
     rootTable.setFillParent(true);
     backgroundTable.setFillParent(true);
     table.setFillParent(true);
@@ -66,6 +82,24 @@ public class MainMenuDisplay extends UIComponent {
             ServiceLocator.getResourceService()
                 .getAsset("images/main_back.png", Texture.class));
 
+  shootingStarOne =
+          new Image(
+                  ServiceLocator.getResourceService()
+                          .getAsset("images/star.png", Texture.class));
+  shootingStarOne.setScale(0.2f, 0.2f);
+
+  Image shootingStarTwo =
+          new Image(
+                  ServiceLocator.getResourceService()
+                          .getAsset("images/star.png", Texture.class));
+  shootingStarTwo.setScale(0.1f, 0.1f);
+
+  Image shootingStarThree =
+          new Image(
+                  ServiceLocator.getResourceService()
+                          .getAsset("images/star.png", Texture.class));
+
+  shootingStarThree.setScale(0.1f, 0.1f);
     TextButton startBtn = new TextButton("Run!", skin);
     //This and its descendants are commented out since it could be a button we use in future
     //TextButton loadBtn = new TextButton("Load", skin);
@@ -206,9 +240,20 @@ public class MainMenuDisplay extends UIComponent {
     highScoreTable.add(highScoreValueText).bottom().right();
     highScoreTable.row();
     highScoreTable.add(leaderBoardButton).bottom().right();
+    starOne.add(shootingStarOne).top().left();
+    starOne.row();
+    //starTwo.add(shootingStarTwo);
+    starOne.row();
+    //starThree.add(shootingStarThree);
+    starOne.setPosition(effectsX, effectsY);
+    starTwo.setPosition(effectsX - 20, effectsY + 20);
+    starThree.setPosition(effectsX + 20, effectsY - 20);
 
     stage.addActor(rootTable);
     stage.addActor(backgroundTable);
+    stage.addActor(starOne);
+    stage.addActor(starTwo);
+    stage.addActor(starThree);
     stage.addActor(table);
     stage.addActor(helpTable);
     stage.addActor(muteTable);
@@ -343,7 +388,53 @@ public class MainMenuDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch) {
-        // Draw is handled by the stage.
+
+        frameCount += 1;
+
+        if (!starsShot) {
+            MoveStars();
+        }
+
+        if (starsShot && frameCount > shootWait) {
+            SetStarPosition();
+            starsShot = false;
+        }
+
+
+        if (!starsShot && effectsX >= 500) {
+            starsShot = true;
+            frameCount = 0;
+            shootWait = (float) Math.random() * 300 + 300;
+        }
+    }
+
+    private void SetStarPosition() {
+        float rand = (float) Math.random() * 1000 + 1000;
+        float rand2 = (float) Math.random() * 150 + 10;
+        effectsX = 200 - rand;
+        effectsY = 300 + rand2;
+
+        shootSpeed = (float) Math.random() * 25 + 25;
+
+        float scale = (float)(Math.random() * 0.2);
+        shootingStarOne.setScale(scale, scale);
+
+
+        starOne.setPosition(effectsX, effectsY);
+        starTwo.setPosition(effectsX, effectsY);
+        starThree.setPosition(effectsX, effectsY);
+    }
+
+    private void MoveStars() {
+
+        if (!starsShot) {
+            effectsX += shootSpeed;
+            //effectsY -= shootSpeed;
+        }
+
+        starOne.setPosition(effectsX, effectsY);
+        starTwo.setPosition(effectsX, effectsY);
+        starThree.setPosition(effectsX, effectsY);
     }
 
     @Override
