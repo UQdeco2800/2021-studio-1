@@ -1,5 +1,5 @@
-Extraordinary Unicorn,3249
-Mouse,2946
-Extraordinary Zebra,2090
-Sam,2044
-Extraordinary Dragonfly,3088
+Fierce Orca,7487
+Fierce Unicorn,6819
+Extraordinary Uber,5909
+Extraordinary Mouse,5526
+Extraordinary Unicorn,5449

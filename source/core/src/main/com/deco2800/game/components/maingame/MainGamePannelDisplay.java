@@ -20,7 +20,7 @@ public class MainGamePannelDisplay extends UIComponent {
   private static final float Z_INDEX = 2f;
   private Table table;
 
-    @Override
+  @Override
   public void create() {
     super.create();
     addActors();
@@ -39,38 +39,38 @@ public class MainGamePannelDisplay extends UIComponent {
     TextButton mainPauseBtn = new TextButton("Pause", skin);
 
     Image displayBack = new Image(
-          ServiceLocator.getResourceService()
-                  .getAsset("images/disp_back.png", Texture.class));
+        ServiceLocator.getResourceService()
+            .getAsset("images/disp_back.png", Texture.class));
 
     // Triggers an event when the button is pressed.
     mainMenuBtn.addListener(
-      new ChangeListener() {
-        @Override
-        public void changed(ChangeEvent changeEvent, Actor actor) {
-          logger.debug("Exit button clicked");
-          entity.getEvents().trigger("exit");
-        }
-      });
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+            logger.debug("Exit button clicked");
+            entity.getEvents().trigger("exit");
+          }
+        });
 
-      // Triggers an event when the button is pressed.
+    // Triggers an event when the button is pressed.
     mainScoreBtn.addListener(
-          new ChangeListener() {
-              @Override
-              public void changed(ChangeEvent changeEvent, Actor actor) {
-                  logger.debug("Score button clicked");
-                  entity.getEvents().trigger("Score Screen");
-              }
-          });
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+            logger.debug("Score button clicked");
+            entity.getEvents().trigger("Score Screen");
+          }
+        });
 
-      // Triggers an event when the button is pressed.
+    // Triggers an event when the button is pressed.
     mainPauseBtn.addListener(
-          new ChangeListener() {
-              @Override
-              public void changed(ChangeEvent changeEvent, Actor actor) {
-                  logger.debug("Pause button clicked");
-                  entity.getEvents().trigger("Pause Menu");
-              }
-          });
+        new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent changeEvent, Actor actor) {
+            logger.debug("Pause button clicked");
+            entity.getEvents().trigger("Pause Menu");
+          }
+        });
 
 
     table.add(mainMenuBtn).padRight(170).padTop(10f).row();
