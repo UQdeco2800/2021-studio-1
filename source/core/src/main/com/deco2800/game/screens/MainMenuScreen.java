@@ -29,6 +29,8 @@ public class MainMenuScreen extends ScreenAdapter {
                                                       "images/mute_button_on.png",
                                                       "images/mute_button_off.png",
                                                       "images/star.png",
+                                                      "images/star2.png",
+                                                      "images/star3.png",
                                                       "images/plainBack.png"};
   private static final String[] mainMenuSounds = {"sounds/main.mp3"};
 
