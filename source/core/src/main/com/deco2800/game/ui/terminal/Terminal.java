@@ -72,7 +72,7 @@ public class Terminal extends Component {
    */
   public void setOpen() {
     logger.info("Opening terminal");
-    setEnteredMessage("");
+    setEnteredMessage("-");
     isOpen = true;
   }
 
