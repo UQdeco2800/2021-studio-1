@@ -47,7 +47,9 @@ public class FallDamageComponent extends Component {
         //if the y_position is less than -1, than set the health of the target to 0.
         if (yPos < -1) {
             CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-            targetStats.hit(attack);
+            if (targetStats != null) {
+                targetStats.hit(attack);
+            }
         }
 
     }
