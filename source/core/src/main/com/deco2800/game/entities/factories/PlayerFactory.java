@@ -141,6 +141,23 @@ public class PlayerFactory {
     animator.addAnimation("throwing-spear-with-shield-left", 0.05f,
             Animation.PlayMode.NORMAL);
 
+    animator.addAnimation("death-right", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("death-left", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("death-spear-right", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("death-spear-left", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("death-shield-right", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("death-shield-left", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("death-spear-shield-right", 0.1f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("death-spear-shield-left", 0.1f,
+            Animation.PlayMode.NORMAL);
+
 
     player.addComponent(animator);
 
