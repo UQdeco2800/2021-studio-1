@@ -43,6 +43,7 @@ public class Terminal extends Component {
     addCommand("-load", new LoadCommand());
     addCommand("-config", new ConfigCommand());
     addCommand("-queue", new QueueCommand());
+    addCommand("-god", new GodCommand());
   }
 
   /** @return message entered by user */
