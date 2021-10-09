@@ -95,7 +95,7 @@ public class ObstacleFactory {
 
         levelLoadTrigger.addComponent(new PhysicsComponent());
         levelLoadTrigger.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        Vector2 size = new Vector2(1, 20);
+        Vector2 size = new Vector2(1, 40);
         levelLoadTrigger.addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
         levelLoadTrigger.getComponent(HitboxComponent.class).setAsBox(size);
         levelLoadTrigger.addComponent(new LevelLoadTriggerComponent());

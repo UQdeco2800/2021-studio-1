@@ -212,7 +212,7 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnLevelLoadTrigger(int x) {
-        GridPoint2 centrePos = new GridPoint2(x, 6);
+        GridPoint2 centrePos = new GridPoint2(x, 11);
         Entity levelLoadTrigger = ObstacleFactory.createLevelLoadTrigger();
         spawnEntityAt(levelLoadTrigger, centrePos, true, true);
     }
