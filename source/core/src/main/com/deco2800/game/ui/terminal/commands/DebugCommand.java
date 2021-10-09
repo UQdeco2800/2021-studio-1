@@ -22,6 +22,11 @@ public class DebugCommand implements Command {
       return false;
     }
 
+    if (args.size() == 0) {
+      ServiceLocator.getRenderService().getDebug().toggleActive();
+      return true;
+    }
+
     String arg = args.get(0);
     switch (arg) {
       case "on":
@@ -45,6 +50,6 @@ public class DebugCommand implements Command {
    * @return is valid
    */
   boolean isValid(ArrayList<String> args) {
-    return args.size() == 1;
+    return (args.size() == 1 || args.size() == 0);
   }
 }
