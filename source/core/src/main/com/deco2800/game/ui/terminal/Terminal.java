@@ -71,7 +71,8 @@ public class Terminal extends Component {
    * Opens the terminal.
    */
   public void setOpen() {
-    logger.debug("Opening terminal");
+    logger.info("Opening terminal");
+    setEnteredMessage("");
     isOpen = true;
   }
 
@@ -157,6 +158,8 @@ public class Terminal extends Component {
   public void setEnteredMessage(String text) {
     enteredMessage = text;
   }
+
+
 
   public void sendTerminal(String text) {
     setEnteredMessage(text);
