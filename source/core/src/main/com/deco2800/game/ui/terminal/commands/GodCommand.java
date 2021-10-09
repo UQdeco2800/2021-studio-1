@@ -13,7 +13,7 @@ public class GodCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(GodCommand.class);
 
     /**
-     * Toggles god mode on or off
+     * Toggles god mode on or off if no argument. Otherwise sets it based off the argument recieved
      */
     
     
@@ -24,10 +24,32 @@ public class GodCommand implements Command {
             return false;
         }
         
-        ServiceLocator.getAreaService().getManager().getPlayer().getComponent(CombatStatsComponent.class).toggleInvincible();
-        return true;
+        if (args.size() == 0) {
+
+            ServiceLocator.getAreaService().getManager().getPlayer().getComponent(CombatStatsComponent.class).toggleInvincible();
+            return true;
         }
-    boolean isValid(ArrayList<String> args) {
-        return args.size() == 0;
-    }
+        
+        String arg = args.get(0);
+        switch (arg) {
+          case "on":
+          ServiceLocator.getAreaService().getManager().getPlayer().getComponent(CombatStatsComponent.class).setInvincible(true);
+            return true;
+          case "off":
+            ServiceLocator.getAreaService().getManager().getPlayer().getComponent(CombatStatsComponent.class).setInvincible(false);
+            return true;
+          default:
+            logger.debug("Unrecognised argument received for 'debug' command: {}", args);
+            return false;
+        }
+      }
+
+  /**
+   * Validates the command arguments.
+   * @param args command arguments
+   * @return is valid
+   */
+  boolean isValid(ArrayList<String> args) {
+    return (args.size() == 1 || args.size() == 0);
+  }
 }

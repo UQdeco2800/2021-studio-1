@@ -32,11 +32,15 @@ public class CombatStatsComponent extends Component {
     return health == 0;
   }
 
+  public void setInvincible(Boolean Invincible) {
+    this.invincible = Invincible;
+  }
+
   public void toggleInvincible() {
     this.invincible = !invincible;
   }
 
-  public Boolean isinvincible() {
+  public Boolean isInvincible() {
     return this.invincible;
   }
 
@@ -110,7 +114,7 @@ public class CombatStatsComponent extends Component {
             attacker.getEntity().getType() != EntityTypes.WALL &&
             attacker.getEntity().getType() != EntityTypes.GIANT) {
       entity.getEvents().trigger("block");
-    } else if (!entity.getComponent(CombatStatsComponent.class).isinvincible()) {
+    } else if (!entity.getComponent(CombatStatsComponent.class).isInvincible()) {
       int newHealth = getHealth() - attacker.getBaseAttack();
       setHealth(newHealth);
     }
