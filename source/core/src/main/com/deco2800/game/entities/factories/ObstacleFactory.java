@@ -28,7 +28,7 @@ public class ObstacleFactory {
     /**
      * Create and return a background entity having only BackgroundRenderComponent.
      *
-     * @param world width of the image using scaleWidth(width)
+     * @param world width of the image (as given by the terrain coordinate system)
      * @param width world type, must match the first word of a .png file in
      *              assets/images/Backgrounds/'world'_bg.png, any information after an underscore
      *              in world is ignored i.e. asgard and asgard_3 are both the same.
@@ -44,7 +44,8 @@ public class ObstacleFactory {
             background.addComponent(new BackgroundRenderComponent("images/Backgrounds/" + specificWorld +
                     "_bg.png"));
         }
-        background.scaleWidth(width);
+        // This 1.5x multiplier ensures 1 'width' value == width of 1 terrain block.
+        background.scaleWidth((float) (width * (1.5)));
         return background;
     }
 

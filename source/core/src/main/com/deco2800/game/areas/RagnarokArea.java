@@ -186,7 +186,7 @@ public class RagnarokArea extends GameArea {
      */
     protected void spawnBackground(int x, int width, String world) {
         Entity background = ObstacleFactory.createBackground(world, width);
-        GridPoint2 pos = new GridPoint2(x, 0);
+        GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);
     }
 
