@@ -71,7 +71,7 @@ public class Terminal extends Component {
    * Opens the terminal.
    */
   public void setOpen() {
-    logger.info("Opening terminal");
+    logger.debug("Opening terminal");
     setEnteredMessage("-");
     isOpen = true;
   }
