@@ -107,6 +107,11 @@ public class DebugRenderer {
     this.active = active;
   }
 
+  public void toggleActive() {
+    this.active = !this.active;
+    logger.info("Set debug to: {}", this.active);
+  }
+
   public void toggleId() {
       logger.info("Set debug, Entity IDs Active to: {}", active);
       //this.entityIDActive = active;

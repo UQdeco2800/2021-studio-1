@@ -112,7 +112,7 @@ public class AreaManager extends RagnarokArea {
 
         logger.debug("Creating AreaManager");
 
-        terrainInstance.spawnBackground(0, this.bPWidth, "asgard");
+        terrainInstance.spawnBackground(0, this.bPWidth * GRID_SCALE, "asgard");
     }
 
     /**
