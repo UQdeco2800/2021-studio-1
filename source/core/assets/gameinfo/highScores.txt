@@ -1,5 +1,5 @@
+Extraordinary Fox,3771
+Extraordinary Unicorn,3319
 Extraordinary Unicorn,3249
-Mouse,2946
-Extraordinary Zebra,2090
-Sam,2044
 Extraordinary Dragonfly,3088
+Extraordinary Fox,3521
