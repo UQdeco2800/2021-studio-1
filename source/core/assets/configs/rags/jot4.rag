@@ -1,0 +1,40 @@
+$_title ear5
+$_width 25
+$_height 10
+$_world jotunheimr_1
+
+$#.......P..
+$#........SF
+$#.........F
+$#.........F
+$#.......FSF
+$#.......FSF
+$#......SFSF
+$#......SFSF
+$#.........F
+$#.........F
+$#.........F
+$#....SF.FSF
+$#....SF.FSF
+$#.......FSF
+$#........SF
+$#.....F...F
+$#....SFSF.F
+$#....SFSF.F
+$#.....FSF.F
+$#.....F.F.F
+$#.....F...F
+$#.....F.FSF
+$#...P...FSF
+$#....SFSFSF
+$#........SF
+
+$@player set [2,8]
+
+
+$-spawn [18,1] (spear)
+$-spawn [19,1] (lightning)
+$-spawn [9,1] (spear)
+$-spawn [0,3] (shield)
+
+$-spawn [20,5] (levelTrigger)
