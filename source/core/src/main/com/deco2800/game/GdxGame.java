@@ -5,12 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.screens.MainGameScreen;
-import com.deco2800.game.screens.MainMenuScreen;
-import com.deco2800.game.screens.SettingsScreen;
+import com.deco2800.game.screens.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
+import java.util.Stack;
 
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
@@ -25,6 +25,7 @@ public class GdxGame extends Game {
   public boolean paused = false;
   public boolean scoreShown = false;
   public boolean over = false;
+  public Stack<ScreenType> beginScreenStack = new Stack();
 
     @Override
   public void create() {
@@ -33,8 +34,8 @@ public class GdxGame extends Game {
 
     // Sets background to light yellow
     Gdx.gl.glClearColor(253f/255f, 153/255f, 47/255f, 1);
-
-    setScreen(ScreenType.MAIN_MENU);
+    beginScreenStack.add(ScreenType.STORY);
+    setScreen(ScreenType.STORY);
   }
 
   /**
@@ -72,19 +73,25 @@ public class GdxGame extends Game {
    */
   private Screen newScreen(ScreenType screenType) {
     switch (screenType) {
+      case STORY:
+        return new StoryScreen(this);
       case MAIN_MENU:
         return new MainMenuScreen(this);
       case MAIN_GAME:
         return new MainGameScreen(this);
       case SETTINGS:
         return new SettingsScreen(this);
+      case TUT1:
+        return new TutorialScreen1(this);
+      case TUT2:
+        return new TutorialScreen2(this);
       default:
         return null;
     }
   }
 
   public enum ScreenType {
-    MAIN_MENU, MAIN_GAME, SETTINGS
+    MAIN_MENU, MAIN_GAME, SETTINGS, STORY, TUT1, TUT2
   }
 
   /**

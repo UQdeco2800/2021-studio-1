@@ -207,7 +207,7 @@ public class NPCFactory {
                                 .getAsset("images/wall.atlas", TextureAtlas.class));
         animator.addAnimation("walk", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("walkAngry", 0.1f, Animation.PlayMode.LOOP);
-
+        
         wallOfDeath
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                 .addComponent(animator)
@@ -216,7 +216,7 @@ public class NPCFactory {
 
         wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
         wallOfDeath.setScale(25f, 12f);
-
+        wallOfDeath.getComponent(HitboxComponent.class).setAsBox(new Vector2(25f,100f));
         wallOfDeath.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
         wallOfDeath.setType(EntityTypes.WALL);
 

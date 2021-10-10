@@ -57,7 +57,8 @@ public class MainGameScreen extends ScreenAdapter {
             "images/PowerUpGUI/spear1.png",
             "images/PowerUpGUI/spear2.png",
             "images/PowerUpGUI/spear3.png",
-            "images/disp_back.png"
+            "images/disp_back.png",
+            "images/story/storyline.png"
     };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);

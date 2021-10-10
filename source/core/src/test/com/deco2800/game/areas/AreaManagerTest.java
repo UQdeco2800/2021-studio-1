@@ -169,7 +169,7 @@ class AreaManagerTest {
         terminal.processMessageBuffer();
 
         verify(area, atLeastOnce()).spawnMapChunk(any(int[].class), anyInt(), any(String.class),
-                eq("earth_1"));
+                eq("earth_3"));
     }
 
     @Test

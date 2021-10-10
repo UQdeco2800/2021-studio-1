@@ -15,10 +15,12 @@ public class CombatStatsComponent extends Component {
   private static final Logger logger = LoggerFactory.getLogger(CombatStatsComponent.class);
   private int health;
   private int baseAttack;
+  private Boolean invincible = false;
 
   public CombatStatsComponent(int health, int baseAttack) {
     setHealth(health);
     setBaseAttack(baseAttack);
+    this.invincible = false;
   }
 
   /**
@@ -28,6 +30,18 @@ public class CombatStatsComponent extends Component {
    */
   public Boolean isDead() {
     return health == 0;
+  }
+
+  public void setInvincible(Boolean Invincible) {
+    this.invincible = Invincible;
+  }
+
+  public void toggleInvincible() {
+    this.invincible = !invincible;
+  }
+
+  public Boolean isInvincible() {
+    return this.invincible;
   }
 
   /**
@@ -100,8 +114,7 @@ public class CombatStatsComponent extends Component {
             attacker.getEntity().getType() != EntityTypes.WALL &&
             attacker.getEntity().getType() != EntityTypes.GIANT) {
       entity.getEvents().trigger("block");
-
-    } else {
+    } else if (!entity.getComponent(CombatStatsComponent.class).isInvincible()) {
       int newHealth = getHealth() - attacker.getBaseAttack();
       setHealth(newHealth);
     }
