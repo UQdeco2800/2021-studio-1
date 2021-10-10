@@ -368,7 +368,8 @@ public class UIPop extends UIComponent {
         selectionText.add("Controls");
         selectionText.add("Goal");
         selections.setItems(selectionText);
-        Label informationText = new Label("Hi, welcome to Ragnarok Racer, \n to play the game click start", skin, POP_UP_FONT);
+        Label informationText = new Label("Hi, welcome to Ragnarok Racer, \nto play the game close this window " +
+                "\nand" + " click Run!", skin, POP_UP_FONT);
 
 
         selections.addListener(new ChangeListener() {
