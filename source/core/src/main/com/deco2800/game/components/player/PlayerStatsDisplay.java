@@ -45,24 +45,18 @@ public class PlayerStatsDisplay extends UIComponent {
     table = new Table();
     table.top().left();
     table.setFillParent(true);
-    table.padTop(30f).padLeft(-200f);
+    table.padTop(20f).padLeft(20f);
 
     tableTwo = new Table();
     tableTwo.top().left();
     tableTwo.setFillParent(true);
-    tableTwo.padTop(60f).padLeft(20f);
-    // Heart image
-    float heartSideLength = 30f;
+    tableTwo.padTop(50f).padLeft(20f);
 
     // Health text
     health = entity.getComponent(CombatStatsComponent.class).getHealth();
     //int health = 100;
     CharSequence healthText = String.format("Health: %d", health);
     healthLabel = new Label(healthText, skin, "large");
-
-    table.add(heartImage).size(heartSideLength).pad(5);
-    table.add(healthLabel);
-    stage.addActor(table);
 
     // Score Text
     long score = scoring.getCurrentScore();

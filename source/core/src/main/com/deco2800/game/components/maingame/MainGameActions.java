@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIPop;
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("Pause Menu", this::onPause);
     entity.getEvents().addListener("Score Screen", this::showScore);
     entity.getEvents().addListener("Game Over", this::gameOver);
+      entity.getEvents().addListener("start", this::onStart);
   }
 
 
@@ -43,6 +45,13 @@ public class MainGameActions extends Component {
     game.scoreShown = false;
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
   }
+
+    private void onStart() {
+        logger.info("Restart game");
+        game.paused = false;
+        game.over = false;
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    }
 
     /**
      * Pauses the game -- the trigger function for the event.

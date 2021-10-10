@@ -228,7 +228,7 @@ public class MainGameScreen extends ScreenAdapter {
         String selectedName = MainMenuDisplay.getPlayerName();
         String name;
 
-        if (!selectedName.equals("Random")) {
+        if (!selectedName.equals("Random") && !selectedName.equals("Select Name")) {
             name = adjective + " " + selectedName;
         } else {
             name = adjective + " " + availableNames[Integer.parseInt(randValue)] + "";

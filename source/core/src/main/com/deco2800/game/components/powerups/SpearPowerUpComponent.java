@@ -3,13 +3,9 @@ package com.deco2800.game.components.powerups;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.entities.factories.ProjectileFactory;
-import com.deco2800.game.physics.BodyUserData;
-import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -25,7 +21,9 @@ public class SpearPowerUpComponent extends PowerUpComponent {
 
     // Update flags to check
     private boolean active;
+    private boolean throwing;
     private int thrown;
+    private long spearDelay;
 
     /**
      * Creates the spear component
@@ -65,17 +63,22 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      */
     @Override
     public void update() {
-        if (active) {
+        if (throwing) {
+            if (ServiceLocator.getTimeSource().getTimeSince(spearDelay) >=
+                    100L) {
+                throwSpear();
+            }
+        } else if (active) {
             if (spearDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-                spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
-                        new Vector2(5f, 0f),
-                        spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
-                        true);
+                spear.getComponent(PhysicsComponent.class).getBody().
+                        applyLinearImpulse(new Vector2(5f, 0f),
+                        spear.getComponent(PhysicsComponent.class).
+                                getBody().getWorldCenter(),true);
             } else {
-                spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
-                        new Vector2(-5f, 0f),
-                        spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
-                        true);
+                spear.getComponent(PhysicsComponent.class).getBody()
+                        .applyLinearImpulse(new Vector2(-5f, 0f),
+                        spear.getComponent(PhysicsComponent.class).getBody()
+                                .getWorldCenter(),true);
             }
         } else if (thrown >= 3) {
             thrown = 0;
@@ -90,42 +93,50 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      */
     @Override
     public void activate() {
-        if (!active ) {
-            active = true;
+        if (!active || throwing) {
+            throwing = true;
             thrown += 1;
-            spear = ProjectileFactory.createSpearEntity();
-            ServiceLocator.getEntityService().register(spear);
-
-            spear.getEvents().addListener("dispose", this::disposeSpear);
-
-            if (entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
-                spear.setPosition(entity.getPosition().x + 1f, entity.getPosition().y);
-                spearDirection = Vector2Utils.RIGHT.cpy();
-                spear.getComponent(PhysicsComponent.class).getBody().applyLinearImpulse(
-                        new Vector2(10f, 10f),
-                        spear.getComponent(PhysicsComponent.class).getBody().getWorldCenter(),
-                        true);
-                spear.getComponent(AnimationRenderComponent.class).stopAnimation();
-                spear.getComponent(AnimationRenderComponent.class).startAnimation(
-                        "fly-right");
-
-            } else {
-                spear.setPosition(entity.getPosition().x - 1f,
-                        entity.getPosition().y);
-                spearDirection = Vector2Utils.LEFT.cpy();
-                spear.getComponent(PhysicsComponent.class).getBody()
-                        .applyLinearImpulse(
-                                new Vector2(-10f, 10f),
-                                spear.getComponent(PhysicsComponent.class).getBody()
-                                        .getWorldCenter(), true);
-                spear.getComponent(AnimationRenderComponent.class)
-                        .stopAnimation();
-                spear.getComponent(AnimationRenderComponent.class)
-                        .startAnimation("fly-left");
-            }
+            spearDelay = ServiceLocator.getTimeSource().getTime();
         } else if (thrown >= 3) {
             thrown = 0;
             setEnabled(false);
+        }
+    }
+
+    public void throwSpear() {
+        spearDelay = 0;
+        active = true;
+        throwing = false;
+        spear = ProjectileFactory.createSpearEntity();
+        ServiceLocator.getEntityService().register(spear);
+
+        spear.getEvents().addListener("dispose", this::disposeSpear);
+
+        if (entity.getComponent(PlayerActions.class).getPreviousDirection()
+                .hasSameDirection(Vector2Utils.RIGHT)) {
+            spear.setPosition(entity.getPosition().x + 1f,
+                    entity.getPosition().y + 0.25f);
+            spearDirection = Vector2Utils.RIGHT.cpy();
+            spear.getComponent(PhysicsComponent.class).getBody()
+                    .applyLinearImpulse(new Vector2(10f, 10f),
+                    spear.getComponent(PhysicsComponent.class)
+                            .getBody().getWorldCenter(),true);
+            spear.getComponent(AnimationRenderComponent.class).stopAnimation();
+            spear.getComponent(AnimationRenderComponent.class).startAnimation(
+                    "fly-right");
+
+        } else {
+            spear.setPosition(entity.getPosition().x - 1f,
+                    entity.getPosition().y);
+            spearDirection = Vector2Utils.LEFT.cpy();
+            spear.getComponent(PhysicsComponent.class).getBody()
+                    .applyLinearImpulse(new Vector2(-10f, 10f),
+                            spear.getComponent(PhysicsComponent.class).getBody()
+                                    .getWorldCenter(), true);
+            spear.getComponent(AnimationRenderComponent.class)
+                    .stopAnimation();
+            spear.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("fly-left");
         }
     }
 

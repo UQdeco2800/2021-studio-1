@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(GameExtension.class)
-public class PlayerActionsTest {
+class PlayerActionsTest {
     Entity player;
 
     @BeforeEach
