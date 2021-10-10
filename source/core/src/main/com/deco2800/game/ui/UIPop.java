@@ -259,7 +259,6 @@ public class UIPop extends UIComponent {
         TextButton restartButton;
 
         returnButton = new TextButton("Return to main menu", skin);
-
         returnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -267,7 +266,16 @@ public class UIPop extends UIComponent {
             }
         });
 
-        popUp.add(returnButton).center().padTop(30f);
+        restartButton = new TextButton("Replay", skin);
+        restartButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                game.getEvents().trigger("start");
+            }
+        });
+
+        popUp.add(returnButton).center().padTop(30f).padLeft(30f);
+        popUp.add(restartButton).center().padTop(30f).padRight(30f);
 
         return popUp;
     }

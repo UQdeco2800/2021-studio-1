@@ -7,6 +7,7 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
      * Create the shield component - creates a listener that activates when
      * the player blocks an attack
      */
+    @Override
     public void create() {
         setEnabled(false);
         blocks = 0;
@@ -30,6 +31,7 @@ public class ShieldPowerUpComponent extends PowerUpComponent {
      * blocks remaining by 1 and changes the active status if the player is
      * out of blocks
      */
+    @Override
     public void activate() {
         if (blocks > 0) {
             blocks -= 1;
