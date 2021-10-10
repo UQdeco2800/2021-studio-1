@@ -62,6 +62,12 @@ public class RagnarokArea extends GameArea {
             "images/blue_bck.png",
             "images/Backgrounds/black_back.png",
             "images/Backgrounds/asgard_bg.png",
+            "images/Backgrounds/Background Alfheim.png",
+            "images/Backgrounds/Background Alfheim Day.png",
+            "images/Backgrounds/Background Earth.png",
+            "images/Backgrounds/Background Earth Day.png",
+            "images/Backgrounds/Background Jotunheim.png",
+            "images/Backgrounds/Background Jotunheim Day.png",
             "images/tutorial/lightningTutorial.png",
             "images/tutorial/shieldTutorial.png",
             "images/tutorial/spearTutorial.png"
@@ -149,7 +155,6 @@ public class RagnarokArea extends GameArea {
 
         // Spawn enemies to test spear on
         spawnWolf(spearSpawn.x+8, spearSpawn.y);
-        spawnWolf(spearSpawn.x+12, spearSpawn.y);
 
         spawnLightning(lightningSpawn.x, lightningSpawn.y);
         Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
@@ -157,8 +162,6 @@ public class RagnarokArea extends GameArea {
         // Spawn enemies to test lightning on
         spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y);
         spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y);
-        spawnSkeleton(lightningSpawn.x+16, lightningSpawn.y);
-
 
         // Offset text and spawn it in
         lightningSpawn.add(textOffset);
@@ -185,6 +188,7 @@ public class RagnarokArea extends GameArea {
      *              in world is ignored i.e. asgard and asgard_3 are both the same.
      */
     protected void spawnBackground(int x, int width, String world) {
+        logger.debug("Spawning background with world {}", world);
         Entity background = ObstacleFactory.createBackground(world, width);
         GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);
