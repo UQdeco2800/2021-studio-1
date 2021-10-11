@@ -312,6 +312,14 @@ public class ObstacleFactory {
         return TutorialSpearObstacle;
     }
 
+    public static Entity createTutorialRun() {
+        Entity TutorialRun = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/run.png"));
+        TutorialRun.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialRun.scaleHeight(5f);
+        return TutorialRun;
+    }
+
 
     private ObstacleFactory() {
         throw new IllegalStateException("Instantiating static util class");

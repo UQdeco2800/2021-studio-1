@@ -71,7 +71,8 @@ public class RagnarokArea extends GameArea {
             "images/tutorial/lightningTutorial.png",
             "images/tutorial/shieldTutorial.png",
             "images/tutorial/spearTutorial.png",
-            "images/tutorial/spearObstacleTutorial.png"
+            "images/tutorial/spearObstacleTutorial.png",
+            "images/tutorial/run.png"
     };
 
     //TODO: make Json,
@@ -150,6 +151,7 @@ public class RagnarokArea extends GameArea {
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
         GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
+        GridPoint2 runSpawn = new GridPoint2(x+80,y);
 
         GridPoint2 textOffset = new GridPoint2(0,5);
 
@@ -173,6 +175,9 @@ public class RagnarokArea extends GameArea {
         spearSpawn.add(textOffset);
         spawnEntityAt(spearTutorial, spearSpawn, true, false);
 
+        runSpawn.add(textOffset);
+        Entity runTutorial = ObstacleFactory.createTutorialRun();
+        spawnEntityAt(runTutorial, runSpawn, true, false);
 
         spearObstacleSpawn.add(textOffset);
         Entity spearObstacleTutorial = ObstacleFactory.createTutorialSpearObstacle();
