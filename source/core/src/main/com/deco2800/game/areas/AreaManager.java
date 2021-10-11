@@ -138,7 +138,7 @@ public class AreaManager extends RagnarokArea {
 
         //if above code is uncommented load can introduce duplicate instances
         //conflict with load not above code I don't think
-        load("asg1");
+        load("ear1");
         terrainInstance.makePlayer(10, 5);
         this.player = terrainInstance.getPlayer();
         terrainInstance.spawnWallOfDeath();
