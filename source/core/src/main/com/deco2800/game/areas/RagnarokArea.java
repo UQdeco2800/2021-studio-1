@@ -62,9 +62,17 @@ public class RagnarokArea extends GameArea {
             "images/blue_bck.png",
             "images/Backgrounds/black_back.png",
             "images/Backgrounds/asgard_bg.png",
+            "images/Backgrounds/Background Alfheim.png",
+            "images/Backgrounds/Background Alfheim Day.png",
+            "images/Backgrounds/Background Earth.png",
+            "images/Backgrounds/Background Earth Day.png",
+            "images/Backgrounds/Background Jotunheim.png",
+            "images/Backgrounds/Background Jotunheim Day.png",
             "images/tutorial/lightningTutorial.png",
             "images/tutorial/shieldTutorial.png",
-            "images/tutorial/spearTutorial.png"
+            "images/tutorial/spearTutorial.png",
+            "images/tutorial/spearObstacleTutorial.png",
+            "images/tutorial/run.png"
     };
 
     //TODO: make Json,
@@ -142,14 +150,17 @@ public class RagnarokArea extends GameArea {
     protected void spawnTutorial(int x, int y) { // TODO: Expand this
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
-        GridPoint2 textOffset = new GridPoint2(0,5);       
-        
+        GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
+        GridPoint2 runSpawn = new GridPoint2(x+80,y);
+
+        GridPoint2 textOffset = new GridPoint2(0,5);
+
         spawnSpear(spearSpawn.x, spearSpawn.y);
+        spawnSpear(spearObstacleSpawn.x + 10, spearObstacleSpawn.y);
         Entity spearTutorial = ObstacleFactory.createTutorialSpear();
 
         // Spawn enemies to test spear on
         spawnWolf(spearSpawn.x+8, spearSpawn.y);
-        spawnWolf(spearSpawn.x+12, spearSpawn.y);
 
         spawnLightning(lightningSpawn.x, lightningSpawn.y);
         Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
@@ -157,14 +168,22 @@ public class RagnarokArea extends GameArea {
         // Spawn enemies to test lightning on
         spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y);
         spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y);
-        spawnSkeleton(lightningSpawn.x+16, lightningSpawn.y);
-
 
         // Offset text and spawn it in
         lightningSpawn.add(textOffset);
         spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
         spearSpawn.add(textOffset);
         spawnEntityAt(spearTutorial, spearSpawn, true, false);
+
+        runSpawn.add(textOffset);
+        Entity runTutorial = ObstacleFactory.createTutorialRun();
+        spawnEntityAt(runTutorial, runSpawn, true, false);
+
+        spearObstacleSpawn.add(textOffset);
+        Entity spearObstacleTutorial = ObstacleFactory.createTutorialSpearObstacle();
+        spawnEntityAt(spearObstacleTutorial, spearObstacleSpawn, true, false);
+
+
     }
 
     protected Entity spawnPlayer(int x, int y) {
@@ -185,6 +204,7 @@ public class RagnarokArea extends GameArea {
      *              in world is ignored i.e. asgard and asgard_3 are both the same.
      */
     protected void spawnBackground(int x, int width, String world) {
+        logger.debug("Spawning background with world {}", world);
         Entity background = ObstacleFactory.createBackground(world, width);
         GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);

@@ -48,7 +48,9 @@ public class FallDamageComponent extends Component {
         if (yPos < -1) {
             CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
             if (targetStats != null) {
-                targetStats.hit(attack);
+                if (!targetStats.isInvincible()) {
+                    targetStats.setHealth(0);
+                }
             }
         }
 

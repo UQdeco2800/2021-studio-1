@@ -268,7 +268,7 @@ class AreaManagerTest {
         // Background
         // If this fails, it is likely because you have different backgrounds. Congrats! Change
         // this line to reflect that.
-        verify(area).spawnBackground(xOffset * GRID_SCALE, JOT_WIDTH, "asgard");
+        verify(area).spawnBackground(xOffset * GRID_SCALE, JOT_WIDTH, "jotunheimr_2");
         verifyNoMoreInteractions(area);
     }
 }

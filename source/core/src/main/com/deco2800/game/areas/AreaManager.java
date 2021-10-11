@@ -102,17 +102,11 @@ public class AreaManager extends RagnarokArea {
      */
     @Override
     public void create() {
-
         load("tutorial");
-        //if above code is uncommented load can introduce duplicate instances
-        //conflict with load not above code I don't think
         terrainInstance.makePlayer(10, 5);
         this.player = terrainInstance.getPlayer();
         terrainInstance.spawnWallOfDeath();
-
         logger.debug("Creating AreaManager");
-
-        terrainInstance.spawnBackground(0, this.bPWidth * GRID_SCALE, "asgard");
     }
 
     /**
@@ -126,7 +120,6 @@ public class AreaManager extends RagnarokArea {
      */
     public void place(int x, int y, String placeType) {
         place(terrainInstance, x, y, placeType);
-
     }
 
     /**
@@ -269,7 +262,7 @@ public class AreaManager extends RagnarokArea {
                         // Spawn a background at the start of the level with width from the rag
                         // file.
                         terrainInstance.spawnBackground(this.startNextArea * GRID_SCALE,
-                                this.bPWidth, "asgard");
+                                this.bPWidth, this.currentWorld);
                         break;
                     case "queue":
                         makeBufferedPlace(terrainInstance);
