@@ -70,7 +70,8 @@ public class RagnarokArea extends GameArea {
             "images/Backgrounds/Background Jotunheim Day.png",
             "images/tutorial/lightningTutorial.png",
             "images/tutorial/shieldTutorial.png",
-            "images/tutorial/spearTutorial.png"
+            "images/tutorial/spearTutorial.png",
+            "images/tutorial/spearObstacleTutorial.png"
     };
 
     //TODO: make Json,
@@ -148,9 +149,12 @@ public class RagnarokArea extends GameArea {
     protected void spawnTutorial(int x, int y) { // TODO: Expand this
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
-        GridPoint2 textOffset = new GridPoint2(0,5);       
-        
+        GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
+
+        GridPoint2 textOffset = new GridPoint2(0,5);
+
         spawnSpear(spearSpawn.x, spearSpawn.y);
+        spawnSpear(spearObstacleSpawn.x + 10, spearObstacleSpawn.y);
         Entity spearTutorial = ObstacleFactory.createTutorialSpear();
 
         // Spawn enemies to test spear on
@@ -168,6 +172,13 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
         spearSpawn.add(textOffset);
         spawnEntityAt(spearTutorial, spearSpawn, true, false);
+
+
+        spearObstacleSpawn.add(textOffset);
+        Entity spearObstacleTutorial = ObstacleFactory.createTutorialSpearObstacle();
+        spawnEntityAt(spearObstacleTutorial, spearObstacleSpawn, true, false);
+
+
     }
 
     protected Entity spawnPlayer(int x, int y) {
