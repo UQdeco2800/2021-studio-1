@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * DECO2800Game/settings.json under your home directory (This is C:/users/[username] on Windows).
  */
 public class SettingsMenuDisplay extends UIComponent {
+  private static final String POP_UP_FONT = "popUpFont";
   private static final Logger logger = LoggerFactory.getLogger(SettingsMenuDisplay.class);
   private final GdxGame game;
 
@@ -77,23 +78,23 @@ public class SettingsMenuDisplay extends UIComponent {
     UserSettings.Settings settings = UserSettings.get();
 
     // Create components
-    Label fpsLabel = new Label("FPS Cap:", skin, "popUpFont");
+    Label fpsLabel = new Label("FPS Cap:", skin, POP_UP_FONT);
     fpsText = new TextField(Integer.toString(settings.fps), skin);
 
-    Label fullScreenLabel = new Label("Fullscreen:", skin, "popUpFont");
+    Label fullScreenLabel = new Label("Fullscreen:", skin, POP_UP_FONT);
     fullScreenCheck = new CheckBox("", skin);
     fullScreenCheck.setChecked(settings.fullscreen);
 
-    Label vsyncLabel = new Label("VSync:", skin, "popUpFont");
+    Label vsyncLabel = new Label("VSync:", skin, POP_UP_FONT);
     vsyncCheck = new CheckBox("", skin);
     vsyncCheck.setChecked(settings.vsync);
 
-    Label uiScaleLabel = new Label("ui Scale (Unused):", skin, "popUpFont");
+    Label uiScaleLabel = new Label("ui Scale (Unused):", skin, POP_UP_FONT);
     uiScaleSlider = new Slider(0.2f, 2f, 0.1f, false, skin);
     uiScaleSlider.setValue(settings.uiScale);
-    Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin, "popUpFont");
+    Label uiScaleValue = new Label(String.format("%.2fx", settings.uiScale), skin, POP_UP_FONT);
 
-    Label displayModeLabel = new Label("Resolution:", skin, "popUpFont");
+    Label displayModeLabel = new Label("Resolution:", skin, POP_UP_FONT);
     displayModeSelect = new SelectBox<>(skin);
     Monitor selectedMonitor = Gdx.graphics.getMonitor();
     displayModeSelect.setItems(getDisplayModes(selectedMonitor));

@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(GameExtension.class)
 @ExtendWith(MockitoExtension.class)
 class AreaManagerTest {
+    private static final int JOT_WIDTH = 15;
     static final int GRID_SCALE = 3;
     int x;
     int y;
@@ -168,7 +169,7 @@ class AreaManagerTest {
         terminal.processMessageBuffer();
 
         verify(area, atLeastOnce()).spawnMapChunk(any(int[].class), anyInt(), any(String.class),
-                eq("earth_1"));
+                eq("earth_3"));
     }
 
     @Test
@@ -206,7 +207,7 @@ class AreaManagerTest {
 
         terminal.processMessageBuffer();
 
-        verifyJot2(15);
+        verifyJot2(JOT_WIDTH);
     }
 
     void verifyJot2(int xOffset) {
@@ -263,6 +264,11 @@ class AreaManagerTest {
         verify(area).spawnSpear((xOffset + 13) * GRID_SCALE, 3 * GRID_SCALE);
         verify(area).spawnLightning((xOffset + 5) * GRID_SCALE, 2 * GRID_SCALE);
         verify(area).spawnLevelLoadTrigger((xOffset + 10) * GRID_SCALE);
+
+        // Background
+        // If this fails, it is likely because you have different backgrounds. Congrats! Change
+        // this line to reflect that.
+        verify(area).spawnBackground(xOffset * GRID_SCALE, JOT_WIDTH, "jotunheimr_2");
         verifyNoMoreInteractions(area);
     }
 }

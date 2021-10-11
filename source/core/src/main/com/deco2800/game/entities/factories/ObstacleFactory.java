@@ -1,9 +1,9 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.entities.Entity;
@@ -11,11 +11,10 @@ import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.rendering.BackgroundRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.LevelLoadTriggerComponent;
-import com.deco2800.game.utils.math.Vector2Utils;
 
 /**
  * Factory to create obstacle entities.
@@ -23,6 +22,49 @@ import com.deco2800.game.utils.math.Vector2Utils;
  * <p>Each obstacle entity type should have a creation method that returns a corresponding entity.
  */
 public class ObstacleFactory {
+
+    /**
+     * Create and return a background entity having only BackgroundRenderComponent.
+     *
+     * @param world the world type; if the first word before an underscore is not  one of 'asgard',
+     *              'alfheim', 'earth', 'jotunheimr', or 'hel', will default to 'asgard'. Can be
+     *              null.
+     * @param width width of the image (as given by the terrain coordinate system)
+     * @return background entity
+     */
+    public static Entity createBackground(String world, int width) {
+        Entity background = new Entity();
+        if (world == null) {
+            background.addComponent(new BackgroundRenderComponent("images/Backgrounds/black_back" +
+                    ".png"));
+        } else { // Choose correct background file. When there is more than one, choose randomly.
+            String filename;
+            switch (world.split("_", 2)[0]) {
+                case "alfheim":
+                    filename = MathUtils.random(1) == 0
+                            ? "Background Alfheim Day" : "Background Alfheim";
+                    break;
+                case "earth":
+                    filename = MathUtils.random(1) == 0
+                            ? "Background Earth Day" : "Background Earth";
+                    break;
+                case "jotunheimr":
+                    filename = MathUtils.random(1) == 0
+                            ? "Background Jotunheim Day" : "Background Jotunheim";
+                    break;
+                case "hel":
+                    // Hel background not yet implemented.
+
+                default: // Either is "asgard" or unrecognised.
+                    filename = "asgard_bg";
+            }
+            background.addComponent(new BackgroundRenderComponent("images/Backgrounds/" + filename +
+                    ".png"));
+        }
+        // This 1.5x multiplier ensures 1 'width' value == width of 1 terrain block.
+        background.scaleWidth((float) (width * (1.5)));
+        return background;
+    }
 
     /**
      * Creates a rock entity.
@@ -71,7 +113,7 @@ public class ObstacleFactory {
 
         levelLoadTrigger.addComponent(new PhysicsComponent());
         levelLoadTrigger.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        Vector2 size = new Vector2(1, 20);
+        Vector2 size = new Vector2(1, 40);
         levelLoadTrigger.addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
         levelLoadTrigger.getComponent(HitboxComponent.class).setAsBox(size);
         levelLoadTrigger.addComponent(new LevelLoadTriggerComponent());
@@ -236,6 +278,48 @@ public class ObstacleFactory {
         wall.setType(EntityTypes.OBSTACLE);
         return wall;
     }
+
+
+    public static Entity createTutorialLightning() {
+        Entity TutorialLightning = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/lightningTutorial.png"));
+        TutorialLightning.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialLightning.scaleHeight(3f);
+        return TutorialLightning;
+    }
+
+    public static Entity createTutorialSpear() {
+        Entity TutorialSpear = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/spearTutorial.png"));
+        TutorialSpear.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialSpear.scaleHeight(3f);
+        return TutorialSpear;
+    }
+
+    public static Entity createTutorialShield() {
+        Entity TutorialShield = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/shieldTutorial.png"));
+        TutorialShield.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialShield.scaleHeight(3f);
+        return TutorialShield;
+    }
+
+    public static Entity createTutorialSpearObstacle() {
+        Entity TutorialSpearObstacle = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/spearObstacleTutorial.png"));
+        TutorialSpearObstacle.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialSpearObstacle.scaleHeight(3f);
+        return TutorialSpearObstacle;
+    }
+
+    public static Entity createTutorialRun() {
+        Entity TutorialRun = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/run.png"));
+        TutorialRun.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialRun.scaleHeight(5f);
+        return TutorialRun;
+    }
+
 
     private ObstacleFactory() {
         throw new IllegalStateException("Instantiating static util class");

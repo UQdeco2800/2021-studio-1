@@ -12,15 +12,12 @@ import com.deco2800.game.entities.factories.*;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
-import com.deco2800.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.VariableSpeedComponent;
 import com.deco2800.game.components.FallDamageComponent;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.function.Function;
 
 public class RagnarokArea extends GameArea {
@@ -29,8 +26,6 @@ public class RagnarokArea extends GameArea {
 
     private static final float WALL_HEIGHT = 0.1f;
     private final String name; //initialise in the loader
-
-    private final HashMap<GridPoint2, LinkedList<Entity>> entitySignUp;
 
     protected Entity player;
 
@@ -42,6 +37,7 @@ public class RagnarokArea extends GameArea {
             "images/fire_spirit.png",
             "images/skeleton.png",
             "images/Spear_1.png",
+            "images/fireball.png",
             "images/Rock_1.png",
             "images/Spike_1.png",
             "images/deathGiant.png",
@@ -65,7 +61,18 @@ public class RagnarokArea extends GameArea {
             "images/powerup-spear.png",
             "images/blue_bck.png",
             "images/Backgrounds/black_back.png",
-            "images/Backgrounds/asgard_bg.png"
+            "images/Backgrounds/asgard_bg.png",
+            "images/Backgrounds/Background Alfheim.png",
+            "images/Backgrounds/Background Alfheim Day.png",
+            "images/Backgrounds/Background Earth.png",
+            "images/Backgrounds/Background Earth Day.png",
+            "images/Backgrounds/Background Jotunheim.png",
+            "images/Backgrounds/Background Jotunheim Day.png",
+            "images/tutorial/lightningTutorial.png",
+            "images/tutorial/shieldTutorial.png",
+            "images/tutorial/spearTutorial.png",
+            "images/tutorial/spearObstacleTutorial.png",
+            "images/tutorial/run.png"
     };
 
     //TODO: make Json,
@@ -74,6 +81,7 @@ public class RagnarokArea extends GameArea {
             "images/odin.atlas",
             "images/wall.atlas",
             "images/deathGiant.atlas",
+            "images/fire_spirit.atlas",
             "images/skeleton.atlas",
             "images/sfx.atlas",
             "images/lightning-animation.atlas",
@@ -102,24 +110,20 @@ public class RagnarokArea extends GameArea {
         super();
         this.name = name;
         this.terrainFactory = terrainFactory;
-        this.entitySignUp = new HashMap<>();
     }
 
+    @Override
     public void create() {
         create(0);
     }
 
+    @Override
     public void create(int xOffset) {
         loadAssets();
         displayUI();
         spawnTerrain();
 
-        // TODO: Add power ups to RagEdit and reformat spawn method
-        //generatePowerUps();
-
         playMusic(); //TODO: eventual move to music
-        // also this is the cause of all music playing at once, because multiple ragnorok areas
-        // get made...
 
         logger.debug("Creating new RagnarokArea");
     }
@@ -140,63 +144,84 @@ public class RagnarokArea extends GameArea {
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
-            // logger.info("Loading... {}%", resourceService.getProgress());
         }
     }
 
-    // randomly generates powerups for an area,
-    // used to be spawn power ups
-    private void generatePowerUps() {
-        GridPoint2 start = new GridPoint2(10, 3);
-        GridPoint2 end = new GridPoint2(1000, 3);
+    protected void spawnTutorial(int x, int y) { // TODO: Expand this
+        GridPoint2 spearSpawn = new GridPoint2(x, y);
+        GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
+        GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
+        GridPoint2 runSpawn = new GridPoint2(x+80,y);
 
-        Entity powerUp;
+        GridPoint2 textOffset = new GridPoint2(0,5);
 
-        for (int i = 0; i < 31; i++) {
-            GridPoint2 posLeft = RandomUtils.random(start, end);
+        spawnSpear(spearSpawn.x, spearSpawn.y);
+        spawnSpear(spearObstacleSpawn.x + 10, spearObstacleSpawn.y);
+        Entity spearTutorial = ObstacleFactory.createTutorialSpear();
 
-            switch (i % 3) {
-                case 0:
-                    powerUp = PowerUpFactory.createLightningPowerUp();
-                    break;
+        // Spawn enemies to test spear on
+        spawnWolf(spearSpawn.x+8, spearSpawn.y);
 
-                case 1:
-                    powerUp = PowerUpFactory.createShieldPowerUp();
-                    break;
+        spawnLightning(lightningSpawn.x, lightningSpawn.y);
+        Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
+        
+        // Spawn enemies to test lightning on
+        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y);
+        spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y);
 
-                default:
-                    powerUp = PowerUpFactory.createSpearPowerUp();
-                    break;
-            }
+        // Offset text and spawn it in
+        lightningSpawn.add(textOffset);
+        spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
+        spearSpawn.add(textOffset);
+        spawnEntityAt(spearTutorial, spearSpawn, true, false);
 
-            spawnEntityAt(powerUp, posLeft, false, false);
-        }
+        runSpawn.add(textOffset);
+        Entity runTutorial = ObstacleFactory.createTutorialRun();
+        spawnEntityAt(runTutorial, runSpawn, true, false);
+
+        spearObstacleSpawn.add(textOffset);
+        Entity spearObstacleTutorial = ObstacleFactory.createTutorialSpearObstacle();
+        spawnEntityAt(spearObstacleTutorial, spearObstacleSpawn, true, false);
+
+
     }
 
     protected Entity spawnPlayer(int x, int y) {
         Entity newPlayer = PlayerFactory.createPlayer();
-        GridPoint2 pos = new GridPoint2(x, y); /*Math.round(lane.y - newPlayer.getScale().y));*/
+        GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(newPlayer, pos, true, false);
 
-        //entitySignUp.
-        // ^ so this will register it to entity service and the activeEntities list
-        // in GameArea
-
         return newPlayer;
+    }
+
+    /**
+     * Spawn a background image starting at x.
+     *
+     * @param x     starting coordinate
+     * @param width width of the image using scaleWidth(width)
+     * @param world world type, must match the first word of a .png file in
+     *              assets/images/Backgrounds/'world'_bg.png, any information after an underscore
+     *              in world is ignored i.e. asgard and asgard_3 are both the same.
+     */
+    protected void spawnBackground(int x, int width, String world) {
+        logger.debug("Spawning background with world {}", world);
+        Entity background = ObstacleFactory.createBackground(world, width);
+        GridPoint2 pos = new GridPoint2(x, -1);
+        spawnEntityAt(background, pos, false, false);
     }
 
     /**
      * This spawns the Wall of Death
      */
     protected void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-40, 13);
-        GridPoint2 leftPos2 = new GridPoint2(-5, 13);
+        GridPoint2 leftPos = new GridPoint2(-30, 13);
+        GridPoint2 leftPos2 = new GridPoint2(5, 13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
         wallOfDeath.addComponent(new CameraShakeComponent(getPlayer(), this.terrainFactory.getCameraComponent(), sfx));
         wallOfDeath.addComponent(new FallDamageComponent(getPlayer()));
 
-        GridPoint2 leftPos3 = new GridPoint2(-15, 13);
+        GridPoint2 leftPos3 = new GridPoint2(-5, 13);
         Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
 
         wallOfDeath.addComponent(new VariableSpeedComponent(getPlayer(), deathGiant, sfx));
@@ -207,7 +232,7 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnLevelLoadTrigger(int x) {
-        GridPoint2 centrePos = new GridPoint2(x, 6);
+        GridPoint2 centrePos = new GridPoint2(x, 11);
         Entity levelLoadTrigger = ObstacleFactory.createLevelLoadTrigger();
         spawnEntityAt(levelLoadTrigger, centrePos, true, true);
     }
@@ -252,7 +277,6 @@ public class RagnarokArea extends GameArea {
         // y + 2 is on this line so the platform spawns at the top of a tile, not the bottom.
         GridPoint2 pos = new GridPoint2(x, y + 2);
         spawnEntityAt(platform, pos, false, false);
-        signup(pos, platform);
     }
 
     /**
@@ -266,19 +290,9 @@ public class RagnarokArea extends GameArea {
         Entity floor = ObstacleFactory.createFloor(world);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(floor, pos, false, false);
-        signup(pos, floor);
     }
 
     /**
-     * * Spawn a line of floors at x[0], x[1], ..., x[n] having only a single collision entity that
-     * * spans from x[1] to x[n].
-     * * <p>
-     * * On disposal of the overarching collision entity, all floors created are disposed of.
-     * *
-     * * @param x     array of x coordinates to spawn floors at
-     * * @param y     the y coordinate to spawn all floors at
-     * * @param world the world type to load in. Must match the name of a .png file in
-     * *              assets/images (e.g. assets/images/world.png)
      * Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
      * spans from x[0] to the end of the map chunk at x[n + 3].
      * <p>
@@ -315,93 +329,47 @@ public class RagnarokArea extends GameArea {
             entities[i] = mapPart;
             GridPoint2 pos = new GridPoint2(x[i], y);
             spawnEntityAt(mapPart, pos, false, false);
-            signup(pos, mapPart);
         }
 
-        // Calculate width by getting taking away the starting position of the first platform from
-        // the starting position of the last platform. This is still one map piece too short, so
-        // add 3 which is the width of a single tile.
+        /* Calculate width by getting taking away the starting position of the first platform from
+           the starting position of the last platform. This is still one map piece too short, so
+           add 3 which is the width of a single tile. */
         int width = x[x.length - 1] - x[0] + 3;
         Entity collider = ObstacleFactory.createCollider(width, height);
         collider.addComponent(new GroupDisposeComponent(entities));
 
         GridPoint2 pos = new GridPoint2(x[0], y);
         spawnEntityAt(collider, pos, false, false);
-        signup(pos, collider);
     }
 
     protected void spawnRocks(int x, int y) {
         Entity rocks = ObstacleFactory.createRock();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(rocks, pos, false, false);
-        signup(pos, rocks);
     }
 
     protected void spawnSpikes(int x, int y) {
         Entity spikes = ObstacleFactory.createSpikes();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(spikes, pos, false, false);
-        signup(pos, spikes);
     }
 
     protected void spawnWolf(int x, int y) {
         Entity wolf = NPCFactory.createWolf(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(wolf, pos, false, false);
-        //signup(pos, wolf);
     }
 
     protected void spawnSkeleton(int x, int y) {
-        Entity skeleton = NPCFactory.createSkeleton(player);
+        Entity skeleton = NPCFactory.createSkeleton();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(skeleton, pos, false, false);
-        //signup(pos, skeleton);
     }
 
     protected void spawnFireSpirit(int x, int y) {
         Entity fireSpirit = NPCFactory.createFireSpirit(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(fireSpirit, pos, false, false);
-        //signup(pos, skeleton);
-    }
-
-    protected void projectileFromEnemy(GridPoint2 enemy) {
-        Entity fireBall = ProjectileFactory.fireBall();
-        spawnEntityAt(fireBall, enemy, false, false);
-    }
-
-    public void clearEntitiesAt(int x, int y) {
-        // takes the global scale x and y, so mutliply them by 3 in here
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                GridPoint2 index = new GridPoint2(x + i, y + j);
-
-                if (entitySignUp.get(index) != null) {
-                    for (Entity e : entitySignUp.get(index)) {
-                        e.flagDelete();
-                    }
-                }
-
-            }
-        }
-    }
-
-    public void clearAllEntities() {
-        for (GridPoint2 g : entitySignUp.keySet()) {
-            for (Entity e : entitySignUp.get(g)) {
-                e.flagDelete();
-            }
-        }
-    }
-
-    public void signup(GridPoint2 pos, Entity entity) {
-        if (!entitySignUp.containsKey(pos)) {
-
-            LinkedList<Entity> posList = new LinkedList<>();
-            entitySignUp.put(pos, posList);
-        }
-
-        entitySignUp.get(pos).add(entity);
     }
 
     protected void spawnShield(int x, int y) {

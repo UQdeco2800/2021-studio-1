@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.powerups.LightningPowerUpComponent;
+import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 import com.deco2800.game.gameScore.gameScore;
 import com.deco2800.game.ui.UIComponent;
 
@@ -17,7 +19,11 @@ public class PlayerStatsDisplay extends UIComponent {
   private Image heartImage;
   private Label healthLabel;
   private Label scoreLabel;
+  public static boolean deadFlag = false;
+  public static boolean lightningActive = false;
+
   gameScore scoring = new gameScore();
+  private int health;
 
   /**
    * Creates reusable ui styles and adds actors to the stage.
@@ -28,6 +34,7 @@ public class PlayerStatsDisplay extends UIComponent {
     addActors();
     entity.getEvents().addListener("updateHealth", this::updatePlayerHealthUI);
     entity.getEvents().addListener("updateScore", this::updatePlayerScoreUI);
+    deadFlag = false;
   }
 
   /**
@@ -38,24 +45,18 @@ public class PlayerStatsDisplay extends UIComponent {
     table = new Table();
     table.top().left();
     table.setFillParent(true);
-    table.padTop(30f).padLeft(-200f);
+    table.padTop(20f).padLeft(20f);
 
     tableTwo = new Table();
     tableTwo.top().left();
     tableTwo.setFillParent(true);
-    tableTwo.padTop(60f).padLeft(20f);
-    // Heart image
-    float heartSideLength = 30f;
+    tableTwo.padTop(50f).padLeft(20f);
 
     // Health text
-    int health = entity.getComponent(CombatStatsComponent.class).getHealth();
+    health = entity.getComponent(CombatStatsComponent.class).getHealth();
     //int health = 100;
     CharSequence healthText = String.format("Health: %d", health);
     healthLabel = new Label(healthText, skin, "large");
-
-    table.add(heartImage).size(heartSideLength).pad(5);
-    table.add(healthLabel);
-    stage.addActor(table);
 
     // Score Text
     long score = scoring.getCurrentScore();
@@ -78,8 +79,17 @@ public class PlayerStatsDisplay extends UIComponent {
   @Override
   public void update(){
     entity.getEvents().trigger("updateScore", scoring.getCurrentScore());
+    // flags that the player is dead
+    if (entity.getComponent(CombatStatsComponent.class).isDead() == true){
+      deadFlag = true;
+      entity.getEvents().trigger("start");
+    }
+    if(entity.getComponent(LightningPowerUpComponent.class).getActive()){
+      lightningActive = true;
+    }else{
+      lightningActive = false;
+    }
   }
-
 
   /**
    * Updates the player's health on the ui.

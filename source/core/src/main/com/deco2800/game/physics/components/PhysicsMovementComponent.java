@@ -26,9 +26,22 @@ public class PhysicsMovementComponent extends Component implements MovementContr
    * Sets the maxSpeed
    * @param speed max speed
    */
-  public static void setMaxSpeed(int speed) {
+  public void setMaxSpeed(int speed) {
     maxSpeed = new Vector2(speed,speed);
   }
+
+  public void setMaxSpeed(float speed) {
+    maxSpeed = new Vector2(speed,speed);
+  }
+
+  /**
+   * Returns the maxSpeed
+   * @return maxSpeed
+   */
+  public Vector2 getMaxSpeed() {
+    return maxSpeed;
+  }
+
 
   @Override
   public void update() {

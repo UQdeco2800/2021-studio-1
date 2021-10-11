@@ -13,13 +13,18 @@ public class DebugCommand implements Command {
   private static final Logger logger = LoggerFactory.getLogger(DebugCommand.class);
 
   /**
-   * Toggles debug mode on or off if the corresponding argument is received.
+   * Toggles debug mode on or off if the corresponding argument is received. If no argument recieved toggles it.
    * @param args command arguments
    */
   public boolean action(ArrayList<String> args) {
     if (!isValid(args)) {
       logger.debug("Invalid arguments received for '-debug' command: {}", args);
       return false;
+    }
+
+    if (args.size() == 0) {
+      ServiceLocator.getRenderService().getDebug().toggleActive();
+      return true;
     }
 
     String arg = args.get(0);
@@ -45,6 +50,6 @@ public class DebugCommand implements Command {
    * @return is valid
    */
   boolean isValid(ArrayList<String> args) {
-    return args.size() == 1;
+    return (args.size() == 1 || args.size() == 0);
   }
 }

@@ -2,6 +2,7 @@ package com.deco2800.game.components.mainmenu;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -26,14 +27,46 @@ public class MainMenuDisplay extends UIComponent {
   private Table table;
   private Table helpTable;
   private Table highScoreTable;
+  private Table starOne;
+  private Image shootingStarOne;
+  private Table starTwo;
+  private Image shootingStarTwo;
+  private Table starThree;
+  private Image shootingStarThree;
+  private float effectsXOne = -200;
+  private float effectsXTwo = -100;
+  private float effectsXThree = -500;
+  private float effectsYOne = 300;
+  private float effectsYTwo = 450;
+  private float effectsYThree = 350;
+  private float frameCountOne = 0;
+  private float frameCountTwo = 0;
+  private float frameCountThree = 0;
+  private float shootOneSpeed = 25;
+  private float shootTwoSpeed = 25;
+  private float shootThreeSpeed = 25;
+  private boolean starOneShot = false;
+  private boolean starTwoShot = false;
+  private boolean starThreeShot = false;
+  private float shootOneWait = 1;
+  private float shootTwoWait = 1;
+  private float shootThreeWait = 1;
+  private Table backgroundTable;
   private Table muteTable;
-  private static String playerName = "";
+  private ImageButton muteButtonOn;
+  private ImageButton muteButtonOff;
+  private boolean muted = false;
+  private SelectBox<String> characterSelections;
+  private Label playerNameText;
+  private TextArea inputBox;
+  private TextButton inputBoxButton;
+  private static String playerName = "Random";
   private static final String POP_UP_FONT = "popUpFont";
   private static int[] scoreValues = {0, 0, 0, 0, 0};
   private static final String PLAY_LINE = "Play to get here!";
   private static String[] scoreNames = {PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE};
   private static String highScoreName = "";
-  private static int highScorevalue = 0;
+  private static int highScoreValue = 0;
 
 
   @Override
@@ -47,8 +80,16 @@ public class MainMenuDisplay extends UIComponent {
     table = new Table();
     helpTable = new Table();
     highScoreTable = new Table();
+    backgroundTable = new Table();
+    starOne = new Table();
+    starTwo = new Table();
+    starThree = new Table();
     muteTable = new Table();
+    starOne.setFillParent(true);
+    starTwo.setFillParent(true);
+    starThree.setFillParent(true);
     rootTable.setFillParent(true);
+    backgroundTable.setFillParent(true);
     table.setFillParent(true);
     helpTable.setFillParent(true);
     muteTable.setFillParent(true);
@@ -59,6 +100,24 @@ public class MainMenuDisplay extends UIComponent {
             ServiceLocator.getResourceService()
                 .getAsset("images/main_back.png", Texture.class));
 
+    shootingStarOne =
+          new Image(
+                  ServiceLocator.getResourceService()
+                          .getAsset("images/star.png", Texture.class));
+    shootingStarOne.setScale(0.2f, 0.2f);
+
+    shootingStarTwo =
+          new Image(
+                  ServiceLocator.getResourceService()
+                          .getAsset("images/star2.png", Texture.class));
+    shootingStarTwo.setScale(0.2f, 0.2f);
+
+    shootingStarThree =
+          new Image(
+                  ServiceLocator.getResourceService()
+                          .getAsset("images/star3.png", Texture.class));
+
+    shootingStarThree.setScale(0.2f, 0.2f);
     TextButton startBtn = new TextButton("Run!", skin);
     //This and its descendants are commented out since it could be a button we use in future
     //TextButton loadBtn = new TextButton("Load", skin);
@@ -66,66 +125,71 @@ public class MainMenuDisplay extends UIComponent {
     TextButton exitBtn = new TextButton("Exit", skin);
     TextButton helpBtn = new TextButton("Help", skin);
     TextButton leaderBoardButton = new TextButton("Leaderboard", skin);
+    inputBoxButton = new TextButton("Enter", skin);
 
-    ImageButton muteButton = new ImageButton(new TextureRegionDrawable(
+    muteButtonOn = new ImageButton(new TextureRegionDrawable(
             ServiceLocator.getResourceService().getAsset(
                     "images/mute_button_on.png", Texture.class)));
 
+    muteButtonOff = new ImageButton(new TextureRegionDrawable(
+              ServiceLocator.getResourceService().getAsset(
+                      "images/mute_button_off.png", Texture.class)));
+
     highScoreName = readHighScores();
-    Label selectionDescription = new Label("Select a Name", skin, POP_UP_FONT);
+    playerNameText = new Label("Your Name: " + playerName, skin, POP_UP_FONT);
     Label highScorePreText = new Label("Best Runner", skin, POP_UP_FONT);
     Label highScoreNameText = new Label(highScoreName, skin, POP_UP_FONT);
-    Label highScoreValueText = new Label("" + highScorevalue , skin, POP_UP_FONT);
-    SelectBox<String> characterSelections = new SelectBox<String>(skin);
+    Label highScoreValueText = new Label("" + highScoreValue, skin, POP_UP_FONT);
+    characterSelections = new SelectBox<>(skin);
+    inputBox = new TextArea("Enter Name", skin);
     addCharacterSelections(characterSelections);
 
-    // Triggers an event when the button is pressed
-
     startBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Start button clicked");
-            entity.getEvents().trigger("start");
-          }
-        });
-        // Triggers an event when the button is pressed
+            new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    logger.debug("Start button clicked");
+                    entity.getEvents().trigger("start");
+                }
+            });
 
-        startBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Start button clicked");
-                        entity.getEvents().trigger("start");
-                    }
-                });
+    helpBtn.addListener(
+            new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    logger.debug("Help button clicked");
+                    entity.getEvents().trigger("Help Screen");
+                }
+            });
 
-        helpBtn.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("Help button clicked");
-                        entity.getEvents().trigger("Help Screen");
-                    }
-                });
+    leaderBoardButton.addListener(
+            new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    logger.debug("leaderboard clicked");
+                    entity.getEvents().trigger("Leaderboard");
+                }
+            });
 
-        leaderBoardButton.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("leaderboard clicked");
-                        entity.getEvents().trigger("Leaderboard");
-                    }
-                });
+    muteButtonOn.addListener(
+            new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent changeEvent, Actor actor) {
+                    logger.debug("mute button clicked");
+                    switchMuteGraphic();
+                    entity.getEvents().trigger("mute");
+                }
+            });
 
-        muteButton.addListener(
-                new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent changeEvent, Actor actor) {
-                        logger.debug("mute button clicked");
-                        entity.getEvents().trigger("mute");
-                    }
-                });
+    muteButtonOff.addListener(
+          new ChangeListener() {
+              @Override
+              public void changed(ChangeEvent changeEvent, Actor actor) {
+                  logger.debug("mute button clicked");
+                  switchMuteGraphic();
+                  entity.getEvents().trigger("mute");
+              }
+          });
 
     /*loadBtn.addListener(
         new ChangeListener() {
@@ -160,13 +224,27 @@ public class MainMenuDisplay extends UIComponent {
           }
         });
 
-    rootTable.add(title);
+    inputBoxButton.addListener(new ChangeListener() {
+        @Override
+        public void changed(ChangeEvent changeEvent, Actor actor) {
+            playerName = inputBox.getText();
+            logger.info(playerName + "players name");
+            playerNameText.setText("Your Name: " + playerName);
+        }
+    });
+
     rootTable.setBackground(new TextureRegionDrawable(new Texture("images/plainBack.png")));
-    table.add(selectionDescription).padTop(70f);
+    setBackground();
+    table.add(playerNameText).padTop(150f);
     table.row();
-    table.add(characterSelections).padTop(10f);
+    table.add(characterSelections).padTop(20f);
     table.row();
-    table.add(startBtn).padTop(30f);
+    table.add(inputBox).padTop(10f);
+    table.add(inputBoxButton);
+    inputBox.setVisible(false);
+    inputBoxButton.setVisible(false);
+    table.row();
+    table.add(startBtn).padTop(20f);
     table.row();
     table.row();
     table.add(settingsBtn).padTop(30f);
@@ -174,7 +252,9 @@ public class MainMenuDisplay extends UIComponent {
     table.add(exitBtn).padTop(30f);
 
     helpTable.add(helpBtn);
-    muteTable.add(muteButton);
+    muteTable.add(muteButtonOn);
+    muteTable.add(muteButtonOff);
+    muteButtonOff.setVisible(false);
     highScoreTable.add(highScorePreText);
     highScoreTable.row();
     highScoreTable.add(highScoreNameText).bottom().right();
@@ -182,8 +262,20 @@ public class MainMenuDisplay extends UIComponent {
     highScoreTable.add(highScoreValueText).bottom().right();
     highScoreTable.row();
     highScoreTable.add(leaderBoardButton).bottom().right();
+    starOne.add(shootingStarOne).top().left();
+    starOne.row();
+    starTwo.add(shootingStarTwo);
+    starOne.row();
+    starThree.add(shootingStarThree);
+    starOne.setPosition(effectsXOne, effectsYOne);
+    starTwo.setPosition(effectsXTwo, effectsYTwo);
+    starThree.setPosition(effectsXThree, effectsYThree);
 
     stage.addActor(rootTable);
+    stage.addActor(backgroundTable);
+    stage.addActor(starOne);
+    stage.addActor(starTwo);
+    stage.addActor(starThree);
     stage.addActor(table);
     stage.addActor(helpTable);
     stage.addActor(muteTable);
@@ -192,8 +284,8 @@ public class MainMenuDisplay extends UIComponent {
 
   private void addCharacterSelections(SelectBox<String> characterSelections) {
 
-      String[] selections = new String[] {"Random",  "Thor", "Loki", "Bjorn", "Floki", "Ironside", "Uber", "Frejya", "Njoror", "Aesir", "Mjolnir"};
-      Array<String> selectionText = new Array<String>();
+      String[] selections = new String[] {"Select Name",  "Random",  "Thor", "Loki", "Bjorn", "Floki", "Odin", "Ironside", "Uber", "Frejya", "Njoror", "Aesir", "Mjolnir", "Custom"};
+      Array<String> selectionText = new Array<>();
 
       for (String selection : selections) {
 
@@ -206,9 +298,24 @@ public class MainMenuDisplay extends UIComponent {
           @Override
           public void changed(ChangeEvent changeEvent, Actor actor) {
               playerName = characterSelections.getSelected();
+              if (playerName.equals("Custom")) {
+                  showCustomBox();
+              } else {
+                  inputBox.setVisible(false);
+                  playerNameText.setText("Your Name: " + playerName);
+              }
           }
       });
   }
+
+    /*
+     * Shows the custom box beneath the selection box on the main menu screen
+     */
+    private void showCustomBox() {
+
+      inputBox.setVisible(true);
+      inputBoxButton.setVisible(true);
+    }
 
     /*
      * Reads the high scores from highScores.txt in gameinfo folder
@@ -228,7 +335,7 @@ public class MainMenuDisplay extends UIComponent {
         }
 
         int numberScoreRead = 0;
-        highScorevalue = 0;
+        highScoreValue = 0;
 
         while (highScoresScanner.hasNextLine()) {
 
@@ -257,18 +364,30 @@ public class MainMenuDisplay extends UIComponent {
             numberScoreRead += 1;
         }
 
-        highScorevalue = scoreValues[0];
+        highScoreValue = scoreValues[0];
         highScoreName = scoreNames[0];
         highScoresScanner.close();
 
         return highScoreName;
     }
 
+    private void switchMuteGraphic() {
+
+        if (muted) {
+            muteButtonOn.setVisible(true);
+            muteButtonOff.setVisible(false);
+            muted = false;
+        } else {
+            muteButtonOn.setVisible(false);
+            muteButtonOff.setVisible(true);
+            muted = true;
+        }
+    }
+
     /*
      * Returns the players selected name
      */
-    public static String getPlayeName () {
-
+    public static String getPlayerName() {
         return playerName;
     }
 
@@ -276,7 +395,7 @@ public class MainMenuDisplay extends UIComponent {
      * Returns the highest score value
      */
     public static int getHighScore() {
-        return highScorevalue;
+        return highScoreValue;
     }
 
     /*
@@ -306,7 +425,153 @@ public class MainMenuDisplay extends UIComponent {
 
     @Override
     public void draw(SpriteBatch batch) {
-        // draw is handled by the stage
+
+        frameCountOne += 1;
+        frameCountTwo += 1;
+        frameCountThree += 1;
+
+        if (!starOneShot) {
+            MoveStarOne();
+        }
+
+        if (!starTwoShot) {
+            MoveStarTwo();
+        }
+
+        if (!starThreeShot) {
+            MoveStarThree();
+        }
+
+        if (starOneShot) {
+            RotateStarOne();
+        }
+
+        RotateStarTwo();
+        if (starTwoShot) {
+            //RotateStarTwo();
+        }
+
+        RotateStarThree();
+        if (starThreeShot) {
+            //RotateStarThree();
+        }
+
+        if (starOneShot && frameCountOne > shootOneWait) {
+            SetStarOnePosition();
+            starOneShot = false;
+        }
+
+        if (starTwoShot && frameCountTwo > shootTwoWait) {
+            SetStarTwoPosition();
+            starTwoShot = false;
+        }
+
+        if (starThreeShot && frameCountThree > shootThreeWait) {
+            SetStarThreePosition();
+            starThreeShot = false;
+        }
+
+        if (!starOneShot && effectsXOne >= 500) {
+            starOneShot = true;
+            frameCountOne = 0;
+            shootOneWait = (float) Math.random() * 800 + 800;
+        }
+
+        if (!starTwoShot && effectsXTwo >= 900) {
+            starTwoShot = true;
+            frameCountTwo = 0;
+            shootTwoWait = (float) Math.random() * 300 + 300;
+        }
+
+        if (!starThreeShot && effectsXThree >= 900) {
+            starThreeShot = true;
+            frameCountThree = 0;
+            shootThreeWait = (float) Math.random() * 500 + 500;
+        }
+    }
+
+    private void SetStarOnePosition() {
+        float rand = (float) Math.random() * 1000 + 1000;
+        float rand2 = (float) Math.random() * 150 + 10;
+        effectsXOne = 200 - rand;
+        effectsYOne = 300 + rand2;
+
+        shootOneSpeed = (float) Math.random() * 25 + 25;
+
+        float scale = (float)(Math.random() * 0.2);
+        shootingStarOne.setScale(scale, scale);
+
+        starOne.setPosition(effectsXOne, effectsYOne);
+    }
+
+    private void SetStarTwoPosition() {
+        float rand = (float) Math.random() * 1000 + 1000;
+        float rand2 = (float) Math.random() * 1000 + 1000;
+        effectsXTwo = 500 - rand;
+        effectsYTwo = rand2;//-35;
+
+        shootTwoSpeed = (float) Math.random() * 25 + 25;
+
+        float scale = (float)(Math.random() * 0.2f);
+        shootingStarTwo.setScale(scale, scale);
+
+        starTwo.setPosition(effectsXTwo, effectsYTwo);
+    }
+
+    private void SetStarThreePosition() {
+        float rand = (float) Math.random() * 1000 + 1000;
+        float rand2 = (float) Math.random() * 1000 + 1000;
+        effectsXThree = 300 - rand;
+        effectsYThree = rand2;
+
+        shootThreeSpeed = (float) Math.random() * 25 + 25;
+
+        float scale = (float)(Math.random() * 0.2);
+        shootingStarThree.setScale(scale, scale);
+
+        starThree.setPosition(effectsXThree, effectsYThree);
+    }
+
+    private void RotateStarOne() {
+
+        float rand = (float)(Math.random() * 10);
+        shootingStarOne.rotateBy(rand);
+    }
+
+    private void RotateStarTwo() {
+
+        float rand = (float)(Math.random() * 10);
+        starTwo.rotateBy(rand * -1);
+    }
+
+    private void RotateStarThree() {
+
+        float rand = (float)(Math.random() * 10);
+        shootingStarThree.rotateBy(rand * -1);
+    }
+
+    private void MoveStarOne() {
+
+        effectsXOne += shootOneSpeed;
+        effectsYOne = shootOneWait != 1 ? 300 : effectsYOne - shootOneSpeed;
+
+        starOne.setPosition(effectsXOne, effectsYOne);
+    }
+
+    private void MoveStarTwo() {
+
+        effectsXTwo += shootTwoSpeed;
+        effectsYTwo = ((int)shootTwoWait) % 2 == 0 ? 200 : effectsYTwo - shootTwoSpeed;
+
+        starTwo.setPosition(effectsXTwo, effectsYTwo);
+    }
+
+    private void MoveStarThree() {
+
+        effectsXThree += shootThreeSpeed;
+        effectsYThree -= shootThreeSpeed;
+
+        starThree.setPosition(effectsXThree, effectsYThree);
     }
 
     @Override
@@ -322,4 +587,14 @@ public class MainMenuDisplay extends UIComponent {
         highScoreTable.clear();
         super.dispose();
     }
+
+    private void setBackground() {
+        if (MathUtils.random() <= 0.5) {
+            backgroundTable.setBackground(new TextureRegionDrawable(new Texture("images/main_back.png")));
+        } else {
+            backgroundTable.setBackground(new TextureRegionDrawable(new Texture("images/main_back2.png")));
+        }
+    }
+
 }
+

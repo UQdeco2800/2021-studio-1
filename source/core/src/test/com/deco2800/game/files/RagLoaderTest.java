@@ -74,12 +74,13 @@ class RagLoaderTest {
 
     @Test
     void shouldReadStartingInfo() {
+        // If this test has failed, the information in ragnarok.rag has most likely been changed.
         RagLoader.createFromFile("ragnorok");
 
         verify(service).sendTerminal("-config title ragTitle");
         verify(service).sendTerminal("-config width 53");
         verify(service).sendTerminal("-config height 10");
-        verify(service).sendTerminal("-config world earth_1");
+        verify(service).sendTerminal("-config world earth_3");
     }
 
     @Test

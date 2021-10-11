@@ -5,11 +5,14 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
+import com.badlogic.gdx.math.Vector2;
 
 public class VariableSpeedComponent extends Component {
     private Entity target;
     private Entity deathGiant;
     private Entity sfx;
+    private int tutorialCompleted = 0;
+    private int stopRunning = 0;
 
     /**
      * Class to change the speed of the entity depending on the distance of target
@@ -30,6 +33,8 @@ public class VariableSpeedComponent extends Component {
     @Override
     public void create() {
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
+        target.getEvents().addListener("collisionStart", this::onCollisionStart);
+        target.getEvents().addListener("anyMovement", this::changeSpeedStart);
     }
 
     /**
@@ -39,21 +44,57 @@ public class VariableSpeedComponent extends Component {
      * @param other second collision object
      */
     private void onCollisionStart(Fixture me, Fixture other) {
+        changeSpeedStart();
+    }
 
-        float yPos = target.getPosition().y;
-        float distance = entity.getPosition().dst(target.getPosition());
+    private void changeSpeedStart() {
 
-        if (distance < 32f) {
+        Vector2 playerPos = target.getPosition();
+        Vector2 entityPos = entity.getPosition();
 
-            entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
-            deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
-            sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+        float distance = playerPos.x - entityPos.x;
 
-        } else {
-            entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
-            deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
-            sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
+        if (playerPos.x < 40 && tutorialCompleted == 0) {
+
+            if (tutorialCompleted == 0) {
+
+                entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
+                deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
+                sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
+            }
+
+        } else if (stopRunning == 0) {
+
+            tutorialCompleted = 1;
+            entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(25);
+            deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(25);
+            sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(25);
+
+            if (distance < 30f)  {
+
+                entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+                deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+                sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+                stopRunning = 1;
+            }
+        }
+
+        if (tutorialCompleted == 1 && stopRunning == 1) {
+
+            if (distance > 50f) {
+                entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
+                deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
+                sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
+
+            } else {
+                entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+                deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+                sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+            }
 
         }
+
     }
+
+
 }

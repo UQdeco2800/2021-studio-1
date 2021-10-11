@@ -1,7 +1,7 @@
 $_title asg2
 $_width 25
 $_height 10
-$_world asgard_1
+$_world asgard_2
 
 $#........SF
 $#.........S
@@ -27,9 +27,9 @@ $#........FF
 $#.........S
 $#.........F
 $#.........S
-$#.........S
+$#.........P
 
-$@player set [2,1]
+$@player set [2,8]
 
 $-spawn [20,2] (skeleton)
 
