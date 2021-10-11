@@ -35,21 +35,7 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("Help Screen", this::onHelp);
     entity.getEvents().addListener("Leaderboard", this::onLeaderBoard);
     entity.getEvents().addListener("mute", this::onMute);
-    music = ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class);
-    music.setLooping(true);
-    playMusic();
   }
-
-    private void playMusic() {
-
-      music.setVolume(0.7f);
-      music.play();
-      logger.info(music.isPlaying() + "music playing");
-    }
-
-    private void stopMusic() {
-        music.setVolume(0f);
-    }
 
     /**
    * Swaps to the Main Game screen.
@@ -121,12 +107,8 @@ public class MainMenuActions extends Component {
     */
   private void onMute() {
     logger.info("muting game");
-    if (muted) {
-        playMusic();
-        muted = false;
-      } else {
-        stopMusic();
-        muted = true;
+
+
+
     }
-  }
 }

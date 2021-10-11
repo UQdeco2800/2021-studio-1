@@ -14,6 +14,7 @@ import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.SoundService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,6 @@ public class MainMenuScreen extends ScreenAdapter {
                                                       "images/star2.png",
                                                       "images/star3.png",
                                                       "images/plainBack.png"};
-  private static final String[] mainMenuSounds = {"sounds/main.mp3"};
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -43,10 +43,15 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
 
+    ServiceLocator.registerSoundService(new SoundService());
+
     renderer = RenderFactory.createRenderer();
 
     loadAssets();
     createUI();
+
+    ServiceLocator.getSoundService().playMusic("theme");
+
   }
 
   @Override
@@ -79,7 +84,6 @@ public class MainMenuScreen extends ScreenAdapter {
     unloadAssets();
     ServiceLocator.getRenderService().dispose();
     ServiceLocator.getEntityService().dispose();
-
     ServiceLocator.clear();
   }
 
@@ -87,15 +91,19 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
-    resourceService.loadMusic(mainMenuSounds);
+
+    ServiceLocator.getSoundService().loadAssets();
+
+    // because Sound Service calls resource service, this must be last
     ServiceLocator.getResourceService().loadAll();
+
   }
 
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainMenuTextures);
-    resourceService.unloadAssets(mainMenuSounds);
+    ServiceLocator.getSoundService().unloadAssets();
   }
 
   /**

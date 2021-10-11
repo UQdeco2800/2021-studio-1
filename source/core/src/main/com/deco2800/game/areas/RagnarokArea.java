@@ -105,7 +105,6 @@ public class RagnarokArea extends GameArea {
 
     private final TerrainFactory terrainFactory;
 
-    //have the loader return a level? fuck yeh
     public RagnarokArea(String name, TerrainFactory terrainFactory) {
         super();
         this.name = name;
@@ -403,6 +402,8 @@ public class RagnarokArea extends GameArea {
      */
     private void playMusic() {
 
+        logger.debug("play music called\n");
+
         String witchMusic;
 
         switch (MathUtils.random(2)) {
@@ -415,18 +416,25 @@ public class RagnarokArea extends GameArea {
             default:
                 witchMusic = MAIN_MUSIC;
         }
-        Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
+
+        /*Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
         Music fire = ServiceLocator.getResourceService().getAsset(FIRE_MUSIC, Music.class);
         Music walk = ServiceLocator.getResourceService().getAsset(WALK_MUSIC, Music.class);
+
         music.setLooping(true);
         fire.setLooping(true);
         walk.setLooping(true);
+
         music.setVolume(0.7f);
-        fire.setVolume(0.7f);
-        walk.setVolume(0.8f);
+        fire.setVolume(0.2f); // the bit crushing is insane on this
+        walk.setVolume(0.3f); // change the tempo of this
+
         music.play();
         fire.play();
-        walk.play();
+        walk.play();*/
+
+        ServiceLocator.getSoundService().playSound("walk");
+
     }
 
     private void unloadAssets() {

@@ -1,6 +1,7 @@
 package com.deco2800.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
@@ -25,6 +26,7 @@ import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.SoundService;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.maingame.MainGamePannelDisplay;
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * The game screen containing the main game.
@@ -86,6 +89,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerAreaService(new AreaService());
+
+        ServiceLocator.registerSoundService(new SoundService());
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -170,6 +175,11 @@ public class MainGameScreen extends ScreenAdapter {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(mainGameTextures);
+
+        ServiceLocator.getSoundService().loadAssets();
+
+        // because SoundService calls the resource service, this call
+        // must be last in the loadAssets
         ServiceLocator.getResourceService().loadAll();
     }
 
