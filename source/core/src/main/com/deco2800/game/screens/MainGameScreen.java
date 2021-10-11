@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
+import java.security.Provider;
 
 /**
  * The game screen containing the main game.
@@ -104,8 +105,10 @@ public class MainGameScreen extends ScreenAdapter {
 
         ragnarokManager = new AreaManager(terrainFactory);
 
+        //ServiceLocator.getSoundService().playSound("stomp");
+
         ServiceLocator.getAreaService().setManager(ragnarokManager);
-        ServiceLocator.getAreaService().run(); //TODO: call run on manager from terminal line
+        ServiceLocator.getAreaService().run();
     }
 
     @Override
@@ -113,6 +116,7 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.getTerminalService().processMessageBuffer();
         ServiceLocator.getEntityService().update();
+        ServiceLocator.getSoundService().update();
 
         physicsEngine.update();
         renderer.updateCameraPosition(ragnarokManager.getPlayer());
@@ -187,6 +191,8 @@ public class MainGameScreen extends ScreenAdapter {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(mainGameTextures);
+
+        ServiceLocator.getSoundService().unloadAssets();
     }
 
     /**

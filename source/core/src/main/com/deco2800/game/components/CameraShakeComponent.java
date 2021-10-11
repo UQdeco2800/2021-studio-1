@@ -79,25 +79,4 @@ public class CameraShakeComponent extends Component {
             //walk.play();
         }
     }
-
-    /**
-     * Set music volume proportionate to distance.
-     *
-     * @param music    music to change volume
-     * @param distance distance from target
-     */
-    private void setVolume(Music music, float distance) {
-        if (distance >= 32 && distance < 40) {
-            music.setVolume(1f);
-        }
-        if (distance >= 40 && distance < 50) {
-            music.setVolume(0.7f);
-        }
-        if (distance >= 50 && distance < 60) {
-            music.setVolume(0.3f);
-        }
-        if (distance > 60) {
-            music.setVolume(0f);
-        }
-    }
 }

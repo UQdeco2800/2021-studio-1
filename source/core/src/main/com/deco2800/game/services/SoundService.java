@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Hashtable;
 
 public class SoundService {
@@ -23,10 +22,20 @@ public class SoundService {
     private static String[] musicArray;
 
     public static boolean isLoaded;
+    public static boolean isGiant;
 
     private static ResourceService resources;
 
+    private static boolean stompOn = false;
+
+    private static long nextStomp = 0; // which value (in milliseconds) the next stomp shoud startd
+    private static double distanceMultiplier = 0;
+
+    private static Sound giantSound;
+    private static long giantWalkingId;
+
     private static Music currentTrack;
+    private static float musicVolume = 1f;
 
     public SoundService() {
 
@@ -35,7 +44,7 @@ public class SoundService {
     /**
      * Loads all the assets from the ResourceService, so they can be called
      * throughout the class.
-     *
+     * <p>
      * This must be called before any sounds can be played.
      */
     public void loadAssets() {
@@ -87,11 +96,6 @@ public class SoundService {
             soundArray = new String[soundList.size()];
             soundArray = soundList.toArray(soundArray);
 
-            int i=0;
-            for (String s : soundArray) {
-                System.out.printf("%d %s\n", i++, s);
-            }
-
             resources.loadSounds(soundArray);
 
             // Loads the table of music into the resource manager.
@@ -99,25 +103,21 @@ public class SoundService {
             musicArray = new String[musicList.size()];
             musicArray = musicList.toArray(musicArray);
 
-            i=0;
-            for (String s : musicArray) {
-                System.out.printf("%d %s\n", i++, s);
-            }
-
             resources.loadMusic(musicArray);
             // Code is heavily repeated due to sounds and music being managed
             // differently in the ResourceService
 
             isLoaded = true;
 
-        } catch(FileNotFoundException e) {
+            config.close();
+
+        } catch (FileNotFoundException e) {
             logger.error("File {} could not be loaded", filepath);
             isLoaded = false;
         } catch (IOException e) {
             logger.error("IOException while reading {}", filepath);
             isLoaded = false;
         }
-
 
 
     }
@@ -138,9 +138,8 @@ public class SoundService {
     /**
      * Accepts a string that is used as index to the Hashtable of sounds
      * Certain sounds have different subroutines associated with them.
-     *
+     * <p>
      * The stomping sound effect linked to the BPM of whichever song is playing
-     *
      *
      * @param sound
      */
@@ -148,7 +147,10 @@ public class SoundService {
         if (isLoaded) {
             if (soundTable.containsKey(sound)) {
                 Sound toPlay = resources.getAsset(soundTable.get(sound), Sound.class);
-                toPlay.play();
+                long id = toPlay.play();
+                toPlay.setPitch(id, (float) (Math.random() * 1.5 + 0.5));
+            } else if (sound.equals("stomp")) {
+                stompOn = !stompOn;
             } else {
                 logger.debug("{} is not a key", sound);
             }
@@ -158,13 +160,14 @@ public class SoundService {
     }
 
     /**
-     *
      * @param music
      */
     public void playMusic(String music) {
         if (isLoaded) {
             if (musicTable.containsKey(music)) {
+                if (currentTrack != null) currentTrack.stop();
                 currentTrack = resources.getAsset(musicTable.get(music), Music.class);
+                currentTrack.setVolume(musicVolume);
                 currentTrack.play();
             } else {
                 logger.debug("{} is not a key", music);
@@ -174,11 +177,65 @@ public class SoundService {
         }
     }
 
+
+    /**
+     * Function that remodels the previous Giant Sound effect manipulation
+     * in the CameraShakeComponent.
+     * <p>
+     * If the giant is >32f distance away, it's volume is determined by
+     * vol = sin(2pi*distance/120f)
+     *
+     * @param distance a float value represnting the giant's distance
+     *                 from the player
+     */
     public void setGiantDistance(float distance) {
 
-    }
-}
+        if (nextStomp < ServiceLocator.getTimeSource().getTime()) return;
 
-interface loadNew {
-    abstract void load(String key, String value);
+        if (distance <= 30f) {
+            distanceMultiplier = 1;
+        } else if (distance > 30f) {
+            distanceMultiplier = Math.sin(2*Math.PI*distance/120);
+        } else if (distance <= 60f) {
+            distanceMultiplier = 0;
+        }
+    }
+
+    private void playStomp() {
+
+        if (!stompOn) return;
+
+        int stompNum = (int) Math.floor(Math.random() * 4);
+        String playSound = String.format("stomp%d", stompNum);
+
+        giantSound = resources.getAsset(soundTable.get(playSound), Sound.class);
+        giantWalkingId = giantSound.play();
+
+        giantSound.setVolume(giantWalkingId, (float) distanceMultiplier);
+        giantSound.setPan(giantWalkingId, -1f, (float)distanceMultiplier);
+        giantSound.setPitch(giantWalkingId, (float)distanceMultiplier * 1.5f - 0.5f);
+
+        nextStomp += 1000 + 2000 * (1 - distanceMultiplier);
+    }
+
+    public void setMusicVolume(float volume) {
+        musicVolume = volume;
+        currentTrack.setVolume(musicVolume);
+    }
+
+    public void setMusicPan(float pan) {
+        currentTrack.setPan(pan, musicVolume);
+    }
+
+    public void update() {
+        // run a routine to check if sound fx need to be played... ? use time source + list for next sound
+        // instance stuff
+        ServiceLocator.getTimeSource().getTime(); // in milliseconds
+
+        long currentTime = ServiceLocator.getTimeSource().getTime(); // current time in seconds
+
+        if (nextStomp < currentTime) {
+            playStomp();
+        }
+    }
 }

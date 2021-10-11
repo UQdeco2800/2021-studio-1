@@ -50,7 +50,7 @@ public class MainMenuScreen extends ScreenAdapter {
     loadAssets();
     createUI();
 
-    ServiceLocator.getSoundService().playMusic("theme");
+    //ServiceLocator.getSoundService().playMusic("theme");
 
   }
 

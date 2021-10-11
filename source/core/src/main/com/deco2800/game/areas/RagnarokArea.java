@@ -122,7 +122,7 @@ public class RagnarokArea extends GameArea {
         displayUI();
         spawnTerrain();
 
-        playMusic(); //TODO: eventual move to music
+        //playMusic(); //TODO: eventual move to music
 
         logger.debug("Creating new RagnarokArea");
     }
@@ -433,7 +433,7 @@ public class RagnarokArea extends GameArea {
         fire.play();
         walk.play();*/
 
-        ServiceLocator.getSoundService().playSound("walk");
+        //ServiceLocator.getSoundService().playSound("walk");
 
     }
 
@@ -442,14 +442,13 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(racerTextures);
         resourceService.unloadAssets(racerTextureAtlases);
-        resourceService.unloadAssets(RACER_SOUNDS);
-        resourceService.unloadAssets(RACER_MUSIC);
+
+        ServiceLocator.getSoundService().unloadAssets();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class).stop();
         this.unloadAssets();
     }
 
