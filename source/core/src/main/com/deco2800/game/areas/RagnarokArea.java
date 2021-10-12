@@ -9,6 +9,11 @@ import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.physics.PhysicsLayer;
+import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.ParticleEffectRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -88,7 +93,8 @@ public class RagnarokArea extends GameArea {
             "images/sfx.atlas",
             "images/lightning-animation.atlas",
             "images/player-spear.atlas",
-            "images/bifrost.atlas"
+            "images/bifrost.atlas",
+            "particles/particles.atlas"
     };
 
     // get the sounds to work and then move the music & sounds to a json
@@ -195,6 +201,19 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(newPlayer, pos, true, false);
 
         return newPlayer;
+    }
+
+    /**
+     * Spawn an entity which will play a particle explosion when on collision with the player.
+     *
+     * @param x terrain x coordinate of the entity
+     * @param y terrain y coordinate of the entity
+     */
+    protected void spawnParticleSpread(int x, int y) {
+        Entity particleEntity = ObstacleFactory.createWallParticles(
+                "particles/rainbow_spread_2", "particles/particles.atlas");
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(particleEntity, pos, false, true);
     }
 
     /**

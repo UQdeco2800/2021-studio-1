@@ -1,5 +1,8 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -13,8 +16,10 @@ import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.rendering.BackgroundRenderComponent;
+import com.deco2800.game.rendering.ParticleEffectRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.LevelLoadTriggerComponent;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * Factory to create obstacle entities.
@@ -65,6 +70,29 @@ public class ObstacleFactory {
         // This 1.5x multiplier ensures 1 'width' value == width of 1 terrain block.
         background.scaleWidth((float) (width * (1.5)));
         return background;
+    }
+
+    /**
+     * Create and return an entity that on collision with the PLAYER physics layer, will start the
+     * given particle effect.
+     *
+     * @param particleEffectPath Asset path to the particle effect created in the LibGDX particle
+     *                           editor (https://github.com/libgdx/libgdx/wiki/2D-Particle-Editor)
+     * @param particleAtlasPath  path to the atlas file of the particle effect (the image of each
+     *                           particle)
+     * @return Entity having PhysicsComponent, HitBoxComponent, ParticleEffectRenderComponent
+     */
+    public static Entity createWallParticles(String particleEffectPath, String particleAtlasPath) {
+        // Resource service does not deal with File Handles, so get manually.
+        FileHandle effectData = Gdx.files.internal("particles/rainbow_spread_2");
+        TextureAtlas particleImage = ServiceLocator.getResourceService()
+                .getAsset("particles/particles.atlas", TextureAtlas.class);
+
+        return new Entity()
+                .addComponent(new PhysicsComponent())
+                .addComponent(new HitboxComponent())
+                .addComponent(new ParticleEffectRenderComponent(effectData, particleImage,
+                        PhysicsLayer.PLAYER));
     }
 
     /**
