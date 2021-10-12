@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -235,6 +235,15 @@ float&nbsp;height)</code></th>
 <div class="block">Create an invisible physics wall.</div>
 </td>
 </tr>
+<tr class="rowColor" id="i17">
+<td class="colFirst"><code>static <a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createWallParticles(java.lang.String,java.lang.String)">createWallParticles</a></span>&#8203;(java.lang.String&nbsp;particleEffectPath,
+java.lang.String&nbsp;particleAtlasPath)</code></th>
+<td class="colLast">
+<div class="block">Create and return an entity that on collision with the PLAYER physics layer, will start the
+ given particle effect.</div>
+</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -271,6 +280,24 @@ int&nbsp;width)</span></div>
 <dd><code>width</code> - width of the image (as given by the terrain coordinate system)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>background entity</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="createWallParticles(java.lang.String,java.lang.String)">createWallParticles</a></h3>
+<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../Entity.html" title="class in com.deco2800.game.entities">Entity</a></span>&nbsp;<span class="memberName">createWallParticles</span>&#8203;(<span class="arguments">java.lang.String&nbsp;particleEffectPath,
+java.lang.String&nbsp;particleAtlasPath)</span></div>
+<div class="block">Create and return an entity that on collision with the PLAYER physics layer, will start the
+ given particle effect.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>particleEffectPath</code> - Asset path to the particle effect created in the LibGDX particle
+                           editor (https://github.com/libgdx/libgdx/wiki/2D-Particle-Editor)</dd>
+<dd><code>particleAtlasPath</code> - path to the atlas file of the particle effect (the image of each
+                           particle)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Entity having PhysicsComponent, HitBoxComponent, ParticleEffectRenderComponent</dd>
 </dl>
 </section>
 </li>
