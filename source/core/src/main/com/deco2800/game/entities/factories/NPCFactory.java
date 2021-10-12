@@ -113,7 +113,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        //animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
 
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
