@@ -13,6 +13,7 @@ import com.deco2800.game.components.npc.BifrostAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ScreenFXAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.BifrostFXComponent;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -382,6 +383,12 @@ public class NPCFactory {
         return npc;
     }
 
+    /**
+     * Creates a bifrost entity to sit on the transition between levels.
+     * On colison with player spawns another particle effect entity.
+     *
+     * @return bifrost entity.
+     */
     public static Entity createBifrost() {
         Entity bifrost = new Entity();
         AnimationRenderComponent animator =
@@ -390,7 +397,11 @@ public class NPCFactory {
         animator.addAnimation("burn", 0.06f, Animation.PlayMode.LOOP);
         bifrost.addComponent(animator);
         bifrost.addComponent(new BifrostAnimationController());
+        bifrost.addComponent(new PhysicsComponent());
+        bifrost.addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
+        bifrost.addComponent(new BifrostFXComponent());
         bifrost.getComponent(AnimationRenderComponent.class).scaleEntity();
+        bifrost.setType(EntityTypes.OBSTACLE);
         bifrost.setScale(1f, 16f);
         return bifrost;
     }
