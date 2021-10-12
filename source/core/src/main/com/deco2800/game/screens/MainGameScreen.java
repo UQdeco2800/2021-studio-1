@@ -105,8 +105,9 @@ public class MainGameScreen extends ScreenAdapter {
 
         ragnarokManager = new AreaManager(terrainFactory);
 
-        // plays the music for the town theme
-        ServiceLocator.getSoundService().playMusic("town");
+        // plays the music
+        ServiceLocator.getSoundService().playMusic("bob");
+
         // plays fire crackling sound effects
         ServiceLocator.getSoundService().playSound("fire");
 

@@ -5,20 +5,40 @@ import com.deco2800.game.services.ServiceLocator;
 import java.security.Provider;
 import java.util.ArrayList;
 
+/**
+ * Command to interface to the SoundFX portion of the
+ * SoundService.
+ */
 public class SFXCommand implements Command {
+    /**
+     * Command to either play a sound effect or
+     * change a setting.
+     * Format:
+     * -sfx key|setting [setting value]
+     * @param args command args
+     * @return
+     */
     public boolean action(ArrayList<String> args) {
 
         if (!isValid(args)) return false;
 
-        // format: sfx key
+        if (args.size() == 1) ServiceLocator.getSoundService().playSound(args.get(0));
+        //if there are more arguments
+        else if (args.size() == 2) {
 
-        // if args = 3, do routine for setting
+            float value;
+            try {
+                String arg = args.get(1).replace(',', '.');
+                value = Float.parseFloat(arg);
+            } catch (Exception e) {
+                return false;
+            }
 
-        ServiceLocator.getSoundService().playSound(args.get(0));
-        if (args.size() == 2) {
-
-            // routine for chaning sound volume
-
+            switch (args.get(0)) {
+                case "-vol":
+                    ServiceLocator.getSoundService().setSfxVolume(value);
+                    return true;
+            }
         }
 
         return true;

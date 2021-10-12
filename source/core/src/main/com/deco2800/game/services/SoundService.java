@@ -45,6 +45,7 @@ public class SoundService {
     private Music currentTrack;
 
     private float musicVolume = 1f;
+    private float sfxVolume = 1f;
 
     /**
      * SoundService handles the playing of sounds and music in the game.
@@ -164,17 +165,17 @@ public class SoundService {
 
     /**
      * Accepts a string that is used as index to the Hashtable of sounds
-     * Certain sounds have different subroutines associated with them.
+     * Certain keywords have subroutines linked to them.
+     * Otherwise the "sound" parameter is used as a key to the table
      * <p>
-     * The stomping sound effect linked to the BPM of whichever song is playing
-     *
-     * @param sound
+     * @param sound sound to play
      */
     public void playSound(String sound) {
         if (isLoaded) {
             if (soundTable.containsKey(sound)) {
                 Sound toPlay = resources.getAsset(soundTable.get(sound), Sound.class);
                 long id = toPlay.play();
+                toPlay.setVolume(id, sfxVolume);
                 toPlay.setPitch(id, (float) (Math.random() * 1.5 + 0.5));
             } else if (sound.equals("onstomp")) {
                 stompOn = true;
@@ -191,6 +192,8 @@ public class SoundService {
     }
 
     /**
+     * Takes the key for the music track, mutes the previous one, and plays
+     * the new one. It only permits one track to be played at a time.
      * @param music
      */
     public void playMusic(String music) {
@@ -207,6 +210,7 @@ public class SoundService {
 
                 currentTrack = resources.getAsset(musicTable.get(music), Music.class);
                 currentTrack.play();
+                currentTrack.setVolume(musicVolume);
 
                 //currentTrackId = currentTrack.play();
                 //currentTrack.setVolume(currentTrackId, musicVolume);
@@ -250,6 +254,12 @@ public class SoundService {
         }
     }
 
+    /**
+     * Subroutine for the stomping sound effect. When this is called,
+     * it randomly picks a stomp to be played, and plays it;
+     * the stomp's volume and pitch are relative to the giant's distance.
+     * Somewhat buggy.
+     */
     private void playStomp() {
 
         if (!stompOn) return;
@@ -259,12 +269,16 @@ public class SoundService {
 
         giantSound = resources.getAsset(soundTable.get(playSound), Sound.class);
         long newId = giantSound.play();
-        giantSound.setVolume(newId, (float) distanceMultiplier);
-        giantSound.setPitch(newId, (float)distanceMultiplier * 0.5f + 1f);
+        giantSound.setVolume(newId, (float) distanceMultiplier * sfxVolume);
+        giantSound.setPitch(newId, (float)(distanceMultiplier * 0.5f + 1f));
 
         nextStomp += 1000 + 1000 * (1 - distanceMultiplier);
     }
 
+    /**
+     * Subroutine for the fire crackling sound effect. It gets higher
+     * and lower depending on the giant's distance from the player.
+     */
     private void playFire() {
 
         if (fireOn) {
@@ -277,28 +291,50 @@ public class SoundService {
         fireOn = true;
 
         fireSound = resources.getAsset(soundTable.get("crackle"), Sound.class);
-        fireId = fireSound.loop(0.5f);
+        fireId = fireSound.loop(0.5f * sfxVolume);
 
     }
 
+    /**
+     * Sets the volume of the current music track.
+     * @param volume value between 0f - 1f for the music's volume.
+     */
     public void setMusicVolume(float volume) {
         musicVolume = volume;
         if (currentTrack != null) currentTrack.setVolume(musicVolume);
     }
 
+    /**
+     * Sets the volume of the sound effects. Special sounds
+     * may need their volume adjusted manually.
+     * @param volume value between 0f - 1f for the sfx volume.
+     */
+    public void setSfxVolume(float volume) {
+        sfxVolume = volume;
+        if (fireId != 0) fireSound.setVolume(fireId, 0.5f * sfxVolume);
+
+    }
+
+    /**
+     * Sets the music to loop or to end after the track is over.
+     * @param value true if music will loop
+     */
     public void setMusicLoop(boolean value) {
         if (currentTrack != null) currentTrack.setLooping(value);
     }
 
+    /**
+     * Called in MainGameScreen every tick. Updates the sound and in turn,
+     * may trigger sounds.
+     */
     public void update() {
-        // run a routine to check if sound fx need to be played... ? use time source + list for next sound
-        // instance stuff
         ServiceLocator.getTimeSource().getTime(); // in milliseconds
         long currentTime = ServiceLocator.getTimeSource().getTime(); // current time in seconds
         if (nextStomp < currentTime) {
             playStomp();
         }
 
+        // fire pitch
         if (fireOn) fireSound.setPitch(fireId, (float) distanceMultiplier + 0.5f);
 
     }
