@@ -21,6 +21,17 @@ public class ParticleEffectRenderComponent extends RenderComponent {
     private final short targetLayer;
     private HitboxComponent hitboxComponent;
 
+    /**
+     * Construct a particle effect that will play when an entity from the targetLayer collides
+     * with it.
+     * <p>
+     * This particle effect is centred on the entity it is applied to. Whether it plays only once
+     * on collision or continuously is given by the information in effectData.
+     *
+     * @param effectData   particle data, should be a file saved from the LibGDX Particle Editor
+     * @param textureAtlas atlas of the image each particle will take
+     * @param targetLayer  PhysicsLayer to play on collision with
+     */
     public ParticleEffectRenderComponent(FileHandle effectData, TextureAtlas textureAtlas,
                                          short targetLayer) {
         particleEffect = new ParticleEffect();
@@ -29,6 +40,9 @@ public class ParticleEffectRenderComponent extends RenderComponent {
         this.targetLayer = targetLayer;
     }
 
+    /**
+     * Create the component.
+     */
     @Override
     public void create() {
         ServiceLocator.getRenderService().register(this);
@@ -39,7 +53,7 @@ public class ParticleEffectRenderComponent extends RenderComponent {
     /**
      * Start the particle effect if me == this hitbox and other is in the targetLayer.
      *
-     * @param me first fixture
+     * @param me    first fixture
      * @param other other fixture
      */
     private void onCollisionStart(Fixture me, Fixture other) {
