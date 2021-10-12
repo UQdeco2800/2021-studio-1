@@ -23,16 +23,24 @@ public class SoundService {
 
     public boolean isLoaded;
 
+    private final String iniFilePath;
+
     private ResourceService resources;
+
+    /**
+     * Determines several audio effects, particularly the volume of certain sounds.
+     */
+    private double distanceMultiplier = 0;
 
     private boolean stompOn = false;
 
     private long nextStomp = 0; // which value (in milliseconds) the next stomp shoud startd
-    private double distanceMultiplier = 0;
-
-    private String iniFilePath;
 
     private Sound giantSound;
+
+    private Sound fireSound;
+    private boolean fireOn = false;
+    private long fireId;
 
     private Music currentTrack;
 
@@ -172,6 +180,8 @@ public class SoundService {
                 stompOn = true;
             } else if (sound.equals("offstomp")) {
                 stompOn = false;
+            } else if (sound.equals("fire")) {
+                playFire();
             } else {
                 logger.debug("{} is not a key", sound);
             }
@@ -255,6 +265,22 @@ public class SoundService {
         nextStomp += 1000 + 1000 * (1 - distanceMultiplier);
     }
 
+    private void playFire() {
+
+        if (fireOn) {
+            fireOn = false;
+            fireSound = null;
+            fireId = 0;
+            return;
+        }
+
+        fireOn = true;
+
+        fireSound = resources.getAsset(soundTable.get("crackle"), Sound.class);
+        fireId = fireSound.loop(0.5f);
+
+    }
+
     public void setMusicVolume(float volume) {
         musicVolume = volume;
         if (currentTrack != null) currentTrack.setVolume(musicVolume);
@@ -272,5 +298,8 @@ public class SoundService {
         if (nextStomp < currentTime) {
             playStomp();
         }
+
+        if (fireOn) fireSound.setPitch(fireId, (float) distanceMultiplier + 0.5f);
+
     }
 }
