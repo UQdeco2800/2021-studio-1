@@ -14,8 +14,11 @@ import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.SoundService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.security.Provider;
 
 /**
  * The game screen containing the main menu.
@@ -25,7 +28,6 @@ public class StoryScreen extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private static final String[] storyTextures = {"images/story/storyline.png"};
-  private static final String[] storySounds = {"sounds/main.mp3"};
 
   public StoryScreen(GdxGame game) {
     this.game = game;
@@ -35,11 +37,15 @@ public class StoryScreen extends ScreenAdapter {
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerSoundService(new SoundService("storyScreen"));
 
     renderer = RenderFactory.createRenderer();
 
     loadAssets();
     createUI();
+
+    ServiceLocator.getSoundService().playMusic("intro");
+    ServiceLocator.getSoundService().setMusicLoop(true);
   }
 
   @Override
@@ -80,15 +86,15 @@ public class StoryScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(storyTextures);
-    resourceService.loadMusic(storySounds);
+    ServiceLocator.getSoundService().loadAssets();
     ServiceLocator.getResourceService().loadAll();
   }
 
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
+    ServiceLocator.getSoundService().unloadAssets();
     resourceService.unloadAssets(storyTextures);
-    resourceService.unloadAssets(storySounds);
   }
 
   /**

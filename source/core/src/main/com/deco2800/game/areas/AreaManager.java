@@ -2,8 +2,12 @@ package com.deco2800.game.areas;
 
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.files.RagLoader;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+
 public class AreaManager extends RagnarokArea {
     private static final Logger logger = LoggerFactory.getLogger(AreaManager.class);
 
@@ -77,8 +81,6 @@ public class AreaManager extends RagnarokArea {
         super("Manager", terrainFactory);
         this.mainTerrainFactory = terrainFactory;
         this.startNextArea = -5;
-        // eventually moved to terminal?
-        // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
     }
 
     /**
@@ -107,7 +109,11 @@ public class AreaManager extends RagnarokArea {
         this.player = terrainInstance.getPlayer();
         terrainInstance.spawnWallOfDeath();
         logger.debug("Creating AreaManager");
+
+        //ServiceLocator.getSoundService().playMusic("town");
+
     }
+
 
     /**
      * Convenience method in case place is called to the Manager. See place(RagnarokArea, int, int, String)

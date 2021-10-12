@@ -1,5 +1,5 @@
 Unbeatable Dragonfly,19158
 Extraordinary Fox,3771
-Extraordinary Unicorn,3319
-Extraordinary Unicorn,3249
 Extraordinary Fox,3521
+Extraordinary Unicorn,3319
+Extraordinary Dire Wolf,4322
