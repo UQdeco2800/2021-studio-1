@@ -35,10 +35,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         isDirection = 1;
         return true;
       case Keys.A:
-        System.out.println(runDirection);
-        System.out.println(Vector2Utils.LEFT);
         if (!runDirection.epsilonEquals(Vector2Utils.LEFT) ) {
-          System.out.println("Adding more speed");
           runDirection.add(Vector2Utils.LEFT);
         }
         triggerRunEvent();
