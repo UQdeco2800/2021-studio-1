@@ -98,10 +98,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Toggles debug mode on or off if the corresponding argument is received.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/commands/MusicCommand.html#action(java.util.ArrayList)">action(ArrayList&lt;String&gt;)</a></span> - Method in class com.deco2800.game.ui.terminal.commands.<a href="com/deco2800/game/ui/terminal/commands/MusicCommand.html" title="class in com.deco2800.game.ui.terminal.commands">MusicCommand</a></dt>
+<dd>
+<div class="block">Does the action based on input.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/commands/PlaceCommand.html#action(java.util.ArrayList)">action(ArrayList&lt;String&gt;)</a></span> - Method in class com.deco2800.game.ui.terminal.commands.<a href="com/deco2800/game/ui/terminal/commands/PlaceCommand.html" title="class in com.deco2800.game.ui.terminal.commands">PlaceCommand</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/commands/QueueCommand.html#action(java.util.ArrayList)">action(ArrayList&lt;String&gt;)</a></span> - Method in class com.deco2800.game.ui.terminal.commands.<a href="com/deco2800/game/ui/terminal/commands/QueueCommand.html" title="class in com.deco2800.game.ui.terminal.commands">QueueCommand</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/commands/SFXCommand.html#action(java.util.ArrayList)">action(ArrayList&lt;String&gt;)</a></span> - Method in class com.deco2800.game.ui.terminal.commands.<a href="com/deco2800/game/ui/terminal/commands/SFXCommand.html" title="class in com.deco2800.game.ui.terminal.commands">SFXCommand</a></dt>
+<dd>
+<div class="block">Command to either play a sound effect or
+ change a setting.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/commands/SpawnCommand.html#action(java.util.ArrayList)">action(ArrayList&lt;String&gt;)</a></span> - Method in class com.deco2800.game.ui.terminal.commands.<a href="com/deco2800/game/ui/terminal/commands/SpawnCommand.html" title="class in com.deco2800.game.ui.terminal.commands">SpawnCommand</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/powerups/LightningPowerUpComponent.html#activate()">activate()</a></span> - Method in class com.deco2800.game.components.powerups.<a href="com/deco2800/game/components/powerups/LightningPowerUpComponent.html" title="class in com.deco2800.game.components.powerups">LightningPowerUpComponent</a></dt>
@@ -1381,6 +1390,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Get the entity's scale.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/ServiceLocator.html#getSoundService()">getSoundService()</a></span> - Static method in class com.deco2800.game.services.<a href="com/deco2800/game/services/ServiceLocator.html" title="class in com.deco2800.game.services">ServiceLocator</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/Renderer.html#getStage()">getStage()</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/Renderer.html" title="class in com.deco2800.game.rendering">Renderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/RenderService.html#getStage()">getStage()</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/RenderService.html" title="class in com.deco2800.game.rendering">RenderService</a></dt>
@@ -1609,6 +1620,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#isJumping()">isJumping()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#isLoaded">isLoaded</a></span> - Variable in class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerActions.html#isMoving()">isMoving()</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerActions.html" title="class in com.deco2800.game.components.player">PlayerActions</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/terrain/TerrainComponent.TerrainOrientation.html#ISOMETRIC">ISOMETRIC</a></span> - com.deco2800.game.areas.terrain.<a href="com/deco2800/game/areas/terrain/TerrainComponent.TerrainOrientation.html" title="enum in com.deco2800.game.areas.terrain">TerrainComponent.TerrainOrientation</a></dt>
@@ -1785,6 +1798,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Blocking call to load all assets.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#loadAssets()">loadAssets()</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>
+<div class="block">Loads all the assets from the ResourceService, so they can be called
+ throughout the class.</div>
+</dd>
 <dt><a href="com/deco2800/game/ui/terminal/commands/LoadCommand.html" title="class in com.deco2800.game.ui.terminal.commands"><span class="typeNameLink">LoadCommand</span></a> - Class in <a href="com/deco2800/game/ui/terminal/commands/package-summary.html">com.deco2800.game.ui.terminal.commands</a></dt>
 <dd>
 <div class="block">A command for toggling debug mode on and off.</div>
@@ -1906,6 +1924,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Wander around by moving a random position within a range of the starting position.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/tasks/MoveRightTask.html#%3Cinit%3E(com.deco2800.game.entities.Entity)">MoveRightTask(Entity)</a></span> - Constructor for class com.deco2800.game.components.tasks.<a href="com/deco2800/game/components/tasks/MoveRightTask.html" title="class in com.deco2800.game.components.tasks">MoveRightTask</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/deco2800/game/ui/terminal/commands/MusicCommand.html" title="class in com.deco2800.game.ui.terminal.commands"><span class="typeNameLink">MusicCommand</span></a> - Class in <a href="com/deco2800/game/ui/terminal/commands/package-summary.html">com.deco2800.game.ui.terminal.commands</a></dt>
+<dd>
+<div class="block">Command to interface to music portion of the SoundService.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/commands/MusicCommand.html#%3Cinit%3E()">MusicCommand()</a></span> - Constructor for class com.deco2800.game.ui.terminal.commands.<a href="com/deco2800/game/ui/terminal/commands/MusicCommand.html" title="class in com.deco2800.game.ui.terminal.commands">MusicCommand</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a id="I:N">
@@ -2146,6 +2170,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/PlayerStatsDisplay.html#%3Cinit%3E()">PlayerStatsDisplay()</a></span> - Constructor for class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/PlayerStatsDisplay.html" title="class in com.deco2800.game.components.player">PlayerStatsDisplay</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#playMusic(java.lang.String)">playMusic(String)</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>
+<div class="block">Takes the key for the music track, mutes the previous one, and plays
+ the new one.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#playSound(java.lang.String)">playSound(String)</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>
+<div class="block">Accepts a string that is used as index to the Hashtable of sounds
+ Certain keywords have subroutines linked to them.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/raycast/RaycastHit.html#point">point</a></span> - Variable in class com.deco2800.game.physics.raycast.<a href="com/deco2800/game/physics/raycast/RaycastHit.html" title="class in com.deco2800.game.physics.raycast">RaycastHit</a></dt>
 <dd>
 <div class="block">Point at which the raycast hit the fixture.</div>
@@ -2313,6 +2347,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/services/ServiceLocator.html#registerRenderService(com.deco2800.game.rendering.RenderService)">registerRenderService(RenderService)</a></span> - Static method in class com.deco2800.game.services.<a href="com/deco2800/game/services/ServiceLocator.html" title="class in com.deco2800.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/services/ServiceLocator.html#registerResourceService(com.deco2800.game.services.ResourceService)">registerResourceService(ResourceService)</a></span> - Static method in class com.deco2800.game.services.<a href="com/deco2800/game/services/ServiceLocator.html" title="class in com.deco2800.game.services">ServiceLocator</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/ServiceLocator.html#registerSoundService(com.deco2800.game.services.SoundService)">registerSoundService(SoundService)</a></span> - Static method in class com.deco2800.game.services.<a href="com/deco2800/game/services/ServiceLocator.html" title="class in com.deco2800.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/services/ServiceLocator.html#registerTerminalService(com.deco2800.game.ui.terminal.Terminal)">registerTerminalService(Terminal)</a></span> - Static method in class com.deco2800.game.services.<a href="com/deco2800/game/services/ServiceLocator.html" title="class in com.deco2800.game.services">ServiceLocator</a></dt>
 <dd>&nbsp;</dd>
@@ -2569,6 +2605,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Set friction.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#setGiantDistance(float)">setGiantDistance(float)</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>
+<div class="block">Function that remodels the previous Giant Sound effect manipulation
+ in the CameraShakeComponent.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/player/InventoryComponent.html#setGold(int)">setGold(int)</a></span> - Method in class com.deco2800.game.components.player.<a href="com/deco2800/game/components/player/InventoryComponent.html" title="class in com.deco2800.game.components.player">InventoryComponent</a></dt>
 <dd>
 <div class="block">Sets the player's gold.</div>
@@ -2602,6 +2643,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/components/PhysicsMovementComponent.html#setMoving(boolean)">setMoving(boolean)</a></span> - Method in class com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/PhysicsMovementComponent.html" title="class in com.deco2800.game.physics.components">PhysicsMovementComponent</a></dt>
 <dd>
 <div class="block">Enable/disable movement for the controller.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#setMusicLoop(boolean)">setMusicLoop(boolean)</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>
+<div class="block">Sets the music to loop or to end after the track is over.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#setMusicVolume(float)">setMusicVolume(float)</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>
+<div class="block">Sets the volume of the current music track.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/components/CameraComponent.html#setOffset(float)">setOffset(float)</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/CameraComponent.html" title="class in com.deco2800.game.components">CameraComponent</a></dt>
 <dd>
@@ -2653,6 +2702,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Set whether this physics component is a sensor.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#setSfxVolume(float)">setSfxVolume(float)</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>
+<div class="block">Sets the volume of the sound effects.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/components/ColliderComponent.html#setShape(com.badlogic.gdx.physics.box2d.Shape)">setShape(Shape)</a></span> - Method in class com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/ColliderComponent.html" title="class in com.deco2800.game.physics.components">ColliderComponent</a></dt>
 <dd>
 <div class="block">Set shape</div>
@@ -2695,6 +2748,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets the type of this entity</div>
 </dd>
+<dt><a href="com/deco2800/game/ui/terminal/commands/SFXCommand.html" title="class in com.deco2800.game.ui.terminal.commands"><span class="typeNameLink">SFXCommand</span></a> - Class in <a href="com/deco2800/game/ui/terminal/commands/package-summary.html">com.deco2800.game.ui.terminal.commands</a></dt>
+<dd>
+<div class="block">Command to interface to the SoundFX portion of the
+ SoundService.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/ui/terminal/commands/SFXCommand.html#%3Cinit%3E()">SFXCommand()</a></span> - Constructor for class com.deco2800.game.ui.terminal.commands.<a href="com/deco2800/game/ui/terminal/commands/SFXCommand.html" title="class in com.deco2800.game.ui.terminal.commands">SFXCommand</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/EntityTypes.html#SHIELDPOWERUP">SHIELDPOWERUP</a></span> - com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/EntityTypes.html" title="enum in com.deco2800.game.entities.factories">EntityTypes</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/powerups/ShieldPowerUpComponent.html" title="class in com.deco2800.game.components.powerups"><span class="typeNameLink">ShieldPowerUpComponent</span></a> - Class in <a href="com/deco2800/game/components/powerups/package-summary.html">com.deco2800.game.components.powerups</a></dt>
@@ -2728,6 +2788,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/utils/SortedIntMap.html#%3Cinit%3E(int)">SortedIntMap(int)</a></span> - Constructor for class com.deco2800.game.utils.<a href="com/deco2800/game/utils/SortedIntMap.html" title="class in com.deco2800.game.utils">SortedIntMap</a></dt>
 <dd>
 <div class="block">Create a sorted intmap with the specified capacity</div>
+</dd>
+<dt><a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services"><span class="typeNameLink">SoundService</span></a> - Class in <a href="com/deco2800/game/services/package-summary.html">com.deco2800.game.services</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#%3Cinit%3E(java.lang.String)">SoundService(String)</a></span> - Constructor for class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>
+<div class="block">SoundService handles the playing of sounds and music in the game.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/AreaManager.html#spawn(int,int,java.lang.String)">spawn(int, int, String)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/AreaManager.html" title="class in com.deco2800.game.areas">AreaManager</a></dt>
 <dd>
@@ -3166,6 +3232,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">ui Scale.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#unloadAssets()">unloadAssets()</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>
+<div class="block">Unloads all assets in the Sound Service.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/services/ResourceService.html#unloadAssets(java.lang.String%5B%5D)">unloadAssets(String[])</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/ResourceService.html" title="class in com.deco2800.game.services">ResourceService</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/EntityService.html#unregister(com.deco2800.game.entities.Entity)">unregister(Entity)</a></span> - Method in class com.deco2800.game.entities.<a href="com/deco2800/game/entities/EntityService.html" title="class in com.deco2800.game.entities">EntityService</a></dt>
@@ -3250,6 +3320,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/PhysicsEngine.html#update()">update()</a></span> - Method in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsEngine.html" title="class in com.deco2800.game.physics">PhysicsEngine</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/services/SoundService.html#update()">update()</a></span> - Method in class com.deco2800.game.services.<a href="com/deco2800/game/services/SoundService.html" title="class in com.deco2800.game.services">SoundService</a></dt>
+<dd>
+<div class="block">Called in MainGameScreen every tick.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/Renderer.html#updateCameraPosition(com.deco2800.game.entities.Entity)">updateCameraPosition(Entity)</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/Renderer.html" title="class in com.deco2800.game.rendering">Renderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/components/PhysicsMovementComponent.html#updateDirection(com.badlogic.gdx.physics.box2d.Body)">updateDirection(Body)</a></span> - Method in class com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/PhysicsMovementComponent.html" title="class in com.deco2800.game.physics.components">PhysicsMovementComponent</a></dt>
