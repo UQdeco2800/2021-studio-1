@@ -16,26 +16,27 @@ public class SoundService {
 
     private static final Logger logger = LoggerFactory.getLogger(SoundService.class);
 
-    private static Hashtable<String, String> soundTable;
-    private static Hashtable<String, String> musicTable;
-    private static String[] soundArray;
-    private static String[] musicArray;
+    private Hashtable<String, String> soundTable;
+    private Hashtable<String, String> musicTable;
+    private String[] soundArray;
+    private String[] musicArray;
 
-    public static boolean isLoaded;
-    public static boolean isGiant;
+    public boolean isLoaded;
+    public boolean isGiant;
 
-    private static ResourceService resources;
+    private ResourceService resources;
 
-    private static boolean stompOn = false;
+    private boolean stompOn = false;
 
-    private static long nextStomp = 0; // which value (in milliseconds) the next stomp shoud startd
-    private static double distanceMultiplier = 0;
+    private long nextStomp = 0; // which value (in milliseconds) the next stomp shoud startd
+    private double distanceMultiplier = 0;
 
-    private static Sound giantSound;
-    private static long giantWalkingId;
+    private Sound giantSound;
+    private long giantWalkingId;
 
-    private static Music currentTrack;
-    private static float musicVolume = 1f;
+    private Music currentTrack;
+    private long currentTrackId;
+    private float musicVolume = 1f;
 
     public SoundService() {
 
@@ -80,7 +81,7 @@ public class SoundService {
 
                 String[] split = l.split(":");
 
-                System.out.printf("key: %s, value: %s\n", split[0], split[1]);
+                //System.out.printf("key: %s, value: %s\n", split[0], split[1]);
 
                 if (assigningTo == null) {
                     logger.error("Error reading file");
@@ -96,12 +97,20 @@ public class SoundService {
             soundArray = new String[soundList.size()];
             soundArray = soundList.toArray(soundArray);
 
+            for (String s : soundArray) {
+                logger.debug(s);
+            }
+
             resources.loadSounds(soundArray);
 
             // Loads the table of music into the resource manager.
             ArrayList<String> musicList = new ArrayList<>(musicTable.values());
             musicArray = new String[musicList.size()];
             musicArray = musicList.toArray(musicArray);
+
+            for (String s : musicArray) {
+                logger.debug(s);
+            }
 
             resources.loadMusic(musicArray);
             // Code is heavily repeated due to sounds and music being managed
@@ -128,6 +137,10 @@ public class SoundService {
      * initialised for each screen of the game.
      */
     public void unloadAssets() {
+
+        if (currentTrack != null) currentTrack.dispose();
+        if (giantSound != null) giantSound.dispose();
+
         // unloads the sound effects
         resources.unloadAssets(soundArray);
 
@@ -166,8 +179,12 @@ public class SoundService {
         if (isLoaded) {
             if (musicTable.containsKey(music)) {
                 if (currentTrack != null) currentTrack.stop();
+
+                logger.debug("{}, resources contain track {}",
+                        resources.containsAsset(musicTable.get(music), Music.class), music);
+
                 currentTrack = resources.getAsset(musicTable.get(music), Music.class);
-                currentTrack.setVolume(musicVolume);
+                currentTrack.setVolume(-1f);
                 currentTrack.play();
             } else {
                 logger.debug("{} is not a key", music);
