@@ -19,7 +19,6 @@ public class MainMenuActions extends Component {
   private GdxGame game;
   private Entity mainMenuPop;
   private boolean muted = false;
-  private Music music;
   private static final String MAIN_MUSIC = "sounds/main.mp3";
 
   public MainMenuActions(GdxGame game) {
@@ -108,7 +107,12 @@ public class MainMenuActions extends Component {
   private void onMute() {
     logger.info("muting game");
 
-
+    muted = !muted;
+    if (muted) {
+        ServiceLocator.getSoundService().setMusicVolume(0f);
+    } else {
+        ServiceLocator.getSoundService().setMusicVolume(1f);
+    }
 
     }
 }

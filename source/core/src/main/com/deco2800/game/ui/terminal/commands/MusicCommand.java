@@ -33,7 +33,7 @@ public class MusicCommand implements Command {
                     ServiceLocator.getSoundService().setMusicVolume(value);
                     return true;
                 case "pan":
-                    ServiceLocator.getSoundService().setMusicPan(value);
+                    //ServiceLocator.getSoundService().setMusicPan(value);
                     return true;
             }
 

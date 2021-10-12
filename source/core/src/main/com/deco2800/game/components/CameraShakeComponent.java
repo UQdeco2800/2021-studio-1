@@ -57,7 +57,7 @@ public class CameraShakeComponent extends Component {
         //Music walk = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
         //Music roar = ServiceLocator.getResourceService().getAsset("sounds/roar.mp3", Music.class);
 
-        ServiceLocator.getSoundService().setGiantDistance(distance);
+        //ServiceLocator.getSoundService().setGiantDistance(distance);
 
         // TODO: refactor all of this to be contained in a call to the sound service
         if (distance < 32f) {

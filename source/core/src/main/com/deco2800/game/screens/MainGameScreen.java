@@ -91,7 +91,7 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerAreaService(new AreaService());
 
-        ServiceLocator.registerSoundService(new SoundService());
+        ServiceLocator.registerSoundService(new SoundService("mainGame"));
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -166,6 +166,7 @@ public class MainGameScreen extends ScreenAdapter {
         logger.debug("Disposing main game screen");
 
         renderer.dispose();
+
         unloadAssets();
 
         ServiceLocator.getEntityService().dispose();
@@ -190,9 +191,8 @@ public class MainGameScreen extends ScreenAdapter {
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
-        resourceService.unloadAssets(mainGameTextures);
-
         ServiceLocator.getSoundService().unloadAssets();
+        resourceService.unloadAssets(mainGameTextures);
     }
 
     /**

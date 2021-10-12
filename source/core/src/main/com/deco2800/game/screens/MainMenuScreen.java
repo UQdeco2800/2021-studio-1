@@ -43,14 +43,14 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
 
-    ServiceLocator.registerSoundService(new SoundService());
+    ServiceLocator.registerSoundService(new SoundService("mainMenu"));
 
     renderer = RenderFactory.createRenderer();
 
     loadAssets();
     createUI();
 
-    //ServiceLocator.getSoundService().playMusic("theme");
+    ServiceLocator.getSoundService().playMusic("theme");
 
   }
 
@@ -83,6 +83,7 @@ public class MainMenuScreen extends ScreenAdapter {
     renderer.dispose();
     unloadAssets();
     ServiceLocator.getRenderService().dispose();
+    ServiceLocator.getResourceService().dispose();
     ServiceLocator.getEntityService().dispose();
     ServiceLocator.clear();
   }

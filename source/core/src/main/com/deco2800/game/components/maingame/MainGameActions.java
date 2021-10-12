@@ -111,7 +111,6 @@ public class MainGameActions extends Component {
     }
 
     private void gameOver() {
-        Sound gameOverSound;
 
         if (game.over) {
             ServiceLocator.getTimeSource().setTimeScale(1f);
