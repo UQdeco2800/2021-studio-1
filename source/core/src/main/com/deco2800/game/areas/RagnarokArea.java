@@ -1,6 +1,9 @@
 package com.deco2800.game.areas;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.MathUtils;
@@ -10,9 +13,11 @@ import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
+import com.deco2800.game.rendering.ParticleEffectRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -178,22 +183,25 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(spearTutorial, spearSpawn, true, false);
     }
 
-    protected Entity spawnParticleSpread(int x, int y) {
-        Entity particleEntity = ParticleFactory.createSpread();
-        particleEntity.addComponent(new PhysicsComponent())
-                .addComponent(new ColliderComponent())
-                .addComponent(new HitboxComponent());
-        GridPoint2 pos = new GridPoint2(x, y);
-        spawnEntityAt(particleEntity, pos, false, true);
-        return particleEntity;
-    }
-
     protected Entity spawnPlayer(int x, int y) {
         Entity newPlayer = PlayerFactory.createPlayer();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(newPlayer, pos, true, false);
 
         return newPlayer;
+    }
+
+    /**
+     * Spawn an entity which will play a particle explosion when on collision with the player.
+     *
+     * @param x terrain x coordinate of the entity
+     * @param y terrain y coordinate of the entity
+     */
+    protected void spawnParticleSpread(int x, int y) {
+        Entity particleEntity = ObstacleFactory.createWallParticles(
+                "particles/rainbow_spread_2", "particles/particles.atlas");
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(particleEntity, pos, false, true);
     }
 
     /**
