@@ -68,11 +68,13 @@ public class RagnarokArea extends GameArea {
             "images/Backgrounds/Background Earth Day.png",
             "images/Backgrounds/Background Jotunheim.png",
             "images/Backgrounds/Background Jotunheim Day.png",
+            "images/Backgrounds/Background Hel.png",
             "images/tutorial/lightningTutorial.png",
             "images/tutorial/shieldTutorial.png",
             "images/tutorial/spearTutorial.png",
             "images/tutorial/spearObstacleTutorial.png",
-            "images/tutorial/run.png"
+            "images/tutorial/run.png",
+            "images/bifrost.png"
     };
 
     //TODO: make Json,
@@ -85,7 +87,8 @@ public class RagnarokArea extends GameArea {
             "images/skeleton.atlas",
             "images/sfx.atlas",
             "images/lightning-animation.atlas",
-            "images/player-spear.atlas"
+            "images/player-spear.atlas",
+            "images/bifrost.atlas"
     };
 
     // get the sounds to work and then move the music & sounds to a json
@@ -208,6 +211,9 @@ public class RagnarokArea extends GameArea {
         Entity background = ObstacleFactory.createBackground(world, width);
         GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);
+        Entity bifrost = NPCFactory.createBifrost();
+        GridPoint2 pos2 = new GridPoint2(x, 8);
+        spawnEntityAt(bifrost, pos2, true, true);
     }
 
     /**

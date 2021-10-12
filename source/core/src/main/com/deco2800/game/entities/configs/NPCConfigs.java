@@ -9,6 +9,7 @@ public class NPCConfigs {
   //creates a config class for the wall of death.
   public BaseEntityConfig wallOfDeath = new BaseEntityConfig();
   public BaseEntityConfig deathGiant = new BaseEntityConfig();
+  public BaseEntityConfig bifrost = new BaseEntityConfig();
 
   public BaseEntityConfig skeleton = new BaseEntityConfig();
   public BaseEntityConfig wolf = new BaseEntityConfig();

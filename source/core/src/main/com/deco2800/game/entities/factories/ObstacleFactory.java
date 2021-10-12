@@ -53,7 +53,8 @@ public class ObstacleFactory {
                             ? "Background Jotunheim Day" : "Background Jotunheim";
                     break;
                 case "hel":
-                    // Hel background not yet implemented.
+                    filename = "Background Hel";
+                    break;
 
                 default: // Either is "asgard" or unrecognised.
                     filename = "asgard_bg";

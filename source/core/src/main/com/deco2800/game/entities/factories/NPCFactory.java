@@ -9,6 +9,7 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.components.npc.DeathGiantAnimationController;
+import com.deco2800.game.components.npc.BifrostAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ScreenFXAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
@@ -379,6 +380,19 @@ public class NPCFactory {
         npc.getComponent(ColliderComponent.class).setSensor(true);
         npc.setType(EntityTypes.ENEMY);
         return npc;
+    }
+
+    public static Entity createBifrost() {
+        Entity bifrost = new Entity();
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/bifrost.atlas", TextureAtlas.class));
+        animator.addAnimation("burn", 0.06f, Animation.PlayMode.LOOP);
+        bifrost.addComponent(animator);
+        bifrost.addComponent(new BifrostAnimationController());
+        bifrost.getComponent(AnimationRenderComponent.class).scaleEntity();
+        bifrost.setScale(1f, 16f);
+        return bifrost;
     }
 
     private NPCFactory() {
