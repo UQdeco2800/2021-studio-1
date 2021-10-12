@@ -14,6 +14,7 @@ import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.SoundService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,6 @@ public class TutorialScreen2 extends ScreenAdapter {
   private final GdxGame game;
   private final Renderer renderer;
   private static final String[] tutorialTextures2 = {"images/tutorial/instruct2.png"};
-  private static final String[] tutorialSounds2 = {"sounds/main.mp3"};
-
   public TutorialScreen2(GdxGame game) {
     this.game = game;
 
@@ -35,11 +34,15 @@ public class TutorialScreen2 extends ScreenAdapter {
     ServiceLocator.registerResourceService(new ResourceService());
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
+    ServiceLocator.registerSoundService(new SoundService("storyScreen"));
 
     renderer = RenderFactory.createRenderer();
 
     loadAssets();
     createUI();
+
+    ServiceLocator.getSoundService().playMusic("intro");
+    ServiceLocator.getSoundService().setMusicLoop(true);
   }
 
   @Override
@@ -80,7 +83,7 @@ public class TutorialScreen2 extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(tutorialTextures2);
-    resourceService.loadMusic(tutorialSounds2);
+    ServiceLocator.getSoundService().loadAssets();
     ServiceLocator.getResourceService().loadAll();
   }
 
@@ -88,7 +91,7 @@ public class TutorialScreen2 extends ScreenAdapter {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(tutorialTextures2);
-    resourceService.unloadAssets(tutorialSounds2);
+    ServiceLocator.getSoundService().unloadAssets();
   }
 
   /**

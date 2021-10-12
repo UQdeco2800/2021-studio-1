@@ -178,6 +178,9 @@ public class ResourceService implements Disposable {
 
   @Override
   public void dispose() {
+
+    logger.debug("Dipose called");
+
     assetManager.clear();
   }
 }

@@ -6,6 +6,9 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.badlogic.gdx.math.Vector2;
+import com.deco2800.game.services.SoundService;
+
+import java.security.Provider;
 
 public class VariableSpeedComponent extends Component {
     private Entity target;
@@ -53,29 +56,30 @@ public class VariableSpeedComponent extends Component {
         Vector2 entityPos = entity.getPosition();
 
         float distance = playerPos.x - entityPos.x;
+        ServiceLocator.getSoundService().setGiantDistance(distance);
 
         if (playerPos.x < 40 && tutorialCompleted == 0) {
-
-            if (tutorialCompleted == 0) {
-
-                entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
-                deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
-                sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
-            }
-
+            entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
+            deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
+            sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
         } else if (stopRunning == 0) {
 
             tutorialCompleted = 1;
-            entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(25);
-            deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(25);
-            sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(25);
+
+            ServiceLocator.getSoundService().playSound("onstomp");
+
+            entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(13);
+            deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(13);
+            sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(13);
 
             if (distance < 30f)  {
 
                 entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
                 deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
                 sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+
                 stopRunning = 1;
+
             }
         }
 
