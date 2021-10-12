@@ -50,6 +50,7 @@ public class SoundService {
     /**
      * SoundService handles the playing of sounds and music in the game.
      * Please make a new initFile for each screen of the game, to save with memory issues.
+     *
      * @param initFile The Sound file to load [initFile].ini
      */
     public SoundService(String initFile) {
@@ -168,6 +169,7 @@ public class SoundService {
      * Certain keywords have subroutines linked to them.
      * Otherwise the "sound" parameter is used as a key to the table
      * <p>
+     *
      * @param sound sound to play
      */
     public void playSound(String sound) {
@@ -194,7 +196,8 @@ public class SoundService {
     /**
      * Takes the key for the music track, mutes the previous one, and plays
      * the new one. It only permits one track to be played at a time.
-     * @param music
+     *
+     * @param music music to play
      */
     public void playMusic(String music) {
         if (isLoaded) {
@@ -227,7 +230,7 @@ public class SoundService {
      * Function that remodels the previous Giant Sound effect manipulation
      * in the CameraShakeComponent.
      * <p>
-     * If the giant is >32f distance away, it's volume is determined by
+     * If the giant is greater than 32f distance away, it's volume is determined by
      * vol = sin(2pi*distance/120f)
      *
      * @param distance a float value represnting the giant's distance
@@ -248,7 +251,7 @@ public class SoundService {
         if (distance <= 25f) {
             distanceMultiplier = 1;
         } else if (25f < distance && distance < 48f) {
-            distanceMultiplier = Math.sin(2*Math.PI*distance/97);
+            distanceMultiplier = Math.sin(2 * Math.PI * distance / 97);
         } else if (distance >= 48f) {
             distanceMultiplier = 0.05f;
         }
@@ -270,7 +273,7 @@ public class SoundService {
         giantSound = resources.getAsset(soundTable.get(playSound), Sound.class);
         long newId = giantSound.play();
         giantSound.setVolume(newId, (float) distanceMultiplier * sfxVolume);
-        giantSound.setPitch(newId, (float)(distanceMultiplier * 0.5f + 1f));
+        giantSound.setPitch(newId, (float) (distanceMultiplier * 0.5f + 1f));
 
         nextStomp += 1000 + 1000 * (1 - distanceMultiplier);
     }
@@ -297,6 +300,7 @@ public class SoundService {
 
     /**
      * Sets the volume of the current music track.
+     *
      * @param volume value between 0f - 1f for the music's volume.
      */
     public void setMusicVolume(float volume) {
@@ -307,6 +311,7 @@ public class SoundService {
     /**
      * Sets the volume of the sound effects. Special sounds
      * may need their volume adjusted manually.
+     *
      * @param volume value between 0f - 1f for the sfx volume.
      */
     public void setSfxVolume(float volume) {
@@ -317,6 +322,7 @@ public class SoundService {
 
     /**
      * Sets the music to loop or to end after the track is over.
+     *
      * @param value true if music will loop
      */
     public void setMusicLoop(boolean value) {

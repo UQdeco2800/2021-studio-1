@@ -16,7 +16,7 @@ public class SFXCommand implements Command {
      * Format:
      * -sfx key|setting [setting value]
      * @param args command args
-     * @return
+     * @return true if action has been carried out, false otherwise
      */
     public boolean action(ArrayList<String> args) {
 
@@ -34,10 +34,9 @@ public class SFXCommand implements Command {
                 return false;
             }
 
-            switch (args.get(0)) {
-                case "-vol":
-                    ServiceLocator.getSoundService().setSfxVolume(value);
-                    return true;
+            if (args.get(0).equals("-vol")) {
+                ServiceLocator.getSoundService().setSfxVolume(value);
+                return true;
             }
         }
 
