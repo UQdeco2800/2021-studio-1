@@ -22,7 +22,6 @@ public class SoundService {
     private String[] musicArray;
 
     public boolean isLoaded;
-    public boolean isGiant;
 
     private ResourceService resources;
 
@@ -31,15 +30,21 @@ public class SoundService {
     private long nextStomp = 0; // which value (in milliseconds) the next stomp shoud startd
     private double distanceMultiplier = 0;
 
-    private Sound giantSound;
-    private long giantWalkingId;
+    private String iniFilePath;
 
-    private Sound currentTrack;
-    private long currentTrackId = 0;
+    private Sound giantSound;
+
+    private Music currentTrack;
+
     private float musicVolume = 1f;
 
-    public SoundService() {
-
+    /**
+     * SoundService handles the playing of sounds and music in the game.
+     * Please make a new initFile for each screen of the game, to save with memory issues.
+     * @param initFile The Sound file to load [initFile].ini
+     */
+    public SoundService(String initFile) {
+        iniFilePath = "sounds/service_files/" + initFile + ".ini";
     }
 
     /**
@@ -56,7 +61,8 @@ public class SoundService {
         musicTable = new Hashtable<>();
         isLoaded = false;
 
-        String filepath = "configs/sound.ini";
+        //String filepath = "configs/sound.ini";
+        String filepath = iniFilePath;
 
         Hashtable<String, String> assigningTo = null;
         BufferedReader config;
@@ -112,7 +118,7 @@ public class SoundService {
                 logger.debug(s);
             }
 
-            resources.loadSounds(musicArray);
+            resources.loadMusic(musicArray);
             // Code is heavily repeated due to sounds and music being managed
             // differently in the ResourceService
 
@@ -138,8 +144,8 @@ public class SoundService {
      */
     public void unloadAssets() {
 
-        if (currentTrack != null) currentTrack.dispose();
-        if (giantSound != null) giantSound.dispose();
+        if (currentTrack != null) currentTrack.stop();
+        if (giantSound != null) giantSound.stop();
 
         // unloads the sound effects
         resources.unloadAssets(soundArray);
@@ -162,8 +168,10 @@ public class SoundService {
                 Sound toPlay = resources.getAsset(soundTable.get(sound), Sound.class);
                 long id = toPlay.play();
                 toPlay.setPitch(id, (float) (Math.random() * 1.5 + 0.5));
-            } else if (sound.equals("stomp")) {
-                stompOn = !stompOn;
+            } else if (sound.equals("onstomp")) {
+                stompOn = true;
+            } else if (sound.equals("offstomp")) {
+                stompOn = false;
             } else {
                 logger.debug("{} is not a key", sound);
             }
@@ -179,15 +187,19 @@ public class SoundService {
         if (isLoaded) {
             if (musicTable.containsKey(music)) {
 
-                if (currentTrack != null) currentTrack.stop();
+                if (currentTrack != null) {
+                    currentTrack.stop();
+                    currentTrack.dispose();
+                }
 
                 logger.debug("{}, resources contain track {}",
                         resources.containsAsset(musicTable.get(music), Music.class), music);
 
-                currentTrack = resources.getAsset(musicTable.get(music), Sound.class);
+                currentTrack = resources.getAsset(musicTable.get(music), Music.class);
+                currentTrack.play();
 
-                currentTrackId = currentTrack.play();
-                currentTrack.setVolume(currentTrackId, musicVolume);
+                //currentTrackId = currentTrack.play();
+                //currentTrack.setVolume(currentTrackId, musicVolume);
             } else {
                 logger.debug("{} is not a key", music);
             }
@@ -211,12 +223,20 @@ public class SoundService {
 
         if (nextStomp < ServiceLocator.getTimeSource().getTime()) return;
 
-        if (distance <= 30f) {
+        /* the distance multipler is given by the function
+            { dist <= 25        mul = 1
+            { 25 < dist < 48    mul = sin(2pi * dist / 97)
+            { dist >= 48        mul = 0.05
+
+            the equation was just worked out through testing what sounded nice
+         */
+
+        if (distance <= 25f) {
             distanceMultiplier = 1;
-        } else if (distance > 30f) {
-            distanceMultiplier = Math.sin(2*Math.PI*distance/120);
-        } else if (distance <= 60f) {
-            distanceMultiplier = 0;
+        } else if (25f < distance && distance < 48f) {
+            distanceMultiplier = Math.sin(2*Math.PI*distance/97);
+        } else if (distance >= 48f) {
+            distanceMultiplier = 0.05f;
         }
     }
 
@@ -228,34 +248,27 @@ public class SoundService {
         String playSound = String.format("stomp%d", stompNum);
 
         giantSound = resources.getAsset(soundTable.get(playSound), Sound.class);
-        giantWalkingId = giantSound.play();
+        long newId = giantSound.play();
+        giantSound.setVolume(newId, (float) distanceMultiplier);
+        giantSound.setPitch(newId, (float)distanceMultiplier * 0.5f + 1f);
 
-        giantSound.setVolume(giantWalkingId, (float) distanceMultiplier);
-        giantSound.setPan(giantWalkingId, -1f, (float)distanceMultiplier);
-        giantSound.setPitch(giantWalkingId, (float)distanceMultiplier * 1.5f - 0.5f);
-
-        nextStomp += 1000 + 2000 * (1 - distanceMultiplier);
+        nextStomp += 1000 + 1000 * (1 - distanceMultiplier);
     }
 
     public void setMusicVolume(float volume) {
         musicVolume = volume;
-
-        if (currentTrackId != 0) currentTrack.setVolume(currentTrackId, musicVolume);
-
-        //currentTrack.setVolume(musicVolume);
+        if (currentTrack != null) currentTrack.setVolume(musicVolume);
     }
 
-    public void setMusicPan(float pan) {
-        //currentTrack.setPan(pan, musicVolume);
+    public void setMusicLoop(boolean value) {
+        if (currentTrack != null) currentTrack.setLooping(value);
     }
 
     public void update() {
         // run a routine to check if sound fx need to be played... ? use time source + list for next sound
         // instance stuff
         ServiceLocator.getTimeSource().getTime(); // in milliseconds
-
         long currentTime = ServiceLocator.getTimeSource().getTime(); // current time in seconds
-
         if (nextStomp < currentTime) {
             playStomp();
         }
