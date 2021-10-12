@@ -17,11 +17,9 @@ import org.slf4j.LoggerFactory;
  */
 public class ParticleEffectRenderComponent extends RenderComponent {
     private static final Logger logger = LoggerFactory.getLogger(ParticleEffectRenderComponent.class);
-    private ParticleEffect particleEffect;
-    private short targetLayer;
+    private final ParticleEffect particleEffect;
+    private final short targetLayer;
     private HitboxComponent hitboxComponent;
-    private boolean toStart;
-    private boolean running;
 
     public ParticleEffectRenderComponent(FileHandle effectData, TextureAtlas textureAtlas,
                                          short targetLayer) {
@@ -29,8 +27,6 @@ public class ParticleEffectRenderComponent extends RenderComponent {
         particleEffect.load(effectData, textureAtlas);
         particleEffect.scaleEffect(0.02f);
         this.targetLayer = targetLayer;
-        toStart = false;
-        running = false;
     }
 
     @Override
@@ -40,32 +36,25 @@ public class ParticleEffectRenderComponent extends RenderComponent {
         this.hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
 
+    /**
+     * Start the particle effect if me == this hitbox and other is in the targetLayer.
+     *
+     * @param me first fixture
+     * @param other other fixture
+     */
     private void onCollisionStart(Fixture me, Fixture other) {
         if (hitboxComponent.getFixture() != me) {
             // Not triggered by hitbox, ignore
             return;
         }
 
-        logger.debug("Registered collision with me");
-
         if (!PhysicsLayer.contains(targetLayer, other.getFilterData().categoryBits)) {
             // Doesn't match our target layer, ignore
             return;
         }
 
-        logger.debug("Registered collision with target layer");
-
-        // Start the particle effect
-        //particleEffect.start();
-        toStart = true;
-    }
-
-    @Override
-    public void earlyUpdate() {
-        if (toStart) {
-            this.start();
-            toStart = false;
-        }
+        logger.debug("Registered collision with target layer, starting particle effect");
+        start();
     }
 
     /**
@@ -78,11 +67,16 @@ public class ParticleEffectRenderComponent extends RenderComponent {
         particleEffect.draw(batch);
     }
 
+    /**
+     * Render the RenderComponent by updating the position and update the particle effect before
+     * drawing to the batch.
+     *
+     * @param batch Batch to render to.
+     */
     @Override
     public void render(SpriteBatch batch) {
         particleEffect.setPosition(entity.getPosition().x, entity.getPosition().y);
-        if (running)
-            particleEffect.update(Gdx.graphics.getDeltaTime());
+        particleEffect.update(Gdx.graphics.getDeltaTime());
         particleEffect.draw(batch);
     }
 
@@ -92,6 +86,5 @@ public class ParticleEffectRenderComponent extends RenderComponent {
     public void start() {
         logger.debug("Starting particle effect.");
         particleEffect.start();
-        running = true;
     }
 }

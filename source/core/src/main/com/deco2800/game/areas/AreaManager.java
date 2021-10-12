@@ -105,7 +105,6 @@ public class AreaManager extends RagnarokArea {
     public void create() {
         load("tutorial");
         terrainInstance.makePlayer(10, 5);
-        terrainInstance.spawnParticleSpread(12, 5);
         this.player = terrainInstance.getPlayer();
         terrainInstance.spawnWallOfDeath();
         logger.debug("Creating AreaManager");
