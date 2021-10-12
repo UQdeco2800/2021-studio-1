@@ -361,7 +361,7 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnSkeleton(int x, int y) {
-        Entity skeleton = NPCFactory.createSkeleton();
+        Entity skeleton = NPCFactory.createSkeleton(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(skeleton, pos, false, false);
     }
