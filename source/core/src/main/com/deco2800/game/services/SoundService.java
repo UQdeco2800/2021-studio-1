@@ -34,8 +34,8 @@ public class SoundService {
     private Sound giantSound;
     private long giantWalkingId;
 
-    private Music currentTrack;
-    private long currentTrackId;
+    private Sound currentTrack;
+    private long currentTrackId = 0;
     private float musicVolume = 1f;
 
     public SoundService() {
@@ -112,7 +112,7 @@ public class SoundService {
                 logger.debug(s);
             }
 
-            resources.loadMusic(musicArray);
+            resources.loadSounds(musicArray);
             // Code is heavily repeated due to sounds and music being managed
             // differently in the ResourceService
 
@@ -178,14 +178,16 @@ public class SoundService {
     public void playMusic(String music) {
         if (isLoaded) {
             if (musicTable.containsKey(music)) {
+
                 if (currentTrack != null) currentTrack.stop();
 
                 logger.debug("{}, resources contain track {}",
                         resources.containsAsset(musicTable.get(music), Music.class), music);
 
-                currentTrack = resources.getAsset(musicTable.get(music), Music.class);
-                currentTrack.setVolume(-1f);
-                currentTrack.play();
+                currentTrack = resources.getAsset(musicTable.get(music), Sound.class);
+
+                currentTrackId = currentTrack.play();
+                currentTrack.setVolume(currentTrackId, musicVolume);
             } else {
                 logger.debug("{} is not a key", music);
             }
@@ -237,11 +239,14 @@ public class SoundService {
 
     public void setMusicVolume(float volume) {
         musicVolume = volume;
-        currentTrack.setVolume(musicVolume);
+
+        if (currentTrackId != 0) currentTrack.setVolume(currentTrackId, musicVolume);
+
+        //currentTrack.setVolume(musicVolume);
     }
 
     public void setMusicPan(float pan) {
-        currentTrack.setPan(pan, musicVolume);
+        //currentTrack.setPan(pan, musicVolume);
     }
 
     public void update() {
