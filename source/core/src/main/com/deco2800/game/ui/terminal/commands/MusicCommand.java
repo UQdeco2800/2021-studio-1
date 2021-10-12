@@ -14,7 +14,7 @@ public class MusicCommand implements Command {
      * Format:
      * -music key|setting [setting value]
      * @param args command args
-     * @return
+     * @return true if action has been carried out, false otherwise
      */
     public boolean action(ArrayList<String> args) {
 
@@ -42,10 +42,9 @@ public class MusicCommand implements Command {
             }
 
             // request change in volume
-            switch (args.get(0)) {
-                case "-vol":
-                    ServiceLocator.getSoundService().setMusicVolume(value);
-                    return true;
+            if (args.get(0).equals("-vol")) {
+                ServiceLocator.getSoundService().setMusicVolume(value);
+                return true;
             }
 
         }
