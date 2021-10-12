@@ -2,7 +2,6 @@ package com.deco2800.game.areas;
 
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.files.RagLoader;
-import com.deco2800.game.rendering.ParticleEffectRenderComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class AreaManager extends RagnarokArea {
