@@ -2,6 +2,7 @@ package com.deco2800.game.areas;
 
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.files.RagLoader;
+import com.deco2800.game.rendering.ParticleEffectRenderComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class AreaManager extends RagnarokArea {
@@ -104,6 +105,7 @@ public class AreaManager extends RagnarokArea {
     public void create() {
         load("tutorial");
         terrainInstance.makePlayer(10, 5);
+        terrainInstance.spawnParticleSpread(12, 5).getComponent(ParticleEffectRenderComponent.class).start();
         this.player = terrainInstance.getPlayer();
         terrainInstance.spawnWallOfDeath();
         logger.debug("Creating AreaManager");

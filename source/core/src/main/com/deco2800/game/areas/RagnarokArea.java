@@ -1,5 +1,6 @@
 package com.deco2800.game.areas;
 
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.MathUtils;
@@ -9,6 +10,9 @@ import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
+import com.deco2800.game.physics.components.ColliderComponent;
+import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
@@ -83,7 +87,8 @@ public class RagnarokArea extends GameArea {
             "images/skeleton.atlas",
             "images/sfx.atlas",
             "images/lightning-animation.atlas",
-            "images/player-spear.atlas"
+            "images/player-spear.atlas",
+            "particles/particles.atlas"
     };
 
     // get the sounds to work and then move the music & sounds to a json
@@ -100,6 +105,9 @@ public class RagnarokArea extends GameArea {
     private static final String ROAR_MUSIC = "sounds/roar.mp3";
     private static final String[] RACER_MUSIC = {MAIN_MUSIC, TOWN_MUSIC, RAIDER_MUSIC, FIRE_MUSIC,
             WALK_MUSIC, LOUD_WALK_MUSIC, ROAR_MUSIC};
+
+    // File handles, used for the particle effect information files.
+    private static final String[] RACER_FILE_HANDLES = {"particles/rainbow_spread_2"};
 
     private final TerrainFactory terrainFactory;
 
@@ -168,6 +176,16 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
         spearSpawn.add(textOffset);
         spawnEntityAt(spearTutorial, spearSpawn, true, false);
+    }
+
+    protected Entity spawnParticleSpread(int x, int y) {
+        Entity particleEntity = ParticleFactory.createSpread();
+        particleEntity.addComponent(new PhysicsComponent())
+                .addComponent(new ColliderComponent())
+                .addComponent(new HitboxComponent());
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(particleEntity, pos, false, true);
+        return particleEntity;
     }
 
     protected Entity spawnPlayer(int x, int y) {
