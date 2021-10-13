@@ -95,8 +95,6 @@ public class ObstacleFactory {
         animator.addAnimation("burn", 0.06f, Animation.PlayMode.LOOP);
 
         Entity bifrost = new Entity()
-                .addComponent(new ParticleEffectRenderComponent(effectData, particleImage,
-                        PhysicsLayer.PLAYER))
                 .addComponent(animator)
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new BifrostAnimationController())
