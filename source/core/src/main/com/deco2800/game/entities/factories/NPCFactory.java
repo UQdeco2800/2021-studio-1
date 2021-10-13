@@ -57,7 +57,6 @@ public class NPCFactory {
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        //.addTask(new WanderTask(new Vector2(15f, 0f), 0f))
                         .addTask(new ChaseTask(target, 2, true, 100, 20));
 
         AnimationRenderComponent animator =
@@ -158,7 +157,6 @@ public class NPCFactory {
 
         wolf.setScale(1.3f, 1f);
 
-        //wolf.getComponent(AnimationRenderComponent.class).startAnimation("run");
         return wolf;
     }
 
