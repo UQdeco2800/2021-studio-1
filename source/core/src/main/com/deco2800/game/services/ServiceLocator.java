@@ -1,5 +1,6 @@
 package com.deco2800.game.services;
 
+import com.badlogic.gdx.audio.Sound;
 import com.deco2800.game.areas.AreaService;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.input.InputService;
@@ -26,6 +27,7 @@ public class ServiceLocator {
   private static ResourceService resourceService;
   private static AreaService areaService;
   private static Terminal terminal;
+  private static SoundService soundService;
 
   public static EntityService getEntityService() {
     return entityService;
@@ -54,6 +56,8 @@ public class ServiceLocator {
   public static AreaService getAreaService() { return areaService; }
 
   public static Terminal getTerminalService() { return terminal; }
+
+  public static SoundService getSoundService() { return soundService; }
 
   public static void registerEntityService(EntityService service) {
     logger.debug("Registering entity service {}", service);
@@ -93,6 +97,11 @@ public class ServiceLocator {
   public static void registerTerminalService(Terminal source) {
     logger.debug("Register terminal {}", source);
     terminal = source;
+  }
+
+  public static void registerSoundService(SoundService source) {
+    logger.debug("Register sound service {}", source);
+    soundService = source;
   }
 
   public static void clear() {
