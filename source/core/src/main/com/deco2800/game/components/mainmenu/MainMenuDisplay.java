@@ -561,7 +561,7 @@ public class MainMenuDisplay extends UIComponent {
     private void MoveStarTwo() {
 
         effectsXTwo += shootTwoSpeed;
-        effectsYTwo = ((int)shootTwoWait) % 2 == 0 ? screenSize.height / 5 : effectsYTwo - shootTwoSpeed;
+        effectsYTwo = ((int)shootTwoWait) % 2 == 0 ? screenSize.height / 5f : effectsYTwo - shootTwoSpeed;
 
         starTwo.setPosition(effectsXTwo, effectsYTwo);
     }
