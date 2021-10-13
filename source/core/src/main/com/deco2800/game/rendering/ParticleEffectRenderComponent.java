@@ -101,4 +101,10 @@ public class ParticleEffectRenderComponent extends RenderComponent {
         logger.debug("Starting particle effect.");
         particleEffect.start();
     }
+
+    @Override
+    public void dispose() {
+        ServiceLocator.getRenderService().unregister(this);
+        particleEffect.dispose();
+    }
 }
