@@ -52,15 +52,13 @@ public class PlayerStatsDisplay extends UIComponent {
     table = new Table();
     table.top().left();
     table.setFillParent(true);
-    table.padTop(25f).padLeft(25f);
+
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    float windowHeight = UserSettings.get().fullscreen ? screenSize.height : UserSettings.getWindowHeight();
 
     tableTwo = new Table();
     tableTwo.top().left();
     tableTwo.setFillParent(true);
-    tableTwo.padTop(50f).padLeft(25f);
-
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    float windowHeight = UserSettings.get().fullscreen ? screenSize.height : UserSettings.getWindowHeight();
 
     // Health text
     health = entity.getComponent(CombatStatsComponent.class).getHealth();
@@ -84,7 +82,10 @@ public class PlayerStatsDisplay extends UIComponent {
 
     float healthBarScale = 0.5f;
     float healthBarOffset = healthBarScale * 3;
-    float healthBarScreenRatio = 0.940f;
+    float healthBarScreenRatio = 0.950f;
+    float healthLabelScreenRatio = 0.950f;
+    float scoreLabelScreenRatio = 0.945f - 0.04f;
+
 
     table.add(healthLabel).left();
     table.add(healthBarBack);
@@ -98,8 +99,11 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.setPosition(20 + healthBarOffset, windowHeight * healthBarScreenRatio + healthBarOffset);
     healthBar.setScale(healthBarScale, healthBarScale);
 
-    stage.addActor(table);
-    stage.addActor(tableTwo);
+    healthLabel.setPosition(20 + healthBarOffset, windowHeight * healthLabelScreenRatio + healthBarOffset);
+    scoreLabel.setPosition(20 + healthBarOffset, windowHeight * scoreLabelScreenRatio + healthBarOffset);
+
+    stage.addActor(healthLabel);
+    stage.addActor(scoreLabel);
   }
 
   @Override
