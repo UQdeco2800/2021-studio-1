@@ -275,7 +275,10 @@ public class PlayerActions extends Component {
      */
     public void whichAnimation() {
         entity.getComponent(AnimationRenderComponent.class).stopAnimation();
-        if (isJumping()) {
+        if(PlayerStatsDisplay.deadFlag){
+            whichDeadAnimations();
+        }
+        else if (isJumping()) {
             whichJumpingAnimations();
         } else if (isFalling()) {
             whichFallingAnimations();
@@ -357,6 +360,24 @@ public class PlayerActions extends Component {
             stillAnimations();
         }
     }
+
+    /**
+     * Determine which death animation to play based off which power ups are
+     * active
+     */
+    private void whichDeadAnimations() {
+        if (entity.getComponent(ShieldPowerUpComponent.class).getActive()
+                && entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
+            spearShieldDeathAnimations();
+        } else if (entity.getComponent(ShieldPowerUpComponent.class).getActive()) {
+            shieldDeathAnimations();
+        } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()
+                && !entity.getComponent(SpearPowerUpComponent.class).getActive()) {
+            spearDeathAnimations();
+        } else {
+            deathAnimations();
+        }
+    }
     /**
      * Determine which animation to play if the player is standing still
      */
@@ -367,6 +388,19 @@ public class PlayerActions extends Component {
         } else {
             entity.getComponent(AnimationRenderComponent.class)
                     .startAnimation("still-left");
+        }
+    }
+
+    /**
+     * Determine which animation to play if the player is standing still
+     */
+    private void deathAnimations() {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-right");
+        } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-left");
         }
     }
 
@@ -466,6 +500,20 @@ public class PlayerActions extends Component {
     }
 
     /**
+     * Determine which animation to play if the player is dead with
+     * the spear power up
+     */
+    private void spearDeathAnimations() {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-spear-right");
+        } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-spear-left");
+        }
+    }
+
+    /**
      * Determine which animation to play if the player is still with the shield
      * power up
      */
@@ -522,6 +570,20 @@ public class PlayerActions extends Component {
     }
 
     /**
+     * Determine which animation to play if the player is dead with the shield
+     * power up
+     */
+    private void shieldDeathAnimations() {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-shield-right");
+        } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-shield-left");
+        }
+    }
+
+    /**
      * Determine which animation to play if the player is still with the spear and shield
      * power up
      */
@@ -574,6 +636,20 @@ public class PlayerActions extends Component {
         } else {
             entity.getComponent(AnimationRenderComponent.class)
                     .startAnimation("fall-left-spear-shield");
+        }
+    }
+
+    /**
+     * Determine which animation to play if the player is dead with the spear and shield
+     * power up
+     */
+    private void spearShieldDeathAnimations() {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-spear-shield-right");
+        } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-spear-shield-left");
         }
     }
 
