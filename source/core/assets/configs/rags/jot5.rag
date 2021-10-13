@@ -1,7 +1,7 @@
 $_title jot5
 $_width 25
 $_height 10
-$_world jotunheimr_2
+$_world jotunheimr_1
 
 $#.........F
 $#.......P.F
@@ -20,7 +20,7 @@ $#.....P...F
 $#.........F
 $#......P..F
 $#.........F
-$#.........F
+$#.......P.F
 $#.........F
 $#....FFFFFF
 $#.........F
@@ -29,10 +29,10 @@ $#.........F
 $#.........F
 $#.........F
 
-$@player set [2,1]
+$@player set [2,8]
 
-$-spawn [14,1] (wolf)
-$-spawn [15,1] (wolf)
+$-spawn [7,1] (fireSpirit)
+$-spawn [13,1] (fireSpirit)
 
 $-spawn [18,1] (spear)
 $-spawn [17,1] (lightning)

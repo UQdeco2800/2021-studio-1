@@ -1,40 +1,43 @@
 $_title ear5
 $_width 25
 $_height 10
-$_world jotunheimr_1
+$_world jotunheimr_2
 
-$#.......P..
-$#........SF
-$#.........F
-$#.........F
-$#.......FSF
-$#.......FSF
-$#......SFSF
-$#......SFSF
-$#.........F
-$#.........F
-$#.........F
-$#....SF.FSF
-$#....SF.FSF
-$#.......FSF
-$#........SF
-$#.....F...F
-$#....SFSF.F
-$#....SFSF.F
-$#.....FSF.F
-$#.....F.F.F
-$#.....F...F
-$#.....F.FSF
-$#...P...FSF
-$#....SFSFSF
-$#........SF
+$#....P..P..
+$#....P...P.
+$#......P.PP
+$#......P..P
+$#....P...P.
+$#....P.P.P.
+$#....P.P.P.
+$#....P.P.P.
+$#....P.P.P.
+$#....P.P.P.
+$#......P.P.
+$#.....PP.P.
+$#......P.P.
+$#....P.P.P.
+$#....P.P.P.
+$#...SP.P.P.
+$#....P.P.P.
+$#......P.P.
+$#........P.
+$#....P.P.P.
+$#....P.P.P.
+$#....P.P.P.
+$#....P.P.P.
+$#....P.P.P.
+$#FFF.F.F.FF
 
-$@player set [2,8]
+$@player set [2,1]
 
+$-spawn [22,2] (wolf)
+$-spawn [21,2] (wolf)
+$-spawn [9,2] (skeleton)
+$-spawn [7,4] (fireSpirit)
 
-$-spawn [18,1] (spear)
-$-spawn [19,1] (lightning)
-$-spawn [9,1] (spear)
-$-spawn [0,3] (shield)
+$-spawn [10,2] (lightning)
+$-spawn [0,6] (spear)
+$-spawn [1,2] (shield)
 
 $-spawn [20,5] (levelTrigger)
