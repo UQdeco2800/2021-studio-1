@@ -48,6 +48,7 @@ public class NPCFactory {
     /**
      * Creates a skeleton entity.
      *
+     * @param target entity to chase
      * @return skeleton entity
      */
     public static Entity createSkeleton(Entity target) {
