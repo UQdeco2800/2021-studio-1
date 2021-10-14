@@ -41,6 +41,6 @@ public class GhostAnimationController extends Component {
   } //test for NPC to face other direction when moving
 
   void animateChase() {
-    animator.startAnimation("angry_float");
+    animator.startAnimation("run");
   }
 }
