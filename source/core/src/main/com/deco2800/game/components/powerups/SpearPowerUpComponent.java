@@ -63,10 +63,6 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             }
         }
         if (wallX != 0) {
-            System.out.println("Player direction: " + entity.getComponent(PlayerActions.class).getPreviousDirection());
-            System.out.println("Player x position: " + entity.getPosition().x);
-            System.out.println("Wall x position: " + wallX);
-            System.out.println("Cant throw spear: " + cantThrowSpear);
             if (entity.getPosition().x <= wallX + 2 && entity.getPosition().x >= wallX - 2) {
                 if (entity.getPosition().x <= wallX + 2 && entity.getPosition().x >= wallX
                         && entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.LEFT)) {
