@@ -259,8 +259,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/PhysicsContactListener.html#beginContact(com.badlogic.gdx.physics.box2d.Contact)">beginContact(Contact)</a></span> - Method in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsContactListener.html" title="class in com.deco2800.game.physics">PhysicsContactListener</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/GdxGame.html#beginScreenStack">beginScreenStack</a></span> - Variable in class com.deco2800.game.<a href="com/deco2800/game/GdxGame.html" title="class in com.deco2800.game">GdxGame</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/configs/NPCConfigs.html#bifrost">bifrost</a></span> - Variable in class com.deco2800.game.entities.configs.<a href="com/deco2800/game/entities/configs/NPCConfigs.html" title="class in com.deco2800.game.entities.configs">NPCConfigs</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/npc/BifrostAnimationController.html" title="class in com.deco2800.game.components.npc"><span class="typeNameLink">BifrostAnimationController</span></a> - Class in <a href="com/deco2800/game/components/npc/package-summary.html">com.deco2800.game.components.npc</a></dt>
@@ -617,7 +615,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Creates the base entity of a projectile</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/NPCFactory.html#createBifrost()">createBifrost()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/NPCFactory.html" title="class in com.deco2800.game.entities.factories">NPCFactory</a></dt>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createBifrost()">createBifrost()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
 <dd>
 <div class="block">Creates a bifrost entity to sit on the transition between levels.</div>
 </dd>
@@ -765,11 +763,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Creates a Wall of Death entity</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createWallParticles(java.lang.String,java.lang.String)">createWallParticles(String, String)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
-<dd>
-<div class="block">Create and return an entity that on collision with the PLAYER physics layer, will start the
- given particle effect.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/GeneratorFactory.html#createWolf()">createWolf()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/GeneratorFactory.html" title="class in com.deco2800.game.entities.factories">GeneratorFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/NPCFactory.html#createWolf(com.deco2800.game.entities.Entity)">createWolf(Entity)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/NPCFactory.html" title="class in com.deco2800.game.entities.factories">NPCFactory</a></dt>
@@ -891,6 +884,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/PhysicsEngine.html#dispose()">dispose()</a></span> - Method in class com.deco2800.game.physics.<a href="com/deco2800/game/physics/PhysicsEngine.html" title="class in com.deco2800.game.physics">PhysicsEngine</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/AnimationRenderComponent.html#dispose()">dispose()</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/AnimationRenderComponent.html" title="class in com.deco2800.game.rendering">AnimationRenderComponent</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/ParticleEffectRenderComponent.html#dispose()">dispose()</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/ParticleEffectRenderComponent.html" title="class in com.deco2800.game.rendering">ParticleEffectRenderComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/RenderComponent.html#dispose()">dispose()</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/RenderComponent.html" title="class in com.deco2800.game.rendering">RenderComponent</a></dt>
 <dd>&nbsp;</dd>
@@ -2863,7 +2858,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnBackground(int,int,java.lang.String)">spawnBackground(int, int, String)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
 <dd>
-<div class="block">Spawn a background image starting at x.</div>
+<div class="block">Spawn a background image starting at x and a bifrost split.</div>
 </dd>
 <dt><a href="com/deco2800/game/ui/terminal/commands/SpawnCommand.html" title="class in com.deco2800.game.ui.terminal.commands"><span class="typeNameLink">SpawnCommand</span></a> - Class in <a href="com/deco2800/game/ui/terminal/commands/package-summary.html">com.deco2800.game.ui.terminal.commands</a></dt>
 <dd>&nbsp;</dd>
@@ -2893,10 +2888,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Spawn a line of 'type' at x[0], x[1], ..., x[n] having only a single collision entity that
  spans from x[0] to the end of the map chunk at x[n + 3].</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnParticleSpread(int,int)">spawnParticleSpread(int, int)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
-<dd>
-<div class="block">Spawn an entity which will play a particle explosion when on collision with the player.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/areas/RagnarokArea.html#spawnPlatform(int,int,java.lang.String)">spawnPlatform(int, int, String)</a></span> - Method in class com.deco2800.game.areas.<a href="com/deco2800/game/areas/RagnarokArea.html" title="class in com.deco2800.game.areas">RagnarokArea</a></dt>
 <dd>
