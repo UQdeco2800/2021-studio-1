@@ -89,7 +89,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             if (ServiceLocator.getTimeSource().getTimeSince(spearDelay) >=
                     100L) {
                 throwSpear();
-                //entity.getComponent(PlayerActions.class).whichAnimation();
+                entity.getComponent(PlayerActions.class).whichAnimation();
             }
         } else if (active) {
             if (spearDirection.hasSameDirection(Vector2Utils.RIGHT)) {
