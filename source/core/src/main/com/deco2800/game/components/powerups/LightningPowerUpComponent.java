@@ -33,14 +33,11 @@ public class LightningPowerUpComponent extends PowerUpComponent {
     @Override
     public void update() {
         if (active && powerUp.getComponent(AnimationRenderComponent.class)
-                .getCurrentAnimation().equals("float")) {
-            if (powerUp.getComponent(AnimationRenderComponent.class).isFinished()) {
-                powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
-                active = false;
-                enabled = false;
-                powerUp.flagDelete();
-            }
-
+            .getCurrentAnimation().equals("float") && powerUp.getComponent(AnimationRenderComponent.class).isFinished()) {
+            powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
+            active = false;
+            enabled = false;
+            powerUp.flagDelete();
         }
         entity.getEvents().trigger("updatePowerUps");
     }
