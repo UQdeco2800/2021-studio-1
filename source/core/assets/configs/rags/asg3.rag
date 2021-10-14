@@ -9,18 +9,18 @@ $#......FFFF
 $#........SF
 $#.........F
 $#.........F
-$#........SF
 $#.........F
 $#.........F
-$#........SF
+$#.........F
+$#.........F
 $#.........F
 $#.........F
 $#.......P.F
 $#.........F
 $#.......P.F
-$#.........F
+$#........SF
 $#.......FFF
-$#.....SFFFF
+$#......FFFF
 $#......F.FF
 $#........FF
 $#......F.FF
@@ -29,17 +29,15 @@ $#......F.FF
 $#.........F
 $#.........F
 
-$@player set [2,1]
+$@player set [2,8]
 
-$-spawn [14,1] (wolf)
-$-spawn [7,1] (skeleton)
+$-spawn [13,1] (skeleton)
 $-spawn [24,1] (skeleton)
-$-spawn [12,1] (wolf)
 $-spawn [5,1] (skeleton)
 $-spawn [23,1] (skeleton)
 
-$-spawn [20,2] (spear)
+$-spawn [22,2] (lightning)
+$-spawn [20,2] (shield)
 $-spawn [19,2] (spear)
-$-spawn [18,2] (lightning)
 
 $-spawn [20,5] (levelTrigger)

@@ -81,7 +81,6 @@ public class StoryDisplay extends UIComponent {
 
     stage.addActor(table);
     stage.addActor(rootTable);
-//    stage.addAction(Actions.sequence(Actions.fadeOut(0.1f), Actions.fadeIn(0.8f)));
   }
 
 

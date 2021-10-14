@@ -47,10 +47,8 @@ public class FallDamageComponent extends Component {
         //if the y_position is less than -1, than set the health of the target to 0.
         if (yPos < -1) {
             CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-            if (targetStats != null) {
-                if (!targetStats.isInvincible()) {
-                    targetStats.setHealth(0);
-                }
+            if (targetStats != null && !targetStats.isInvincible()) {//satisfy SonarCloud
+                targetStats.setHealth(0);
             }
         }
 

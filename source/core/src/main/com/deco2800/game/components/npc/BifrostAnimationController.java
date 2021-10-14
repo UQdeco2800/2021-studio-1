@@ -18,11 +18,11 @@ public class BifrostAnimationController extends Component {
     animateBurn();
 
   }
+
   /**
    * Starts the "walk" animation
    */
   void animateBurn() {
     animator.startAnimation("burn");
   }
-
 }

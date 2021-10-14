@@ -187,12 +187,6 @@ public class ObstacleArea extends GameArea {
         }
     }
 
-    private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer();
-        spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-        return newPlayer;
-    }
-
     private Entity spawnAbstractPlayer() {
         Entity newAbstractPlayer = PlayerFactory.createAbstractPlayer();
         spawnEntityAt(newAbstractPlayer, new GridPoint2(0, 0), true, true);

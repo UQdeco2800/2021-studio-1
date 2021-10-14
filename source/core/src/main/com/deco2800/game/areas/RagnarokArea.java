@@ -92,24 +92,8 @@ public class RagnarokArea extends GameArea {
             "particles/particles.atlas"
     };
 
-    // get the sounds to work and then move the music & sounds to a json
-    //TODO: make Json
-    private static final String[] RACER_SOUNDS = {"sounds/Impact4.ogg"};
-    private static final String MAIN_MUSIC = "sounds/main.mp3";
-    private static final String TOWN_MUSIC = "sounds/town.mp3";
-    private static final String RAIDER_MUSIC = "sounds/raider.mp3";
-    // sound effect of fire/burning behind giant *fwoom* *crackle*
-    private static final String FIRE_MUSIC = "sounds/fire.mp3";
-    // sound effects of giant walking (still to be tested)
-    private static final String WALK_MUSIC = "sounds/walk.mp3";
-    private static final String LOUD_WALK_MUSIC = "sounds/giant_walk.mp3";
-    private static final String ROAR_MUSIC = "sounds/roar.mp3";
-    private static final String[] RACER_MUSIC = {MAIN_MUSIC, TOWN_MUSIC, RAIDER_MUSIC, FIRE_MUSIC,
-            WALK_MUSIC, LOUD_WALK_MUSIC, ROAR_MUSIC};
-
     private final TerrainFactory terrainFactory;
 
-    //have the loader return a level? fuck yeh
     public RagnarokArea(String name, TerrainFactory terrainFactory) {
         super();
         this.name = name;
@@ -127,7 +111,7 @@ public class RagnarokArea extends GameArea {
         displayUI();
         spawnTerrain();
 
-        playMusic(); //TODO: eventual move to music
+        //playMusic(); //TODO: eventual move to music
 
         logger.debug("Creating new RagnarokArea");
     }
@@ -143,8 +127,6 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(racerTextures);
         resourceService.loadTextureAtlases(racerTextureAtlases);
-        resourceService.loadSounds(RACER_SOUNDS);
-        resourceService.loadMusic(RACER_MUSIC);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -199,20 +181,7 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
-     * Spawn an entity which will play a particle explosion when on collision with the player.
-     *
-     * @param x terrain x coordinate of the entity
-     * @param y terrain y coordinate of the entity
-     */
-    protected void spawnParticleSpread(int x, int y) {
-        Entity particleEntity = ObstacleFactory.createWallParticles(
-                "particles/rainbow_spread_2", "particles/particles.atlas");
-        GridPoint2 pos = new GridPoint2(x, y);
-        spawnEntityAt(particleEntity, pos, false, true);
-    }
-
-    /**
-     * Spawn a background image starting at x.
+     * Spawn a background image starting at x and a bifrost split.
      *
      * @param x     starting coordinate
      * @param width width of the image using scaleWidth(width)
@@ -225,7 +194,8 @@ public class RagnarokArea extends GameArea {
         Entity background = ObstacleFactory.createBackground(world, width);
         GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);
-        Entity bifrost = NPCFactory.createBifrost();
+
+        Entity bifrost = ObstacleFactory.createBifrost();
         GridPoint2 pos2 = new GridPoint2(x, 8);
         spawnEntityAt(bifrost, pos2, true, true);
     }
@@ -381,7 +351,7 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnSkeleton(int x, int y) {
-        Entity skeleton = NPCFactory.createSkeleton(player);
+        Entity skeleton = NPCFactory.createSkeleton();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(skeleton, pos, false, false);
     }
@@ -418,50 +388,18 @@ public class RagnarokArea extends GameArea {
         this.player = spawnPlayer(x, y);
     }
 
-    /**
-     * Play all SFX in the game.
-     */
-    private void playMusic() {
-
-        String witchMusic;
-
-        switch (MathUtils.random(2)) {
-            case 1:
-                witchMusic = TOWN_MUSIC;
-                break;
-            case 2:
-                witchMusic = RAIDER_MUSIC;
-                break;
-            default:
-                witchMusic = MAIN_MUSIC;
-        }
-        Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
-        Music fire = ServiceLocator.getResourceService().getAsset(FIRE_MUSIC, Music.class);
-        Music walk = ServiceLocator.getResourceService().getAsset(WALK_MUSIC, Music.class);
-        music.setLooping(true);
-        fire.setLooping(true);
-        walk.setLooping(true);
-        music.setVolume(0.7f);
-        fire.setVolume(0.7f);
-        walk.setVolume(0.8f);
-        music.play();
-        fire.play();
-        walk.play();
-    }
-
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(racerTextures);
         resourceService.unloadAssets(racerTextureAtlases);
-        resourceService.unloadAssets(RACER_SOUNDS);
-        resourceService.unloadAssets(RACER_MUSIC);
+
+        ServiceLocator.getSoundService().unloadAssets();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class).stop();
         this.unloadAssets();
     }
 

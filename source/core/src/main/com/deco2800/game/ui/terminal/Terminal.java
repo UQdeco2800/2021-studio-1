@@ -44,6 +44,8 @@ public class Terminal extends Component {
     addCommand("-config", new ConfigCommand());
     addCommand("-queue", new QueueCommand());
     addCommand("-god", new GodCommand());
+    addCommand("-sfx", new SFXCommand());
+    addCommand("-music", new MusicCommand());
   }
 
   /** @return message entered by user */
