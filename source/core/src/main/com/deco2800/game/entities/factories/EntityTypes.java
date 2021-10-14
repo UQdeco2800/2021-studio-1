@@ -6,6 +6,7 @@ public enum EntityTypes {
     SHIELDPOWERUP,
     SPEARPOWERUP,
     OBSTACLE,
+    OBSTACLE_COLLIDER,
     PROJECTILE,
     ENEMY,
     WALL,
