@@ -51,13 +51,13 @@ public class NPCFactory {
      *
      * @return skeleton entity
      */
-    public static Entity createSkeleton() {
+    public static Entity createSkeleton(Entity target) {
         Entity skeleton = createBaseNPC();
         BaseEntityConfig config = configs.skeleton;
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new WanderTask(new Vector2(50f, 0f), 0f));
+                        .addTask(new ChaseTask(target, 2, true, 100, 20));
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(
@@ -70,6 +70,8 @@ public class NPCFactory {
                 .addComponent(animator)
                 .addComponent(aiComponent);
 
+        skeleton.getComponent(PhysicsMovementComponent.class).setMaxSpeed(10);
+
         skeleton.getComponent(AnimationRenderComponent.class).scaleEntity();
         skeleton.setScale(1f, 1.2f);
 
@@ -77,7 +79,7 @@ public class NPCFactory {
         //set body collision box
         skeleton.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.6f,
             0.7f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
-        //create head circle colilision box
+        //create head circle collision box
         CircleShape head = new CircleShape();
         head.setRadius(0.2f);
         Vector2 circleOffset = new Vector2(skeleton.getCenterPosition().x + 0.15f,
@@ -90,6 +92,7 @@ public class NPCFactory {
         }
 
         skeleton.setType(EntityTypes.SKELETON);
+        skeleton.getComponent(AnimationRenderComponent.class).startAnimation("run");
 
         return skeleton;
     }
@@ -112,7 +115,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        //animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
 
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -154,7 +157,6 @@ public class NPCFactory {
 
         wolf.setScale(1.3f, 1f);
 
-        wolf.getComponent(AnimationRenderComponent.class).startAnimation("run");
         return wolf;
     }
 
