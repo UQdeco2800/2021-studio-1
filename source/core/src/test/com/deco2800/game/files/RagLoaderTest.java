@@ -180,10 +180,10 @@ class RagLoaderTest {
                 "-config world jotunheimr_2",
                 "-config close init",
                 "-queue #.........F",
-                "-queue #........SF",
-                "-queue #........SF",
                 "-queue #.........F",
                 "-queue #........SF",
+                "-queue #.........F",
+                "-queue #.........F",
                 "-queue #........FF",
                 "-queue #.......FFF",
                 "-queue #.....RFFFF",
@@ -195,9 +195,8 @@ class RagLoaderTest {
                 "-queue #.........S",
                 "-queue #........FF",
                 "-config close queue",
-                "-spawn [6,3] (skeleton)",
                 "-spawn [14,2] (skeleton)",
-                "-spawn [13,3] (spear)",
+                "-spawn [12,2] (spear)",
                 "-spawn [5,2] (lightning)",
                 "-spawn [10,5] (levelTrigger)"};
 

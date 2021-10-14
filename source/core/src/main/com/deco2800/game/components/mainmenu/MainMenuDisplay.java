@@ -95,11 +95,6 @@ public class MainMenuDisplay extends UIComponent {
     muteTable.setFillParent(true);
     highScoreTable.setFillParent(true);
 
-    Image title =
-        new Image(
-            ServiceLocator.getResourceService()
-                .getAsset("images/main_back.png", Texture.class));
-
     shootingStarOne =
           new Image(
                   ServiceLocator.getResourceService()
@@ -228,7 +223,7 @@ public class MainMenuDisplay extends UIComponent {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
             playerName = inputBox.getText();
-            logger.info(playerName + "players name");
+            logger.info(String.format("%s players name", playerName));
             playerNameText.setText("Your Name: " + playerName);
         }
     });
