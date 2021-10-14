@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.components.powerups.ShieldPowerUpComponent;
@@ -61,18 +62,20 @@ public class PlayerActions extends Component {
     @Override
     public void update() {
         // for pause condition
-        if (!playerInputComponent.isPlayerInputEnabled()) {
-            return;
-        }
-        if (falling) {
-            checkFalling();
-        } else if (jumping) {
-            applyJumpForce();
-        } else if (moving) {
-            updateRunningSpeed();
-        }
 
-        checkGameTime();
+        if (entity.getComponent(CombatStatsComponent.class).getHealth() != 0) {
+            if (!playerInputComponent.isPlayerInputEnabled()) {
+                return;
+            }
+            if (falling) {
+                checkFalling();
+            } else if (jumping) {
+                applyJumpForce();
+            } else if (moving) {
+                updateRunningSpeed();
+            }
+            checkGameTime();
+        }
     }
 
     private void updateRunningSpeed() {

@@ -121,7 +121,6 @@ public class MainGameActions extends Component {
             if (popUp != null) {
                 popUp.dispose();
             }
-
             popUp = new Entity();
             popUp.addComponent(new UIPop("Game Over", entity));
             ServiceLocator.getEntityService().register(popUp);

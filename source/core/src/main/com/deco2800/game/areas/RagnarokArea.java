@@ -89,6 +89,7 @@ public class RagnarokArea extends GameArea {
             "images/lightning-animation.atlas",
             "images/player-spear.atlas",
             "images/bifrost.atlas",
+            "images/deathFade.atlas",
             "particles/particles.atlas"
     };
 

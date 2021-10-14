@@ -11,16 +11,21 @@ import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
+import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.components.powerups.PowerUpGUIComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
+import com.deco2800.game.entities.factories.DeathFactory;
+import com.deco2800.game.entities.factories.ObstacleFactory;
+import com.deco2800.game.entities.factories.PlayerFactory;
 import com.deco2800.game.entities.factories.RenderFactory;
 import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.input.InputDecorator;
 import com.deco2800.game.input.InputService;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsService;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.GameTime;
@@ -73,12 +78,14 @@ public class MainGameScreen extends ScreenAdapter {
     private AreaManager ragnarokManager;
     private Entity gameUI;
     private boolean gameEnded;
+    private boolean deathAnimation;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
         this.gameEnded = false;
+        this.deathAnimation = false;
 
         PhysicsService physicsService = new PhysicsService();
         ServiceLocator.registerPhysicsService(physicsService);
@@ -137,8 +144,24 @@ public class MainGameScreen extends ScreenAdapter {
 
                 }
                 if (!gameEnded) {
-                    gameUI.getEvents().trigger("Game Over");
+                    Entity death;
+                    if (!deathAnimation) {
+                        death = DeathFactory.createPlayerDeath(gameUI);
+                        death.setPosition(player.getPosition());
+                        player.getComponent(AnimationRenderComponent.class).stopAnimation();
+                        player.getComponent(KeyboardPlayerInputComponent.class).dispose();
+                        ServiceLocator.getEntityService().register(death);
+                        Entity fade = DeathFactory.createFade();
+                        fade.setPosition(player.getPosition().x - 20, -5);
+                        fade.setScale(40f, 20f);
+                        ServiceLocator.getEntityService().register(fade);
+                        fade.getComponent(AnimationRenderComponent.class).startAnimation("deathFade");
+                        death.getComponent(AnimationRenderComponent.class).startAnimation("death-right");
+                        deathAnimation = true;
+                    }
+
                     gameEnded = true;
+
                 }
             }
         }
