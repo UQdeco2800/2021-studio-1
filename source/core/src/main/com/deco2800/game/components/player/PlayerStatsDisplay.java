@@ -18,16 +18,18 @@ import java.awt.*;
  * A ui component for displaying player stats, e.g. health.
  */
 public class PlayerStatsDisplay extends UIComponent {
+
   private Table table;
   private Table tableTwo;
+
   private Image heartImage;
+  private Image healthBar;
+
   private Label healthLabel;
   private Label scoreLabel;
 
   public static boolean deadFlag = false;
   public static boolean lightningActive = false;
-
-  private Image healthBar;
 
   gameScore scoring = new gameScore();
   private int health;
@@ -49,6 +51,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @see Table for positioning options
    */
   private void addActors() {
+
     table = new Table();
     table.top().left();
     table.setFillParent(true);
