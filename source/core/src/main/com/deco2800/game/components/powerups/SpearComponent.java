@@ -57,7 +57,7 @@ public class SpearComponent extends Component {
                 (BodyUserData) otherFixture.getBody().getUserData();
         if (entity.getComponent(PhysicsComponent.class).getBody().getType() == BodyDef.BodyType.StaticBody) {
             if (other.entity.getType() == EntityTypes.PLAYERSPEAR) {
-                other.entity.flagDelete();
+                spear.entity.getEvents().trigger("dispose");
             }
         } else {
             if (other.entity.getType() == EntityTypes.FIRESPIRIT
