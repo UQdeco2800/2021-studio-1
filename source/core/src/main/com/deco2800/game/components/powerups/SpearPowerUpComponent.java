@@ -3,9 +3,12 @@ package com.deco2800.game.components.powerups;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.components.player.PlayerActions;
 import com.deco2800.game.entities.Entity;
+import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.entities.factories.ProjectileFactory;
+import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -22,6 +25,8 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     // Update flags to check
     private boolean active;
     private boolean throwing;
+    private boolean cantThrowSpear;
+    private float wallX;
     private int thrown;
     private long spearDelay;
 
@@ -33,6 +38,8 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         setEnabled(false);
         spear = null;
         thrown = 0;
+        cantThrowSpear = false;
+        entity.getEvents().addListener("collisionStart", this::playerCollide);
     }
 
     public void obtainSpear() {
@@ -54,7 +61,22 @@ public class SpearPowerUpComponent extends PowerUpComponent {
                 spear.getComponent(PhysicsComponent.class).setBodyType(BodyDef.BodyType.StaticBody);
                 active = false;
             }
-
+        }
+        if (wallX != 0) {
+            if (entity.getPosition().x <= wallX + 2 && entity.getPosition().x >= wallX - 2) {
+                if (entity.getPosition().x <= wallX + 2 && entity.getPosition().x >= wallX
+                        && entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.LEFT)) {
+                    cantThrowSpear = true;
+                } else if (entity.getPosition().x >= wallX - 2 && entity.getPosition().x <= wallX
+                        && entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.RIGHT)) {
+                    cantThrowSpear = true;
+                } else {
+                    cantThrowSpear = false;
+                }
+            } else {
+                cantThrowSpear = false;
+                wallX = 0;
+            }
         }
     }
 
@@ -67,19 +89,19 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             if (ServiceLocator.getTimeSource().getTimeSince(spearDelay) >=
                     100L) {
                 throwSpear();
-                getEntity().getComponent(PlayerActions.class).whichAnimation();
+                entity.getComponent(PlayerActions.class).whichAnimation();
             }
         } else if (active) {
             if (spearDirection.hasSameDirection(Vector2Utils.RIGHT)) {
                 spear.getComponent(PhysicsComponent.class).getBody().
                         applyLinearImpulse(new Vector2(5f, 0f),
-                        spear.getComponent(PhysicsComponent.class).
-                                getBody().getWorldCenter(),true);
+                                spear.getComponent(PhysicsComponent.class).
+                                        getBody().getWorldCenter(), true);
             } else {
                 spear.getComponent(PhysicsComponent.class).getBody()
                         .applyLinearImpulse(new Vector2(-5f, 0f),
-                        spear.getComponent(PhysicsComponent.class).getBody()
-                                .getWorldCenter(),true);
+                                spear.getComponent(PhysicsComponent.class).getBody()
+                                        .getWorldCenter(), true);
             }
         } else if (thrown >= 3) {
             thrown = 0;
@@ -94,7 +116,8 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      */
     @Override
     public void activate() {
-        if (!active && !throwing) {
+        if (!active && !throwing && !cantThrowSpear) {
+            entity.getComponent(PlayerActions.class).useSpearAttack();
             throwing = true;
             thrown += 1;
             spearDelay = ServiceLocator.getTimeSource().getTime();
@@ -112,6 +135,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         ServiceLocator.getEntityService().register(spear);
 
         spear.getEvents().addListener("dispose", this::disposeSpear);
+
         if (entity.getComponent(PlayerActions.class).getPreviousDirection()
                 .hasSameDirection(Vector2Utils.RIGHT)) {
             spear.setPosition(entity.getPosition().x + 1f,
@@ -120,7 +144,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
             spear.getComponent(PhysicsComponent.class).getBody()
                     .applyLinearImpulse(new Vector2(10f, 10f),
                             spear.getComponent(PhysicsComponent.class)
-                                    .getBody().getWorldCenter(),true);
+                                    .getBody().getWorldCenter(), true);
             spear.getComponent(AnimationRenderComponent.class).stopAnimation();
             spear.getComponent(AnimationRenderComponent.class).startAnimation(
                     "fly-right");
@@ -168,9 +192,16 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     /**
      * Triggered when the spear should get deleted
      */
-    public void disposeSpear() {
+    private void disposeSpear() {
         active = false;
         spear.getComponent(AnimationRenderComponent.class).stopAnimation();
         spear.flagDelete();
+    }
+
+    public void playerCollide(Fixture playerFixture, Fixture other) {
+        BodyUserData otherBody = (BodyUserData) other.getBody().getUserData();
+        if (otherBody.entity.getType() == EntityTypes.OBSTACLE_COLLIDER && other.getBody().getPosition().y > 0) {
+            wallX = other.getBody().getPosition().x;
+        }
     }
 }

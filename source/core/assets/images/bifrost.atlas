@@ -1,0 +1,138 @@
+bifrost.png
+size: 414, 450
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+default
+  rotate: false
+  xy: 0, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 0, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 23, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 46, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 69, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 92, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 115, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 138, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 161, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 184, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 207, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 230, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 253, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 276, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 299, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 322, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 345, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 368, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
+burn
+  rotate: false
+  xy: 391, 0
+  size: 23, 450
+  orig: 23, 450
+  offset: 0, 0
+  index: -1
