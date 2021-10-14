@@ -136,9 +136,17 @@ public class PlayerFactory {
             Animation.PlayMode.NORMAL);
     animator.addAnimation("throwing-spear-left", 0.05f,
             Animation.PlayMode.NORMAL);
+    animator.addAnimation("throwing-spear-while-jumping-right", 0.05f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("throwing-spear-while-jumping-left", 0.05f,
+            Animation.PlayMode.NORMAL);
     animator.addAnimation("throwing-spear-with-shield-right", 0.05f,
             Animation.PlayMode.NORMAL);
     animator.addAnimation("throwing-spear-with-shield-left", 0.05f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("throwing-spear-with-shield-while-jumping-right", 0.05f,
+            Animation.PlayMode.NORMAL);
+    animator.addAnimation("throwing-spear-with-shield-while-jumping-left", 0.05f,
             Animation.PlayMode.NORMAL);
 
     animator.addAnimation("death-right", 0.1f,

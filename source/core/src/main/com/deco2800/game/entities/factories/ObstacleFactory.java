@@ -246,6 +246,7 @@ public class ObstacleFactory {
         Entity floor = createFloorNoCollider(world)
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        floor.setType(EntityTypes.OBSTACLE);
         floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         return floor;
     }
@@ -273,7 +274,7 @@ public class ObstacleFactory {
         }
         floor.getComponent(TextureRenderComponent.class).scaleEntity();
         floor.scaleHeight(1.5f);
-        floor.setType(EntityTypes.OBSTACLE);
+
         return floor;
     }
 
@@ -302,7 +303,7 @@ public class ObstacleFactory {
         collider.setScale(scale);
         collider.getComponent(ColliderComponent.class).setAsBoxAligned(size,
                 PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM);
-        collider.setType(EntityTypes.OBSTACLE);
+        collider.setType(EntityTypes.OBSTACLE_COLLIDER);
         return collider;
     }
 
