@@ -74,15 +74,11 @@ public class ShootTask extends DefaultTask implements PriorityTask {
      */
     private void fire() {
         logger.debug("Shot Fired");
-        Entity fire = ProjectileFactory.fireBall();
-        Body body = fire.getComponent(PhysicsComponent.class).getBody();
-        ServiceLocator.getEntityService().register(fire);
-        fire.setPosition(owner.getEntity().getPosition().x + 1, owner.getEntity().getPosition().y);
-        fire.getComponent(PhysicsComponent.class).getBody().setLinearVelocity(50, 0);
-
-        if (body.getLinearVelocity().X.isZero() || fire.getCenterPosition().y < 0) {
-            fire.flagDelete();
-        }
+        fireball = ProjectileFactory.fireBall();
+        Body body = fireball.getComponent(PhysicsComponent.class).getBody();
+        ServiceLocator.getEntityService().register(fireball);
+        fireball.setPosition(owner.getEntity().getPosition().x + 1, owner.getEntity().getPosition().y);
+        fireball.getComponent(PhysicsComponent.class).getBody().setLinearVelocity(50, 0);
 
         //You had movementTask.setTarget(player) but movementTask wasn't defined and it caused a NullPointerException
         swapTask(waitTask);
