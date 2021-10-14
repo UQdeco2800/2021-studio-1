@@ -55,7 +55,6 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("jump", this::jump);
         entity.getEvents().addListener("collisionStart", this::obtainPowerUp);
         entity.getEvents().addListener("usePowerUp", this::usePowerUp);
-        entity.getEvents().addListener("useSpearAttack", this::useSpearAttack);
     }
 
     @Override
@@ -240,7 +239,6 @@ public class PlayerActions extends Component {
             case SPEARPOWERUP:
                 if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
                     entity.getComponent(SpearPowerUpComponent.class).activate();
-                    whichAnimation();
                 }
                 break;
 
@@ -275,7 +273,7 @@ public class PlayerActions extends Component {
      * Determine which set animation of to play based off of which triggers are
      * active
      */
-    private void whichAnimation() {
+    public void whichAnimation() {
         entity.getComponent(AnimationRenderComponent.class).stopAnimation();
         if (isJumping()) {
             whichJumpingAnimations();
@@ -583,7 +581,7 @@ public class PlayerActions extends Component {
      * Determine which animation to play if the player is going to use spear
      * power up
      */
-    private void useSpearAttack() {
+    public void useSpearAttack() {
         if (entity.getComponent(ShieldPowerUpComponent.class).getActive()
                 && entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
             if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
