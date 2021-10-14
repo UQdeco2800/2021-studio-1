@@ -220,7 +220,7 @@ public class MainMenuDisplay extends UIComponent {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
             playerName = inputBox.getText();
-            logger.info(playerName + "players name");
+            logger.info(playerName + " players name");
             playerNameText.setText(YOUR_NAME_TEXT + playerName);
         }
     });

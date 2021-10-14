@@ -26,7 +26,7 @@ public class MainGamePannelDisplay extends UIComponent {
   private void addActors() {
     table = new Table();
     Table pannelDisplayBack = new Table();
-    table.top().right();
+    table.bottom().left();
     pannelDisplayBack.top().left();
     table.setFillParent(true);
     pannelDisplayBack.setFillParent(true);

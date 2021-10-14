@@ -25,7 +25,6 @@ public class RandomTask extends DefaultTask implements PriorityTask {
     private MovementTask movementTaskOne;
     private MovementTask movementTaskTwo;
     private MovementTask movementTaskThree;
-    private MovementTask movementTaskFour;
 
     /**
      * @param target The entity to chase.
@@ -76,8 +75,8 @@ public class RandomTask extends DefaultTask implements PriorityTask {
         movementTaskTwo.create(owner);
 
         Vector2 targetPosition = target.getPosition();
-        movementTaskFour = new MovementTask(new Vector2(0, 25));
-        movementTaskFour.create(owner);
+        movementTaskThree = new MovementTask(new Vector2(0, 25));
+        movementTaskThree.create(owner);
 
         startTask(type);
 
@@ -97,7 +96,7 @@ public class RandomTask extends DefaultTask implements PriorityTask {
             return;
         }
         if (type == 2) {
-            currentTask = movementTaskFour;
+            currentTask = movementTaskThree;
             currentTask.start();
         }
 

@@ -8,7 +8,6 @@ import com.deco2800.game.input.InputComponent;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.Vector2Utils;
 
-import java.lang.System;
 /**
  * Input handler for the player for keyboard and touch (mouse) input.
  * This input handler only uses keyboard input.
@@ -30,10 +29,13 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   public boolean keyDown(int keycode) {
 
     switch (keycode) {
+      case Keys.UP:
+      case Keys.SPACE:
       case Keys.W:
         triggerJumpEvent();
         isDirection = 1;
         return true;
+      case Keys.LEFT:
       case Keys.A:
         if (!runDirection.epsilonEquals(Vector2Utils.LEFT) ) {
           runDirection.add(Vector2Utils.LEFT);
@@ -41,42 +43,18 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerRunEvent();
         isDirection = 2;
         return true;
+      case Keys.DOWN:
       case Keys.S:
         triggerCrouchEvent();
         isDirection = 3;
         return true;
+      case Keys.RIGHT:
       case Keys.D:
       if (!runDirection.epsilonEquals(Vector2Utils.RIGHT) ) {
           runDirection.add(Vector2Utils.RIGHT);
         }
         triggerRunEvent();
         isDirection = 4;
-        return true;
-      case Keys.UP:
-        triggerJumpEvent();
-        isDirection = 1;
-        return true;
-      case Keys.LEFT:
-      if (!runDirection.epsilonEquals(Vector2Utils.LEFT) ) {
-          runDirection.add(Vector2Utils.LEFT);
-        }
-        triggerRunEvent();
-        isDirection = 2;
-        return true;
-      case Keys.DOWN:
-        triggerCrouchEvent();
-        isDirection = 3;
-        return true;
-      case Keys.RIGHT:
-      if (!runDirection.epsilonEquals(Vector2Utils.RIGHT) ) {
-          runDirection.add(Vector2Utils.RIGHT);
-        }
-        triggerRunEvent();
-        isDirection = 4;
-        return true;
-      case Keys.SPACE:
-        triggerJumpEvent();
-        isDirection = 1;
         return true;
       case Keys.L:
         triggerLightningEvent();
@@ -101,9 +79,12 @@ public class KeyboardPlayerInputComponent extends InputComponent {
 
     triggerAnyMovement();
     switch (keycode) {
+      case Keys.UP:
+      case Keys.SPACE:
       case Keys.W:
         isDirection = 1;
         return true;
+      case Keys.LEFT:
       case Keys.A:
         if (runDirection.epsilonEquals(Vector2Utils.LEFT)) {
           runDirection.sub(Vector2Utils.LEFT);
@@ -111,40 +92,18 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         triggerRunEvent();
         isDirection = 2;
         return true;
+      case Keys.DOWN:
       case Keys.S:
         triggerStopCrouchEvent();
         isDirection = 3;
         return true;
+      case Keys.RIGHT:
       case Keys.D:
         if (runDirection.epsilonEquals(Vector2Utils.RIGHT)) {
           runDirection.sub(Vector2Utils.RIGHT);
         }
         triggerRunEvent();
         isDirection = 4;
-        return true;
-      case Keys.UP:
-        isDirection = 1;
-        return true;
-      case Keys.LEFT:
-        if (runDirection.epsilonEquals(Vector2Utils.LEFT)) {
-          runDirection.sub(Vector2Utils.LEFT);
-        }
-        triggerRunEvent();
-        isDirection = 2;
-        return true;
-      case Keys.DOWN:
-        triggerStopCrouchEvent();
-        isDirection = 3;
-        return true;
-      case Keys.RIGHT:
-        if (runDirection.epsilonEquals(Vector2Utils.RIGHT)) {
-          runDirection.sub(Vector2Utils.RIGHT);
-        }
-        triggerRunEvent();
-        isDirection = 4;
-        return true;
-      case Keys.SPACE:
-        isDirection = 1;
         return true;
       default:
         return false;

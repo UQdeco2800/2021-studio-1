@@ -65,8 +65,9 @@ public class PlayerStatsDisplay extends UIComponent {
 
     // Health text
     health = entity.getComponent(CombatStatsComponent.class).getHealth();
+
     //int health = 100;
-    CharSequence healthText = String.format("" + health);
+    CharSequence healthText = String.format("%d", health);
     healthLabel = new Label("HP:" + healthText, skin);
 
     healthBar =  new Image(

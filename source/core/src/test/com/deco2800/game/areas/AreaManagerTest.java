@@ -246,9 +246,7 @@ class AreaManagerTest {
                 , world);
 
         // Spikes
-        verify(area).spawnSpikes((xOffset + 1) * GRID_SCALE, GRID_SCALE);
         verify(area).spawnSpikes((xOffset + 2) * GRID_SCALE, GRID_SCALE);
-        verify(area).spawnSpikes((xOffset + 4) * GRID_SCALE, GRID_SCALE);
         verify(area).spawnSpikes((xOffset + 9) * GRID_SCALE, 0);
         verify(area).spawnSpikes((xOffset + 10) * GRID_SCALE, 0);
         verify(area).spawnSpikes((xOffset + 11) * GRID_SCALE, 0);
@@ -259,9 +257,8 @@ class AreaManagerTest {
         verify(area).spawnRocks((xOffset + 7) * GRID_SCALE, 4 * GRID_SCALE);
 
         // Entities
-        verify(area).spawnSkeleton((xOffset + 6) * GRID_SCALE, 3 * GRID_SCALE);
         verify(area).spawnSkeleton((xOffset + 14) * GRID_SCALE, 2 * GRID_SCALE);
-        verify(area).spawnSpear((xOffset + 13) * GRID_SCALE, 3 * GRID_SCALE);
+        verify(area).spawnSpear((xOffset + 12) * GRID_SCALE, 2 * GRID_SCALE);
         verify(area).spawnLightning((xOffset + 5) * GRID_SCALE, 2 * GRID_SCALE);
         verify(area).spawnLevelLoadTrigger((xOffset + 10) * GRID_SCALE);
 

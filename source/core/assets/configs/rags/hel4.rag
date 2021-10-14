@@ -1,39 +1,42 @@
 $_title ear5
 $_width 25
 $_height 10
-$_world jotunheimr_1
+$_world hel_1
 
 $#.......P..
-$#........SF
+$#.....P...F
+$#.......P.F
+$#....P..P.F
+$#....P..P.F
+$#...SP..P.F
+$#....P..P.F
+$#......P..F
+$#....P.P..F
+$#....P....F
+$#...SP..P.F
+$#....P..P.F
+$#....P..P.F
+$#......P..F
+$#....P.P..F
+$#...SP.P..F
+$#....P.P..F
 $#.........F
+$#......P..F
 $#.........F
-$#.......FSF
-$#.......FSF
-$#......SFSF
-$#......SFSF
+$#......P..F
 $#.........F
+$#......P..F
 $#.........F
-$#.........F
-$#....SF.FSF
-$#....SF.FSF
-$#.......FSF
-$#.........F
-$#.......F.F
-$#....SFSF.F
-$#....SFSF.F
-$#....SFSF.F
-$#.....F.F.F
-$#.....F...F
-$#.....F.FSF
-$#.......FSF
-$#.....FSFSF
-$#........SF
+$#......FFFF
 
-$@player set [2,8]
+$@player set [2,1]
 
+$-spawn [18,1] (wolf)
+$-spawn [5,3] (fireSpirit)
+$-spawn [19,1] (wolf)
 
-$-spawn [23,5] (lightning)
 $-spawn [9,1] (spear)
 $-spawn [0,3] (shield)
+$-spawn [23,1] (lightning)
 
 $-spawn [20,5] (levelTrigger)

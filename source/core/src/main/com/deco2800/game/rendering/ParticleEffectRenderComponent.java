@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.ServiceLocator;
@@ -20,6 +21,7 @@ public class ParticleEffectRenderComponent extends RenderComponent {
     private final ParticleEffect particleEffect;
     private final short targetLayer;
     private HitboxComponent hitboxComponent;
+    private float y;
 
     /**
      * Construct a particle effect that will play when an entity from the targetLayer collides
@@ -38,6 +40,7 @@ public class ParticleEffectRenderComponent extends RenderComponent {
         particleEffect.load(effectData, textureAtlas);
         particleEffect.scaleEffect(0.02f);
         this.targetLayer = targetLayer;
+        this.y = 0;
     }
 
     /**
@@ -68,6 +71,7 @@ public class ParticleEffectRenderComponent extends RenderComponent {
         }
 
         logger.debug("Registered collision with target layer, starting particle effect");
+        this.y = ((BodyUserData) other.getBody().getUserData()).entity.getPosition().y;
         start();
     }
 
@@ -89,7 +93,7 @@ public class ParticleEffectRenderComponent extends RenderComponent {
      */
     @Override
     public void render(SpriteBatch batch) {
-        particleEffect.setPosition(entity.getPosition().x, entity.getPosition().y);
+        particleEffect.setPosition(entity.getPosition().x, this.y);
         particleEffect.update(Gdx.graphics.getDeltaTime());
         particleEffect.draw(batch);
     }
@@ -100,5 +104,11 @@ public class ParticleEffectRenderComponent extends RenderComponent {
     public void start() {
         logger.debug("Starting particle effect.");
         particleEffect.start();
+    }
+
+    @Override
+    public void dispose() {
+        ServiceLocator.getRenderService().unregister(this);
+        particleEffect.dispose();
     }
 }

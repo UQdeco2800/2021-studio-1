@@ -49,7 +49,7 @@ public class PowerUpGUIComponent extends UIComponent {
      * Creates power up icons, positions them in tables and sets them initially to not be visible
      */
     private void addActors() {
-        float iconSize = 40f;
+        float iconSize = 55f;
         //Shield Display
         Table emptyShieldDisplay = new Table();
         emptyShieldDisplay.top().right().padTop(5).padRight(5);
@@ -72,7 +72,7 @@ public class PowerUpGUIComponent extends UIComponent {
 
         //Spear Display
         Table emptySpearDisplay = new Table();
-        emptySpearDisplay.top().right().padTop(47f).padRight(5);
+        emptySpearDisplay.top().right().padTop(62f).padRight(5);
         emptySpearDisplay.setFillParent(true);
 
         emptySpearDisplay.add(empty4).size(iconSize).pad(2);
@@ -81,7 +81,7 @@ public class PowerUpGUIComponent extends UIComponent {
 
 
         Table spearDisplay = new Table();
-        spearDisplay.top().right().padTop(47f).padRight(5);
+        spearDisplay.top().right().padTop(62f).padRight(5);
         spearDisplay.setFillParent(true);
 
         spearDisplay.add(spear1).size(iconSize).pad(2);
@@ -93,13 +93,13 @@ public class PowerUpGUIComponent extends UIComponent {
 
         //Lightning Display
         Table emptyLightningDisplay = new Table();
-        emptyLightningDisplay.top().right().padTop(89f).padRight(5);
+        emptyLightningDisplay.top().right().padTop(120f).padRight(5);
         emptyLightningDisplay.setFillParent(true);
 
         emptyLightningDisplay.add(empty7).size(iconSize).pad(2);
 
         Table lightningDisplay = new Table();
-        lightningDisplay.top().right().padTop(89f).padRight(5);
+        lightningDisplay.top().right().padTop(120f).padRight(5);
         lightningDisplay.setFillParent(true);
 
         lightningDisplay.add(lightning).size(iconSize).pad(2);
