@@ -15,7 +15,7 @@ public class DeathFactory {
                 new AnimationRenderComponent(ServiceLocator.getResourceService()
                         .getAsset("images/odin.atlas", TextureAtlas.class));
 
-        animator.addAnimation("death-right", 0.2f,
+        animator.addAnimation("death-right", 0.1f,
                 Animation.PlayMode.NORMAL);
 
         player.addComponent(animator);
