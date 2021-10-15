@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
+import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
@@ -96,6 +97,9 @@ public class RagnarokArea extends GameArea {
             WALK_MUSIC, LOUD_WALK_MUSIC, ROAR_MUSIC};
 
     private final TerrainFactory terrainFactory;
+    private Music music;
+    private Music fire;
+    private Music walk;
 
     //have the loader return a level? fuck yeh
     public RagnarokArea(String name, TerrainFactory terrainFactory) {
@@ -395,9 +399,9 @@ public class RagnarokArea extends GameArea {
             default:
                 witchMusic = MAIN_MUSIC;
         }
-        Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
-        Music fire = ServiceLocator.getResourceService().getAsset(FIRE_MUSIC, Music.class);
-        Music walk = ServiceLocator.getResourceService().getAsset(WALK_MUSIC, Music.class);
+        music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
+        fire = ServiceLocator.getResourceService().getAsset(FIRE_MUSIC, Music.class);
+        walk = ServiceLocator.getResourceService().getAsset(WALK_MUSIC, Music.class);
         music.setLooping(true);
         fire.setLooping(true);
         walk.setLooping(true);

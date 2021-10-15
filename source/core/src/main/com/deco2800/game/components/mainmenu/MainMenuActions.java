@@ -41,7 +41,6 @@ public class MainMenuActions extends Component {
   }
 
     private void playMusic() {
-
       music.setVolume(0.7f);
       music.play();
       logger.info(music.isPlaying() + "music playing");

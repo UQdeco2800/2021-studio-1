@@ -32,7 +32,7 @@ public class MainGameActions extends Component {
     entity.getEvents().addListener("Pause Menu", this::onPause);
     entity.getEvents().addListener("Score Screen", this::showScore);
     entity.getEvents().addListener("Game Over", this::gameOver);
-      entity.getEvents().addListener("start", this::onStart);
+    entity.getEvents().addListener("restart", this::restart);
   }
 
 
@@ -87,6 +87,11 @@ public class MainGameActions extends Component {
         pauseSound.play();
     }
 
+    private void restart() {
+        game.paused = false;
+        game.over = false;
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+    }
 
     /**
      * Pauses the game -- the trigger function for the event.
@@ -125,11 +130,9 @@ public class MainGameActions extends Component {
             gameOverSound = ServiceLocator.getResourceService().getAsset(IMPACT, Sound.class);
         } else {
             ServiceLocator.getTimeSource().setTimeScale(0f);
-
             if (popUp != null) {
                 popUp.dispose();
             }
-
             popUp = new Entity();
             popUp.addComponent(new UIPop("Game Over", entity));
             ServiceLocator.getEntityService().register(popUp);
