@@ -12,12 +12,12 @@ $#.....P...S
 $#.....PPPPS
 $#.....PPRFF
 $#.....PPSPS
+$#.........S
+$#.....P.PPS
+$#.......RFF
+$#.......PPS
 $#.....P...S
 $#.....PPPPS
-$#.....PPRFF
-$#.....PPPPS
-$#.....P...S
-$#....SPPPPS
 $#.....PSPFF
 $#.....PP.PS
 $#.....P...S
@@ -26,14 +26,13 @@ $#....SPPRFF
 
 $@player set [2,1]
 
-$-spawn [9,5] (skeleton)
 $-spawn [15,5] (wolf)
 $-spawn [11,5] (skeleton)
 $-spawn [10,5] (skeleton)
 $-spawn [17,5] (wolf)
 $-spawn [16,5] (wolf)
 
+$-spawn [12,3] (lightning)
 $-spawn [6,5] (spear)
-$-spawn [12,5] (spear)
 
 $-spawn [15,5] (levelTrigger)
