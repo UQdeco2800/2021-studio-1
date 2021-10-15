@@ -18,8 +18,6 @@ import org.slf4j.LoggerFactory;
 public class ObstacleArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ObstacleArea.class);
 
-    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
-
     private static final float WALL_WIDTH = 0.1f;
     private static final float WALL_HEIGHT = 0.1f;
 

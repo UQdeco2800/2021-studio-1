@@ -32,8 +32,8 @@ public class CombatStatsComponent extends Component {
     return health == 0;
   }
 
-  public void setInvincible(Boolean Invincible) {
-    this.invincible = Invincible;
+  public void setInvincible(boolean invincible) {
+    this.invincible = invincible;
   }
 
   public void toggleInvincible() {
