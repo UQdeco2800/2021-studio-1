@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.npc.BifrostAnimationController;
+import com.deco2800.game.components.npc.FireballAnimationController;
 import com.deco2800.game.components.powerups.SpearComponent;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -43,9 +45,14 @@ public class ProjectileFactory {
      * @return a base projectile entity
      */
     public static Entity createBaseProjectile() {
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(
+                        ServiceLocator.getResourceService().getAsset("images/fireball.atlas", TextureAtlas.class));
+        animator.addAnimation("fireball", 0.1f, Animation.PlayMode.LOOP);
 
         Entity baseProjectile = new Entity()
-                .addComponent(new TextureRenderComponent("images/fireball.png"))
+                .addComponent(animator)
+                .addComponent(new FireballAnimationController())
                 .addComponent(new PhysicsComponent())
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
@@ -54,7 +61,7 @@ public class ProjectileFactory {
                 .addComponent(new CombatStatsComponent(1, 20));
 
         baseProjectile.getComponent(PhysicsComponent.class).setGravityScale(5f);
-        baseProjectile.getComponent(TextureRenderComponent.class).scaleEntity();
+        baseProjectile.getComponent(AnimationRenderComponent.class).scaleEntity();
         baseProjectile.setScale(0.6f, 0.6f);
         PhysicsUtils.setScaledCollider(baseProjectile, 0.8f, 0.8f);
         baseProjectile.setType(EntityTypes.PROJECTILE);
