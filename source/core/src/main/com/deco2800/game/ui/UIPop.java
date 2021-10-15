@@ -274,9 +274,10 @@ public class UIPop extends UIComponent {
             }
         });
 
-        popUp.add(returnButton).center().padTop(30f).padLeft(30f);
-        popUp.add(restartButton).center().padTop(30f).padRight(30f);
-
+        popUp.add(restartButton).center().padTop(30f);
+        popUp.row();
+        popUp.row();
+        popUp.add(returnButton).center().padTop(30f);
         return popUp;
     }
 

@@ -240,7 +240,6 @@ public class PlayerActions extends Component {
             case SPEARPOWERUP:
                 if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
                     entity.getComponent(SpearPowerUpComponent.class).activate();
-                    whichAnimation();
                 }
                 break;
 
@@ -275,9 +274,12 @@ public class PlayerActions extends Component {
      * Determine which set animation of to play based off of which triggers are
      * active
      */
-    private void whichAnimation() {
+    public void whichAnimation() {
         entity.getComponent(AnimationRenderComponent.class).stopAnimation();
-        if (isJumping()) {
+        if(PlayerStatsDisplay.deadFlag){
+            whichDeadAnimations();
+        }
+        else if (isJumping()) {
             whichJumpingAnimations();
         } else if (isFalling()) {
             whichFallingAnimations();
@@ -359,6 +361,24 @@ public class PlayerActions extends Component {
             stillAnimations();
         }
     }
+
+    /**
+     * Determine which death animation to play based off which power ups are
+     * active
+     */
+    private void whichDeadAnimations() {
+        if (entity.getComponent(ShieldPowerUpComponent.class).getActive()
+                && entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
+            spearShieldDeathAnimations();
+        } else if (entity.getComponent(ShieldPowerUpComponent.class).getActive()) {
+            shieldDeathAnimations();
+        } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()
+                && !entity.getComponent(SpearPowerUpComponent.class).getActive()) {
+            spearDeathAnimations();
+        } else {
+            deathAnimations();
+        }
+    }
     /**
      * Determine which animation to play if the player is standing still
      */
@@ -369,6 +389,19 @@ public class PlayerActions extends Component {
         } else {
             entity.getComponent(AnimationRenderComponent.class)
                     .startAnimation("still-left");
+        }
+    }
+
+    /**
+     * Determine which animation to play if the player is standing still
+     */
+    private void deathAnimations() {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-right");
+        } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-left");
         }
     }
 
@@ -468,6 +501,20 @@ public class PlayerActions extends Component {
     }
 
     /**
+     * Determine which animation to play if the player is dead with
+     * the spear power up
+     */
+    private void spearDeathAnimations() {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-spear-right");
+        } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-spear-left");
+        }
+    }
+
+    /**
      * Determine which animation to play if the player is still with the shield
      * power up
      */
@@ -520,6 +567,20 @@ public class PlayerActions extends Component {
         } else {
             entity.getComponent(AnimationRenderComponent.class)
                     .startAnimation("fall-left-shield");
+        }
+    }
+
+    /**
+     * Determine which animation to play if the player is dead with the shield
+     * power up
+     */
+    private void shieldDeathAnimations() {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-shield-right");
+        } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-shield-left");
         }
     }
 
@@ -580,27 +641,60 @@ public class PlayerActions extends Component {
     }
 
     /**
+     * Determine which animation to play if the player is dead with the spear and shield
+     * power up
+     */
+    private void spearShieldDeathAnimations() {
+        if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-spear-shield-right");
+        } else {
+            entity.getComponent(AnimationRenderComponent.class)
+                    .startAnimation("death-spear-shield-left");
+        }
+    }
+
+    /**
      * Determine which animation to play if the player is going to use spear
      * power up
      */
-    private void useSpearAttack() {
+    public void useSpearAttack() {
         if (entity.getComponent(ShieldPowerUpComponent.class).getActive()
                 && entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
-            if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-                entity.getComponent(AnimationRenderComponent.class)
-                        .startAnimation("throwing-spear-with-shield-right");
+            if (isFalling()) {
+                if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+                    entity.getComponent(AnimationRenderComponent.class)
+                            .startAnimation("throwing-spear-with-shield-while-jumping-right");
+                } else {
+                    entity.getComponent(AnimationRenderComponent.class)
+                            .startAnimation("throwing-spear-with-shield-while-jumping-left");
+                }
             } else {
-                entity.getComponent(AnimationRenderComponent.class)
-                        .startAnimation("throwing-spear-with-shield-left");
+                if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+                    entity.getComponent(AnimationRenderComponent.class)
+                            .startAnimation("throwing-spear-with-shield-right");
+                } else {
+                    entity.getComponent(AnimationRenderComponent.class)
+                            .startAnimation("throwing-spear-with-shield-left");
+                }
             }
-
         } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
-            if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-                entity.getComponent(AnimationRenderComponent.class)
-                        .startAnimation("throwing-spear-right");
+            if (isFalling()) {
+                if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+                    entity.getComponent(AnimationRenderComponent.class)
+                            .startAnimation("throwing-spear-while-jumping-right");
+                } else {
+                    entity.getComponent(AnimationRenderComponent.class)
+                            .startAnimation("throwing-spear-while-jumping-left");
+                }
             } else {
-                entity.getComponent(AnimationRenderComponent.class)
-                        .startAnimation("throwing-spear-left");
+                if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+                    entity.getComponent(AnimationRenderComponent.class)
+                            .startAnimation("throwing-spear-right");
+                } else {
+                    entity.getComponent(AnimationRenderComponent.class)
+                            .startAnimation("throwing-spear-left");
+                }
             }
         }
     }
