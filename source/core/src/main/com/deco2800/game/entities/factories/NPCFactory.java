@@ -287,6 +287,8 @@ public class NPCFactory {
         bfx.getComponent(AnimationRenderComponent.class).scaleEntity();
         bfx.setType(EntityTypes.OBSTACLE);
         bfx.setScale(6f, 6f);
+
+        ServiceLocator.getSoundService().playSound("shatter");
         
         return bfx;
     }
