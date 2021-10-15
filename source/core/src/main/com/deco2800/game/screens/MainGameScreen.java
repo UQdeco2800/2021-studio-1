@@ -1,7 +1,6 @@
 package com.deco2800.game.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.deco2800.game.GdxGame;
@@ -36,8 +35,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Serializable;
-import java.security.Provider;
 
 /**
  * The game screen containing the main game.
@@ -62,7 +59,9 @@ public class MainGameScreen extends ScreenAdapter {
             "images/PowerUpGUI/spear2.png",
             "images/PowerUpGUI/spear3.png",
             "images/disp_back.png",
-            "images/story/storyline.png"
+            "images/story/storyline.png",
+            "images/healthBar.png",
+            "images/healthBarBack.png"
     };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);

@@ -5,14 +5,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -21,6 +26,7 @@ import java.util.Scanner;
  * A ui component for displaying the Main menu.
  */
 public class MainMenuDisplay extends UIComponent {
+
   private static final Logger logger = LoggerFactory.getLogger(MainMenuDisplay.class);
   private static final float Z_INDEX = 2f;
   private Table rootTable;
@@ -56,18 +62,20 @@ public class MainMenuDisplay extends UIComponent {
   private ImageButton muteButtonOn;
   private ImageButton muteButtonOff;
   private boolean muted = false;
-  private SelectBox<String> characterSelections;
+  private Dimension screenSize;
   private Label playerNameText;
   private TextArea inputBox;
   private TextButton inputBoxButton;
-  private static String playerName = "Random";
-  private static final String POP_UP_FONT = "popUpFont";
-  private static int[] scoreValues = {0, 0, 0, 0, 0};
+
+  private String YOUR_NAME_TEXT = "Your Name: ";
   private static final String PLAY_LINE = "Play to get here!";
+  private static final String POP_UP_FONT = "popUpFont";
+
+  private static String playerName = "Random";
+  private static int[] scoreValues = {0, 0, 0, 0, 0};
   private static String[] scoreNames = {PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE, PLAY_LINE};
   private static String highScoreName = "";
   private static int highScoreValue = 0;
-
 
   @Override
   public void create() {
@@ -95,10 +103,9 @@ public class MainMenuDisplay extends UIComponent {
     muteTable.setFillParent(true);
     highScoreTable.setFillParent(true);
 
-    shootingStarOne =
-          new Image(
-                  ServiceLocator.getResourceService()
-                          .getAsset("images/star.png", Texture.class));
+    shootingStarOne = new Image(
+            ServiceLocator.getResourceService()
+                    .getAsset("images/star.png", Texture.class));
     shootingStarOne.setScale(0.2f, 0.2f);
 
     shootingStarTwo =
@@ -111,11 +118,9 @@ public class MainMenuDisplay extends UIComponent {
           new Image(
                   ServiceLocator.getResourceService()
                           .getAsset("images/star3.png", Texture.class));
-
     shootingStarThree.setScale(0.2f, 0.2f);
+
     TextButton startBtn = new TextButton("Run!", skin);
-    //This and its descendants are commented out since it could be a button we use in future
-    //TextButton loadBtn = new TextButton("Load", skin);
     TextButton settingsBtn = new TextButton("Settings", skin);
     TextButton exitBtn = new TextButton("Exit", skin);
     TextButton helpBtn = new TextButton("Help", skin);
@@ -131,13 +136,15 @@ public class MainMenuDisplay extends UIComponent {
                       "images/mute_button_off.png", Texture.class)));
 
     highScoreName = readHighScores();
-    playerNameText = new Label("Your Name: " + playerName, skin, POP_UP_FONT);
+    playerNameText = new Label(YOUR_NAME_TEXT + playerName, skin, POP_UP_FONT);
     Label highScorePreText = new Label("Best Runner", skin, POP_UP_FONT);
     Label highScoreNameText = new Label(highScoreName, skin, POP_UP_FONT);
     Label highScoreValueText = new Label("" + highScoreValue, skin, POP_UP_FONT);
-    characterSelections = new SelectBox<>(skin);
+    SelectBox<String> characterSelections = new SelectBox<>(skin);
     inputBox = new TextArea("Enter Name", skin);
     addCharacterSelections(characterSelections);
+
+    screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     startBtn.addListener(
             new ChangeListener() {
@@ -186,16 +193,6 @@ public class MainMenuDisplay extends UIComponent {
               }
           });
 
-    /*loadBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Load button clicked");
-            entity.getEvents().trigger("load");
-          }
-        });
-    */
-
     muteTable.bottom().left();
     helpTable.bottom().right();
     highScoreTable.top().right();
@@ -223,8 +220,8 @@ public class MainMenuDisplay extends UIComponent {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
             playerName = inputBox.getText();
-            logger.info(String.format("%s players name", playerName));
-            playerNameText.setText("Your Name: " + playerName);
+            logger.info(playerName + " players name");
+            playerNameText.setText(YOUR_NAME_TEXT + playerName);
         }
     });
 
@@ -297,7 +294,8 @@ public class MainMenuDisplay extends UIComponent {
                   showCustomBox();
               } else {
                   inputBox.setVisible(false);
-                  playerNameText.setText("Your Name: " + playerName);
+                  inputBoxButton.setVisible(false);
+                  playerNameText.setText(YOUR_NAME_TEXT + playerName);
               }
           }
       });
@@ -425,31 +423,34 @@ public class MainMenuDisplay extends UIComponent {
         frameCountTwo += 1;
         frameCountThree += 1;
 
-        if (!starOneShot) {
-            MoveStarOne();
+        int offset = UserSettings.get().fullscreen ? 200 : 0;
+
+        MoveStars();
+
+        RotateStars();
+
+        SetStarPositions();
+
+        if (!starOneShot && effectsXOne >= screenSize.width / 4 + offset) {
+            starOneShot = true;
+            frameCountOne = 0;
+            shootOneWait = (float) Math.random() * 800 + 800;
         }
 
-        if (!starTwoShot) {
-            MoveStarTwo();
+        if (!starTwoShot && effectsXTwo >= screenSize.width + offset) {
+            starTwoShot = true;
+            frameCountTwo = 0;
+            shootTwoWait = (float) Math.random() * 300 + 300;
         }
 
-        if (!starThreeShot) {
-            MoveStarThree();
+        if (!starThreeShot && effectsXThree >= screenSize.width + offset) {
+            starThreeShot = true;
+            frameCountThree = 0;
+            shootThreeWait = (float) Math.random() * 500 + 500;
         }
+    }
 
-        if (starOneShot) {
-            RotateStarOne();
-        }
-
-        RotateStarTwo();
-        if (starTwoShot) {
-            //RotateStarTwo();
-        }
-
-        RotateStarThree();
-        if (starThreeShot) {
-            //RotateStarThree();
-        }
+    private void SetStarPositions() {
 
         if (starOneShot && frameCountOne > shootOneWait) {
             SetStarOnePosition();
@@ -464,24 +465,6 @@ public class MainMenuDisplay extends UIComponent {
         if (starThreeShot && frameCountThree > shootThreeWait) {
             SetStarThreePosition();
             starThreeShot = false;
-        }
-
-        if (!starOneShot && effectsXOne >= 500) {
-            starOneShot = true;
-            frameCountOne = 0;
-            shootOneWait = (float) Math.random() * 800 + 800;
-        }
-
-        if (!starTwoShot && effectsXTwo >= 900) {
-            starTwoShot = true;
-            frameCountTwo = 0;
-            shootTwoWait = (float) Math.random() * 300 + 300;
-        }
-
-        if (!starThreeShot && effectsXThree >= 900) {
-            starThreeShot = true;
-            frameCountThree = 0;
-            shootThreeWait = (float) Math.random() * 500 + 500;
         }
     }
 
@@ -503,7 +486,7 @@ public class MainMenuDisplay extends UIComponent {
         float rand = (float) Math.random() * 1000 + 1000;
         float rand2 = (float) Math.random() * 1000 + 1000;
         effectsXTwo = 500 - rand;
-        effectsYTwo = rand2;//-35;
+        effectsYTwo = rand2;
 
         shootTwoSpeed = (float) Math.random() * 25 + 25;
 
@@ -527,6 +510,13 @@ public class MainMenuDisplay extends UIComponent {
         starThree.setPosition(effectsXThree, effectsYThree);
     }
 
+    private void RotateStars() {
+
+        if (starOneShot) {
+            RotateStarOne();
+        }
+    }
+
     private void RotateStarOne() {
 
         float rand = (float)(Math.random() * 10);
@@ -545,10 +535,25 @@ public class MainMenuDisplay extends UIComponent {
         shootingStarThree.rotateBy(rand * -1);
     }
 
+    private void MoveStars() {
+
+        if (!starOneShot) {
+            MoveStarOne();
+        }
+
+        if (!starTwoShot) {
+            MoveStarTwo();
+        }
+
+        if (!starThreeShot) {
+            MoveStarThree();
+        }
+    }
+
     private void MoveStarOne() {
 
         effectsXOne += shootOneSpeed;
-        effectsYOne = shootOneWait != 1 ? 300 : effectsYOne - shootOneSpeed;
+        effectsYOne = shootOneWait != 1 ? screenSize.height /3.5f : effectsYOne - shootOneSpeed;
 
         starOne.setPosition(effectsXOne, effectsYOne);
     }
@@ -556,7 +561,7 @@ public class MainMenuDisplay extends UIComponent {
     private void MoveStarTwo() {
 
         effectsXTwo += shootTwoSpeed;
-        effectsYTwo = ((int)shootTwoWait) % 2 == 0 ? 200 : effectsYTwo - shootTwoSpeed;
+        effectsYTwo = ((int)shootTwoWait) % 2 == 0 ? screenSize.height / 5f : effectsYTwo - shootTwoSpeed;
 
         starTwo.setPosition(effectsXTwo, effectsYTwo);
     }

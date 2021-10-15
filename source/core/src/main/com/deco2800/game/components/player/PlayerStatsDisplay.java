@@ -1,24 +1,33 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
-import com.deco2800.game.components.powerups.SpearPowerUpComponent;
+import com.deco2800.game.files.UserSettings;
 import com.deco2800.game.gameScore.gameScore;
+import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
+
+import java.awt.*;
 
 /**
  * A ui component for displaying player stats, e.g. health.
  */
 public class PlayerStatsDisplay extends UIComponent {
-  Table table;
-  Table tableTwo;
+
+  private Table table;
+  private Table tableTwo;
+
   private Image heartImage;
+  private Image healthBar;
+
   private Label healthLabel;
   private Label scoreLabel;
+
   public static boolean deadFlag = false;
   public static boolean lightningActive = false;
 
@@ -42,20 +51,32 @@ public class PlayerStatsDisplay extends UIComponent {
    * @see Table for positioning options
    */
   private void addActors() {
+
     table = new Table();
     table.top().left();
     table.setFillParent(true);
-    table.padTop(20f).padLeft(20f);
+
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    float windowHeight = UserSettings.get().fullscreen ? screenSize.height : UserSettings.getWindowHeight();
 
     tableTwo = new Table();
     tableTwo.top().left();
     tableTwo.setFillParent(true);
-    tableTwo.padTop(50f).padLeft(20f);
 
     // Health text
     health = entity.getComponent(CombatStatsComponent.class).getHealth();
-    CharSequence healthText = String.format("Health: %d", health);
-    healthLabel = new Label(healthText, skin, "large");
+
+    //int health = 100;
+    CharSequence healthText = String.format("%d", health);
+    healthLabel = new Label("HP:" + healthText, skin);
+
+    healthBar =  new Image(
+          ServiceLocator.getResourceService()
+                  .getAsset("images/healthBar.png", Texture.class));
+
+    Image healthBarBack = new Image(
+          ServiceLocator.getResourceService()
+                  .getAsset("images/healthBarBack.png", Texture.class));
 
     // Score Text
     long score = scoring.getCurrentScore();
@@ -63,11 +84,30 @@ public class PlayerStatsDisplay extends UIComponent {
     CharSequence scoreText = String.format("Score: %d",score);
     scoreLabel = new Label(scoreText,skin,"large");
 
-    table.add(healthLabel);
-    tableTwo.add(scoreLabel);
-    stage.addActor(table);
-    stage.addActor(tableTwo);
+    float healthBarScale = 0.5f;
+    float healthBarOffset = healthBarScale * 3;
+    float healthBarScreenRatio = 0.950f;
+    float healthLabelScreenRatio = 0.950f;
+    float scoreLabelScreenRatio = 0.945f - 0.04f;
 
+
+    table.add(healthLabel).left();
+    table.add(healthBarBack);
+    tableTwo.add(scoreLabel);
+
+    stage.addActor(healthBarBack);
+    healthBarBack.setPosition(20, windowHeight * healthBarScreenRatio);
+    healthBarBack.setScale(healthBarScale, healthBarScale);
+
+    stage.addActor(healthBar);
+    healthBar.setPosition(20 + healthBarOffset, windowHeight * healthBarScreenRatio + healthBarOffset);
+    healthBar.setScale(healthBarScale, healthBarScale);
+
+    healthLabel.setPosition(20 + healthBarOffset, windowHeight * healthLabelScreenRatio + healthBarOffset);
+    scoreLabel.setPosition(20 + healthBarOffset, windowHeight * scoreLabelScreenRatio + healthBarOffset);
+
+    stage.addActor(healthLabel);
+    stage.addActor(scoreLabel);
   }
 
   @Override
@@ -95,7 +135,8 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param health player health
    */
   public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("Health: %d", health);
+    CharSequence text = String.format("HP: " + health);
+    healthBar.setScale(health/100f * 0.5f, 0.5f);
     healthLabel.setText(text);
   }
 
