@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
-import java.util.Stack;
 
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.

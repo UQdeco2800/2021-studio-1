@@ -48,6 +48,7 @@ import com.deco2800.game.services.ServiceLocator;
 public class NPCFactory {
     private static final NPCConfigs configs =
             FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+    private static final String RUN_BACK = "run_back";
 
     /**
      * Creates a skeleton entity.
@@ -66,7 +67,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
 
         skeleton
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -115,7 +116,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        //animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        //animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
 
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -174,7 +175,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/fire_spirit.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
 
         fireSpirit

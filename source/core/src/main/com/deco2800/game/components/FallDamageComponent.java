@@ -2,10 +2,7 @@ package com.deco2800.game.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.physics.components.PhysicsMovementComponent;
-import com.deco2800.game.components.CombatStatsComponent;
+
 public class FallDamageComponent extends Component {
     Entity target;
     CombatStatsComponent attack;

@@ -75,12 +75,9 @@ public class SoundService {
         String filepath = iniFilePath;
 
         Hashtable<String, String> assigningTo = null;
-        BufferedReader config;
 
         // loads in sounds and their keys from the sound.ini file
-        try {
-            config = new BufferedReader(new FileReader(filepath));
-
+        try (BufferedReader config = new BufferedReader(new FileReader(filepath))){
             String l;
             while ((l = config.readLine()) != null) {
 
@@ -143,7 +140,6 @@ public class SoundService {
             logger.error("IOException while reading {}", filepath);
             isLoaded = false;
         }
-
 
     }
 
