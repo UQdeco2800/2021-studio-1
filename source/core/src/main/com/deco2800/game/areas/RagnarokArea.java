@@ -72,7 +72,8 @@ public class RagnarokArea extends GameArea {
             "images/tutorial/spearTutorial.png",
             "images/tutorial/spearObstacleTutorial.png",
             "images/tutorial/run.png",
-            "images/bifrost.png"
+            "images/bifrost.png",
+            "images/bfx.png"
     };
 
     //TODO: make Json,
@@ -87,6 +88,7 @@ public class RagnarokArea extends GameArea {
             "images/lightning-animation.atlas",
             "images/player-spear.atlas",
             "images/bifrost.atlas",
+            "images/bfx.atlas",
             "particles/particles.atlas"
     };
 
@@ -167,7 +169,6 @@ public class RagnarokArea extends GameArea {
         Entity spearObstacleTutorial = ObstacleFactory.createTutorialSpearObstacle();
         spawnEntityAt(spearObstacleTutorial, spearObstacleSpawn, true, false);
 
-
     }
 
     protected Entity spawnPlayer(int x, int y) {
@@ -193,8 +194,15 @@ public class RagnarokArea extends GameArea {
         GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);
 
+        spawnBifrost(x);
+    }
+
+    /*
+    * Spawns a biforst level transition
+    */
+    protected void spawnBifrost(int x) {
         Entity bifrost = ObstacleFactory.createBifrost();
-        GridPoint2 pos2 = new GridPoint2(x, 8);
+        GridPoint2 pos2 = new GridPoint2(x, 10);
         spawnEntityAt(bifrost, pos2, true, true);
     }
 
@@ -217,6 +225,12 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(wallOfDeath, leftPos, true, true);
         spawnEntityAt(sfx, leftPos2, true, true);
         spawnEntityAt(deathGiant, leftPos3, true, true);
+    }
+
+    protected void spawnBifrostFX(int x, int y) {
+        Entity bfx = NPCFactory.createBifrostFX(player);
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(bfx, pos, false, false);
     }
 
     protected void spawnLevelLoadTrigger(int x) {

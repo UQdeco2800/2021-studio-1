@@ -9,11 +9,10 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.components.npc.DeathGiantAnimationController;
-import com.deco2800.game.components.npc.BifrostAnimationController;
+import com.deco2800.game.components.npc.BFXAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ScreenFXAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.BifrostFXComponent;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -273,6 +272,23 @@ public class NPCFactory {
         screenFX.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
 
         return screenFX;
+    }
+
+    public static Entity createBifrostFX(Entity target) {
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset(
+                        "images/bfx.atlas", TextureAtlas.class));
+        animator.addAnimation("play", 0.06f, Animation.PlayMode.NORMAL);
+
+        Entity bfx = new Entity()
+                .addComponent(animator)
+                .addComponent(new BFXAnimationController());
+
+        bfx.getComponent(AnimationRenderComponent.class).scaleEntity();
+        bfx.setType(EntityTypes.OBSTACLE);
+        bfx.setScale(6f, 6f);
+        
+        return bfx;
     }
 
     public static Entity createDeathGiant(Entity target) {
