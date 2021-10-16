@@ -82,13 +82,13 @@ public class PlayerStatsDisplay extends UIComponent {
     long score = scoring.getCurrentScore();
 
     CharSequence scoreText = String.format("Score: %d",score);
-    scoreLabel = new Label(scoreText,skin,"large");
+    scoreLabel = new Label(scoreText,skin,"popUpFont");
 
     float healthBarScale = 0.5f;
-    float healthBarOffset = healthBarScale * 3;
+    float healthBarOffset = healthBarScale;
     float healthBarScreenRatio = 0.950f;
     float healthLabelScreenRatio = 0.950f;
-    float scoreLabelScreenRatio = 0.945f - 0.04f;
+    float scoreLabelScreenRatio = 0.915f;
 
 
     table.add(healthLabel).left();
@@ -103,7 +103,7 @@ public class PlayerStatsDisplay extends UIComponent {
     healthBar.setPosition(20 + healthBarOffset, windowHeight * healthBarScreenRatio + healthBarOffset);
     healthBar.setScale(healthBarScale, healthBarScale);
 
-    healthLabel.setPosition(20 + healthBarOffset, windowHeight * healthLabelScreenRatio + healthBarOffset);
+    healthLabel.setPosition(25 + healthBarOffset, windowHeight * healthLabelScreenRatio + healthBarOffset + 3);
     scoreLabel.setPosition(20 + healthBarOffset, windowHeight * scoreLabelScreenRatio + healthBarOffset);
 
     stage.addActor(healthLabel);
@@ -141,7 +141,7 @@ public class PlayerStatsDisplay extends UIComponent {
   }
 
   public void updatePlayerScoreUI(long score){
-    CharSequence text = String.format("Score %d",score);
+    CharSequence text = String.format("Score: %d",score);
     scoreLabel.setText(text);
 
   }
