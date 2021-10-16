@@ -30,14 +30,6 @@ public class GameAreaDisplay extends UIComponent {
     this.gameAreaName = gameAreaName;
   }
 
-  /*public void setPlayer(Entity player) {
-    this.player = player;
-  }*/
-
-  //public void setEntityManager(Entity)
-
-  //ServiceLocator.getEntityService()
-
   @Override
   public void create() {
     super.create();
@@ -47,8 +39,6 @@ public class GameAreaDisplay extends UIComponent {
   private void addActors() {
     title = new Label(this.gameAreaName, skin, "large");
     debug = new Label("", skin, "small");
-
-    //stage.addActor(title);
 
     stage.addActor(debug); //remove to remove this if don't want to debug
   }
@@ -101,14 +91,8 @@ public class GameAreaDisplay extends UIComponent {
 
       if (e.getComponent(AITaskComponent.class) != null) {
         debugString.append("AI Entity :: ");
-        debugString.append(String.format("id: %d, x: %f, y: %f\n", e.getId(),
+        debugString.append(String.format("id: %d, x: %f, y: %f%n", e.getId(),
                 e.getCenterPosition().x, e.getCenterPosition().y));
-
-        /*Task currentTask = e.getComponent(AITaskComponent.class).getCurrentTask();
-        //debugString.append("\n  Current Task Status : " + currentTask.toString());
-        debugString.append("\n");*/
-
-        // ^ causes some bugs if task is undefined, can completed break game (teehee)
 
         sortedArray.removeValue(e, true);
       }
@@ -133,22 +117,6 @@ public class GameAreaDisplay extends UIComponent {
 
       }
     }
-
-
-    /*for (Entity e : ServiceLocator.getEntityService().getEntityArray()) {
-
-      debugString.append(String.format(ID_FORMAT, e.getId(),
-              e.getCenterPosition().x, e.getCenterPosition().y));
-      debugString.append("\n");
-
-    }*/
-
-    /*if (player != null) {
-
-      Vector2 playerPos = player.getPosition();
-
-      debugString.append(String.format("Player\nx: %f, y: %f", playerPos.x, playerPos.y));
-    }*/
 
     return debugString.toString();
 

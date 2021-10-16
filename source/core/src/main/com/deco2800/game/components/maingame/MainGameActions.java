@@ -1,11 +1,9 @@
 package com.deco2800.game.components.maingame;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.audio.Music;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIPop;
 import org.slf4j.Logger;

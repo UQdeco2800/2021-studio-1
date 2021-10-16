@@ -27,7 +27,7 @@ public abstract class GameArea implements Disposable {
   /** Create the game area in the world. */
   public void create() {
     create(0);
-  };
+  }
 
 
   public abstract void create(int xOffset);
