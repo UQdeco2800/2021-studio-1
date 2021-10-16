@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.FireballComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.npc.BifrostAnimationController;
 import com.deco2800.game.components.npc.FireballAnimationController;
@@ -35,6 +36,7 @@ public class ProjectileFactory {
 
     public static Entity fireBall() {
         Entity fireBall = createBaseProjectile();
+        fireBall.addComponent(new FireballComponent());
         fireBall.getComponent(PhysicsMovementComponent.class);
         fireBall.setType(EntityTypes.FIREBALL);
         return fireBall;

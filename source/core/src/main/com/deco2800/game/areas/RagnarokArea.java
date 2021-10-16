@@ -1,8 +1,6 @@
 package com.deco2800.game.areas;
 
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.GroupDisposeComponent;
@@ -182,20 +180,7 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
-     * Spawn an entity which will play a particle explosion when on collision with the player.
-     *
-     * @param x terrain x coordinate of the entity
-     * @param y terrain y coordinate of the entity
-     */
-    protected void spawnParticleSpread(int x, int y) {
-        Entity particleEntity = ObstacleFactory.createWallParticles(
-                "particles/rainbow_spread_2", "particles/particles.atlas");
-        GridPoint2 pos = new GridPoint2(x, y);
-        spawnEntityAt(particleEntity, pos, false, true);
-    }
-
-    /**
-     * Spawn a background image starting at x.
+     * Spawn a background image starting at x and a bifrost split.
      *
      * @param x     starting coordinate
      * @param width width of the image using scaleWidth(width)
@@ -208,7 +193,8 @@ public class RagnarokArea extends GameArea {
         Entity background = ObstacleFactory.createBackground(world, width);
         GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);
-        Entity bifrost = NPCFactory.createBifrost();
+
+        Entity bifrost = ObstacleFactory.createBifrost();
         GridPoint2 pos2 = new GridPoint2(x, 8);
         spawnEntityAt(bifrost, pos2, true, true);
     }

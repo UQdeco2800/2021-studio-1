@@ -4,22 +4,22 @@ $_height 10
 $_world earth_1
 
 $#.........F
-$#.PPP.....F
-$#.PP......F
-$#.P.......F
+$#...P.....F
+$#.........F
+$#.........F
 $#.......P.F
-$#.PPP...F.F
+$#...P...F.F
 $#...P..RF.F
-$#.PPP.FFF.F
+$#...P.FFF.F
 $#.....P...F
-$#.PPP.P..SF
-$#.P.P.P...F
-$#.P.P.P...F
+$#...P.P..SF
+$#...P.P...F
+$#...P.P...F
 $#.....P...F
-$#....RFFF.F
+$#....RF...F
 $#..........
 
-$@player set [2,8]
+$@player set [2,1]
 
 $-spawn [11,5] (skeleton)
 $-spawn [8,5] (skeleton)

@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.badlogic.gdx.Gdx.app;
-import java.util.Stack;
 
 /**
  * Entry point of the non-platform-specific game logic. Controls which screen is currently running.
@@ -25,7 +24,6 @@ public class GdxGame extends Game {
   public boolean paused = false;
   public boolean scoreShown = false;
   public boolean over = false;
-  public Stack<ScreenType> beginScreenStack = new Stack();
 
     @Override
   public void create() {
@@ -34,7 +32,6 @@ public class GdxGame extends Game {
 
     // Sets background to light yellow
     Gdx.gl.glClearColor(253f/255f, 153/255f, 47/255f, 1);
-    beginScreenStack.add(ScreenType.STORY);
     setScreen(ScreenType.STORY);
   }
 

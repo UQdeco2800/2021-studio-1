@@ -1,11 +1,9 @@
 package com.deco2800.game.components.maingame;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.audio.Music;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIPop;
 import org.slf4j.Logger;
@@ -57,16 +55,9 @@ public class MainGameActions extends Component {
      * Pauses the game -- the trigger function for the event.
      */
     public void onPause() {
-
-        Sound pauseSound;
-        //Music walkSound = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
-        //walkSound.setLooping(true);
-        //walkSound.setVolume(0.8f);
-
         if (game.paused) {
             ServiceLocator.getTimeSource().setTimeScale(1f);
             popUp.dispose();
-            //walkSound.play();
         } else {
             ServiceLocator.getTimeSource().setTimeScale(0f);
 
@@ -77,11 +68,8 @@ public class MainGameActions extends Component {
             popUp = new Entity();
             popUp.addComponent(new UIPop("Pause Menu", entity));
             ServiceLocator.getEntityService().register(popUp);
-            //pause sound
-            //walkSound.pause();
         }
         game.paused = !game.paused;
-        //pauseSound.play();
     }
 
 

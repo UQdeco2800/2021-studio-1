@@ -2,10 +2,7 @@ package com.deco2800.game.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.services.ServiceLocator;
-import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.physics.components.PhysicsMovementComponent;
-import com.deco2800.game.components.CombatStatsComponent;
+
 public class FallDamageComponent extends Component {
     Entity target;
     CombatStatsComponent attack;
@@ -47,10 +44,8 @@ public class FallDamageComponent extends Component {
         //if the y_position is less than -1, than set the health of the target to 0.
         if (yPos < -1) {
             CombatStatsComponent targetStats = target.getComponent(CombatStatsComponent.class);
-            if (targetStats != null) {
-                if (!targetStats.isInvincible()) {
-                    targetStats.setHealth(0);
-                }
+            if (targetStats != null && !targetStats.isInvincible()) {//satisfy SonarCloud
+                targetStats.setHealth(0);
             }
         }
 

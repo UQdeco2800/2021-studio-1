@@ -26,7 +26,6 @@ import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 /**
@@ -45,10 +44,12 @@ import com.deco2800.game.services.ServiceLocator;
 public class NPCFactory {
     private static final NPCConfigs configs =
             FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+    private static final String RUN_BACK = "run_back";
 
     /**
      * Creates a skeleton entity.
      *
+     * @param target entity to chase
      * @return skeleton entity
      */
     public static Entity createSkeleton(Entity target) {
@@ -63,7 +64,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
 
         skeleton
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -78,16 +79,16 @@ public class NPCFactory {
         // NEED TO CHANGE COLLISION BOXES -> RUN THROUGH ENEMIES
         //set body collision box
         skeleton.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.6f,
-            0.7f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
+                0.7f), PhysicsComponent.AlignX.RIGHT, PhysicsComponent.AlignY.BOTTOM);
         //create head circle collision box
         CircleShape head = new CircleShape();
         head.setRadius(0.2f);
         Vector2 circleOffset = new Vector2(skeleton.getCenterPosition().x + 0.15f,
-            skeleton.getCenterPosition().y + 0.3f);
+                skeleton.getCenterPosition().y + 0.3f);
         head.setPosition(circleOffset);
-        skeleton.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+        skeleton.getComponent(PhysicsComponent.class).getBody().createFixture(head, 1.0f);
 
-        for(Fixture fixture : skeleton.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
+        for (Fixture fixture : skeleton.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
             fixture.setSensor(true);
         }
 
@@ -115,7 +116,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
 
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -138,7 +139,7 @@ public class NPCFactory {
         Vector2 circleOffset = new Vector2(wolf.getCenterPosition().x - 0.4f,
                 wolf.getCenterPosition().y + 0.2f);
         head.setPosition(circleOffset);
-        wolf.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+        wolf.getComponent(PhysicsComponent.class).getBody().createFixture(head, 1.0f);
 
         //create neck circle collision box
         CircleShape neck = new CircleShape();
@@ -146,9 +147,9 @@ public class NPCFactory {
         Vector2 neckOffset = new Vector2(wolf.getCenterPosition().x - 0.2f,
                 wolf.getCenterPosition().y + 0.15f);
         neck.setPosition(neckOffset);
-        wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck,1.0f);
+        wolf.getComponent(PhysicsComponent.class).getBody().createFixture(neck, 1.0f);
 
-        for(Fixture fixture : wolf.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
+        for (Fixture fixture : wolf.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
             fixture.setSensor(true);
         }
 
@@ -173,7 +174,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/fire_spirit.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
 
         fireSpirit
@@ -195,9 +196,9 @@ public class NPCFactory {
         Vector2 circleOffset = new Vector2(fireSpirit.getCenterPosition().x + 0.05f,
                 fireSpirit.getCenterPosition().y + 0.35f);
         head.setPosition(circleOffset);
-        fireSpirit.getComponent(PhysicsComponent.class).getBody().createFixture(head,1.0f);
+        fireSpirit.getComponent(PhysicsComponent.class).getBody().createFixture(head, 1.0f);
 
-        for(Fixture fixture : fireSpirit.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
+        for (Fixture fixture : fireSpirit.getComponent(PhysicsComponent.class).getBody().getFixtureList()) {
             fixture.setSensor(true);
         }
 
@@ -229,7 +230,7 @@ public class NPCFactory {
                                 .getAsset("images/wall.atlas", TextureAtlas.class));
         animator.addAnimation("walk", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("walkAngry", 0.1f, Animation.PlayMode.LOOP);
-        
+
         wallOfDeath
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                 .addComponent(animator)
@@ -238,7 +239,7 @@ public class NPCFactory {
 
         wallOfDeath.getComponent(AnimationRenderComponent.class).scaleEntity();
         wallOfDeath.setScale(25f, 12f);
-        wallOfDeath.getComponent(HitboxComponent.class).setAsBox(new Vector2(25f,100f));
+        wallOfDeath.getComponent(HitboxComponent.class).setAsBox(new Vector2(25f, 100f));
         wallOfDeath.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
         wallOfDeath.setType(EntityTypes.WALL);
 
@@ -345,29 +346,6 @@ public class NPCFactory {
         wall.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
         wall.setType(EntityTypes.ENEMY);
         return wall;
-    }
-
-    /**
-     * Creates a bifrost entity to sit on the transition between levels.
-     * On colison with player spawns another particle effect entity.
-     *
-     * @return bifrost entity.
-     */
-    public static Entity createBifrost() {
-        Entity bifrost = new Entity();
-        AnimationRenderComponent animator =
-                new AnimationRenderComponent(
-                        ServiceLocator.getResourceService().getAsset("images/bifrost.atlas", TextureAtlas.class));
-        animator.addAnimation("burn", 0.06f, Animation.PlayMode.LOOP);
-        bifrost.addComponent(animator);
-        bifrost.addComponent(new BifrostAnimationController());
-        bifrost.addComponent(new PhysicsComponent());
-        bifrost.addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
-        bifrost.addComponent(new BifrostFXComponent());
-        bifrost.getComponent(AnimationRenderComponent.class).scaleEntity();
-        bifrost.setType(EntityTypes.OBSTACLE);
-        bifrost.setScale(1f, 16f);
-        return bifrost;
     }
 
     private NPCFactory() {

@@ -13,13 +13,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.deco2800.game.areas.terrain.TerrainComponent.TerrainOrientation;
 import com.deco2800.game.components.CameraComponent;
-import com.deco2800.game.utils.math.RandomUtils;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 
 /** Factory for creating game terrains. */
 public class TerrainFactory {
-  private static final GridPoint2 MAP_SIZE = new GridPoint2(60, 60);
+  private static final GridPoint2 MAP_SIZE = new GridPoint2(45, 45);
 
   private final OrthographicCamera camera;
   private final CameraComponent cameraComponent;
@@ -62,22 +61,18 @@ public class TerrainFactory {
     ResourceService resourceService = ServiceLocator.getResourceService();
     if (terrainType == TerrainType.RAGNAROK_MAIN) {
       String bgPath = "images/Backgrounds/asgard_bg.png";
-      TextureRegion orthoGrass =
+      TextureRegion bg =
               new TextureRegion(resourceService.getAsset(bgPath, Texture.class));
-      TextureRegion orthoTuft =
-              new TextureRegion(resourceService.getAsset(bgPath, Texture.class));
-      TextureRegion orthoRocks =
-              new TextureRegion(resourceService.getAsset(bgPath, Texture.class));
-      return createRagnarockTerrain(0.5f, orthoGrass, orthoTuft, orthoRocks);
+      return createRagnarockTerrain(0.5f, bg);
     }
     return null;
   }
 
   private TerrainComponent createRagnarockTerrain(
-      float tileWorldSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
-    GridPoint2 tilePixelSize = new GridPoint2(grass.getRegionWidth(), grass.getRegionHeight());
-    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, grass, grassTuft, rocks);
-    TiledMapRenderer renderer = createRenderer(tiledMap, 60*tileWorldSize / tilePixelSize.x);
+      float tileWorldSize, TextureRegion bg) {
+    GridPoint2 tilePixelSize = new GridPoint2(bg.getRegionWidth(), bg.getRegionHeight());
+    TiledMap tiledMap = createForestDemoTiles(tilePixelSize, bg);
+    TiledMapRenderer renderer = createRenderer(tiledMap, 45*tileWorldSize / tilePixelSize.x);
     return new TerrainComponent(camera, tiledMap, renderer, orientation, tileWorldSize);
   }
 
@@ -95,15 +90,13 @@ public class TerrainFactory {
   }
 
   private TiledMap createForestDemoTiles(
-      GridPoint2 tileSize, TextureRegion grass, TextureRegion grassTuft, TextureRegion rocks) {
+      GridPoint2 tileSize, TextureRegion bg) {
     TiledMap tiledMap = new TiledMap();
-    TerrainTile grassTile = new TerrainTile(grass);
-    TerrainTile grassTuftTile = new TerrainTile(grassTuft);
-    TerrainTile rockTile = new TerrainTile(rocks);
+    TerrainTile bgTile = new TerrainTile(bg);
     TiledMapTileLayer layer = new TiledMapTileLayer(MAP_SIZE.x, MAP_SIZE.y, tileSize.x, tileSize.y);
 
     // Create base grass
-    fillTiles(layer, MAP_SIZE, grassTile);
+    fillTiles(layer, MAP_SIZE, bgTile);
 
     tiledMap.getLayers().add(layer);
     return tiledMap;
@@ -112,7 +105,7 @@ public class TerrainFactory {
   private static void fillTiles(TiledMapTileLayer layer, GridPoint2 mapSize, TerrainTile tile) {
     Cell cell = new Cell();
     cell.setTile(tile);
-    layer.setCell(0, mapSize.x/60 - 1, cell);
+    layer.setCell(0, mapSize.x/45 - 1, cell);
   }
 
   /**

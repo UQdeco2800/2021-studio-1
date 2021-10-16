@@ -18,26 +18,25 @@ $#......FF.F
 $#.......FFF
 $#........FF
 $#.........F
+$#.........F
+$#.........F
+$#.........F
+$#.........F
 $#........SF
+$#.........F
+$#.........F
+$#.........F
+$#.........F
 $#........SF
-$#.........F
-$#.........F
-$#.........F
-$#.........F
-$#.........F
-$#.........F
-$#.........F
-$#.........F
 
-$@player set [2,1]
+$@player set [2,8]
 
-$-spawn [13,2] (skeleton)
-$-spawn [22,1] (wolf)
 $-spawn [10,1] (fireSpirit)
+$-spawn [13,2] (skeleton)
 $-spawn [11,4] (skeleton)
 $-spawn [9,1] (fireSpirit)
 
-$-spawn [4,2] (spear)
 $-spawn [11,1] (lightning)
+$-spawn [4,2] (spear)
 
 $-spawn [20,5] (levelTrigger)
