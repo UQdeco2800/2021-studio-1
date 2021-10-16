@@ -1,12 +1,6 @@
 package com.deco2800.game.components;
 
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.entities.EntityService;
-import com.deco2800.game.physics.BodyUserData;
-import com.deco2800.game.physics.PhysicsLayer;
-import com.deco2800.game.physics.components.HitboxComponent;
-import com.deco2800.game.services.ServiceLocator;
 
 /**
  * When this entity is disposed of, it disposes of a list of other entities.

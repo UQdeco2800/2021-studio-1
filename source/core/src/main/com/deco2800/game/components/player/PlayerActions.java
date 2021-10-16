@@ -27,11 +27,11 @@ public class PlayerActions extends Component {
     private SpeedTypes playerSpeed;
     private long walkTime;
     private long gameTime;
-    private Vector2 maxSpeed = new Vector2(8f, 1f); // Metres
+    private final Vector2 maxSpeed = new Vector2(8f, 1f); // Metres
     // per second
-    private Vector2 mediumSpeed = new Vector2(6f, 1f);
+    private final Vector2 mediumSpeed = new Vector2(6f, 1f);
     // Metres per second
-    private Vector2 walkSpeed = new Vector2(4f, 1f);
+    private final Vector2 walkSpeed = new Vector2(4f, 1f);
     // Metres per second
 
     private PhysicsComponent physicsComponent;
@@ -40,7 +40,7 @@ public class PlayerActions extends Component {
 
     private Vector2 runDirection = Vector2.Zero.cpy();
     private Vector2 previousDirection = Vector2.Zero.cpy();
-    private static boolean moving = false;
+    private boolean moving = false;
     private boolean jumping = false;
     private boolean falling = false;
 
@@ -56,7 +56,6 @@ public class PlayerActions extends Component {
         entity.getEvents().addListener("jump", this::jump);
         entity.getEvents().addListener("collisionStart", this::obtainPowerUp);
         entity.getEvents().addListener("usePowerUp", this::usePowerUp);
-        entity.getEvents().addListener("useSpearAttack", this::useSpearAttack);
     }
 
     @Override
@@ -664,40 +663,48 @@ public class PlayerActions extends Component {
     public void useSpearAttack() {
         if (entity.getComponent(ShieldPowerUpComponent.class).getActive()
                 && entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
-            if (isFalling()) {
-                if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-                    entity.getComponent(AnimationRenderComponent.class)
-                            .startAnimation("throwing-spear-with-shield-while-jumping-right");
-                } else {
-                    entity.getComponent(AnimationRenderComponent.class)
-                            .startAnimation("throwing-spear-with-shield-while-jumping-left");
-                }
-            } else {
-                if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-                    entity.getComponent(AnimationRenderComponent.class)
-                            .startAnimation("throwing-spear-with-shield-right");
-                } else {
-                    entity.getComponent(AnimationRenderComponent.class)
-                            .startAnimation("throwing-spear-with-shield-left");
-                }
-            }
+            useSpearAttackWithShield();
         } else if (entity.getComponent(SpearPowerUpComponent.class).getEnabled()) {
-            if (isFalling()) {
-                if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-                    entity.getComponent(AnimationRenderComponent.class)
-                            .startAnimation("throwing-spear-while-jumping-right");
-                } else {
-                    entity.getComponent(AnimationRenderComponent.class)
-                            .startAnimation("throwing-spear-while-jumping-left");
-                }
+            useSpearAttackWithoutShield();
+        }
+    }
+
+    private void useSpearAttackWithShield() {
+        if (isFalling()) {
+            if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+                entity.getComponent(AnimationRenderComponent.class)
+                        .startAnimation("throwing-spear-with-shield-while-jumping-right");
             } else {
-                if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
-                    entity.getComponent(AnimationRenderComponent.class)
-                            .startAnimation("throwing-spear-right");
-                } else {
-                    entity.getComponent(AnimationRenderComponent.class)
-                            .startAnimation("throwing-spear-left");
-                }
+                entity.getComponent(AnimationRenderComponent.class)
+                        .startAnimation("throwing-spear-with-shield-while-jumping-left");
+            }
+        } else {
+            if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+                entity.getComponent(AnimationRenderComponent.class)
+                        .startAnimation("throwing-spear-with-shield-right");
+            } else {
+                entity.getComponent(AnimationRenderComponent.class)
+                        .startAnimation("throwing-spear-with-shield-left");
+            }
+        }
+    }
+
+    private void useSpearAttackWithoutShield() {
+        if (isFalling()) {
+            if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+                entity.getComponent(AnimationRenderComponent.class)
+                        .startAnimation("throwing-spear-while-jumping-right");
+            } else {
+                entity.getComponent(AnimationRenderComponent.class)
+                        .startAnimation("throwing-spear-while-jumping-left");
+            }
+        } else {
+            if (this.previousDirection.hasSameDirection(Vector2Utils.RIGHT)) {
+                entity.getComponent(AnimationRenderComponent.class)
+                        .startAnimation("throwing-spear-right");
+            } else {
+                entity.getComponent(AnimationRenderComponent.class)
+                        .startAnimation("throwing-spear-left");
             }
         }
     }

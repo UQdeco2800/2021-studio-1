@@ -2,11 +2,8 @@ package com.deco2800.game.areas;
 
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.files.RagLoader;
-import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
 
 public class AreaManager extends RagnarokArea {
     private static final Logger logger = LoggerFactory.getLogger(AreaManager.class);
@@ -216,6 +213,9 @@ public class AreaManager extends RagnarokArea {
                 break;
             case "tutorial":
                 area.spawnTutorial(gx, gy);
+                break;
+            case "bifrostFX":
+                area.spawnBifrostFX(gx,gy);
                 break;
             default:
                 logger.error("spawn() called in AreaManger without valid spawnType");
