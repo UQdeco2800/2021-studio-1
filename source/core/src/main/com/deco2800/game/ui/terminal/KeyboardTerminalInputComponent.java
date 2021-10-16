@@ -51,13 +51,8 @@ public class KeyboardTerminalInputComponent extends InputComponent {
     }
 
     if(!terminal.isOpen()) {
-      if (keycode == Input.Keys.P) {
+      if (keycode == Input.Keys.P || keycode == Input.Keys.ESCAPE) {
         entity.getEvents().trigger("Pause Menu");
-        return true;
-      }
-
-      if (keycode == Input.Keys.O) {
-        entity.getEvents().trigger("Game Over");
         return true;
       }
 
