@@ -7,6 +7,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIPop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.audio.Music;
 
 /**
  * This class listens to events relevant to the Main Menu Screen and does something when one of the

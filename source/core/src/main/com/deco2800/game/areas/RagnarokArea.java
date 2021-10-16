@@ -16,6 +16,9 @@ import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.VariableSpeedComponent;
 import com.deco2800.game.components.FallDamageComponent;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.MathUtils;
+
 
 import java.util.function.Function;
 
