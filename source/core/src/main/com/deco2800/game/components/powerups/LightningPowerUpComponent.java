@@ -63,6 +63,7 @@ public class LightningPowerUpComponent extends PowerUpComponent {
             powerUp.getComponent(ColliderComponent.class).setSensor(true);
             powerUp.setScale(20f, 15f);
             powerUp.getComponent(AnimationRenderComponent.class).startAnimation("float");
+            ServiceLocator.getSoundService().playSound("lightning");
 
             // If the enemy is a wolf or skeleton within 8 metres, dispose
             for (Entity enemy : ServiceLocator.getEntityService().getEntityArray()) {
@@ -71,8 +72,11 @@ public class LightningPowerUpComponent extends PowerUpComponent {
                         enemy.getType() == EntityTypes.FIRESPIRIT) &&
                         (enemy.getCenterPosition().x - entity.getCenterPosition().x <= 15f)) {
                     enemy.flagDelete();
+
+
                 }
             }
+
         }
     }
 
