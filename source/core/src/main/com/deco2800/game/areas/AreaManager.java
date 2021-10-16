@@ -214,6 +214,9 @@ public class AreaManager extends RagnarokArea {
             case "tutorial":
                 area.spawnTutorial(gx, gy);
                 break;
+            case "bifrostFX":
+                area.spawnBifrostFX(gx,gy);
+                break;
             default:
                 logger.error("spawn() called in AreaManger without valid spawnType");
         }

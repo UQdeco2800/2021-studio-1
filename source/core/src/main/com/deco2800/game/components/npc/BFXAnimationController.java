@@ -1,20 +1,20 @@
 package com.deco2800.game.components.npc;
 
 import com.deco2800.game.components.Component;
-import com.deco2800.game.rendering.BifrostAnimationRenderComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 
 /**
  * This class listens to events relevant to a ghost entity's state and plays the animation when one
  * of the events is triggered.
  */
-public class BifrostAnimationController extends Component {
-  BifrostAnimationRenderComponent animator;
+public class BFXAnimationController extends Component {
+  AnimationRenderComponent animator;
 
   @Override
   public void create() {
     super.create();
-    animator = this.entity.getComponent(BifrostAnimationRenderComponent.class);
-    entity.getEvents().addListener("burn", this::animateBurn);
+    animator = this.entity.getComponent(AnimationRenderComponent.class);
+    entity.getEvents().addListener("play", this::animateBurn);
     animateBurn();
 
   }
@@ -23,6 +23,6 @@ public class BifrostAnimationController extends Component {
    * Starts the "walk" animation
    */
   void animateBurn() {
-    animator.startAnimation("burn");
+    animator.startAnimation("play");
   }
 }
