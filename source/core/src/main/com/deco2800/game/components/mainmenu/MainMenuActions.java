@@ -18,8 +18,8 @@ public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
   private GdxGame game;
   private Entity mainMenuPop;
-  private boolean muted = false;
   private Music music;
+  private boolean muted = false;
   private static final String MAIN_MUSIC = "sounds/main.mp3";
 
   public MainMenuActions(GdxGame game) {
@@ -35,12 +35,10 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("Help Screen", this::onHelp);
     entity.getEvents().addListener("Leaderboard", this::onLeaderBoard);
     entity.getEvents().addListener("mute", this::onMute);
-    music = ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class);
-    music.setLooping(true);
-    playMusic();
   }
 
     private void playMusic() {
+      music = ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class);
       music.setVolume(0.7f);
       music.play();
       logger.info(music.isPlaying() + "music playing");
@@ -120,12 +118,13 @@ public class MainMenuActions extends Component {
     */
   private void onMute() {
     logger.info("muting game");
+
+    muted = !muted;
     if (muted) {
-        playMusic();
-        muted = false;
-      } else {
-        stopMusic();
-        muted = true;
+        ServiceLocator.getSoundService().setMusicVolume(0f);
+    } else {
+        ServiceLocator.getSoundService().setMusicVolume(1f);
     }
-  }
+
+    }
 }

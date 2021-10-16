@@ -1,22 +1,29 @@
 package com.deco2800.game.entities.factories;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
+import com.deco2800.game.components.BifrostFXComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.npc.BifrostAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.PhysicsUtils;
 import com.deco2800.game.physics.components.ColliderComponent;
 import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.physics.components.HitboxComponent;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.BackgroundRenderComponent;
+import com.deco2800.game.rendering.ParticleEffectRenderComponent;
 import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.components.LevelLoadTriggerComponent;
-import com.deco2800.game.utils.math.Vector2Utils;
+import com.deco2800.game.services.ServiceLocator;
 
 /**
  * Factory to create obstacle entities.
@@ -28,10 +35,10 @@ public class ObstacleFactory {
     /**
      * Create and return a background entity having only BackgroundRenderComponent.
      *
-     * @param world width of the image using scaleWidth(width)
-     * @param width world type, must match the first word of a .png file in
-     *              assets/images/Backgrounds/'world'_bg.png, any information after an underscore
-     *              in world is ignored i.e. asgard and asgard_3 are both the same.
+     * @param world the world type; if the first word before an underscore is not  one of 'asgard',
+     *              'alfheim', 'earth', 'jotunheimr', or 'hel', will default to 'asgard'. Can be
+     *              null.
+     * @param width width of the image (as given by the terrain coordinate system)
      * @return background entity
      */
     public static Entity createBackground(String world, int width) {
@@ -39,13 +46,67 @@ public class ObstacleFactory {
         if (world == null) {
             background.addComponent(new BackgroundRenderComponent("images/Backgrounds/black_back" +
                     ".png"));
-        } else {
-            String specificWorld = world.split("_", 2)[0];
-            background.addComponent(new BackgroundRenderComponent("images/Backgrounds/" + specificWorld +
-                    "_bg.png"));
+        } else { // Choose correct background file. When there is more than one, choose randomly.
+            String filename;
+            switch (world.split("_", 2)[0]) {
+                case "alfheim":
+                    filename = MathUtils.random(1) == 0
+                            ? "Background Alfheim Day" : "Background Alfheim";
+                    break;
+                case "earth":
+                    filename = MathUtils.random(1) == 0
+                            ? "Background Earth Day" : "Background Earth";
+                    break;
+                case "jotunheimr":
+                    filename = MathUtils.random(1) == 0
+                            ? "Background Jotunheim Day" : "Background Jotunheim";
+                    break;
+                case "hel":
+                    filename = "Background Hel";
+                    break;
+
+                default: // Either is "asgard" or unrecognised.
+                    filename = "asgard_bg";
+            }
+            background.addComponent(new BackgroundRenderComponent("images/Backgrounds/" + filename +
+                    ".png"));
         }
-        background.scaleWidth(width);
+        // This 1.5x multiplier ensures 1 'width' value == width of 1 terrain block.
+        background.scaleWidth((float) (width * (1.5)));
         return background;
+    }
+
+    /**
+     * Creates a bifrost entity to sit on the transition between levels.
+     * <p>
+     * On colison with player spawns another particle effect entity.
+     *
+     * @return bifrost entity.
+     */
+    public static Entity createBifrost() {
+        // Resource service does not deal with File Handles, so get manually.
+        FileHandle effectData = Gdx.files.internal("particles/rainbow_spread_2");
+        TextureAtlas particleImage = ServiceLocator.getResourceService()
+                .getAsset("particles/particles.atlas", TextureAtlas.class);
+
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset(
+                        "images/bifrost.atlas", TextureAtlas.class));
+        animator.addAnimation("burn", 0.06f, Animation.PlayMode.LOOP);
+
+        Entity bifrost = new Entity()
+                .addComponent(animator)
+                .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
+                .addComponent(new BifrostAnimationController())
+                .addComponent(new PhysicsComponent())
+                .addComponent(new BifrostFXComponent())
+                .addComponent(new ParticleEffectRenderComponent(effectData, particleImage,
+                        PhysicsLayer.PLAYER));
+
+        bifrost.getComponent(AnimationRenderComponent.class).scaleEntity();
+        bifrost.setType(EntityTypes.OBSTACLE);
+        bifrost.setScale(1f, 16f);
+        return bifrost;
     }
 
     /**
@@ -95,7 +156,7 @@ public class ObstacleFactory {
 
         levelLoadTrigger.addComponent(new PhysicsComponent());
         levelLoadTrigger.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
-        Vector2 size = new Vector2(1, 20);
+        Vector2 size = new Vector2(1, 40);
         levelLoadTrigger.addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE));
         levelLoadTrigger.getComponent(HitboxComponent.class).setAsBox(size);
         levelLoadTrigger.addComponent(new LevelLoadTriggerComponent());
@@ -185,6 +246,7 @@ public class ObstacleFactory {
         Entity floor = createFloorNoCollider(world)
                 .addComponent(new PhysicsComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE));
+        floor.setType(EntityTypes.OBSTACLE);
         floor.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         return floor;
     }
@@ -212,7 +274,7 @@ public class ObstacleFactory {
         }
         floor.getComponent(TextureRenderComponent.class).scaleEntity();
         floor.scaleHeight(1.5f);
-        floor.setType(EntityTypes.OBSTACLE);
+
         return floor;
     }
 
@@ -241,7 +303,7 @@ public class ObstacleFactory {
         collider.setScale(scale);
         collider.getComponent(ColliderComponent.class).setAsBoxAligned(size,
                 PhysicsComponent.AlignX.LEFT, PhysicsComponent.AlignY.BOTTOM);
-        collider.setType(EntityTypes.OBSTACLE);
+        collider.setType(EntityTypes.OBSTACLE_COLLIDER);
         return collider;
     }
 
@@ -284,6 +346,22 @@ public class ObstacleFactory {
         TutorialShield.getComponent(TextureRenderComponent.class).scaleEntity();
         TutorialShield.scaleHeight(3f);
         return TutorialShield;
+    }
+
+    public static Entity createTutorialSpearObstacle() {
+        Entity TutorialSpearObstacle = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/spearObstacleTutorial.png"));
+        TutorialSpearObstacle.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialSpearObstacle.scaleHeight(3f);
+        return TutorialSpearObstacle;
+    }
+
+    public static Entity createTutorialRun() {
+        Entity TutorialRun = new Entity()
+                .addComponent(new TextureRenderComponent("images/tutorial/run.png"));
+        TutorialRun.getComponent(TextureRenderComponent.class).scaleEntity();
+        TutorialRun.scaleHeight(5f);
+        return TutorialRun;
     }
 
 

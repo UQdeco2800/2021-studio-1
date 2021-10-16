@@ -27,6 +27,11 @@ public class RagnarokArea extends GameArea {
 
     private static final float WALL_HEIGHT = 0.1f;
     private final String name; //initialise in the loader
+    private static final String TOWN_MUSIC = "sounds/town.mp3";
+    private static final String MAIN_MUSIC = "sounds/main.mp3";
+    private static final String RAIDER_MUSIC = "sounds/raider.mp3";
+    private static final String FIRE_MUSIC = "sounds/fire.mp3";
+    private static final String WALK_MUSIC = "sounds/walk.mp3";
 
     protected Entity player;
 
@@ -63,9 +68,19 @@ public class RagnarokArea extends GameArea {
             "images/blue_bck.png",
             "images/Backgrounds/black_back.png",
             "images/Backgrounds/asgard_bg.png",
+            "images/Backgrounds/Background Alfheim.png",
+            "images/Backgrounds/Background Alfheim Day.png",
+            "images/Backgrounds/Background Earth.png",
+            "images/Backgrounds/Background Earth Day.png",
+            "images/Backgrounds/Background Jotunheim.png",
+            "images/Backgrounds/Background Jotunheim Day.png",
+            "images/Backgrounds/Background Hel.png",
             "images/tutorial/lightningTutorial.png",
             "images/tutorial/shieldTutorial.png",
-            "images/tutorial/spearTutorial.png"
+            "images/tutorial/spearTutorial.png",
+            "images/tutorial/spearObstacleTutorial.png",
+            "images/tutorial/run.png",
+            "images/bifrost.png"
     };
 
     //TODO: make Json,
@@ -78,30 +93,16 @@ public class RagnarokArea extends GameArea {
             "images/skeleton.atlas",
             "images/sfx.atlas",
             "images/lightning-animation.atlas",
-            "images/player-spear.atlas"
+            "images/player-spear.atlas",
+            "images/bifrost.atlas",
+            "particles/particles.atlas"
     };
-
-    // get the sounds to work and then move the music & sounds to a json
-    //TODO: make Json
-    private static final String[] RACER_SOUNDS = {"sounds/Impact4.ogg"};
-    private static final String MAIN_MUSIC = "sounds/main.mp3";
-    private static final String TOWN_MUSIC = "sounds/town.mp3";
-    private static final String RAIDER_MUSIC = "sounds/raider.mp3";
-    // sound effect of fire/burning behind giant *fwoom* *crackle*
-    private static final String FIRE_MUSIC = "sounds/fire.mp3";
-    // sound effects of giant walking (still to be tested)
-    private static final String WALK_MUSIC = "sounds/walk.mp3";
-    private static final String LOUD_WALK_MUSIC = "sounds/giant_walk.mp3";
-    private static final String ROAR_MUSIC = "sounds/roar.mp3";
-    private static final String[] RACER_MUSIC = {MAIN_MUSIC, TOWN_MUSIC, RAIDER_MUSIC, FIRE_MUSIC,
-            WALK_MUSIC, LOUD_WALK_MUSIC, ROAR_MUSIC};
 
     private final TerrainFactory terrainFactory;
     private Music music;
     private Music fire;
     private Music walk;
 
-    //have the loader return a level? fuck yeh
     public RagnarokArea(String name, TerrainFactory terrainFactory) {
         super();
         this.name = name;
@@ -119,7 +120,7 @@ public class RagnarokArea extends GameArea {
         displayUI();
         spawnTerrain();
 
-        playMusic(); //TODO: eventual move to music
+        //playMusic(); //TODO: eventual move to music
 
         logger.debug("Creating new RagnarokArea");
     }
@@ -135,8 +136,6 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(racerTextures);
         resourceService.loadTextureAtlases(racerTextureAtlases);
-        resourceService.loadSounds(RACER_SOUNDS);
-        resourceService.loadMusic(RACER_MUSIC);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
@@ -146,14 +145,17 @@ public class RagnarokArea extends GameArea {
     protected void spawnTutorial(int x, int y) { // TODO: Expand this
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
-        GridPoint2 textOffset = new GridPoint2(0,5);       
-        
+        GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
+        GridPoint2 runSpawn = new GridPoint2(x+80,y);
+
+        GridPoint2 textOffset = new GridPoint2(0,5);
+
         spawnSpear(spearSpawn.x, spearSpawn.y);
+        spawnSpear(spearObstacleSpawn.x + 10, spearObstacleSpawn.y);
         Entity spearTutorial = ObstacleFactory.createTutorialSpear();
 
         // Spawn enemies to test spear on
         spawnWolf(spearSpawn.x+8, spearSpawn.y);
-        spawnWolf(spearSpawn.x+12, spearSpawn.y);
 
         spawnLightning(lightningSpawn.x, lightningSpawn.y);
         Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
@@ -161,14 +163,22 @@ public class RagnarokArea extends GameArea {
         // Spawn enemies to test lightning on
         spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y);
         spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y);
-        spawnSkeleton(lightningSpawn.x+16, lightningSpawn.y);
-
 
         // Offset text and spawn it in
         lightningSpawn.add(textOffset);
         spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
         spearSpawn.add(textOffset);
         spawnEntityAt(spearTutorial, spearSpawn, true, false);
+
+        runSpawn.add(textOffset);
+        Entity runTutorial = ObstacleFactory.createTutorialRun();
+        spawnEntityAt(runTutorial, runSpawn, true, false);
+
+        spearObstacleSpawn.add(textOffset);
+        Entity spearObstacleTutorial = ObstacleFactory.createTutorialSpearObstacle();
+        spawnEntityAt(spearObstacleTutorial, spearObstacleSpawn, true, false);
+
+
     }
 
     protected Entity spawnPlayer(int x, int y) {
@@ -180,7 +190,7 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
-     * Spawn a background image starting at x.
+     * Spawn a background image starting at x and a bifrost split.
      *
      * @param x     starting coordinate
      * @param width width of the image using scaleWidth(width)
@@ -189,9 +199,14 @@ public class RagnarokArea extends GameArea {
      *              in world is ignored i.e. asgard and asgard_3 are both the same.
      */
     protected void spawnBackground(int x, int width, String world) {
+        logger.debug("Spawning background with world {}", world);
         Entity background = ObstacleFactory.createBackground(world, width);
-        GridPoint2 pos = new GridPoint2(x, 0);
+        GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);
+
+        Entity bifrost = ObstacleFactory.createBifrost();
+        GridPoint2 pos2 = new GridPoint2(x, 8);
+        spawnEntityAt(bifrost, pos2, true, true);
     }
 
     /**
@@ -216,7 +231,7 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnLevelLoadTrigger(int x) {
-        GridPoint2 centrePos = new GridPoint2(x, 6);
+        GridPoint2 centrePos = new GridPoint2(x, 11);
         Entity levelLoadTrigger = ObstacleFactory.createLevelLoadTrigger();
         spawnEntityAt(levelLoadTrigger, centrePos, true, true);
     }
@@ -412,20 +427,18 @@ public class RagnarokArea extends GameArea {
         fire.play();
         walk.play();
     }
-
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(racerTextures);
         resourceService.unloadAssets(racerTextureAtlases);
-        resourceService.unloadAssets(RACER_SOUNDS);
-        resourceService.unloadAssets(RACER_MUSIC);
+
+        ServiceLocator.getSoundService().unloadAssets();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class).stop();
         this.unloadAssets();
     }
 

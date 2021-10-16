@@ -25,6 +25,7 @@ import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.SoundService;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.maingame.MainGamePannelDisplay;
@@ -57,7 +58,10 @@ public class MainGameScreen extends ScreenAdapter {
             "images/PowerUpGUI/spear1.png",
             "images/PowerUpGUI/spear2.png",
             "images/PowerUpGUI/spear3.png",
-            "images/disp_back.png"
+            "images/disp_back.png",
+            "images/story/storyline.png",
+            "images/healthBar.png",
+            "images/healthBarBack.png"
     };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
@@ -86,6 +90,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerAreaService(new AreaService());
 
+        ServiceLocator.registerSoundService(new SoundService("mainGame"));
+
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
         renderer.getDebug().renderPhysicsWorld(physicsEngine.getWorld());
@@ -98,8 +104,14 @@ public class MainGameScreen extends ScreenAdapter {
 
         ragnarokManager = new AreaManager(terrainFactory);
 
+        // plays the music
+        ServiceLocator.getSoundService().playMusic("bob");
+
+        // plays fire crackling sound effects
+        ServiceLocator.getSoundService().playSound("fire");
+
         ServiceLocator.getAreaService().setManager(ragnarokManager);
-        ServiceLocator.getAreaService().run(); //TODO: call run on manager from terminal line
+        ServiceLocator.getAreaService().run();
     }
 
     @Override
@@ -107,6 +119,7 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.getTerminalService().processMessageBuffer();
         ServiceLocator.getEntityService().update();
+        ServiceLocator.getSoundService().update();
 
         physicsEngine.update();
         renderer.updateCameraPosition(ragnarokManager.getPlayer());
@@ -156,6 +169,7 @@ public class MainGameScreen extends ScreenAdapter {
         logger.debug("Disposing main game screen");
 
         renderer.dispose();
+
         unloadAssets();
 
         ServiceLocator.getEntityService().dispose();
@@ -169,12 +183,18 @@ public class MainGameScreen extends ScreenAdapter {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(mainGameTextures);
+
+        ServiceLocator.getSoundService().loadAssets();
+
+        // because SoundService calls the resource service, this call
+        // must be last in the loadAssets
         ServiceLocator.getResourceService().loadAll();
     }
 
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+        ServiceLocator.getSoundService().unloadAssets();
         resourceService.unloadAssets(mainGameTextures);
     }
 

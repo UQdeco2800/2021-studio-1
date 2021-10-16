@@ -1,0 +1,42 @@
+$_title asg5
+$_width 25
+$_height 10
+$_world asgard_1
+
+$#.........F
+$#.........F
+$#.........F
+$#.........F
+$#........FF
+$#.......FFF
+$#.........F
+$#.......F.F
+$#....FFFF.F
+$#....FFFF.F
+$#.....FFF.F
+$#......FF.F
+$#.......FFF
+$#........FF
+$#.........F
+$#.........F
+$#.........F
+$#.........F
+$#.........F
+$#........SF
+$#.........F
+$#.........F
+$#.........F
+$#.........F
+$#........SF
+
+$@player set [2,8]
+
+$-spawn [10,1] (fireSpirit)
+$-spawn [13,2] (skeleton)
+$-spawn [11,4] (skeleton)
+$-spawn [9,1] (fireSpirit)
+
+$-spawn [11,1] (lightning)
+$-spawn [4,2] (spear)
+
+$-spawn [20,5] (levelTrigger)

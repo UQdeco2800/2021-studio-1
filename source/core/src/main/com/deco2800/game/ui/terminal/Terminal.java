@@ -43,6 +43,9 @@ public class Terminal extends Component {
     addCommand("-load", new LoadCommand());
     addCommand("-config", new ConfigCommand());
     addCommand("-queue", new QueueCommand());
+    addCommand("-god", new GodCommand());
+    addCommand("-sfx", new SFXCommand());
+    addCommand("-music", new MusicCommand());
   }
 
   /** @return message entered by user */
@@ -71,6 +74,7 @@ public class Terminal extends Component {
    */
   public void setOpen() {
     logger.debug("Opening terminal");
+    setEnteredMessage("-");
     isOpen = true;
   }
 
@@ -156,6 +160,8 @@ public class Terminal extends Component {
   public void setEnteredMessage(String text) {
     enteredMessage = text;
   }
+
+
 
   public void sendTerminal(String text) {
     setEnteredMessage(text);

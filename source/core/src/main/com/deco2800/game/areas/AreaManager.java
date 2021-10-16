@@ -2,8 +2,12 @@ package com.deco2800.game.areas;
 
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.files.RagLoader;
+import com.deco2800.game.services.ServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+
 public class AreaManager extends RagnarokArea {
     private static final Logger logger = LoggerFactory.getLogger(AreaManager.class);
 
@@ -77,8 +81,6 @@ public class AreaManager extends RagnarokArea {
         super("Manager", terrainFactory);
         this.mainTerrainFactory = terrainFactory;
         this.startNextArea = -5;
-        // eventually moved to terminal?
-        // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
     }
 
     /**
@@ -102,18 +104,16 @@ public class AreaManager extends RagnarokArea {
      */
     @Override
     public void create() {
-
         load("tutorial");
-        //if above code is uncommented load can introduce duplicate instances
-        //conflict with load not above code I don't think
         terrainInstance.makePlayer(10, 5);
         this.player = terrainInstance.getPlayer();
         terrainInstance.spawnWallOfDeath();
-
         logger.debug("Creating AreaManager");
 
-        terrainInstance.spawnBackground(0, this.bPWidth, "asgard");
+        //ServiceLocator.getSoundService().playMusic("town");
+
     }
+
 
     /**
      * Convenience method in case place is called to the Manager. See place(RagnarokArea, int, int, String)
@@ -126,7 +126,6 @@ public class AreaManager extends RagnarokArea {
      */
     public void place(int x, int y, String placeType) {
         place(terrainInstance, x, y, placeType);
-
     }
 
     /**
@@ -269,7 +268,7 @@ public class AreaManager extends RagnarokArea {
                         // Spawn a background at the start of the level with width from the rag
                         // file.
                         terrainInstance.spawnBackground(this.startNextArea * GRID_SCALE,
-                                this.bPWidth, "asgard");
+                                this.bPWidth, this.currentWorld);
                         break;
                     case "queue":
                         makeBufferedPlace(terrainInstance);

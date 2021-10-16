@@ -1,0 +1,43 @@
+$_title ear5
+$_width 25
+$_height 10
+$_world hel_2
+
+$#...P......
+$#...FFF...F
+$#...FFFF..F
+$#...FFFF..F
+$#...FFFF..F
+$#...FFFFF.F
+$#...FFFFF.F
+$#...FFFFF.F
+$#...FFFFF.F
+$#...FFFFF.F
+$#.....FFF.F
+$#...F.FFF.F
+$#...FFFFF.F
+$#...FFFFF.F
+$#...F.....F
+$#...F...F.F
+$#...F.F.F.F
+$#...F.F.F.F
+$#.....F.FFF
+$#.....F.FFF
+$#.....FFFFF
+$#.....FFFFF
+$#....SFFFFF
+$#.....FFFFF
+$#.....FFFFF
+
+$@player set [2,8]
+
+$-spawn [3,7] (skeleton)
+$-spawn [13,7] (skeleton)
+$-spawn [16,7] (skeleton)
+$-spawn [1,7] (skeleton)
+
+$-spawn [11,5] (shield)
+$-spawn [17,1] (spear)
+$-spawn [19,3] (lightning)
+
+$-spawn [20,5] (levelTrigger)

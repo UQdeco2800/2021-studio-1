@@ -1,46 +1,46 @@
 $_title ragTitle
 $_width 53
 $_height 10
-$_world earth_1
+$_world earth_3
 
-$#.....P...F
-$#....FFFF.F
-$#....P.F..F
-$#....FF.F.F
 $#.........F
-$#....FFFF.F
-$#....P.P..F
-$#....F.FF.F
+$#...FFFF..F
+$#...P.F...F
+$#...FF.F..F
 $#.........F
-$#....FFFF.F
-$#....F..F.F
-$#....F.FF.F
+$#...FFFF..F
+$#...P.P...F
+$#...FFFF..F
 $#.........F
-$#....FFFF.F
-$#....P.F..F
-$#....FF.F.F
+$#...FFFF..F
+$#...F..F..F
+$#...F.FF..F
 $#.........F
-$#..F.FFFF.F
-$#....F..F.F
-$#..F.FFFF.F
-$#.........F
-$#....FFFF.F
-$#......F..F
-$#....FF.F.F
-$#.........F
-$#.........F
-$#...FFF.F.F
-$#.........F
-$#.........F
-$#...FF....F
-$#..P..F...F
-$#..P..F...F
-$#...FF....F
-$#.........F
-$#..FFFF...F
+$#...FFFF..F
 $#....P....F
-$#...PF....F
-$#..P..F...F
+$#.....P...F
+$#......P..F
+$#...FFFF..F
+$#.........F
+$#...FFFF..F
+$#...P.P...F
+$#...FFFF..F
+$#.........F
+$#...FFFF..F
+$#...P.F...F
+$#...FF.F..F
+$#.........F
+$#...FFF...F
+$#..P...F..F
+$#..P...F..F
+$#...FFF...F
+$#.........F
+$#...FFFF..F
+$#.....P...F
+$#....P.P..F
+$#...P...P.F
+$#.........F
+$#.........F
 $#.........F
 $#.........F
 $#.........F
@@ -57,22 +57,16 @@ $#.........F
 $#.........F
 $#.........F
 
-$@player set [2,1]
+$@player set [2,8]
 
 $-spawn [30,1] (skeleton)
-$-spawn [20,1] (skeleton)
-$-spawn [5,1] (fireSpirit)
 $-spawn [13,1] (wolf)
 $-spawn [19,1] (wolf)
+$-spawn [20,1] (skeleton)
 $-spawn [15,1] (skeleton)
 
-$-spawn [8,1] (shield)
-$-spawn [17,8] (spear)
-$-spawn [6,4] (spear)
-$-spawn [4,1] (lightning)
-$-spawn [19,8] (lightning)
-$-spawn [22,4] (lightning)
-$-spawn [26,3] (lightning)
-$-spawn [10,3] (spear)
+$-spawn [16,4] (lightning)
+$-spawn [14,6] (spear)
+$-spawn [28,8] (shield)
 
 $-spawn [48,5] (levelTrigger)

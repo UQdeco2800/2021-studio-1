@@ -75,6 +75,7 @@ public class UIPop extends UIComponent {
     private Music music;
     private Music music2;
     private Music music3;
+    private Music music4;
     private Music fire;
     private Music walk;
 
@@ -160,26 +161,25 @@ public class UIPop extends UIComponent {
         music = ServiceLocator.getResourceService().getAsset("sounds/main.mp3", Music.class);
         music2 = ServiceLocator.getResourceService().getAsset("sounds/town.mp3", Music.class);
         music3 = ServiceLocator.getResourceService().getAsset("sounds/raider.mp3", Music.class);
-        fire = ServiceLocator.getResourceService().getAsset("sounds/fire.mp3", Music.class);
-        walk = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
+        music4 = ServiceLocator.getResourceService().getAsset("sounds/bobjob.mp3", Music.class);
         UserSettings.Settings settings = UserSettings.get();
         settings.fullscreen = fullScreenCheck.isChecked();
         volume = volumeSlider.getValue();
         volumeSlider.setValue(volume);
         UserSettings.set(settings, true);
         music.setLooping(true);
+        music4.setLooping(true);
         music2.setLooping(true);
         music3.setLooping(true);
-        fire.setLooping(true);
-        walk.setLooping(true);
         music.setVolume(volume);
+        music4.setVolume(volume);
         music2.setVolume(volume);
         music3.setVolume(volume);
-        fire.setVolume(volume);
-        walk.setVolume(volume);
         music.play();
-        fire.play();
-        walk.play();
+        music2.play();
+        music3.play();
+        music4.play();
+
     }
 
     // Adds actors based on screen name
