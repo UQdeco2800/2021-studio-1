@@ -14,6 +14,7 @@ import com.deco2800.game.rendering.RenderService;
 import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.SoundService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,14 @@ public class MainMenuScreen extends ScreenAdapter {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuScreen.class);
   private final GdxGame game;
   private final Renderer renderer;
-  private static final String[] mainMenuTextures = {"images/main_back.png", "images/mute_button_on.png", "images/plainBack.png"};
+  private static final String[] mainMenuTextures = {"images/main_back.png" ,
+                                                      "images/main_back2.png",
+                                                      "images/mute_button_on.png",
+                                                      "images/mute_button_off.png",
+                                                      "images/star.png",
+                                                      "images/star2.png",
+                                                      "images/star3.png",
+                                                      "images/plainBack.png"};
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
@@ -35,10 +43,15 @@ public class MainMenuScreen extends ScreenAdapter {
     ServiceLocator.registerEntityService(new EntityService());
     ServiceLocator.registerRenderService(new RenderService());
 
+    ServiceLocator.registerSoundService(new SoundService("mainMenu"));
+
     renderer = RenderFactory.createRenderer();
 
     loadAssets();
     createUI();
+
+    ServiceLocator.getSoundService().playMusic("theme");
+
   }
 
   @Override
@@ -70,8 +83,8 @@ public class MainMenuScreen extends ScreenAdapter {
     renderer.dispose();
     unloadAssets();
     ServiceLocator.getRenderService().dispose();
+    ServiceLocator.getResourceService().dispose();
     ServiceLocator.getEntityService().dispose();
-
     ServiceLocator.clear();
   }
 
@@ -79,13 +92,19 @@ public class MainMenuScreen extends ScreenAdapter {
     logger.debug("Loading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.loadTextures(mainMenuTextures);
+
+    ServiceLocator.getSoundService().loadAssets();
+
+    // because Sound Service calls resource service, this must be last
     ServiceLocator.getResourceService().loadAll();
+
   }
 
   private void unloadAssets() {
     logger.debug("Unloading assets");
     ResourceService resourceService = ServiceLocator.getResourceService();
     resourceService.unloadAssets(mainMenuTextures);
+    ServiceLocator.getSoundService().unloadAssets();
   }
 
   /**

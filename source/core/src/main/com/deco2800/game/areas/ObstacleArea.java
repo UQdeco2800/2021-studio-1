@@ -18,8 +18,6 @@ import org.slf4j.LoggerFactory;
 public class ObstacleArea extends GameArea {
     private static final Logger logger = LoggerFactory.getLogger(ObstacleArea.class);
 
-    private static final GridPoint2 PLAYER_SPAWN = new GridPoint2(10, 15);
-
     private static final float WALL_WIDTH = 0.1f;
     private static final float WALL_HEIGHT = 0.1f;
 
@@ -46,8 +44,11 @@ public class ObstacleArea extends GameArea {
             "images/deathGiant.png"
     };
     private static final String[] forestTextureAtlases = {
-            "images/terrain_iso_grass.atlas", "images/ghostKing" +
-            ".atlas", "images/odin.atlas", "images/wall.atlas", "images/skeleton.atlas"
+            "images/terrain_iso_grass.atlas",
+            "images/ghostKing.atlas",
+            "images/odin.atlas",
+            "images/wall.atlas",
+            "images/skeleton.atlas"
     };
     private static final String[] FOREST_SOUNDS = {"sounds/Impact4.ogg"};
     private static final String BACKGROUND_MUSIC = "sounds/bobjob.mp3";
@@ -75,9 +76,7 @@ public class ObstacleArea extends GameArea {
 
         spawnFloor(40, 4, xOffset);
 
-        Entity player = spawnPlayer();
         abstractPlayer = spawnAbstractPlayer();
-        int abstractPlayerId = abstractPlayer.getId();
 
         displayUI(); // done after all stuff cause it gets added, jafeel?
 
@@ -90,10 +89,8 @@ public class ObstacleArea extends GameArea {
         Entity ui = new Entity();
 
         GameAreaDisplay gameDisplay = new GameAreaDisplay("__obstacleArea");
-        //gameDisplay.setPlayer(player);
         ui.addComponent(gameDisplay);
 
-        //ui.addComponent(new GameAreaDisplay("RAGNAROK WORLD"));
         spawnEntity(ui);
     }
 
@@ -188,16 +185,10 @@ public class ObstacleArea extends GameArea {
         }
     }
 
-    private Entity spawnPlayer() {
-        Entity newPlayer = PlayerFactory.createPlayer();
-        spawnEntityAt(newPlayer, PLAYER_SPAWN, true, true);
-        return newPlayer;
-    }
-
     private Entity spawnAbstractPlayer() {
-        Entity abstractPlayer = PlayerFactory.createAbstractPlayer();
-        spawnEntityAt(abstractPlayer, new GridPoint2(0, 0), true, true);
-        return abstractPlayer;
+        Entity newAbstractPlayer = PlayerFactory.createAbstractPlayer();
+        spawnEntityAt(newAbstractPlayer, new GridPoint2(0, 0), true, true);
+        return newAbstractPlayer;
     }
 
     private void playMusic() {

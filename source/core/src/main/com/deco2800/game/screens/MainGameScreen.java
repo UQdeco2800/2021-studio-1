@@ -12,7 +12,6 @@ import com.deco2800.game.components.maingame.MainGameActions;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.components.powerups.PowerUpGUIComponent;
-import com.deco2800.game.components.powerups.PowerUpGUIComponent2;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.EntityService;
 import com.deco2800.game.entities.factories.RenderFactory;
@@ -26,11 +25,11 @@ import com.deco2800.game.rendering.Renderer;
 import com.deco2800.game.services.GameTime;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.services.SoundService;
 import com.deco2800.game.ui.terminal.Terminal;
 import com.deco2800.game.ui.terminal.TerminalDisplay;
 import com.deco2800.game.components.maingame.MainGamePannelDisplay;
 import com.deco2800.game.components.gamearea.PerformanceDisplay;
-import com.sun.tools.javac.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,23 +42,27 @@ import java.io.IOException;
  * <p>Details on libGDX screens: https://happycoding.io/tutorials/libgdx/game-screens
  */
 public class MainGameScreen extends ScreenAdapter {
-  private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
-  private static final String[] mainGameTextures = {
-          "images/PowerUpGUI/Shield.png",
-          "images/PowerUpGUI/Spear.png",
-          "images/PowerUpGUI/Lightning.png",
-          "images/PowerUpGUI/Empty.png",
-          "images/PowerUpGUI/lightning0.png",
-          "images/PowerUpGUI/lightning1.png",
-          "images/PowerUpGUI/shield0.png",
-          "images/PowerUpGUI/shield1.png",
-          "images/PowerUpGUI/shield2.png",
-          "images/PowerUpGUI/shield3.png",
-          "images/PowerUpGUI/spear0.png",
-          "images/PowerUpGUI/spear1.png",
-          "images/PowerUpGUI/spear2.png",
-          "images/PowerUpGUI/spear3.png"
-  };
+    private static final Logger logger = LoggerFactory.getLogger(MainGameScreen.class);
+    private static final String[] mainGameTextures = {
+            "images/PowerUpGUI/Shield.png",
+            "images/PowerUpGUI/Spear.png",
+            "images/PowerUpGUI/Lightning.png",
+            "images/PowerUpGUI/Empty.png",
+            "images/PowerUpGUI/lightning0.png",
+            "images/PowerUpGUI/lightning1.png",
+            "images/PowerUpGUI/shield0.png",
+            "images/PowerUpGUI/shield1.png",
+            "images/PowerUpGUI/shield2.png",
+            "images/PowerUpGUI/shield3.png",
+            "images/PowerUpGUI/spear0.png",
+            "images/PowerUpGUI/spear1.png",
+            "images/PowerUpGUI/spear2.png",
+            "images/PowerUpGUI/spear3.png",
+            "images/disp_back.png",
+            "images/story/storyline.png",
+            "images/healthBar.png",
+            "images/healthBarBack.png"
+    };
 
     private static final Vector2 CAMERA_POSITION = new Vector2(7.5f, 6f);
 
@@ -67,11 +70,14 @@ public class MainGameScreen extends ScreenAdapter {
     private final Renderer renderer;
     private final PhysicsEngine physicsEngine;
     private AreaManager ragnarokManager;
+    private Entity gameUI;
+    private boolean gameEnded;
 
     public MainGameScreen(GdxGame game) {
         this.game = game;
         logger.debug("Initialising main game screen services");
         ServiceLocator.registerTimeSource(new GameTime());
+        this.gameEnded = false;
 
         PhysicsService physicsService = new PhysicsService();
         ServiceLocator.registerPhysicsService(physicsService);
@@ -83,6 +89,8 @@ public class MainGameScreen extends ScreenAdapter {
         ServiceLocator.registerEntityService(new EntityService());
         ServiceLocator.registerRenderService(new RenderService());
         ServiceLocator.registerAreaService(new AreaService());
+
+        ServiceLocator.registerSoundService(new SoundService("mainGame"));
 
         renderer = RenderFactory.createRenderer();
         renderer.getCamera().getEntity().setPosition(CAMERA_POSITION);
@@ -96,28 +104,14 @@ public class MainGameScreen extends ScreenAdapter {
 
         ragnarokManager = new AreaManager(terrainFactory);
 
+        // plays the music
+        ServiceLocator.getSoundService().playMusic("bob");
+
+        // plays fire crackling sound effects
+        ServiceLocator.getSoundService().playSound("fire");
+
         ServiceLocator.getAreaService().setManager(ragnarokManager);
-        ServiceLocator.getAreaService().run(); //TODO: call run on manager from terminal line
-
-        //ragnarokManager.create();
-
-        //boolean isObstacle = false;
-        //if (isObstacle) {
-        //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-        //obstacleArea.create();
-        //} else if (!isObstacle) {
-
-        //ObstacleArea obstacleArea = new ObstacleArea(terrainFactory);
-        //obstacleArea.create()
-
-        //ragnarokArea = new RagnarokArea("the og", terrainFactory);
-
-        //TODO: abstract commands from RacerArea to GameArea
-        //TODO: so that they can be called from any GameArea
-        //ServiceLocator.getAreaService().setMainRacerArea(ragnarokArea);
-
-        //ragnarokArea.create();
-        //}
+        ServiceLocator.getAreaService().run();
     }
 
     @Override
@@ -125,6 +119,7 @@ public class MainGameScreen extends ScreenAdapter {
 
         ServiceLocator.getTerminalService().processMessageBuffer();
         ServiceLocator.getEntityService().update();
+        ServiceLocator.getSoundService().update();
 
         physicsEngine.update();
         renderer.updateCameraPosition(ragnarokManager.getPlayer());
@@ -135,13 +130,15 @@ public class MainGameScreen extends ScreenAdapter {
             if (player.getComponent(CombatStatsComponent.class).getHealth() == 0) {
 
                 long currentScore = player.getComponent(PlayerStatsDisplay.class).getPlayerScore();
-
                 if (currentScore > MainMenuDisplay.getHighScoreValues()[4]) {
 
                     recordHighScore("" + currentScore);
 
                 }
-                game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+                if (!gameEnded) {
+                    gameUI.getEvents().trigger("Game Over");
+                    gameEnded = true;
+                }
             }
         }
 
@@ -172,6 +169,7 @@ public class MainGameScreen extends ScreenAdapter {
         logger.debug("Disposing main game screen");
 
         renderer.dispose();
+
         unloadAssets();
 
         ServiceLocator.getEntityService().dispose();
@@ -185,11 +183,18 @@ public class MainGameScreen extends ScreenAdapter {
         logger.debug("Loading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(mainGameTextures);
+
+        ServiceLocator.getSoundService().loadAssets();
+
+        // because SoundService calls the resource service, this call
+        // must be last in the loadAssets
         ServiceLocator.getResourceService().loadAll();
     }
+
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
+        ServiceLocator.getSoundService().unloadAssets();
         resourceService.unloadAssets(mainGameTextures);
     }
 
@@ -206,8 +211,8 @@ public class MainGameScreen extends ScreenAdapter {
         Terminal theOg = new Terminal();
         ServiceLocator.registerTerminalService(theOg);
 
-        Entity ui = new Entity();
-        ui.addComponent(new InputDecorator(stage, 10))
+        gameUI = new Entity();
+        gameUI.addComponent(new InputDecorator(stage, 10))
                 .addComponent(new PerformanceDisplay())
                 .addComponent(new MainGameActions(this.game))
                 .addComponent(new MainGamePannelDisplay())
@@ -216,7 +221,7 @@ public class MainGameScreen extends ScreenAdapter {
                 .addComponent(new TerminalDisplay())
                 .addComponent(new PowerUpGUIComponent());
 
-        ServiceLocator.getEntityService().register(ui);
+        ServiceLocator.getEntityService().register(gameUI);
     }
 
     private void recordHighScore(String currentScore) {
@@ -239,16 +244,14 @@ public class MainGameScreen extends ScreenAdapter {
             adjective = availableAdjectives[((scoreIntegers.length - 1) * 2) + section];
         }
 
-        String selectedName = MainMenuDisplay.getPlayeName();
+        String selectedName = MainMenuDisplay.getPlayerName();
         String name;
 
-        if (!selectedName.equals("Random")) {
+        if (!selectedName.equals("Random") && !selectedName.equals("Select Name")) {
             name = adjective + " " + selectedName;
         } else {
             name = adjective + " " + availableNames[Integer.parseInt(randValue)] + "";
         }
-
-        FileWriter highScoreFile = null;
 
         int[] highScoreValues = MainMenuDisplay.getHighScoreValues();
         String[] highScoreNames = MainMenuDisplay.getHighScoreNames();
@@ -256,14 +259,10 @@ public class MainGameScreen extends ScreenAdapter {
         highScoreNames[4] = name;
         highScoreValues[4] = Integer.parseInt(currentScore);
 
-        try {
-            highScoreFile = new FileWriter("gameinfo/highScores.txt");
-
-            for (int i = 0; i < highScoreNames.length;  i++) {
+        try (FileWriter highScoreFile = new FileWriter("gameinfo/highScores.txt")) {
+            for (int i = 0; i < highScoreNames.length; i++) {
                 highScoreFile.write(highScoreNames[i] + "," + highScoreValues[i] + "\n");
             }
-
-            highScoreFile.close();
         } catch (IOException e) {
             logger.info("Could not record high score");
         }

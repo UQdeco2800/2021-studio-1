@@ -74,12 +74,13 @@ class RagLoaderTest {
 
     @Test
     void shouldReadStartingInfo() {
+        // If this test has failed, the information in ragnarok.rag has most likely been changed.
         RagLoader.createFromFile("ragnorok");
 
         verify(service).sendTerminal("-config title ragTitle");
         verify(service).sendTerminal("-config width 53");
         verify(service).sendTerminal("-config height 10");
-        verify(service).sendTerminal("-config world earth_1");
+        verify(service).sendTerminal("-config world earth_3");
     }
 
     @Test
@@ -179,10 +180,10 @@ class RagLoaderTest {
                 "-config world jotunheimr_2",
                 "-config close init",
                 "-queue #.........F",
-                "-queue #........SF",
-                "-queue #........SF",
                 "-queue #.........F",
                 "-queue #........SF",
+                "-queue #.........F",
+                "-queue #.........F",
                 "-queue #........FF",
                 "-queue #.......FFF",
                 "-queue #.....RFFFF",
@@ -194,9 +195,8 @@ class RagLoaderTest {
                 "-queue #.........S",
                 "-queue #........FF",
                 "-config close queue",
-                "-spawn [6,3] (skeleton)",
                 "-spawn [14,2] (skeleton)",
-                "-spawn [13,3] (spear)",
+                "-spawn [12,2] (spear)",
                 "-spawn [5,2] (lightning)",
                 "-spawn [10,5] (levelTrigger)"};
 

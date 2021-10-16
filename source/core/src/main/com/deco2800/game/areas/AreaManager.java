@@ -5,9 +5,6 @@ import com.deco2800.game.files.RagLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-
 public class AreaManager extends RagnarokArea {
     private static final Logger logger = LoggerFactory.getLogger(AreaManager.class);
 
@@ -23,12 +20,6 @@ public class AreaManager extends RagnarokArea {
      * to be altered.
      */
     private static final int GRID_SCALE = 3;
-
-    /**
-     * this contains a list of GameAreas inside the manager,
-     * though it is currently underutilised. BackgroundArea, MainArea?
-     */
-    private LinkedList<RagnarokArea> areaInstances;
 
     /**
      * the main instance of the game is where the terrain and enemies are
@@ -56,12 +47,6 @@ public class AreaManager extends RagnarokArea {
      * This is the current world to be loaded into the game next
      */
     private String currentWorld;
-
-    /**
-     * buffered "spawns" will eventually store a list
-     * of coords and the entity to spawn them @
-     */
-    private HashMap<String, String> bufferedSpawns;
 
     /**
      * this is passed to all areas inside... I think
@@ -92,16 +77,7 @@ public class AreaManager extends RagnarokArea {
     public AreaManager(TerrainFactory terrainFactory) {
         super("Manager", terrainFactory);
         this.mainTerrainFactory = terrainFactory;
-        this.areaInstances = new LinkedList<>();
-
-        bufferedSpawns = new HashMap<>();
         this.startNextArea = -5;
-        // eventually moved to terminal?
-        // move RagLoader to terminal because it interfaces to the AreaManger through the commandline
-
-        //terrain = terrainFactory.createTerrain(TerrainFactory.TerrainType.FOREST_DEMO);
-
-        //spawn(10, 5, "avatar");
     }
 
     /**
@@ -114,9 +90,6 @@ public class AreaManager extends RagnarokArea {
     public AreaManager(TerrainFactory terrainFactory, RagnarokArea ragnarokArea) {
         super("Manager", terrainFactory);
         this.mainTerrainFactory = terrainFactory;
-        this.areaInstances = new LinkedList<>();
-
-        bufferedSpawns = new HashMap<>();
         this.startNextArea = 0;
         this.terrainInstance = ragnarokArea;
     }
@@ -128,21 +101,16 @@ public class AreaManager extends RagnarokArea {
      */
     @Override
     public void create() {
-
         load("tutorial");
-        //if above code is uncommented load can introduce duplicate instances
-        //conflict with load not above code I don't think
         terrainInstance.makePlayer(10, 5);
         this.player = terrainInstance.getPlayer();
         terrainInstance.spawnWallOfDeath();
-
         logger.debug("Creating AreaManager");
 
-        terrainInstance.spawnBackground(0, this.bPWidth, "asgard");
+        //ServiceLocator.getSoundService().playMusic("town");
 
-        //mainInstance.makePlayer(10, 5); // has to be here, even tho (should) be called in ragedit
-        //this.player = mainInstance.getPlayer();
     }
+
 
     /**
      * Convenience method in case place is called to the Manager. See place(RagnarokArea, int, int, String)
@@ -155,7 +123,6 @@ public class AreaManager extends RagnarokArea {
      */
     public void place(int x, int y, String placeType) {
         place(terrainInstance, x, y, placeType);
-
     }
 
     /**
@@ -188,8 +155,7 @@ public class AreaManager extends RagnarokArea {
                 area.spawnSpikes(gx, gy);
                 break;
             case "null":
-                // This should no longer be needed since we are loading one after another
-                // area.clearEntitiesAt(gx, gy);
+                // No longer needed
                 break;
             default:
                 logger.error("place() called in AreaManager without valid placeType");
@@ -223,9 +189,6 @@ public class AreaManager extends RagnarokArea {
         int gx = (startNextArea + x) * GRID_SCALE;
         int gy = y * GRID_SCALE;
 
-        // System.out.println("Spawning  " + spawnType);
-
-
         switch (spawnType) {
             case "skeleton":
                 area.spawnSkeleton(gx, gy);
@@ -249,7 +212,6 @@ public class AreaManager extends RagnarokArea {
                 area.spawnLightning(gx, gy);
                 break;
             case "tutorial":
-                System.out.println("Creating tutorial");
                 area.spawnTutorial(gx, gy);
                 break;
             default:
@@ -303,7 +265,7 @@ public class AreaManager extends RagnarokArea {
                         // Spawn a background at the start of the level with width from the rag
                         // file.
                         terrainInstance.spawnBackground(this.startNextArea * GRID_SCALE,
-                                this.bPWidth, "asgard");
+                                this.bPWidth, this.currentWorld);
                         break;
                     case "queue":
                         makeBufferedPlace(terrainInstance);

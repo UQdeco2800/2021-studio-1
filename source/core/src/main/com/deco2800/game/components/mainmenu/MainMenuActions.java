@@ -16,6 +16,8 @@ public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
   private GdxGame game;
   private Entity mainMenuPop;
+  private boolean muted = false;
+  private static final String MAIN_MUSIC = "sounds/main.mp3";
 
   public MainMenuActions(GdxGame game) {
     this.game = game;
@@ -32,11 +34,13 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("mute", this::onMute);
   }
 
-  /**
+    /**
    * Swaps to the Main Game screen.
    */
   private void onStart() {
     logger.info("Start game");
+    game.paused = false;
+    game.over = false;
     game.setScreen(GdxGame.ScreenType.MAIN_GAME);
   }
 
@@ -100,5 +104,13 @@ public class MainMenuActions extends Component {
     */
   private void onMute() {
     logger.info("muting game");
-  }
+
+    muted = !muted;
+    if (muted) {
+        ServiceLocator.getSoundService().setMusicVolume(0f);
+    } else {
+        ServiceLocator.getSoundService().setMusicVolume(1f);
+    }
+
+    }
 }

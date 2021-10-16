@@ -109,6 +109,25 @@ public class UserSettings {
     }
   }
 
+    /**
+     * Returns the window set height
+     */
+    public static int getWindowHeight() {
+
+        return WINDOW_HEIGHT;
+
+    }
+
+    /**
+     * Returns the window set width
+     */
+    public static int getWindowWidth() {
+
+        return WINDOW_WIDTH;
+
+    }
+
+
   private UserSettings() {
     throw new IllegalStateException("Instantiating static util class");
   }

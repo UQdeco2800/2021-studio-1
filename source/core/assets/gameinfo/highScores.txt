@@ -1,5 +1,5 @@
-Mouse,2946
-Sam,2044
-Mouse,1796
-Dragonfly,1348
-Extraordinary Thor,1091
+Unbeatable Dragonfly,19158
+Unbeatable Puma,14514
+Fierce Kitten,9015
+Fierce Zebra,8770
+Unbeatable Dire Wolf,11012

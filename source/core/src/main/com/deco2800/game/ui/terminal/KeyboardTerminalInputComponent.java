@@ -13,7 +13,7 @@ import com.deco2800.game.input.InputComponent;
  */
 public class KeyboardTerminalInputComponent extends InputComponent {
   private static final int TOGGLE_OPEN_KEY = Input.Keys.F1;
-  private static final int TOGGLE_COMMAND_KEY = Input.Keys.MINUS;
+  private static final int TOGGLE_COMMAND_KEY = Input.Keys.SLASH;
   private Terminal terminal;
 
   public KeyboardTerminalInputComponent() {
@@ -52,8 +52,13 @@ public class KeyboardTerminalInputComponent extends InputComponent {
 
     if(!terminal.isOpen()) {
       if (keycode == Input.Keys.P) {
-          entity.getEvents().trigger("Pause Menu");
-          return true;
+        entity.getEvents().trigger("Pause Menu");
+        return true;
+      }
+
+      if (keycode == Input.Keys.O) {
+        entity.getEvents().trigger("Game Over");
+        return true;
       }
 
       if (keycode == TOGGLE_COMMAND_KEY) {

@@ -1,27 +1,21 @@
 package com.deco2800.game.areas;
 
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
 import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.factories.*;
-import com.deco2800.game.rendering.TextureRenderComponent;
 import com.deco2800.game.services.ResourceService;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.utils.math.GridPoint2Utils;
-import com.deco2800.game.utils.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.VariableSpeedComponent;
 import com.deco2800.game.components.FallDamageComponent;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.function.Function;
 
 public class RagnarokArea extends GameArea {
@@ -30,8 +24,6 @@ public class RagnarokArea extends GameArea {
 
     private static final float WALL_HEIGHT = 0.1f;
     private final String name; //initialise in the loader
-
-    private final HashMap<GridPoint2, LinkedList<Entity>> entitySignUp;
 
     protected Entity player;
 
@@ -68,9 +60,19 @@ public class RagnarokArea extends GameArea {
             "images/blue_bck.png",
             "images/Backgrounds/black_back.png",
             "images/Backgrounds/asgard_bg.png",
+            "images/Backgrounds/Background Alfheim.png",
+            "images/Backgrounds/Background Alfheim Day.png",
+            "images/Backgrounds/Background Earth.png",
+            "images/Backgrounds/Background Earth Day.png",
+            "images/Backgrounds/Background Jotunheim.png",
+            "images/Backgrounds/Background Jotunheim Day.png",
+            "images/Backgrounds/Background Hel.png",
             "images/tutorial/lightningTutorial.png",
             "images/tutorial/shieldTutorial.png",
-            "images/tutorial/spearTutorial.png"
+            "images/tutorial/spearTutorial.png",
+            "images/tutorial/spearObstacleTutorial.png",
+            "images/tutorial/run.png",
+            "images/bifrost.png"
     };
 
     //TODO: make Json,
@@ -79,52 +81,35 @@ public class RagnarokArea extends GameArea {
             "images/odin.atlas",
             "images/wall.atlas",
             "images/deathGiant.atlas",
+            "images/fire_spirit.atlas",
             "images/skeleton.atlas",
             "images/sfx.atlas",
             "images/lightning-animation.atlas",
-            "images/player-spear.atlas"
+            "images/player-spear.atlas",
+            "images/bifrost.atlas",
+            "particles/particles.atlas"
     };
-
-    // get the sounds to work and then move the music & sounds to a json
-    //TODO: make Json
-    private static final String[] RACER_SOUNDS = {"sounds/Impact4.ogg"};
-    private static final String MAIN_MUSIC = "sounds/main.mp3";
-    private static final String TOWN_MUSIC = "sounds/town.mp3";
-    private static final String RAIDER_MUSIC = "sounds/raider.mp3";
-    // sound effect of fire/burning behind giant *fwoom* *crackle*
-    private static final String FIRE_MUSIC = "sounds/fire.mp3";
-    // sound effects of giant walking (still to be tested)
-    private static final String WALK_MUSIC = "sounds/walk.mp3";
-    private static final String LOUD_WALK_MUSIC = "sounds/giant_walk.mp3";
-    private static final String ROAR_MUSIC = "sounds/roar.mp3";
-    private static final String[] RACER_MUSIC = {MAIN_MUSIC, TOWN_MUSIC, RAIDER_MUSIC, FIRE_MUSIC,
-            WALK_MUSIC, LOUD_WALK_MUSIC, ROAR_MUSIC};
 
     private final TerrainFactory terrainFactory;
 
-    //have the loader return a level? fuck yeh
     public RagnarokArea(String name, TerrainFactory terrainFactory) {
         super();
         this.name = name;
         this.terrainFactory = terrainFactory;
-        this.entitySignUp = new HashMap<>();
     }
 
+    @Override
     public void create() {
         create(0);
     }
 
+    @Override
     public void create(int xOffset) {
         loadAssets();
         displayUI();
         spawnTerrain();
 
-        // TODO: Add power ups to RagEdit and reformat spawn method
-        //generatePowerUps();
-
-        playMusic(); //TODO: eventual move to music
-        // also this is the cause of all music playing at once, because multiple ragnorok areas
-        // get made...
+        //playMusic(); //TODO: eventual move to music
 
         logger.debug("Creating new RagnarokArea");
     }
@@ -140,60 +125,26 @@ public class RagnarokArea extends GameArea {
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.loadTextures(racerTextures);
         resourceService.loadTextureAtlases(racerTextureAtlases);
-        resourceService.loadSounds(RACER_SOUNDS);
-        resourceService.loadMusic(RACER_MUSIC);
 
         while (!resourceService.loadForMillis(10)) {
             // This could be upgraded to a loading screen
-            // logger.info("Loading... {}%", resourceService.getProgress());
         }
     }
 
-    // randomly generates powerups for an area,
-    // used to be spawn power ups
-    private void generatePowerUps() {
-        GridPoint2 start = new GridPoint2(10, 3);
-        GridPoint2 end = new GridPoint2(1000, 3);
-
-        Entity powerUp;
-
-        for (int i = 0; i < 31; i++) {
-            GridPoint2 posLeft = RandomUtils.random(start, end);
-
-            switch (i % 3) {
-                case 0:
-                    powerUp = PowerUpFactory.createLightningPowerUp();
-                    break;
-
-                case 1:
-                    powerUp = PowerUpFactory.createShieldPowerUp();
-                    break;
-
-                default:
-                    powerUp = PowerUpFactory.createSpearPowerUp();
-                    break;
-            }
-
-            spawnEntityAt(powerUp, posLeft, false, false);
-        }
-    }
-
-
-    protected void spawnTutorial(int x, int y) {
+    protected void spawnTutorial(int x, int y) { // TODO: Expand this
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
-        GridPoint2 textOffset = new GridPoint2(0,5);
-        // GridPoint2 shieldSpawn = new GridPoint2(x+12, y+3);
+        GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
+        GridPoint2 runSpawn = new GridPoint2(x+80,y);
 
-        
-        
+        GridPoint2 textOffset = new GridPoint2(0,5);
+
         spawnSpear(spearSpawn.x, spearSpawn.y);
+        spawnSpear(spearObstacleSpawn.x + 10, spearObstacleSpawn.y);
         Entity spearTutorial = ObstacleFactory.createTutorialSpear();
 
         // Spawn enemies to test spear on
         spawnWolf(spearSpawn.x+8, spearSpawn.y);
-        spawnWolf(spearSpawn.x+12, spearSpawn.y);
-        // spawnShield(shieldSpawn.x, shieldSpawn.y-3);
 
         spawnLightning(lightningSpawn.x, lightningSpawn.y);
         Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
@@ -201,8 +152,6 @@ public class RagnarokArea extends GameArea {
         // Spawn enemies to test lightning on
         spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y);
         spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y);
-        spawnSkeleton(lightningSpawn.x+16, lightningSpawn.y);
-
 
         // Offset text and spawn it in
         lightningSpawn.add(textOffset);
@@ -210,25 +159,27 @@ public class RagnarokArea extends GameArea {
         spearSpawn.add(textOffset);
         spawnEntityAt(spearTutorial, spearSpawn, true, false);
 
+        runSpawn.add(textOffset);
+        Entity runTutorial = ObstacleFactory.createTutorialRun();
+        spawnEntityAt(runTutorial, runSpawn, true, false);
 
-        // Entity shieldTutorial = ObstacleFactory.createTutorialShield();
-        // spawnEntityAt(shieldTutorial, shieldSpawn, true, false);
+        spearObstacleSpawn.add(textOffset);
+        Entity spearObstacleTutorial = ObstacleFactory.createTutorialSpearObstacle();
+        spawnEntityAt(spearObstacleTutorial, spearObstacleSpawn, true, false);
+
+
     }
 
     protected Entity spawnPlayer(int x, int y) {
         Entity newPlayer = PlayerFactory.createPlayer();
-        GridPoint2 pos = new GridPoint2(x, y); /*Math.round(lane.y - newPlayer.getScale().y));*/
+        GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(newPlayer, pos, true, false);
-
-        //entitySignUp.
-        // ^ so this will register it to entity service and the activeEntities list
-        // in GameArea
 
         return newPlayer;
     }
 
     /**
-     * Spawn a background image starting at x.
+     * Spawn a background image starting at x and a bifrost split.
      *
      * @param x     starting coordinate
      * @param width width of the image using scaleWidth(width)
@@ -237,9 +188,14 @@ public class RagnarokArea extends GameArea {
      *              in world is ignored i.e. asgard and asgard_3 are both the same.
      */
     protected void spawnBackground(int x, int width, String world) {
+        logger.debug("Spawning background with world {}", world);
         Entity background = ObstacleFactory.createBackground(world, width);
-        GridPoint2 pos = new GridPoint2(x, 0);
+        GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);
+
+        Entity bifrost = ObstacleFactory.createBifrost();
+        GridPoint2 pos2 = new GridPoint2(x, 8);
+        spawnEntityAt(bifrost, pos2, true, true);
     }
 
     /**
@@ -264,7 +220,7 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnLevelLoadTrigger(int x) {
-        GridPoint2 centrePos = new GridPoint2(x, 6);
+        GridPoint2 centrePos = new GridPoint2(x, 11);
         Entity levelLoadTrigger = ObstacleFactory.createLevelLoadTrigger();
         spawnEntityAt(levelLoadTrigger, centrePos, true, true);
     }
@@ -309,7 +265,6 @@ public class RagnarokArea extends GameArea {
         // y + 2 is on this line so the platform spawns at the top of a tile, not the bottom.
         GridPoint2 pos = new GridPoint2(x, y + 2);
         spawnEntityAt(platform, pos, false, false);
-        signup(pos, platform);
     }
 
     /**
@@ -323,7 +278,6 @@ public class RagnarokArea extends GameArea {
         Entity floor = ObstacleFactory.createFloor(world);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(floor, pos, false, false);
-        signup(pos, floor);
     }
 
     /**
@@ -363,96 +317,47 @@ public class RagnarokArea extends GameArea {
             entities[i] = mapPart;
             GridPoint2 pos = new GridPoint2(x[i], y);
             spawnEntityAt(mapPart, pos, false, false);
-            signup(pos, mapPart);
         }
 
-        // Calculate width by getting taking away the starting position of the first platform from
-        // the starting position of the last platform. This is still one map piece too short, so
-        // add 3 which is the width of a single tile.
+        /* Calculate width by getting taking away the starting position of the first platform from
+           the starting position of the last platform. This is still one map piece too short, so
+           add 3 which is the width of a single tile. */
         int width = x[x.length - 1] - x[0] + 3;
         Entity collider = ObstacleFactory.createCollider(width, height);
         collider.addComponent(new GroupDisposeComponent(entities));
 
         GridPoint2 pos = new GridPoint2(x[0], y);
         spawnEntityAt(collider, pos, false, false);
-        signup(pos, collider);
     }
 
     protected void spawnRocks(int x, int y) {
         Entity rocks = ObstacleFactory.createRock();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(rocks, pos, false, false);
-        signup(pos, rocks);
     }
 
     protected void spawnSpikes(int x, int y) {
         Entity spikes = ObstacleFactory.createSpikes();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(spikes, pos, false, false);
-        signup(pos, spikes);
     }
 
     protected void spawnWolf(int x, int y) {
         Entity wolf = NPCFactory.createWolf(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(wolf, pos, false, false);
-        //signup(pos, wolf);
     }
 
     protected void spawnSkeleton(int x, int y) {
         Entity skeleton = NPCFactory.createSkeleton(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(skeleton, pos, false, false);
-        //signup(pos, skeleton);
     }
 
     protected void spawnFireSpirit(int x, int y) {
         Entity fireSpirit = NPCFactory.createFireSpirit(player);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(fireSpirit, pos, false, false);
-        //signup(pos, skeleton);
-    }
-
-    /*
-    protected void spawnFireBall(int x, int y) {
-        Entity fireball = ProjectileFactory.createFireBall();
-        GridPoint2 pos = new GridPoint2(x, y);
-        spawnEntityAt(fireball, pos, false, false);
-    }
-    */
-
-    public void clearEntitiesAt(int x, int y) {
-        // takes the global scale x and y, so mutliply them by 3 in here
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                GridPoint2 index = new GridPoint2(x + i, y + j);
-
-                if (entitySignUp.get(index) != null) {
-                    for (Entity e : entitySignUp.get(index)) {
-                        e.flagDelete();
-                    }
-                }
-
-            }
-        }
-    }
-
-    public void clearAllEntities() {
-        for (GridPoint2 g : entitySignUp.keySet()) {
-            for (Entity e : entitySignUp.get(g)) {
-                e.flagDelete();
-            }
-        }
-    }
-
-    public void signup(GridPoint2 pos, Entity entity) {
-        if (!entitySignUp.containsKey(pos)) {
-
-            LinkedList<Entity> posList = new LinkedList<>();
-            entitySignUp.put(pos, posList);
-        }
-
-        entitySignUp.get(pos).add(entity);
     }
 
     protected void spawnShield(int x, int y) {
@@ -481,50 +386,18 @@ public class RagnarokArea extends GameArea {
         this.player = spawnPlayer(x, y);
     }
 
-    /**
-     * Play all SFX in the game.
-     */
-    private void playMusic() {
-
-        String witchMusic;
-
-        switch (MathUtils.random(2)) {
-            case 1:
-                witchMusic = TOWN_MUSIC;
-                break;
-            case 2:
-                witchMusic = RAIDER_MUSIC;
-                break;
-            default:
-                witchMusic = MAIN_MUSIC;
-        }
-        Music music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
-        Music fire = ServiceLocator.getResourceService().getAsset(FIRE_MUSIC, Music.class);
-        Music walk = ServiceLocator.getResourceService().getAsset(WALK_MUSIC, Music.class);
-        music.setLooping(true);
-        fire.setLooping(true);
-        walk.setLooping(true);
-        music.setVolume(0.7f);
-        fire.setVolume(0.7f);
-        walk.setVolume(0.8f);
-        music.play();
-        fire.play();
-        walk.play();
-    }
-
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();
         resourceService.unloadAssets(racerTextures);
         resourceService.unloadAssets(racerTextureAtlases);
-        resourceService.unloadAssets(RACER_SOUNDS);
-        resourceService.unloadAssets(RACER_MUSIC);
+
+        ServiceLocator.getSoundService().unloadAssets();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class).stop();
         this.unloadAssets();
     }
 

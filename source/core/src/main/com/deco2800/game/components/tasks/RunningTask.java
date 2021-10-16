@@ -14,16 +14,9 @@ import com.deco2800.game.physics.components.PhysicsComponent;
  * bit between movements. Requires an entity with a PhysicsMovementComponent.
  */
 public class RunningTask extends DefaultTask implements PriorityTask {
-  private static final Logger logger = LoggerFactory.getLogger(RunningTask.class);
-
   private Vector2 startPos;
   private MovementTask movementTask;
-  private WaitTask waitTask;
   private Task currentTask;
-
-
-  public RunningTask() {
-  }
 
   @Override
   public int getPriority() {

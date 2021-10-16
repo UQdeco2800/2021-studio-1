@@ -32,15 +32,12 @@ public class LightningPowerUpComponent extends PowerUpComponent {
      */
     @Override
     public void update() {
-        if (active) {
-            if (powerUp.getComponent(AnimationRenderComponent.class).getCurrentAnimation().equals("float")) {
-                if (powerUp.getComponent(AnimationRenderComponent.class).isFinished()) {
-                    powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
-                    active = false;
-                    enabled = false;
-                    powerUp.flagDelete();
-                }
-            }
+        if (active && powerUp.getComponent(AnimationRenderComponent.class)
+            .getCurrentAnimation().equals("float") && powerUp.getComponent(AnimationRenderComponent.class).isFinished()) {
+            powerUp.getComponent(AnimationRenderComponent.class).stopAnimation();
+            active = false;
+            enabled = false;
+            powerUp.flagDelete();
         }
         entity.getEvents().trigger("updatePowerUps");
     }
@@ -66,12 +63,11 @@ public class LightningPowerUpComponent extends PowerUpComponent {
 
             // If the enemy is a wolf or skeleton within 8 metres, dispose
             for (Entity enemy : ServiceLocator.getEntityService().getEntityArray()) {
-                if (enemy.getType() == EntityTypes.WOLF
-                        ||enemy.getType() == EntityTypes.SKELETON
-                        || enemy.getType() == EntityTypes.FIRESPIRIT) {
-                    if (enemy.getCenterPosition().x - entity.getCenterPosition().x <= 15f) {
-                        enemy.flagDelete();
-                    }
+                if ((enemy.getType() == EntityTypes.WOLF ||
+                        enemy.getType() == EntityTypes.SKELETON ||
+                        enemy.getType() == EntityTypes.FIRESPIRIT) &&
+                        (enemy.getCenterPosition().x - entity.getCenterPosition().x <= 15f)) {
+                    enemy.flagDelete();
                 }
             }
         }

@@ -1,7 +1,6 @@
 package com.deco2800.game.components.maingame;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.audio.Music;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
@@ -24,39 +23,41 @@ public class MainGameActions extends Component {
         this.game = game;
     }
 
-    @Override
-    public void create() {
-        entity.getEvents().addListener("exit", this::onExit);
-        entity.getEvents().addListener("Pause Menu", this::onPause);
-        entity.getEvents().addListener("Score Screen", this::showScore);
-    }
 
-    /**
-     * Swaps to the Main Menu screen.
-     */
-    public void onExit() {
-        logger.info("Exiting main game screen");
+  @Override
+  public void create() {
+    entity.getEvents().addListener("exit", this::onExit);
+    entity.getEvents().addListener("Pause Menu", this::onPause);
+    entity.getEvents().addListener("Score Screen", this::showScore);
+    entity.getEvents().addListener("Game Over", this::gameOver);
+      entity.getEvents().addListener("start", this::onStart);
+  }
+
+
+  /**
+   * Swaps to the Main Menu screen.
+   */
+  public void onExit() {
+    logger.info("Exiting main game screen");
+    game.paused = false;
+    game.scoreShown = false;
+    game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+  }
+
+    private void onStart() {
+        logger.info("Restart game");
         game.paused = false;
-        game.scoreShown = false;
-        game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+        game.over = false;
+        game.setScreen(GdxGame.ScreenType.MAIN_GAME);
     }
 
     /**
      * Pauses the game -- the trigger function for the event.
      */
     public void onPause() {
-
-        Sound pauseSound;
-        Music walkSound = ServiceLocator.getResourceService().getAsset("sounds/walk.mp3", Music.class);
-        walkSound.setLooping(true);
-        walkSound.setVolume(0.8f);
-
         if (game.paused) {
             ServiceLocator.getTimeSource().setTimeScale(1f);
             popUp.dispose();
-            //resume sound
-            pauseSound = ServiceLocator.getResourceService().getAsset(IMPACT, Sound.class);
-            walkSound.play();
         } else {
             ServiceLocator.getTimeSource().setTimeScale(0f);
 
@@ -67,12 +68,8 @@ public class MainGameActions extends Component {
             popUp = new Entity();
             popUp.addComponent(new UIPop("Pause Menu", entity));
             ServiceLocator.getEntityService().register(popUp);
-            //pause sound
-            pauseSound = ServiceLocator.getResourceService().getAsset(IMPACT, Sound.class);
-            walkSound.pause();
         }
         game.paused = !game.paused;
-        pauseSound.play();
     }
 
 
@@ -87,7 +84,6 @@ public class MainGameActions extends Component {
             popUp.dispose();
             ServiceLocator.getEntityService().unregister(popUp);
             //score screen removed sound
-            scoreScreenSound = ServiceLocator.getResourceService().getAsset(IMPACT, Sound.class);
             game.scoreShown = false;
         } else {
             if (popUp != null) {
@@ -97,10 +93,30 @@ public class MainGameActions extends Component {
             popUp.addComponent(new UIPop("Score Screen", entity));
             ServiceLocator.getEntityService().register(popUp);
             //score screen sound
-            scoreScreenSound = ServiceLocator.getResourceService().getAsset(IMPACT, Sound.class);
             game.scoreShown = true;
         }
-        scoreScreenSound.play();
+        ServiceLocator.getSoundService().playSound("impact");
     }
 
+    private void gameOver() {
+
+        if (game.over) {
+            ServiceLocator.getTimeSource().setTimeScale(1f);
+            popUp.dispose();
+        } else {
+            ServiceLocator.getTimeSource().setTimeScale(0f);
+
+            if (popUp != null) {
+                popUp.dispose();
+            }
+
+            popUp = new Entity();
+            popUp.addComponent(new UIPop("Game Over", entity));
+            ServiceLocator.getEntityService().register(popUp);
+        }
+        game.over = !game.over;
+
+        ServiceLocator.getSoundService().playSound("impact");
+
+    }
 }

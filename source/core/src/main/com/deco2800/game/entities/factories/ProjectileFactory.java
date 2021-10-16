@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.CombatStatsComponent;
+import com.deco2800.game.components.FireballComponent;
 import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.components.powerups.SpearComponent;
 import com.deco2800.game.entities.Entity;
@@ -33,6 +34,7 @@ public class ProjectileFactory {
 
     public static Entity fireBall() {
         Entity fireBall = createBaseProjectile();
+        fireBall.addComponent(new FireballComponent());
         fireBall.getComponent(PhysicsMovementComponent.class);
         fireBall.setType(EntityTypes.FIREBALL);
         return fireBall;
@@ -50,7 +52,7 @@ public class ProjectileFactory {
                 .addComponent(new PhysicsMovementComponent())
                 .addComponent(new ColliderComponent().setLayer(PhysicsLayer.OBSTACLE))
                 .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
-                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f))
+                .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 7.5f))
                 .addComponent(new CombatStatsComponent(1, 20));
 
         baseProjectile.getComponent(PhysicsComponent.class).setGravityScale(5f);
