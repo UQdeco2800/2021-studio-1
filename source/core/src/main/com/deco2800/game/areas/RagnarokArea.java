@@ -68,11 +68,13 @@ public class RagnarokArea extends GameArea {
             "images/Backgrounds/Background Earth Day.png",
             "images/Backgrounds/Background Jotunheim.png",
             "images/Backgrounds/Background Jotunheim Day.png",
+            "images/Backgrounds/Background Hel.png",
             "images/tutorial/lightningTutorial.png",
             "images/tutorial/shieldTutorial.png",
             "images/tutorial/spearTutorial.png",
             "images/tutorial/spearObstacleTutorial.png",
-            "images/tutorial/run.png"
+            "images/tutorial/run.png",
+            "images/bifrost.png"
     };
 
     //TODO: make Json,
@@ -85,7 +87,10 @@ public class RagnarokArea extends GameArea {
             "images/skeleton.atlas",
             "images/sfx.atlas",
             "images/lightning-animation.atlas",
-            "images/player-spear.atlas"
+            "images/player-spear.atlas",
+            "images/bifrost.atlas",
+            "particles/particles.atlas",
+            "images/fireball.atlas"
     };
 
     private final TerrainFactory terrainFactory;
@@ -177,6 +182,19 @@ public class RagnarokArea extends GameArea {
     }
 
     /**
+     * Spawn an entity which will play a particle explosion when on collision with the player.
+     *
+     * @param x terrain x coordinate of the entity
+     * @param y terrain y coordinate of the entity
+     */
+    protected void spawnParticleSpread(int x, int y) {
+        Entity particleEntity = ObstacleFactory.createWallParticles(
+                "particles/rainbow_spread_2", "particles/particles.atlas");
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(particleEntity, pos, false, true);
+    }
+
+    /**
      * Spawn a background image starting at x.
      *
      * @param x     starting coordinate
@@ -190,6 +208,9 @@ public class RagnarokArea extends GameArea {
         Entity background = ObstacleFactory.createBackground(world, width);
         GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);
+        Entity bifrost = NPCFactory.createBifrost();
+        GridPoint2 pos2 = new GridPoint2(x, 8);
+        spawnEntityAt(bifrost, pos2, true, true);
     }
 
     /**
