@@ -22,6 +22,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private final RaycastHit hit = new RaycastHit();
   private boolean chaseHorizontal = false;
   private MovementTask movementTask;
+  private Vector2 currentPos;
 
   /**
    * @param target The entity to chase.
@@ -66,7 +67,8 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     movementTask = new MovementTask(target.getPosition());
     movementTask.create(owner);
     movementTask.start();
-    
+    currentPos = owner.getEntity().getPosition();
+
     this.owner.getEntity().getEvents().trigger("chaseStart");
   }
 
