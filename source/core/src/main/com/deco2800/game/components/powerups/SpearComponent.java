@@ -8,6 +8,7 @@ import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.PhysicsComponent;
 import com.deco2800.game.services.ServiceLocator;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 
 public class SpearComponent extends Component {
     /**
@@ -75,6 +76,10 @@ public class SpearComponent extends Component {
                     case WOLF:
                         ServiceLocator.getSoundService().playSound("wolf_death");
                         break;
+                }
+                other.entity.getEvents().trigger("death");
+                if(entity.getComponent(AnimationRenderComponent.class).isFinished()) {
+                    other.entity.flagDelete();
                 }
                 spear.entity.getEvents().trigger("dispose");
             }
