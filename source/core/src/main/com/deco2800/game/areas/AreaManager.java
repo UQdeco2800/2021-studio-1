@@ -106,9 +106,6 @@ public class AreaManager extends RagnarokArea {
         this.player = terrainInstance.getPlayer();
         terrainInstance.spawnWallOfDeath();
         logger.debug("Creating AreaManager");
-
-        //ServiceLocator.getSoundService().playMusic("town");
-
     }
 
 
