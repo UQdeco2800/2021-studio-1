@@ -272,9 +272,11 @@ public class UIPop extends UIComponent {
         TextButton returnButton;
         //Button - new game
         TextButton restartButton;
+        String currentScore = String.format("Score: %s", PlayerStatsDisplay.getPlayerScore());
 
         returnButton = new TextButton("Return to main menu", skin);
         restartButton = new TextButton("Restart", skin);
+        Label score = new Label(currentScore, skin, POP_UP_FONT);
 
         restartButton.addListener(new ChangeListener() {
             @Override
@@ -288,6 +290,8 @@ public class UIPop extends UIComponent {
                 game.getEvents().trigger("exit");
             }
         });
+        popUp.add(score).center().padTop(30f);
+        popUp.row();
         popUp.add(restartButton).center().padTop(30f);
         popUp.row();
         popUp.add(returnButton).center().padTop(30f);
