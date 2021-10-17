@@ -75,4 +75,8 @@ public class TouchAttackComponent extends Component {
       targetBody.applyLinearImpulse(impulse, targetBody.getWorldCenter(), true);
     }
   }
+
+  public void setKnockbackForce(float knockback) {
+    knockbackForce = knockback;
+  }
 }
