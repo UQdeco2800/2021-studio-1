@@ -289,6 +289,7 @@ public class NPCFactory {
         bfx.setScale(6f, 6f);
 
         ServiceLocator.getSoundService().playSound("shatter");
+        ServiceLocator.getSoundService().playSound("roar");
         
         return bfx;
     }
