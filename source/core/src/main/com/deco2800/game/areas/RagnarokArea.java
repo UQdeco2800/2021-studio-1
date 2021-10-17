@@ -90,7 +90,9 @@ public class RagnarokArea extends GameArea {
             "images/bifrost.atlas",
             "images/bfx.atlas",
             "images/deathFade.atlas",
-            "particles/particles.atlas"
+            "particles/particles.atlas",
+            "particles/particles.atlas",
+            "images/fireball.atlas"
     };
 
     private final TerrainFactory terrainFactory;

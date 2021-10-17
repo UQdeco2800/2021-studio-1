@@ -68,8 +68,10 @@ public class LightningPowerUpComponent extends PowerUpComponent {
                         enemy.getType() == EntityTypes.FIRESPIRIT) &&
                         (enemy.getCenterPosition().x - entity.getCenterPosition().x <= 15f)) {
                     enemy.flagDelete();
-
-
+                    enemy.getEvents().trigger("death");
+                    if(entity.getComponent(AnimationRenderComponent.class).isFinished()) {
+                        enemy.flagDelete();
+                    }
                 }
             }
 

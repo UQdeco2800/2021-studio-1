@@ -63,6 +63,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
 
         skeleton
@@ -115,6 +116,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
 
         wolf
@@ -289,6 +291,7 @@ public class NPCFactory {
         bfx.setScale(6f, 6f);
 
         ServiceLocator.getSoundService().playSound("shatter");
+        ServiceLocator.getSoundService().playSound("roar");
         
         return bfx;
     }
