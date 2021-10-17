@@ -8,11 +8,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchDisposeComponent;
-import com.deco2800.game.components.npc.DeathGiantAnimationController;
-import com.deco2800.game.components.npc.BFXAnimationController;
-import com.deco2800.game.components.npc.GhostAnimationController;
-import com.deco2800.game.components.npc.ScreenFXAnimationController;
+import com.deco2800.game.components.npc.*;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.components.player.DeathComponent;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -63,8 +61,8 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
 
         skeleton
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -116,8 +114,8 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
 
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -175,8 +173,8 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/fire_spirit.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.NORMAL);
 
         fireSpirit
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -337,7 +335,8 @@ public class NPCFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 7.5f))
-                        .addComponent(new GhostAnimationController());
+                        .addComponent(new GhostAnimationController())
+                        .addComponent(new EntityDeath());
 
         PhysicsUtils.setScaledCollider(npc, 0f, 0f);
         npc.getComponent(HitboxComponent.class).setAsCircleAligned(0.2f,

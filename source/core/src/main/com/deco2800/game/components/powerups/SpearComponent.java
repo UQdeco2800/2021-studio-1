@@ -65,7 +65,6 @@ public class SpearComponent extends Component {
             if (other.entity.getType() == EntityTypes.FIRESPIRIT
                     || other.entity.getType() == EntityTypes.SKELETON
                     || other.entity.getType() == EntityTypes.WOLF) {
-                other.entity.flagDelete();
                 switch (other.entity.getType()) {
                     case FIRESPIRIT:
                         ServiceLocator.getSoundService().playSound("spirit_death");
@@ -78,9 +77,6 @@ public class SpearComponent extends Component {
                         break;
                 }
                 other.entity.getEvents().trigger("death");
-                if(entity.getComponent(AnimationRenderComponent.class).isFinished()) {
-                    other.entity.flagDelete();
-                }
                 spear.entity.getEvents().trigger("dispose");
             }
         }
