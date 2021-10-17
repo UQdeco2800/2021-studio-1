@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.deco2800.game.components.BifrostFXComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.rendering.BifrostAnimationRenderComponent;
 import com.deco2800.game.components.npc.BifrostAnimationController;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsLayer;
@@ -90,7 +91,7 @@ public class ObstacleFactory {
                 .getAsset("particles/particles.atlas", TextureAtlas.class);
 
         AnimationRenderComponent animator =
-                new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset(
+                new BifrostAnimationRenderComponent(ServiceLocator.getResourceService().getAsset(
                         "images/bifrost.atlas", TextureAtlas.class));
         animator.addAnimation("burn", 0.06f, Animation.PlayMode.LOOP);
 
@@ -103,7 +104,7 @@ public class ObstacleFactory {
                 .addComponent(new ParticleEffectRenderComponent(effectData, particleImage,
                         PhysicsLayer.PLAYER));
 
-        bifrost.getComponent(AnimationRenderComponent.class).scaleEntity();
+        bifrost.getComponent(BifrostAnimationRenderComponent.class).scaleEntity();
         bifrost.setType(EntityTypes.OBSTACLE);
         bifrost.setScale(1f, 16f);
         return bifrost;

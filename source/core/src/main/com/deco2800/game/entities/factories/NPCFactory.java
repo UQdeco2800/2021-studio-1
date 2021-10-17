@@ -9,11 +9,10 @@ import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.components.npc.DeathGiantAnimationController;
-import com.deco2800.game.components.npc.BifrostAnimationController;
+import com.deco2800.game.components.npc.BFXAnimationController;
 import com.deco2800.game.components.npc.GhostAnimationController;
 import com.deco2800.game.components.npc.ScreenFXAnimationController;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.BifrostFXComponent;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -44,6 +43,7 @@ import com.deco2800.game.services.ServiceLocator;
 public class NPCFactory {
     private static final NPCConfigs configs =
             FileLoader.readClass(NPCConfigs.class, "configs/NPCs.json");
+    private static final String RUN_BACK = "run_back";
 
     /**
      * Creates a skeleton entity.
@@ -63,7 +63,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
 
         skeleton
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -115,7 +115,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
 
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
@@ -173,7 +173,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/fire_spirit.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("run_back", 0.1f, Animation.PlayMode.LOOP);
+        animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
 
         fireSpirit
@@ -272,6 +272,25 @@ public class NPCFactory {
         screenFX.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
 
         return screenFX;
+    }
+
+    public static Entity createBifrostFX(Entity target) {
+        AnimationRenderComponent animator =
+                new AnimationRenderComponent(ServiceLocator.getResourceService().getAsset(
+                        "images/bfx.atlas", TextureAtlas.class));
+        animator.addAnimation("play", 0.06f, Animation.PlayMode.NORMAL);
+
+        Entity bfx = new Entity()
+                .addComponent(animator)
+                .addComponent(new BFXAnimationController());
+
+        bfx.getComponent(AnimationRenderComponent.class).scaleEntity();
+        bfx.setType(EntityTypes.OBSTACLE);
+        bfx.setScale(6f, 6f);
+
+        ServiceLocator.getSoundService().playSound("shatter");
+        
+        return bfx;
     }
 
     public static Entity createDeathGiant(Entity target) {

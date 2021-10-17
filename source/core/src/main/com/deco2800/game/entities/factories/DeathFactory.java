@@ -19,7 +19,6 @@ public class DeathFactory {
                 Animation.PlayMode.NORMAL);
 
         player.addComponent(animator);
-        ServiceLocator.getSoundService().playSound("death");
 
         return player;
     }

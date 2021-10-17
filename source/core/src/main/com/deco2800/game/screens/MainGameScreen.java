@@ -159,6 +159,7 @@ public class MainGameScreen extends ScreenAdapter {
                         ServiceLocator.getEntityService().register(fade);
                         fade.getComponent(AnimationRenderComponent.class).startAnimation("deathFade");
                         death.getComponent(AnimationRenderComponent.class).startAnimation("death-right");
+                        ServiceLocator.getSoundService().playMusic("death");
                         deathAnimation = true;
                     }
 
