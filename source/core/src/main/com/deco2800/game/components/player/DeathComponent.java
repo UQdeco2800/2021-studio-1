@@ -11,6 +11,9 @@ public class DeathComponent extends Component {
         this.gameUI = gameUI;
     }
 
+    /**
+     * Checks if the death animation has finished and triggers the game over sequence to start
+     */
     @Override
     public void update() {
         if (entity.getComponent(AnimationRenderComponent.class).isFinished()) {

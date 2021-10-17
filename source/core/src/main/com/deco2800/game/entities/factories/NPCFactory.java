@@ -10,7 +10,6 @@ import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchDisposeComponent;
 import com.deco2800.game.components.npc.*;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.player.DeathComponent;
 import com.deco2800.game.components.tasks.*;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
