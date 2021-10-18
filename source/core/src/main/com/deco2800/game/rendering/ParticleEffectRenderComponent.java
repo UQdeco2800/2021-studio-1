@@ -46,7 +46,7 @@ public class ParticleEffectRenderComponent extends RenderComponent {
      */
     @Override
     public void create() {
-        ServiceLocator.getRenderService().register(this);
+        super.create();
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
         this.hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
@@ -95,7 +95,7 @@ public class ParticleEffectRenderComponent extends RenderComponent {
 
     @Override
     public void dispose() {
-        ServiceLocator.getRenderService().unregister(this);
+        super.dispose();
         particleEffect.dispose();
     }
 }
