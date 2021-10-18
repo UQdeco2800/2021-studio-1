@@ -8,6 +8,7 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
  * of the events is triggered.
  */
 public class GhostAnimationController extends Component {
+  private boolean toDie;
   AnimationRenderComponent animator;
 
   @Override
@@ -24,22 +25,35 @@ public class GhostAnimationController extends Component {
   }
 
   void animateDeath() {
+    animator.stopAnimation();
     animator.startAnimation("death");
+    this.toDie = true;
+  }
+
+  @Override
+  public void update() {
+    if (this.toDie && this.animator.isFinished()) {
+      this.entity.flagDelete();
+    }
   }
 
   void animateWander() {
+    animator.stopAnimation();
     animator.startAnimation("run");
   }
 
   void animateWander_right() {
+    animator.stopAnimation();
     animator.startAnimation("run_back");
   } //test for NPC to face other direction when moving
 
   void animateChase() {
+    animator.stopAnimation();
     animator.startAnimation("run");
   }
 
   void animateChase_right() {
+    animator.stopAnimation();
     animator.startAnimation("run_back");
   }
 }

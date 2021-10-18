@@ -92,7 +92,9 @@ public class RagnarokArea extends GameArea {
             "images/bifrost.atlas",
             "images/bfx.atlas",
             "particles/particles.atlas",
-            "images/fireball.atlas"
+            "images/fireball.atlas",
+            "images/deathFade.atlas",
+            "particles/particles.atlas"
     };
 
     private final TerrainFactory terrainFactory;
@@ -232,7 +234,7 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnBifrostFX(int x, int y) {
-        Entity bfx = NPCFactory.createBifrostFX(player);
+        Entity bfx = NPCFactory.createBifrostFX();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(bfx, pos, false, false);
     }

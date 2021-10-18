@@ -119,7 +119,7 @@ public class PlayerStatsDisplay extends UIComponent {
   public void update(){
     entity.getEvents().trigger("updateScore", scoring.getCurrentScore());
     // flags that the player is dead
-    if (entity.getComponent(CombatStatsComponent.class).isDead() == true){
+    if (entity.getComponent(CombatStatsComponent.class).isDead()){
       deadFlag = true;
       entity.getEvents().trigger("start");
     }
