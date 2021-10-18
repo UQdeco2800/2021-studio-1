@@ -49,7 +49,6 @@ public class StoryDisplay extends UIComponent {
     topLayer.setColor(Color.BLACK);
 
     TextButton nextBtn = new TextButton("Next", skin);
-    TextButton prevBtn = new TextButton("Prev", skin);
     TextButton skipBtn = new TextButton("Skip", skin);
 
     // Triggers an event when the button is pressed
@@ -64,14 +63,6 @@ public class StoryDisplay extends UIComponent {
         });
     // Triggers an event when the button is pressed
 
-    prevBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Prev button clicked");
-            entity.getEvents().trigger("prev");
-          }
-        });
 
     skipBtn.addListener(
         new ChangeListener() {
@@ -83,7 +74,6 @@ public class StoryDisplay extends UIComponent {
         });
     topLayer.addAction(Actions.fadeOut(2));
     table.stack(story, topLayer).width(Gdx.graphics.getWidth()).height(Gdx.graphics.getHeight());
-    rootTable.add(prevBtn).pad(30f);
     rootTable.add(nextBtn).pad(30f);
     rootTable.add(skipBtn).pad(30f);
 
