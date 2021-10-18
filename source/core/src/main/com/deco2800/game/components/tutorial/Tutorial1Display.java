@@ -1,7 +1,10 @@
 package com.deco2800.game.components.tutorial;
 
 import com.badlogic.gdx.Gdx;
+import com.deco2800.game.GdxGame;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -10,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +25,7 @@ public class Tutorial1Display extends UIComponent {
   private static final float Z_INDEX = 2f;
   private Table table;
   private Table rootTable;
+  private Texture texture;
 
   @Override
   public void create() {
@@ -39,6 +44,9 @@ public class Tutorial1Display extends UIComponent {
         new Image(
             ServiceLocator.getResourceService()
                 .getAsset("images/tutorial/instruct1.png", Texture.class));
+
+    Image topLayerTutorial1 = new Image(new TextureRegion(texture=GdxGame.getTexture()));
+    topLayerTutorial1.setColor(Color.BLACK);
 
     TextButton nextBtn = new TextButton("Next", skin);
     TextButton prevBtn = new TextButton("Prev", skin);
@@ -73,15 +81,14 @@ public class Tutorial1Display extends UIComponent {
             entity.getEvents().trigger("skip");
           }
         });
-
-    table.add(tutorial1).width(Gdx.graphics.getWidth()).height(Gdx.graphics.getHeight());
+    topLayerTutorial1.addAction(Actions.fadeOut(2));
+    table.stack(tutorial1, topLayerTutorial1).width(Gdx.graphics.getWidth()).height(Gdx.graphics.getHeight());
     rootTable.add(prevBtn).pad(30f);
     rootTable.add(nextBtn).pad(30f);
     rootTable.add(skipBtn).pad(30f);
 
     stage.addActor(table);
     stage.addActor(rootTable);
-//    stage.addAction(Actions.sequence(Actions.fadeOut(0.1f), Actions.fadeIn(0.8f)));
   }
 
 
