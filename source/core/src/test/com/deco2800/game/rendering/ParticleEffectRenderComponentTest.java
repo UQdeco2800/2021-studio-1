@@ -55,9 +55,9 @@ class ParticleEffectRenderComponentTest {
     }
 
     @Test
-    void shouldUpdateOnRender() {
+    void shouldUpdateOnDraw() {
         SpriteBatch batch = mock(SpriteBatch.class);
-        particleEntity.getComponent(ParticleEffectRenderComponent.class).render(batch);
+        particleEntity.getComponent(ParticleEffectRenderComponent.class).draw(batch);
         verify(particleEffect).update(anyFloat());
     }
 
@@ -92,7 +92,7 @@ class ParticleEffectRenderComponentTest {
                 player.getComponent(HitboxComponent.class).getFixture());
 
         SpriteBatch batch = mock(SpriteBatch.class);
-        particleEntity.getComponent(ParticleEffectRenderComponent.class).render(batch);
+        particleEntity.getComponent(ParticleEffectRenderComponent.class).draw(batch);
 
         verify(particleEffect).setPosition(x, y);
     }

@@ -80,17 +80,6 @@ public class ParticleEffectRenderComponent extends RenderComponent {
      */
     @Override
     protected void draw(SpriteBatch batch) {
-        particleEffect.draw(batch);
-    }
-
-    /**
-     * Render the RenderComponent by updating the position and update the particle effect before
-     * drawing to the batch.
-     *
-     * @param batch Batch to render to.
-     */
-    @Override
-    public void render(SpriteBatch batch) {
         particleEffect.setPosition(entity.getPosition().x, this.y);
         particleEffect.update(Gdx.graphics.getDeltaTime());
         particleEffect.draw(batch);
