@@ -65,7 +65,9 @@ public class VariableSpeedComponent extends Component {
         } else if (stopRunning == 0) {
 
             tutorialCompleted = 1;
-
+            entity.getEvents().trigger("moveRight");
+            deathGiant.getEvents().trigger("moveRight");
+            sfx.getEvents().trigger("moveRight");
             ServiceLocator.getSoundService().playSound("onstomp");
 
             entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(10);

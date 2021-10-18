@@ -42,7 +42,7 @@ public class MoveRightTask extends DefaultTask implements PriorityTask {
     movementTask.start();
     currentTask = movementTask;
 
-    this.owner.getEntity().getEvents().trigger("moveRight");
+    //this.owner.getEntity().getEvents().trigger("moveRight");
   }
 
   @Override
