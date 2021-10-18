@@ -11,7 +11,7 @@ import com.deco2800.game.services.ServiceLocator;
  * are made on the scoring on basis of various interactions
  */
 public class GameScore extends Component  {
-    private  long score = 0;
+    public  long score = 0;
     private long previous_score = 1;
 
     /**
@@ -49,6 +49,5 @@ public class GameScore extends Component  {
             PlayerStatsDisplay.lightningActive = false;
         }
     }
-
 }
 

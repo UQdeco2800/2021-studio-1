@@ -41,7 +41,9 @@ public class MainGameActions extends Component {
     game.paused = false;
     game.scoreShown = false;
     game.setScreen(GdxGame.ScreenType.MAIN_MENU);
+    PlayerStatsDisplay.resetPlayerScore();
   }
+
 
     private void onStart() {
         logger.info("Restart game");
