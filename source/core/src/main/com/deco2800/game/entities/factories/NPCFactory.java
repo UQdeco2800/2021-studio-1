@@ -63,7 +63,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/skeleton.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("death", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
 
         skeleton
@@ -116,7 +116,7 @@ public class NPCFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/wolf.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("death", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
 
         wolf
@@ -176,7 +176,7 @@ public class NPCFactory {
                         ServiceLocator.getResourceService().getAsset("images/fire_spirit.atlas", TextureAtlas.class));
         animator.addAnimation("run", 0.1f, Animation.PlayMode.LOOP);
         animator.addAnimation(RUN_BACK, 0.1f, Animation.PlayMode.LOOP);
-        animator.addAnimation("death", 0.1f, Animation.PlayMode.NORMAL);
+        animator.addAnimation("death", 0.1f, Animation.PlayMode.LOOP);
 
         fireSpirit
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
