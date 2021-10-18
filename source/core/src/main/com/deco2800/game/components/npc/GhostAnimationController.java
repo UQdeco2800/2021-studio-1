@@ -31,6 +31,7 @@ public class GhostAnimationController extends Component {
 //    animator.startAnimation("float");
 //  }
   void animateDeath() {
+    animator.stopAnimation();
     animator.startAnimation("death");
     this.toDie = true;
   }
@@ -43,18 +44,22 @@ public class GhostAnimationController extends Component {
   }
 
   void animateWander() {
+    animator.stopAnimation();
     animator.startAnimation("run");
   }
 
   void animateWander_right() {
+    animator.stopAnimation();
     animator.startAnimation("run_back");
   } //test for NPC to face other direction when moving
 
   void animateChase() {
+    animator.stopAnimation();
     animator.startAnimation("run");
   }
 
   void animateChase_right() {
+    animator.stopAnimation();
     animator.startAnimation("run_back");
   }
 }
