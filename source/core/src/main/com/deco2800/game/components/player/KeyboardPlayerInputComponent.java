@@ -15,6 +15,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 runDirection = Vector2.Zero.cpy();
   public static int isDirection = 0;
+  public static int isMoving = 0;
   public KeyboardPlayerInputComponent() {
     super(5);
   }
@@ -42,6 +43,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         triggerRunEvent();
         isDirection = 2;
+        isMoving =2;
         return true;
       case Keys.DOWN:
       case Keys.S:
@@ -55,6 +57,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         triggerRunEvent();
         isDirection = 4;
+        isMoving = 4;
         return true;
       case Keys.L:
         triggerLightningEvent();
@@ -91,6 +94,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         triggerRunEvent();
         isDirection = 2;
+        isMoving =0;
         return true;
       case Keys.DOWN:
       case Keys.S:
@@ -104,6 +108,7 @@ public class KeyboardPlayerInputComponent extends InputComponent {
         }
         triggerRunEvent();
         isDirection = 4;
+        isMoving = 0;
         return true;
       default:
         return false;
