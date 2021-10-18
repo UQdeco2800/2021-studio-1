@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.files.UserSettings;
-import com.deco2800.game.gameScore.gameScore;
+import com.deco2800.game.score.GameScore;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 
@@ -30,8 +30,9 @@ public class PlayerStatsDisplay extends UIComponent {
 
   public static boolean deadFlag = false;
   public static boolean lightningActive = false;
+  
+  public static GameScore scoring = new GameScore();
 
-  public static gameScore scoring = new gameScore();
   private int health;
 
   /**
