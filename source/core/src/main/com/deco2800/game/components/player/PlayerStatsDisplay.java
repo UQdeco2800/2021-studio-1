@@ -30,7 +30,7 @@ public class PlayerStatsDisplay extends UIComponent {
 
   public static boolean deadFlag = false;
   public static boolean lightningActive = false;
-  
+
   public static GameScore scoring = new GameScore();
 
   private int health;

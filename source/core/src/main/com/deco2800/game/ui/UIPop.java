@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.score.GameScore;
 import com.deco2800.game.files.UserSettings;
 import com.badlogic.gdx.audio.Music;
+import com.deco2800.game.services.ServiceLocator;
 
 import java.util.*;
 
@@ -528,10 +529,6 @@ public class UIPop extends UIComponent {
 
     @Override
     public void draw(SpriteBatch UIIndex) {
-        int screenHeight = Gdx.graphics.getHeight();
-        int screenWidth = Gdx.graphics.getHeight();
-        float offsetX = 10f;
-        float offsetY = 30f;
     }
 
     @Override
