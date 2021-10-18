@@ -2,7 +2,6 @@ package com.deco2800.game.components;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.deco2800.game.entities.Entity;
-import com.deco2800.game.services.ServiceLocator;
 
 public class CameraShakeComponent extends Component {
     private Entity target;
@@ -53,7 +52,6 @@ public class CameraShakeComponent extends Component {
         entity.getEvents().trigger("moveRightAngry");
         this.sfx.getEvents().trigger("dark");
 
-        // TODO: refactor all of this to be contained in a call to the sound service
         if (distance < 32f) {
             cameraComponent.setOffset(this.toggle);
             cameraComponent.update();

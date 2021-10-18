@@ -27,7 +27,6 @@ public class AreaManager extends RagnarokArea {
      */
     private RagnarokArea terrainInstance;
 
-    //TODO: make this *far* less volatile. currently if either the height/width value loaded
     //      by the loader doesn't equal the amount of lines/colums this thing will go bananas
     //      [unequivolcally crash the game]
     private String[][] bufferedPlaces;
@@ -194,7 +193,7 @@ public class AreaManager extends RagnarokArea {
                 area.spawnWolf(gx, gy);
                 break;
             case "levelTrigger":
-                area.spawnLevelLoadTrigger(gx); //TODO: MAKE THiS DYNAMICALLY BASED ON SCREEN WIDTH
+                area.spawnLevelLoadTrigger(gx);
                 break;
             case "fireSpirit":
                 area.spawnFireSpirit(gx, gy);

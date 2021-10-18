@@ -24,13 +24,8 @@ public class SpawnCommand implements Command {
             return false;
         }
 
-        //TODO: CHECK FOR TWO CLOSED BRACKETS
         String arg0 = args.get(0).replace("[","").replace("]","");
-
-        //TODO: CHECK FOR TWO CLOSED BRACKETS
         String arg1 = args.get(1).replace("(","").replace(")","");
-
-        //TODO: CHECK FOR PARSE INT WORK
         String[] coOrds = arg0.split(",");
         int x = Integer.parseInt(coOrds[0]);
         int y = Integer.parseInt(coOrds[1]);
