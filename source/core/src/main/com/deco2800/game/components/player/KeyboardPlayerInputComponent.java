@@ -15,6 +15,7 @@ import com.deco2800.game.utils.math.Vector2Utils;
 public class KeyboardPlayerInputComponent extends InputComponent {
   private final Vector2 runDirection = Vector2.Zero.cpy();
   public static int isDirection = 0;
+  public static int isMoving = 0;
   public KeyboardPlayerInputComponent() {
     super(5);
   }

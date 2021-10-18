@@ -3,6 +3,7 @@ package com.deco2800.game.gameScore;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.components.powerups.SpearPowerUpComponent;
@@ -31,6 +32,9 @@ public class gameScore extends Component  {
         // if the game is not paused increment the score and pauses the scoring on player being dead
         if (ServiceLocator.getTimeSource().getDeltaTime() != 0
                 && PlayerStatsDisplay.deadFlag == false
+                && (
+                (KeyboardPlayerInputComponent.isMoving == 2 || KeyboardPlayerInputComponent.isMoving == 4 )
+        )
         ) {
             // checks if spear being thrown
             lightningComponent();
