@@ -56,8 +56,9 @@ public class PlayerStatsDisplay extends UIComponent {
     table.top().left();
     table.setFillParent(true);
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    float windowHeight = UserSettings.get().fullscreen ? screenSize.height : UserSettings.getWindowHeight();
+    //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    float windowHeight = UserSettings.get().fullscreen ? 900 :
+            UserSettings.getWindowHeight();
 
     tableTwo = new Table();
     tableTwo.top().left();

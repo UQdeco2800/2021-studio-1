@@ -144,7 +144,7 @@ public class MainMenuDisplay extends UIComponent {
     inputBox = new TextArea("Enter Name", skin);
     addCharacterSelections(characterSelections);
 
-    screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    //screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     startBtn.addListener(
             new ChangeListener() {
@@ -431,19 +431,19 @@ public class MainMenuDisplay extends UIComponent {
 
         SetStarPositions();
 
-        if (!starOneShot && effectsXOne >= screenSize.width / 4 + offset) {
+        if (!starOneShot && effectsXOne >= offset) {
             starOneShot = true;
             frameCountOne = 0;
             shootOneWait = (float) Math.random() * 800 + 800;
         }
 
-        if (!starTwoShot && effectsXTwo >= screenSize.width + offset) {
+        if (!starTwoShot && effectsXTwo >= offset) {
             starTwoShot = true;
             frameCountTwo = 0;
             shootTwoWait = (float) Math.random() * 300 + 300;
         }
 
-        if (!starThreeShot && effectsXThree >= screenSize.width + offset) {
+        if (!starThreeShot && effectsXThree >= offset) {
             starThreeShot = true;
             frameCountThree = 0;
             shootThreeWait = (float) Math.random() * 500 + 500;
@@ -553,7 +553,7 @@ public class MainMenuDisplay extends UIComponent {
     private void MoveStarOne() {
 
         effectsXOne += shootOneSpeed;
-        effectsYOne = shootOneWait != 1 ? screenSize.height /3.5f : effectsYOne - shootOneSpeed;
+        effectsYOne = shootOneWait != 1 ? 200 : effectsYOne - shootOneSpeed;
 
         starOne.setPosition(effectsXOne, effectsYOne);
     }
@@ -561,7 +561,8 @@ public class MainMenuDisplay extends UIComponent {
     private void MoveStarTwo() {
 
         effectsXTwo += shootTwoSpeed;
-        effectsYTwo = ((int)shootTwoWait) % 2 == 0 ? screenSize.height / 5f : effectsYTwo - shootTwoSpeed;
+        effectsYTwo = ((int)shootTwoWait) % 2 == 0 ? 200 :
+                effectsYTwo - shootTwoSpeed;
 
         starTwo.setPosition(effectsXTwo, effectsYTwo);
     }
