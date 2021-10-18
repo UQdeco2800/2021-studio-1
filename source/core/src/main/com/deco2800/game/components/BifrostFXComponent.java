@@ -7,8 +7,11 @@ import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.components.HitboxComponent;
 import com.deco2800.game.services.ServiceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BifrostFXComponent extends Component {
+    private static final Logger logger = LoggerFactory.getLogger(BifrostFXComponent.class);
     HitboxComponent hitboxComponent;
     EntityService entityService;
     
@@ -18,7 +21,7 @@ public class BifrostFXComponent extends Component {
 
     @Override
     public void create() {
-        entity.getEvents().addListener("collisionEnd", this::onCollisionEnd);
+        entity.getEvents().addListener("collisionStart", this::onCollisionEnd);
         hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
 
@@ -31,12 +34,14 @@ public class BifrostFXComponent extends Component {
         if (PhysicsLayer.contains(PhysicsLayer.PLAYER, other.getFilterData().categoryBits)) {
             // Colided with player, spawn FX!
             Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-            
-            //GridPoint2 pos = new GridPoint2(target.getPosition().x, target.getPosition().y);
-            int x = Math.round(target.getPosition().x) + 3;
-            int y = Math.round(target.getPosition().y);
-            //ServiceLocator.getTerminalService().sendTerminal("-spawn "+ x + "," + y + ", skeleton");
-            //Fix the above somehow buddy?
+
+            int y = Math.round(target.getPosition().y) - 3;
+            if (y < 0)
+                y = 0;
+
+            String line = String.format("-spawn [%d,%d] (bifrostFX)", -1, y);
+            logger.debug(line);
+            ServiceLocator.getTerminalService().sendTerminal(line);
         }
     }
 }

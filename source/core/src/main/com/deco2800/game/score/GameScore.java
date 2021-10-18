@@ -1,12 +1,8 @@
-package com.deco2800.game.gameScore;
+package com.deco2800.game.score;
 
-import com.deco2800.game.GdxGame;
-import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
-import com.deco2800.game.components.powerups.LightningPowerUpComponent;
-import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 import com.deco2800.game.services.ServiceLocator;
 
 
@@ -14,7 +10,7 @@ import com.deco2800.game.services.ServiceLocator;
  * The class handles the scoring of the player the score is increased linearly in a loop and variations
  * are made on the scoring on basis of various interactions
  */
-public class gameScore extends Component  {
+public class GameScore extends Component  {
     private  long score = 0;
     private long previous_score = 1;
 

@@ -14,6 +14,10 @@ public class RagLoader {
     private static boolean inConfig;
     private static boolean inTerrain;
 
+    public RagLoader() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Loads file, sending messages to the terminal that are handled and delegated to the AreaManager.
      * It's quite messy, but the true dishpit-code-filthy warriors will know whats up.
@@ -75,16 +79,6 @@ public class RagLoader {
                 inTerrain = false;
                 ServiceLocator.getTerminalService().sendTerminal("-config close queue");
             }
-
-            String[] args = line.split(" ");
-            String entity = args[0];
-            String command = args[1];
-            String argument = args[2];
-
-            argument = argument.replace("]", "").replace("[", "");
-
-            float px = Float.parseFloat(argument.split(",")[0]);
-            float py = Float.parseFloat(argument.split(",")[1]);
 
         } else if (line.startsWith("-")) { // direct command line
             ServiceLocator.getTerminalService().sendTerminal(line);

@@ -16,8 +16,12 @@ import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.VariableSpeedComponent;
 import com.deco2800.game.components.FallDamageComponent;
+
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.MathUtils;
+
+
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 
 
 import java.util.function.Function;
@@ -28,15 +32,19 @@ public class RagnarokArea extends GameArea {
 
     private static final float WALL_HEIGHT = 0.1f;
     private final String name; //initialise in the loader
+
+
     private static final String TOWN_MUSIC = "sounds/town.mp3";
     private static final String MAIN_MUSIC = "sounds/main.mp3";
     private static final String RAIDER_MUSIC = "sounds/raider.mp3";
     private static final String FIRE_MUSIC = "sounds/fire.mp3";
     private static final String WALK_MUSIC = "sounds/walk.mp3";
 
+    private static final int DEFAULT_SPEED =3;
+
+
     protected Entity player;
 
-    //TODO: make Json
     private static final String[] racerTextures = {
             "images/floor.png",
             "images/platform_gradient.png",
@@ -81,11 +89,11 @@ public class RagnarokArea extends GameArea {
             "images/tutorial/spearTutorial.png",
             "images/tutorial/spearObstacleTutorial.png",
             "images/tutorial/run.png",
-            "images/bifrost.png"
+            "images/bifrost.png",
+            "images/bfx.png"
     };
 
-    //TODO: make Json,
-    private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
+    private static final String[] racerTextureAtlases = {
             "images/wolf.atlas",
             "images/odin.atlas",
             "images/wall.atlas",
@@ -96,6 +104,10 @@ public class RagnarokArea extends GameArea {
             "images/lightning-animation.atlas",
             "images/player-spear.atlas",
             "images/bifrost.atlas",
+            "images/bfx.atlas",
+            "particles/particles.atlas",
+            "images/fireball.atlas",
+            "images/deathFade.atlas",
             "particles/particles.atlas"
     };
 
@@ -108,6 +120,7 @@ public class RagnarokArea extends GameArea {
         super();
         this.name = name;
         this.terrainFactory = terrainFactory;
+
     }
 
     @Override
@@ -121,7 +134,6 @@ public class RagnarokArea extends GameArea {
         displayUI();
         spawnTerrain();
 
-        //playMusic(); //TODO: eventual move to music
 
         logger.debug("Creating new RagnarokArea");
     }
@@ -143,7 +155,7 @@ public class RagnarokArea extends GameArea {
         }
     }
 
-    protected void spawnTutorial(int x, int y) { // TODO: Expand this
+    protected void spawnTutorial(int x, int y) {
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
         GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
@@ -156,13 +168,13 @@ public class RagnarokArea extends GameArea {
         Entity spearTutorial = ObstacleFactory.createTutorialSpear();
 
         // Spawn enemies to test spear on
-        spawnWolf(spearSpawn.x+8, spearSpawn.y);
+        spawnWolf(spearSpawn.x+8, spearSpawn.y, 0);
 
         spawnLightning(lightningSpawn.x, lightningSpawn.y);
         Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
         
         // Spawn enemies to test lightning on
-        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y);
+        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y, 0);
         spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y);
 
         // Offset text and spawn it in
@@ -178,7 +190,6 @@ public class RagnarokArea extends GameArea {
         spearObstacleSpawn.add(textOffset);
         Entity spearObstacleTutorial = ObstacleFactory.createTutorialSpearObstacle();
         spawnEntityAt(spearObstacleTutorial, spearObstacleSpawn, true, false);
-
 
     }
 
@@ -205,8 +216,15 @@ public class RagnarokArea extends GameArea {
         GridPoint2 pos = new GridPoint2(x, -1);
         spawnEntityAt(background, pos, false, false);
 
+        spawnBifrost(x);
+    }
+
+    /*
+    * Spawns a biforst level transition
+    */
+    protected void spawnBifrost(int x) {
         Entity bifrost = ObstacleFactory.createBifrost();
-        GridPoint2 pos2 = new GridPoint2(x, 8);
+        GridPoint2 pos2 = new GridPoint2(x, 10);
         spawnEntityAt(bifrost, pos2, true, true);
     }
 
@@ -214,14 +232,14 @@ public class RagnarokArea extends GameArea {
      * This spawns the Wall of Death
      */
     protected void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-30, 13);
-        GridPoint2 leftPos2 = new GridPoint2(5, 13);
+        GridPoint2 leftPos = new GridPoint2(-42, 13);
+        GridPoint2 leftPos2 = new GridPoint2(-7, 13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
         wallOfDeath.addComponent(new CameraShakeComponent(getPlayer(), this.terrainFactory.getCameraComponent(), sfx));
         wallOfDeath.addComponent(new FallDamageComponent(getPlayer()));
 
-        GridPoint2 leftPos3 = new GridPoint2(-5, 13);
+        GridPoint2 leftPos3 = new GridPoint2(-17, 13);
         Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
 
         wallOfDeath.addComponent(new VariableSpeedComponent(getPlayer(), deathGiant, sfx));
@@ -231,6 +249,12 @@ public class RagnarokArea extends GameArea {
         spawnEntityAt(deathGiant, leftPos3, true, true);
     }
 
+    protected void spawnBifrostFX(int x, int y) {
+        Entity bfx = NPCFactory.createBifrostFX();
+        GridPoint2 pos = new GridPoint2(x, y);
+        spawnEntityAt(bfx, pos, false, false);
+    }
+
     protected void spawnLevelLoadTrigger(int x) {
         GridPoint2 centrePos = new GridPoint2(x, 11);
         Entity levelLoadTrigger = ObstacleFactory.createLevelLoadTrigger();
@@ -238,7 +262,6 @@ public class RagnarokArea extends GameArea {
     }
 
 
-    //TODO: KEEP
     // this has to get kept otherwise calls to spawn stuff
     // gets messed, as terrain has not been initialised
     private void spawnTerrain() {
@@ -355,13 +378,23 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnWolf(int x, int y) {
+        spawnWolf(x,y,DEFAULT_SPEED);
+    }
+
+    protected void spawnWolf(int x, int y, int speed) {
         Entity wolf = NPCFactory.createWolf(player);
+        wolf.getComponent(PhysicsMovementComponent.class).setMaxSpeed(speed);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(wolf, pos, false, false);
     }
 
     protected void spawnSkeleton(int x, int y) {
+        spawnSkeleton(x,y,DEFAULT_SPEED);
+    }
+
+    protected void spawnSkeleton(int x, int y, int speed) {
         Entity skeleton = NPCFactory.createSkeleton(player);
+        skeleton.getComponent(PhysicsMovementComponent.class).setMaxSpeed(speed);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(skeleton, pos, false, false);
     }

@@ -19,7 +19,6 @@ public class MainMenuActions extends Component {
   private Entity mainMenuPop;
   private Music music;
   private boolean muted = false;
-  private static final String MAIN_MUSIC = "sounds/main.mp3";
 
   public MainMenuActions(GdxGame game) {
     this.game = game;
@@ -37,7 +36,7 @@ public class MainMenuActions extends Component {
   }
 
     private void playMusic() {
-      music = ServiceLocator.getResourceService().getAsset(MAIN_MUSIC, Music.class);
+      music = ServiceLocator.getResourceService().getAsset("sounds/main.mp3", Music.class);
       music.setVolume(0.7f);
       music.play();
       logger.info(music.isPlaying() + "music playing");

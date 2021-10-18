@@ -220,7 +220,7 @@ public class MainMenuDisplay extends UIComponent {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
             playerName = inputBox.getText();
-            logger.info(playerName + " players name");
+            logger.debug("{} players name", playerName);
             playerNameText.setText(YOUR_NAME_TEXT + playerName);
         }
     });
@@ -337,7 +337,7 @@ public class MainMenuDisplay extends UIComponent {
             String readName = lineResult[0];
             int scoreValue = Integer.parseInt(lineResult[1]);
 
-            logger.info(readName);
+            logger.debug(readName);
 
             // sort while reading
             for (int i = 0; i < 5; i++) {
