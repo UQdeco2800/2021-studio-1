@@ -12,7 +12,6 @@ public class QueueCommand implements Command {
 
     public boolean action(ArrayList<String> args) {
         if (!isValid(args)) {
-            //TODO: add log
             return false;
         }
 
