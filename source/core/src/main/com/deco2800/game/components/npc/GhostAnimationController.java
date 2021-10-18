@@ -8,6 +8,7 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
  * of the events is triggered.
  */
 public class GhostAnimationController extends Component {
+  private boolean toDie;
   AnimationRenderComponent animator;
 
   @Override
@@ -25,6 +26,14 @@ public class GhostAnimationController extends Component {
 
   void animateDeath() {
     animator.startAnimation("death");
+    this.toDie = true;
+  }
+
+  @Override
+  public void update() {
+    if (this.toDie && this.animator.isFinished()) {
+      this.entity.flagDelete();
+    }
   }
 
   void animateWander() {

@@ -229,7 +229,7 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnBifrostFX(int x, int y) {
-        Entity bfx = NPCFactory.createBifrostFX(player);
+        Entity bfx = NPCFactory.createBifrostFX();
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(bfx, pos, false, false);
     }
