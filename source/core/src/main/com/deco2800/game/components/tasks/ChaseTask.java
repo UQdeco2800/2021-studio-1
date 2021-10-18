@@ -91,8 +91,11 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
       movementTask.start();
     }
 
-    if (owner.getEntity().getComponent(AnimationRenderComponent.class).isFinished()){
-      inAnimation = false;
+    //Check for null for JUnit tests, however the animation component should never be null in the actual game
+    if (owner.getEntity().getComponent(AnimationRenderComponent.class) != null) {
+      if (owner.getEntity().getComponent(AnimationRenderComponent.class).isFinished()) {
+        inAnimation = false;
+      }
     }
 
     if (inAnimation == false && !owner.getEntity().getDeath()) {
