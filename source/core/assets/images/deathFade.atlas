@@ -1,0 +1,111 @@
+
+deathFade.png
+size: 8012, 4808
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+default
+  rotate: false
+  xy: 6410, 3206
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 0
+deathFade
+  rotate: false
+  xy: 6410, 3206
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 0
+deathFade
+  rotate: false
+  xy: 1604, 2
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 1
+deathFade
+  rotate: false
+  xy: 2, 3206
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 10
+deathFade
+  rotate: false
+  xy: 3206, 2
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 11
+deathFade
+  rotate: false
+  xy: 1604, 1604
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 12
+deathFade
+  rotate: false
+  xy: 6410, 1604
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 13
+deathFade
+  rotate: false
+  xy: 2, 2
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 2
+deathFade
+  rotate: false
+  xy: 4808, 3206
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 3
+deathFade
+  rotate: false
+  xy: 1604, 3206
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 4
+deathFade
+  rotate: false
+  xy: 4808, 2
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 5
+deathFade
+  rotate: false
+  xy: 3206, 1604
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 6
+deathFade
+  rotate: false
+  xy: 2, 1604
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 7
+deathFade
+  rotate: false
+  xy: 4808, 1604
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 8
+deathFade
+  rotate: false
+  xy: 3206, 3206
+  size: 1600, 1600
+  orig: 1600, 1600
+  offset: 0, 0
+  index: 9
