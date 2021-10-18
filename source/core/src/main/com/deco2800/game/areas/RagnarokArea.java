@@ -29,7 +29,6 @@ public class RagnarokArea extends GameArea {
 
     protected Entity player;
 
-    //TODO: make Json
     private static final String[] racerTextures = {
             "images/floor.png",
             "images/platform_gradient.png",
@@ -78,8 +77,7 @@ public class RagnarokArea extends GameArea {
             "images/bfx.png"
     };
 
-    //TODO: make Json,
-    private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
+    private static final String[] racerTextureAtlases = {
             "images/wolf.atlas",
             "images/odin.atlas",
             "images/wall.atlas",
@@ -117,7 +115,6 @@ public class RagnarokArea extends GameArea {
         displayUI();
         spawnTerrain();
 
-        //playMusic(); //TODO: eventual move to music
 
         logger.debug("Creating new RagnarokArea");
     }
@@ -139,7 +136,7 @@ public class RagnarokArea extends GameArea {
         }
     }
 
-    protected void spawnTutorial(int x, int y) { // TODO: Expand this
+    protected void spawnTutorial(int x, int y) {
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
         GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
@@ -216,14 +213,14 @@ public class RagnarokArea extends GameArea {
      * This spawns the Wall of Death
      */
     protected void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-45, 13);
-        GridPoint2 leftPos2 = new GridPoint2(-10, 13);
+        GridPoint2 leftPos = new GridPoint2(-42, 13);
+        GridPoint2 leftPos2 = new GridPoint2(-7, 13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
         wallOfDeath.addComponent(new CameraShakeComponent(getPlayer(), this.terrainFactory.getCameraComponent(), sfx));
         wallOfDeath.addComponent(new FallDamageComponent(getPlayer()));
 
-        GridPoint2 leftPos3 = new GridPoint2(-20, 13);
+        GridPoint2 leftPos3 = new GridPoint2(-17, 13);
         Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
 
         wallOfDeath.addComponent(new VariableSpeedComponent(getPlayer(), deathGiant, sfx));
@@ -246,7 +243,6 @@ public class RagnarokArea extends GameArea {
     }
 
 
-    //TODO: KEEP
     // this has to get kept otherwise calls to spawn stuff
     // gets messed, as terrain has not been initialised
     private void spawnTerrain() {

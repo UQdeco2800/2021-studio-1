@@ -38,7 +38,7 @@ public class Terminal extends Component {
     this.commands = commands;
 
     addCommand("-debug", new DebugCommand());
-    addCommand("-spawn", new SpawnCommand()); //TODO: make more Commands
+    addCommand("-spawn", new SpawnCommand());
     addCommand("-place", new PlaceCommand());
     addCommand("-load", new LoadCommand());
     addCommand("-config", new ConfigCommand());
