@@ -21,12 +21,12 @@ com.deco2800.game.entities.factories
 com.deco2800.game.events
 com.deco2800.game.events.listeners
 com.deco2800.game.files
-com.deco2800.game.gameScore
 com.deco2800.game.input
 com.deco2800.game.physics
 com.deco2800.game.physics.components
 com.deco2800.game.physics.raycast
 com.deco2800.game.rendering
+com.deco2800.game.score
 com.deco2800.game.screens
 com.deco2800.game.services
 com.deco2800.game.ui
