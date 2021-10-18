@@ -27,14 +27,6 @@ public class GhostAnimationController extends Component {
   void animateDeath() {
     animator.stopAnimation();
     animator.startAnimation("death");
-    this.toDie = true;
-  }
-
-  @Override
-  public void update() {
-    if (this.toDie && this.animator.isFinished()) {
-      this.entity.flagDelete();
-    }
   }
 
   void animateWander() {

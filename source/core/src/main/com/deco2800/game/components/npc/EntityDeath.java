@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.components.TouchAttackComponent;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 
 public class EntityDeath extends Component {
@@ -30,5 +31,6 @@ public class EntityDeath extends Component {
         entity.getComponent(CombatStatsComponent.class).setBaseAttack(0);
         entity.getComponent(AnimationRenderComponent.class).stopAnimation();
         entity.getComponent(AnimationRenderComponent.class).startAnimation("death");
+        entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
     }
 }
