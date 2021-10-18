@@ -4,10 +4,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.deco2800.game.ai.movement.MovementController;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.components.powerups.SpearPowerUpComponent;
 import com.deco2800.game.gameScore.gameScore;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.ui.UIComponent;
 
 /**
@@ -21,6 +23,7 @@ public class PlayerStatsDisplay extends UIComponent {
   private Label scoreLabel;
   public static boolean deadFlag = false;
   public static boolean lightningActive = false;
+  public static boolean movementActive = false;
 
   gameScore scoring = new gameScore();
   private int health;
@@ -89,6 +92,12 @@ public class PlayerStatsDisplay extends UIComponent {
     }else{
       lightningActive = false;
     }
+//    if(entity.getComponent(KeyboardPlayerInputComponent.class). ){
+//      movementActive = true;
+//
+//    }else{
+//      movementActive = false;
+//    }
   }
 
   /**
