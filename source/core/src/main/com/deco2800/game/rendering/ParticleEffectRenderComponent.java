@@ -24,20 +24,18 @@ public class ParticleEffectRenderComponent extends RenderComponent {
     private float y;
 
     /**
-     * Construct a particle effect that will play when an entity from the targetLayer collides
-     * with it.
+     * Play the given particle effect when an entity from the targetLayer collides with this entity.
      * <p>
-     * This particle effect is centred on the entity it is applied to. Whether it plays only once
-     * on collision or continuously is given by the information in effectData.
+     * This particle effect is centred on the x coordinate of the entity it is applied to. Its y coordinate is given
+     * by the y coordinate of the colliding entity.
+     * <p>
+     * Whether it plays only once on collision or continuously is given by the information in effectData.
      *
-     * @param effectData   particle data, should be a file saved from the LibGDX Particle Editor
-     * @param textureAtlas atlas of the image each particle will take
-     * @param targetLayer  PhysicsLayer to play on collision with
+     * @param particleEffect particle effect to play
+     * @param targetLayer    PhysicsLayer to play on collision with
      */
-    public ParticleEffectRenderComponent(FileHandle effectData, TextureAtlas textureAtlas,
-                                         short targetLayer) {
-        particleEffect = new ParticleEffect();
-        particleEffect.load(effectData, textureAtlas);
+    public ParticleEffectRenderComponent(ParticleEffect particleEffect, short targetLayer) {
+        this.particleEffect = particleEffect;
         particleEffect.scaleEffect(0.02f);
         this.targetLayer = targetLayer;
         this.y = 0;
