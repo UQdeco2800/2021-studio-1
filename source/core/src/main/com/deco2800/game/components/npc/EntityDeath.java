@@ -29,6 +29,7 @@ public class EntityDeath extends Component {
         triggered = true;
         entity.getComponent(TouchAttackComponent.class).setKnockbackForce(0f);
         entity.getComponent(CombatStatsComponent.class).setBaseAttack(0);
+        entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0f);
         entity.getComponent(AnimationRenderComponent.class).stopAnimation();
         entity.getComponent(AnimationRenderComponent.class).startAnimation("death");
         entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
