@@ -119,7 +119,7 @@ public class PlayerStatsDisplay extends UIComponent {
   public void update(){
     entity.getEvents().trigger("updateScore", scoring.getCurrentScore());
     // flags that the player is dead
-    if (entity.getComponent(CombatStatsComponent.class).isDead() == true){
+    if (entity.getComponent(CombatStatsComponent.class).isDead()){
       deadFlag = true;
     }
     if(entity.getComponent(LightningPowerUpComponent.class).getActive()){
@@ -134,7 +134,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param health player health
    */
   public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("HP: " + health);
+    CharSequence text = String.format("HP: %d", health);
     healthBar.setScale(health/100f * 0.5f, 0.5f);
     healthLabel.setText(text);
   }

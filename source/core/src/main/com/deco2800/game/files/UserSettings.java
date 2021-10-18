@@ -111,6 +111,8 @@ public class UserSettings {
 
     /**
      * Returns the window set height
+     *
+     * @return window height
      */
     public static int getWindowHeight() {
 
@@ -120,6 +122,8 @@ public class UserSettings {
 
     /**
      * Returns the window set width
+     *
+     * @return window width
      */
     public static int getWindowWidth() {
 

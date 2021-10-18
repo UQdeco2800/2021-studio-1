@@ -34,17 +34,14 @@ public class BifrostFXComponent extends Component {
         if (PhysicsLayer.contains(PhysicsLayer.PLAYER, other.getFilterData().categoryBits)) {
             // Colided with player, spawn FX!
             Entity target = ((BodyUserData) other.getBody().getUserData()).entity;
-            
-            //GridPoint2 pos = new GridPoint2(target.getPosition().x, target.getPosition().y);
-            //int x = Math.round(target.getPosition().x) + 3;
+
             int y = Math.round(target.getPosition().y) - 3;
             if (y < 0)
                 y = 0;
 
             String line = String.format("-spawn [%d,%d] (bifrostFX)", -1, y);
-            //logger.info(line);
+            logger.debug(line);
             ServiceLocator.getTerminalService().sendTerminal(line);
-            //Fix the above somehow buddy?
         }
     }
 }
