@@ -140,7 +140,8 @@ public class RagnarokArea extends GameArea {
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
         GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
-        GridPoint2 runSpawn = new GridPoint2(x+80,y);
+        GridPoint2 shieldSpawn = new GridPoint2(x+80,y);
+        GridPoint2 runSpawn = new GridPoint2(x+108,y);
 
         GridPoint2 textOffset = new GridPoint2(0,5);
 
@@ -161,6 +162,19 @@ public class RagnarokArea extends GameArea {
         // Offset text and spawn it in
         lightningSpawn.add(textOffset);
         spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
+        spearSpawn.add(textOffset);
+        spawnEntityAt(spearTutorial, spearSpawn, true, false);
+
+        spawnShield(shieldSpawn.x, shieldSpawn.y);
+        Entity shieldTutorial = ObstacleFactory.createTutorialShield();
+
+        // Spawn enemies to test shield on
+        spawnSkeleton(shieldSpawn.x+12, shieldSpawn.y, 0);
+        spawnFireSpirit(shieldSpawn.x+14, shieldSpawn.y);
+
+        // Offset text and spawn it in
+        shieldSpawn.add(textOffset);
+        spawnEntityAt(shieldTutorial, shieldSpawn, true, false);
         spearSpawn.add(textOffset);
         spawnEntityAt(spearTutorial, spearSpawn, true, false);
 
