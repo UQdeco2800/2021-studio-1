@@ -32,9 +32,7 @@ public class gameScore extends Component  {
         // if the game is not paused increment the score and pauses the scoring on player being dead
         if (ServiceLocator.getTimeSource().getDeltaTime() != 0
                 && PlayerStatsDisplay.deadFlag == false
-                && (
-                (KeyboardPlayerInputComponent.isMoving == 2 || KeyboardPlayerInputComponent.isMoving == 4 )
-        )
+                && (KeyboardPlayerInputComponent.isMoving == 2 || KeyboardPlayerInputComponent.isMoving == 4 )
         ) {
             // checks if spear being thrown
             lightningComponent();
