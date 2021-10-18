@@ -167,7 +167,6 @@ public class DebugRenderer {
     shapeRenderer.rect(request.pos.x, request.pos.y, request.end.x, request.end.y);
   }
 
-  //TODO account for Vector2 pos to draw entity ID over eachother well
   private void renderText(DrawRequest request) {
     String text = request.text;
     entityIDDisplay.setText(" hello hello ");
