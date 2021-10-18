@@ -68,15 +68,15 @@ public class VariableSpeedComponent extends Component {
 
             ServiceLocator.getSoundService().playSound("onstomp");
 
-            entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(13);
-            deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(13);
-            sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(13);
+            entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(10);
+            deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(10);
+            sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(10);
 
-            if (distance < 30f)  {
+            if (distance < 40f) {
 
-                entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
-                deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
-                sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+                entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(3);
+                deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(3);
+                sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(3);
 
                 stopRunning = 1;
 
@@ -85,20 +85,33 @@ public class VariableSpeedComponent extends Component {
 
         if (tutorialCompleted == 1 && stopRunning == 1) {
 
-            if (distance > 50f) {
+            if (distance > 65f) {
+
                 entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
                 deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
                 sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(6);
 
-            } else {
+            } else if (distance < 65f && distance > 45f) {
+
                 entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
                 deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
                 sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(4);
+
+            } else if (distance < 45f && distance > 25f) {
+
+                entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(3);
+                deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(3);
+                sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(3);
+
+            } else if (distance < 25f) {
+
+                entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+                deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+                sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(2);
+
             }
 
         }
 
     }
-
-
 }
