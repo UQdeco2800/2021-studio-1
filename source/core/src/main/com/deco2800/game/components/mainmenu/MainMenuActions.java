@@ -17,7 +17,6 @@ public class MainMenuActions extends Component {
   private GdxGame game;
   private Entity mainMenuPop;
   private boolean muted = false;
-  private static final String MAIN_MUSIC = "sounds/main.mp3";
 
   public MainMenuActions(GdxGame game) {
     this.game = game;

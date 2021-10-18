@@ -4,6 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.deco2800.game.files.UserSettings;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.deco2800.game.screens.MainGameScreen;
 import com.deco2800.game.screens.*;
 import org.slf4j.Logger;
@@ -85,6 +89,15 @@ public class GdxGame extends Game {
       default:
         return null;
     }
+  }
+
+  public static Texture getTexture() {
+    Pixmap pixmap;
+    pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+    pixmap.setColor(Color.WHITE);
+    pixmap.drawRectangle(0,0,1,1);
+
+    return new Texture(pixmap);
   }
 
   public enum ScreenType {

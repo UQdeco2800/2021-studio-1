@@ -1,6 +1,5 @@
 package com.deco2800.game.components.maingame;
 
-import com.badlogic.gdx.audio.Sound;
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.Entity;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * events is triggered.
  */
 public class MainGameActions extends Component {
-    private static final String IMPACT = "sounds/Impact4.ogg"; // Satisfy sonarCloud.
     private static final Logger logger = LoggerFactory.getLogger(MainGameActions.class);
     private GdxGame game;
     private Entity popUp;
@@ -77,8 +75,6 @@ public class MainGameActions extends Component {
      * Pauses the game -- the trigger function for the event.
      */
     private void showScore() {
-
-        Sound scoreScreenSound;
 
         if (game.scoreShown) {
             popUp.dispose();

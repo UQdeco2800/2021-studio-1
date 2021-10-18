@@ -24,23 +24,9 @@ public class GhostAnimationController extends Component {
           //test for NPC to face other direction when moving
   }
 
-  /**
-   * Starts the "walk" animation
-   */
-//  void animateWalk() {
-//    animator.startAnimation("float");
-//  }
   void animateDeath() {
     animator.stopAnimation();
     animator.startAnimation("death");
-    this.toDie = true;
-  }
-
-  @Override
-  public void update() {
-    if (this.toDie && this.animator.isFinished()) {
-      this.entity.flagDelete();
-    }
   }
 
   void animateWander() {

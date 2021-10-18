@@ -135,7 +135,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param health player health
    */
   public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("HP: " + health);
+    CharSequence text = String.format("HP: %d", health);
     healthBar.setScale(health/100f * 0.5f, 0.5f);
     healthLabel.setText(text);
   }
