@@ -337,7 +337,7 @@ public class MainMenuDisplay extends UIComponent {
             String readName = lineResult[0];
             int scoreValue = Integer.parseInt(lineResult[1]);
 
-            logger.info(readName);
+            logger.debug(readName);
 
             // sort while reading
             for (int i = 0; i < 5; i++) {

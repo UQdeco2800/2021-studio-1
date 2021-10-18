@@ -8,6 +8,7 @@ import com.deco2800.game.rendering.AnimationRenderComponent;
  * of the events is triggered.
  */
 public class GhostAnimationController extends Component {
+  private boolean toDie;
   AnimationRenderComponent animator;
 
   @Override
@@ -19,12 +20,21 @@ public class GhostAnimationController extends Component {
     entity.getEvents().addListener("chaseStart_right", this::animateChase_right);
     entity.getEvents().addListener("move_right", this::animateWander_right);
     entity.getEvents().addListener("death", this::animateDeath);
+    this.toDie = false;
 
           //test for NPC to face other direction when moving
   }
 
   void animateDeath() {
     animator.startAnimation("death");
+    this.toDie = true;
+  }
+
+  @Override
+  public void update() {
+    if (this.toDie && this.animator.isFinished()) {
+      this.entity.flagDelete();
+    }
   }
 
   void animateWander() {
