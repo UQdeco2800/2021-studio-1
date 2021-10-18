@@ -33,5 +33,6 @@ public class EntityDeath extends Component {
         entity.getComponent(AnimationRenderComponent.class).stopAnimation();
         entity.setDeath(true);
         entity.getComponent(AnimationRenderComponent.class).startAnimation("death");
+        entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
     }
 }

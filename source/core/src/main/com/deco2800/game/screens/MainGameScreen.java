@@ -170,9 +170,6 @@ public class MainGameScreen extends ScreenAdapter {
         }
 
         renderer.render();
-
-        //TODO: do terminal requests
-
     }
 
     @Override

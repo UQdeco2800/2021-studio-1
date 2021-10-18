@@ -1,7 +1,10 @@
 package com.deco2800.game.components.story;
 
 import com.badlogic.gdx.Gdx;
+import com.deco2800.game.GdxGame;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -10,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +25,7 @@ public class StoryDisplay extends UIComponent {
   private static final float Z_INDEX = 2f;
   private Table table;
   private Table rootTable;
+  private Texture texture;
 
   @Override
   public void create() {
@@ -40,8 +45,10 @@ public class StoryDisplay extends UIComponent {
             ServiceLocator.getResourceService()
                 .getAsset("images/story/storyline.png", Texture.class));
 
+    Image topLayer = new Image(new TextureRegion(texture=GdxGame.getTexture()));
+    topLayer.setColor(Color.BLACK);
+
     TextButton nextBtn = new TextButton("Next", skin);
-    TextButton prevBtn = new TextButton("Prev", skin);
     TextButton skipBtn = new TextButton("Skip", skin);
 
     // Triggers an event when the button is pressed
@@ -56,14 +63,6 @@ public class StoryDisplay extends UIComponent {
         });
     // Triggers an event when the button is pressed
 
-    prevBtn.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent changeEvent, Actor actor) {
-            logger.debug("Prev button clicked");
-            entity.getEvents().trigger("prev");
-          }
-        });
 
     skipBtn.addListener(
         new ChangeListener() {
@@ -73,9 +72,8 @@ public class StoryDisplay extends UIComponent {
             entity.getEvents().trigger("skip");
           }
         });
-
-    table.add(story).width(Gdx.graphics.getWidth()).height(Gdx.graphics.getHeight());
-    rootTable.add(prevBtn).pad(30f);
+    topLayer.addAction(Actions.fadeOut(2));
+    table.stack(story, topLayer).width(Gdx.graphics.getWidth()).height(Gdx.graphics.getHeight());
     rootTable.add(nextBtn).pad(30f);
     rootTable.add(skipBtn).pad(30f);
 
