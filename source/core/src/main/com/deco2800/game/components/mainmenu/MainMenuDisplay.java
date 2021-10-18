@@ -93,6 +93,10 @@ public class MainMenuDisplay extends UIComponent {
     starTwo = new Table();
     starThree = new Table();
     muteTable = new Table();
+
+    Table iconsTable = new Table();
+    Table leaderboardIconsTable = new Table();
+
     starOne.setFillParent(true);
     starTwo.setFillParent(true);
     starThree.setFillParent(true);
@@ -101,6 +105,8 @@ public class MainMenuDisplay extends UIComponent {
     table.setFillParent(true);
     helpTable.setFillParent(true);
     muteTable.setFillParent(true);
+    iconsTable.setFillParent(true);
+    leaderboardIconsTable.setFillParent(true);
     highScoreTable.setFillParent(true);
 
     shootingStarOne = new Image(
@@ -127,13 +133,31 @@ public class MainMenuDisplay extends UIComponent {
     TextButton leaderBoardButton = new TextButton("Leaderboard", skin);
     inputBoxButton = new TextButton("Enter", skin);
 
+    Image runIcon = new Image(new TextureRegionDrawable(
+            ServiceLocator.getResourceService().getAsset(
+                    "images/FireMonsterUI.png", Texture.class)));
+
+    Image settingsIcon = new Image(new TextureRegionDrawable(
+          ServiceLocator.getResourceService().getAsset(
+                  "images/SkeletonUI.png", Texture.class)));
+
+    Image exitIcon = new Image(new TextureRegionDrawable(
+          ServiceLocator.getResourceService().getAsset(
+                  "images/WolfUI.png", Texture.class)));
+
+
+
+    Image leaderboardIcon = new Image(new TextureRegionDrawable(
+          ServiceLocator.getResourceService().getAsset(
+                  "images/powerup-speed.png", Texture.class)));
+
     muteButtonOn = new ImageButton(new TextureRegionDrawable(
             ServiceLocator.getResourceService().getAsset(
-                    "images/mute_button_on.png", Texture.class)));
+                    "images/Mute_button_on2.png", Texture.class)));
 
     muteButtonOff = new ImageButton(new TextureRegionDrawable(
               ServiceLocator.getResourceService().getAsset(
-                      "images/mute_button_off.png", Texture.class)));
+                      "images/Mute_button_off2.png", Texture.class)));
 
     highScoreName = readHighScores();
     playerNameText = new Label(YOUR_NAME_TEXT + playerName, skin, POP_UP_FONT);
@@ -196,6 +220,7 @@ public class MainMenuDisplay extends UIComponent {
     muteTable.bottom().left();
     helpTable.bottom().right();
     highScoreTable.top().right();
+    leaderboardIconsTable.top().right();
 
     settingsBtn.addListener(
         new ChangeListener() {
@@ -227,21 +252,28 @@ public class MainMenuDisplay extends UIComponent {
 
     rootTable.setBackground(new TextureRegionDrawable(new Texture("images/plainBack.png")));
     setBackground();
-    table.add(playerNameText).padTop(150f);
+    table.add(playerNameText).padLeft(100f).padTop(50f);
     table.row();
-    table.add(characterSelections).padTop(20f);
+    table.add(characterSelections).padLeft(100f).padTop(20f);
     table.row();
-    table.add(inputBox).padTop(10f);
+    table.add(inputBox).padTop(10f).padLeft(100f);
     table.add(inputBoxButton);
     inputBox.setVisible(false);
     inputBoxButton.setVisible(false);
     table.row();
-    table.add(startBtn).padTop(20f);
+    table.add(startBtn).padLeft(100f).padTop(20f);
     table.row();
     table.row();
-    table.add(settingsBtn).padTop(30f);
+    table.add(settingsBtn).padLeft(100f).padTop(30f);
     table.row();
-    table.add(exitBtn).padTop(30f);
+    table.add(exitBtn).padLeft(100f).padTop(30f);
+    iconsTable.add(runIcon).padBottom(25f);
+    iconsTable.row();
+    iconsTable.add(settingsIcon).padBottom(25f);
+    iconsTable.row();
+    iconsTable.add(exitIcon);
+    iconsTable.padTop(180f).padRight(180f);
+    leaderboardIconsTable.add(leaderboardIcon).padRight(170f).padTop(45f);
 
     helpTable.add(helpBtn);
     muteTable.add(muteButtonOn);
@@ -269,6 +301,8 @@ public class MainMenuDisplay extends UIComponent {
     stage.addActor(starTwo);
     stage.addActor(starThree);
     stage.addActor(table);
+    stage.addActor(iconsTable);
+    stage.addActor(leaderboardIconsTable);
     stage.addActor(helpTable);
     stage.addActor(muteTable);
     stage.addActor(highScoreTable);

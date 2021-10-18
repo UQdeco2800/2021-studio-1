@@ -41,6 +41,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           runDirection.add(Vector2Utils.LEFT);
         }
         triggerRunEvent();
+        isDirection = 2;
+        isMoving = 2;
         return true;
       case Keys.DOWN:
       case Keys.S:
@@ -52,6 +54,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           runDirection.add(Vector2Utils.RIGHT);
         }
         triggerRunEvent();
+      isDirection = 4;
+      isMoving = 4;
         return true;
       case Keys.L:
         triggerLightningEvent();
@@ -86,6 +90,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           runDirection.sub(Vector2Utils.LEFT);
         }
         triggerRunEvent();
+        isDirection = 2;
+        isMoving = 0;
         return true;
       case Keys.DOWN:
       case Keys.S:
@@ -97,6 +103,8 @@ public class KeyboardPlayerInputComponent extends InputComponent {
           runDirection.sub(Vector2Utils.RIGHT);
         }
         triggerRunEvent();
+        isDirection = 4;
+        isMoving = 0;
         return true;
       default:
         return false;
