@@ -8,6 +8,7 @@ import com.deco2800.game.entities.Entity;
 import com.deco2800.game.physics.PhysicsEngine;
 import com.deco2800.game.physics.PhysicsLayer;
 import com.deco2800.game.physics.raycast.RaycastHit;
+import com.deco2800.game.rendering.AnimationRenderComponent;
 import com.deco2800.game.rendering.DebugRenderer;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -23,6 +24,7 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
   private boolean chaseHorizontal = false;
   private MovementTask movementTask;
   private Vector2 currentPos;
+  private boolean inAnimation;
 
   /**
    * @param target The entity to chase.
@@ -69,13 +71,15 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     movementTask.start();
     currentPos = owner.getEntity().getPosition();
 
-    this.owner.getEntity().getEvents().trigger("chaseStart");
+    if (targetPosition.x > currentPos.x) {
+      this.owner.getEntity().getEvents().trigger("chaseStart_right");
+    } else {
+      this.owner.getEntity().getEvents().trigger("chaseStart");
+    }
   }
 
   @Override
   public void update() {
-
-
     Vector2 targetPosition = target.getPosition();
     if (chaseHorizontal) {
       targetPosition = new Vector2(targetPosition.x, 0);
@@ -85,6 +89,19 @@ public class ChaseTask extends DefaultTask implements PriorityTask {
     movementTask.update();
     if (movementTask.getStatus() != Status.ACTIVE) {
       movementTask.start();
+    }
+
+    if (owner.getEntity().getComponent(AnimationRenderComponent.class).isFinished()){
+      inAnimation = false;
+    }
+
+    if (inAnimation == false && !owner.getEntity().getDeath()) {
+      if (targetPosition.x > currentPos.x) {
+        this.owner.getEntity().getEvents().trigger("chaseStart_right");
+      } else {
+        this.owner.getEntity().getEvents().trigger("chaseStart");
+      }
+      inAnimation = true;
     }
   }
 

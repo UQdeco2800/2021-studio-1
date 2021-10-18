@@ -42,6 +42,8 @@ public class Entity {
   private boolean nextDelete = false;
   private EntityTypes entityType;
 
+  private boolean dead = false;
+
   public Entity() {
     id = nextId;
     nextId++;
@@ -256,6 +258,25 @@ public class Entity {
     for (Component component : createdComponents) {
       component.triggerUpdate();
     }
+  }
+
+  /**
+   * Boolean to determine if the target is dead
+   * relevant for ChaseTask and EntityDeath
+   *
+   * @return true if entity is dead, false otherwise
+   */
+  public boolean getDeath(){
+    return this.dead;
+  }
+
+  /**
+   * Modify entity death status
+   *
+   * @param dead the death value to be modified to
+   */
+  public void setDeath(boolean dead){
+    this.dead = dead;
   }
 
   /**
