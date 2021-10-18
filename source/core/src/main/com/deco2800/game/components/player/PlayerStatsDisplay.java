@@ -146,9 +146,12 @@ public class PlayerStatsDisplay extends UIComponent {
 
   }
 
-  public static long getPlayerScore() {
-      return scoring.getCurrentScore();
-  }
+  public static long getPlayerScore() {return scoring.getCurrentScore();}
+
+  public static void resetPlayerScore() {
+      KeyboardPlayerInputComponent.isMoving = 0;
+      KeyboardPlayerInputComponent.isDirection = 0;
+      scoring.score = 0;}
 
   @Override
   public void dispose() {

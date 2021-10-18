@@ -2,6 +2,7 @@ package com.deco2800.game.components.maingame;
 
 import com.deco2800.game.GdxGame;
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIPop;
@@ -47,6 +48,7 @@ public class MainGameActions extends Component {
         game.paused = false;
         game.over = false;
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        PlayerStatsDisplay.resetPlayerScore();
     }
 
     /**
@@ -74,6 +76,7 @@ public class MainGameActions extends Component {
         game.paused = false;
         game.over = false;
         game.setScreen(GdxGame.ScreenType.MAIN_GAME);
+        PlayerStatsDisplay.resetPlayerScore();
     }
 
     /**
