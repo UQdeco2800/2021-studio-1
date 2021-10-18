@@ -252,7 +252,7 @@ public class MainMenuDisplay extends UIComponent {
 
     rootTable.setBackground(new TextureRegionDrawable(new Texture("images/plainBack.png")));
     setBackground();
-    table.add(playerNameText).padLeft(100f).padTop(50f);
+    table.add(playerNameText).padLeft(100f).padTop(80f);
     table.row();
     table.add(characterSelections).padLeft(100f).padTop(20f);
     table.row();
@@ -272,7 +272,7 @@ public class MainMenuDisplay extends UIComponent {
     iconsTable.add(settingsIcon).padBottom(25f);
     iconsTable.row();
     iconsTable.add(exitIcon);
-    iconsTable.padTop(180f).padRight(180f);
+    iconsTable.padTop(210f).padRight(180f);
     leaderboardIconsTable.add(leaderboardIcon).padRight(170f).padTop(45f);
 
     helpTable.add(helpBtn);
