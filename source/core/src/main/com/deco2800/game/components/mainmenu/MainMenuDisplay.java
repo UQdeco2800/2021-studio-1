@@ -1,5 +1,6 @@
 package com.deco2800.game.components.mainmenu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -62,7 +63,12 @@ public class MainMenuDisplay extends UIComponent {
   private ImageButton muteButtonOn;
   private ImageButton muteButtonOff;
   private boolean muted = false;
-  private Dimension screenSize;
+
+  private int screenHeight;
+  private int screenWidth;
+  private float windowHeight;
+  private float windowWidth;
+
   private Label playerNameText;
   private TextArea inputBox;
   private TextButton inputBoxButton;
@@ -168,7 +174,11 @@ public class MainMenuDisplay extends UIComponent {
     inputBox = new TextArea("Enter Name", skin);
     addCharacterSelections(characterSelections);
 
-    screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    screenHeight = Gdx.graphics.getHeight();
+    screenWidth = Gdx.graphics.getWidth();
+
+    windowHeight = UserSettings.get().fullscreen ? screenHeight : UserSettings.getWindowHeight();
+    windowWidth = UserSettings.get().fullscreen ? screenWidth : UserSettings.getWindowWidth();
 
     startBtn.addListener(
             new ChangeListener() {
@@ -465,19 +475,19 @@ public class MainMenuDisplay extends UIComponent {
 
         SetStarPositions();
 
-        if (!starOneShot && effectsXOne >= screenSize.width / 4 + offset) {
+        if (!starOneShot && effectsXOne >= windowWidth / 3 + offset) {
             starOneShot = true;
             frameCountOne = 0;
             shootOneWait = (float) Math.random() * 800 + 800;
         }
 
-        if (!starTwoShot && effectsXTwo >= screenSize.width + offset) {
+        if (!starTwoShot && effectsXTwo >= windowWidth + offset) {
             starTwoShot = true;
             frameCountTwo = 0;
             shootTwoWait = (float) Math.random() * 300 + 300;
         }
 
-        if (!starThreeShot && effectsXThree >= screenSize.width + offset) {
+        if (!starThreeShot && effectsXThree >= windowWidth + offset) {
             starThreeShot = true;
             frameCountThree = 0;
             shootThreeWait = (float) Math.random() * 500 + 500;
@@ -587,7 +597,7 @@ public class MainMenuDisplay extends UIComponent {
     private void MoveStarOne() {
 
         effectsXOne += shootOneSpeed;
-        effectsYOne = shootOneWait != 1 ? screenSize.height /3.5f : effectsYOne - shootOneSpeed;
+        effectsYOne = shootOneWait != 1 ? windowHeight /3.5f : effectsYOne - shootOneSpeed;
 
         starOne.setPosition(effectsXOne, effectsYOne);
     }
@@ -595,7 +605,7 @@ public class MainMenuDisplay extends UIComponent {
     private void MoveStarTwo() {
 
         effectsXTwo += shootTwoSpeed;
-        effectsYTwo = ((int)shootTwoWait) % 2 == 0 ? screenSize.height / 5f : effectsYTwo - shootTwoSpeed;
+        effectsYTwo = ((int)shootTwoWait) % 2 == 0 ? windowHeight / 5f : effectsYTwo - shootTwoSpeed;
 
         starTwo.setPosition(effectsXTwo, effectsYTwo);
     }
