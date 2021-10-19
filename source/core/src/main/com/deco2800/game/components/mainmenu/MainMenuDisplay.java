@@ -475,7 +475,7 @@ public class MainMenuDisplay extends UIComponent {
 
         SetStarPositions();
 
-        if (!starOneShot && effectsXOne >= windowWidth / 4 + offset) {
+        if (!starOneShot && effectsXOne >= windowWidth / 3 + offset) {
             starOneShot = true;
             frameCountOne = 0;
             shootOneWait = (float) Math.random() * 800 + 800;
