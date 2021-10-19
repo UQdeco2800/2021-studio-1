@@ -181,13 +181,17 @@ public class ObstacleFactory {
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.OBSTACLE))
                         .addComponent(new CombatStatsComponent(1, 100))
                         .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f));
+        // Set the hit box
+        spikes.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.35f,
+                        0.5f), PhysicsComponent.AlignX.CENTER,
+                PhysicsComponent.AlignY.BOTTOM);
 
         spikes.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
         spikes.getComponent(TextureRenderComponent.class).scaleEntity();
         spikes.getComponent(PhysicsComponent.class).setGravityScale(5.0f);
         spikes.getComponent(ColliderComponent.class).setDensity(1.0f);
         spikes.setScale(1.1f, 0.5f);
-        PhysicsUtils.setScaledCollider(spikes, 0.9f, 0.9f);
+        PhysicsUtils.setScaledCollider(spikes, 1f, 1f);
         spikes.setType(EntityTypes.OBSTACLE);
         return spikes;
     }

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.VariableSpeedComponent;
 import com.deco2800.game.components.FallDamageComponent;
+import com.deco2800.game.physics.components.PhysicsMovementComponent;
 
 import java.util.function.Function;
 
@@ -24,10 +25,10 @@ public class RagnarokArea extends GameArea {
 
     private static final float WALL_HEIGHT = 0.1f;
     private final String name; //initialise in the loader
+    private static final int DEFAULT_SPEED =3;
 
     protected Entity player;
 
-    //TODO: make Json
     private static final String[] racerTextures = {
             "images/floor.png",
             "images/platform_gradient.png",
@@ -76,8 +77,7 @@ public class RagnarokArea extends GameArea {
             "images/bfx.png"
     };
 
-    //TODO: make Json,
-    private static final String[] racerTextureAtlases = { //TODO: remove references to Box Boy (forest)
+    private static final String[] racerTextureAtlases = {
             "images/wolf.atlas",
             "images/odin.atlas",
             "images/wall.atlas",
@@ -101,6 +101,7 @@ public class RagnarokArea extends GameArea {
         super();
         this.name = name;
         this.terrainFactory = terrainFactory;
+
     }
 
     @Override
@@ -114,7 +115,6 @@ public class RagnarokArea extends GameArea {
         displayUI();
         spawnTerrain();
 
-        //playMusic(); //TODO: eventual move to music
 
         logger.debug("Creating new RagnarokArea");
     }
@@ -136,7 +136,7 @@ public class RagnarokArea extends GameArea {
         }
     }
 
-    protected void spawnTutorial(int x, int y) { // TODO: Expand this
+    protected void spawnTutorial(int x, int y) {
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
         GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
@@ -149,13 +149,13 @@ public class RagnarokArea extends GameArea {
         Entity spearTutorial = ObstacleFactory.createTutorialSpear();
 
         // Spawn enemies to test spear on
-        spawnWolf(spearSpawn.x+8, spearSpawn.y);
+        spawnWolf(spearSpawn.x+8, spearSpawn.y, 0);
 
         spawnLightning(lightningSpawn.x, lightningSpawn.y);
         Entity lightningTutorial = ObstacleFactory.createTutorialLightning();
         
         // Spawn enemies to test lightning on
-        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y);
+        spawnSkeleton(lightningSpawn.x+12, lightningSpawn.y, 0);
         spawnFireSpirit(lightningSpawn.x+14, lightningSpawn.y);
 
         // Offset text and spawn it in
@@ -213,14 +213,14 @@ public class RagnarokArea extends GameArea {
      * This spawns the Wall of Death
      */
     protected void spawnWallOfDeath() {
-        GridPoint2 leftPos = new GridPoint2(-30, 13);
-        GridPoint2 leftPos2 = new GridPoint2(5, 13);
+        GridPoint2 leftPos = new GridPoint2(-42, 13);
+        GridPoint2 leftPos2 = new GridPoint2(-7, 13);
         Entity wallOfDeath = NPCFactory.createWallOfDeath(getPlayer());
         Entity sfx = NPCFactory.createScreenFX(getPlayer());
         wallOfDeath.addComponent(new CameraShakeComponent(getPlayer(), this.terrainFactory.getCameraComponent(), sfx));
         wallOfDeath.addComponent(new FallDamageComponent(getPlayer()));
 
-        GridPoint2 leftPos3 = new GridPoint2(-5, 13);
+        GridPoint2 leftPos3 = new GridPoint2(-17, 13);
         Entity deathGiant = NPCFactory.createDeathGiant(getPlayer());
 
         wallOfDeath.addComponent(new VariableSpeedComponent(getPlayer(), deathGiant, sfx));
@@ -243,7 +243,6 @@ public class RagnarokArea extends GameArea {
     }
 
 
-    //TODO: KEEP
     // this has to get kept otherwise calls to spawn stuff
     // gets messed, as terrain has not been initialised
     private void spawnTerrain() {
@@ -360,13 +359,23 @@ public class RagnarokArea extends GameArea {
     }
 
     protected void spawnWolf(int x, int y) {
+        spawnWolf(x,y,DEFAULT_SPEED);
+    }
+
+    protected void spawnWolf(int x, int y, int speed) {
         Entity wolf = NPCFactory.createWolf(player);
+        wolf.getComponent(PhysicsMovementComponent.class).setMaxSpeed(speed);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(wolf, pos, false, false);
     }
 
     protected void spawnSkeleton(int x, int y) {
+        spawnSkeleton(x,y,DEFAULT_SPEED);
+    }
+
+    protected void spawnSkeleton(int x, int y, int speed) {
         Entity skeleton = NPCFactory.createSkeleton(player);
+        skeleton.getComponent(PhysicsMovementComponent.class).setMaxSpeed(speed);
         GridPoint2 pos = new GridPoint2(x, y);
         spawnEntityAt(skeleton, pos, false, false);
     }

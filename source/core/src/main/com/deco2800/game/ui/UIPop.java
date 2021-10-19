@@ -10,9 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.deco2800.game.gameScore.gameScore;
+import com.deco2800.game.score.GameScore;
 import com.deco2800.game.files.UserSettings;
-import com.deco2800.game.services.ServiceLocator;
 import com.badlogic.gdx.audio.Music;
 
 import java.util.*;
@@ -22,7 +21,6 @@ import java.util.*;
  * and can be added directly to entities.
  *
  * See wiki for full description and example use
- * @Link -- {'https://github.com/UQdeco2800/2021-studio-1/wiki/UI-Popup'}
  */
 public class UIPop extends UIComponent {
     private static final String HELP = "Help Screen";
@@ -472,7 +470,7 @@ public class UIPop extends UIComponent {
         if (screenName.equals(SCORE)) {
             switch (index) {
                 case 0:
-                    return entity.getComponent(gameScore.class).getCurrentScore() + "";
+                    return entity.getComponent(GameScore.class).getCurrentScore() + "";
                 case 1:
                     return "Score info 2";
                 default:

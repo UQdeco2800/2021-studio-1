@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.powerups.LightningPowerUpComponent;
 import com.deco2800.game.files.UserSettings;
-import com.deco2800.game.gameScore.gameScore;
+import com.deco2800.game.score.GameScore;
 import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIComponent;
 
@@ -31,7 +31,7 @@ public class PlayerStatsDisplay extends UIComponent {
   public static boolean deadFlag = false;
   public static boolean lightningActive = false;
 
-  gameScore scoring = new gameScore();
+  GameScore scoring = new GameScore();
   private int health;
 
   /**
@@ -136,7 +136,7 @@ public class PlayerStatsDisplay extends UIComponent {
    * @param health player health
    */
   public void updatePlayerHealthUI(int health) {
-    CharSequence text = String.format("HP: " + health);
+    CharSequence text = String.format("HP: %d", health);
     healthBar.setScale(health/100f * 0.5f, 0.5f);
     healthLabel.setText(text);
   }
