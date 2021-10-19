@@ -11,6 +11,9 @@ public class NPCAnimationController extends Component {
   private boolean toDie;
   AnimationRenderComponent animator;
 
+  /**
+   * creating the animation events
+   */
   @Override
   public void create() {
     super.create();
@@ -20,30 +23,43 @@ public class NPCAnimationController extends Component {
     entity.getEvents().addListener("chaseStart_right", this::animateChase_right);
     entity.getEvents().addListener("move_right", this::animateWander_right);
     entity.getEvents().addListener("death", this::animateDeath);
-
-          //test for NPC to face other direction when moving
   }
 
+  /**
+   * trigger death animation
+   */
   void animateDeath() {
     animator.stopAnimation();
     animator.startAnimation("death");
   }
 
+  /**
+   * trigger run animation
+   */
   void animateWander() {
     animator.stopAnimation();
     animator.startAnimation("run");
   }
 
+  /**
+   * trigger right facing run animation
+   */
   void animateWander_right() {
     animator.stopAnimation();
     animator.startAnimation("run_back");
-  } //test for NPC to face other direction when moving
+  }
 
+  /**
+   * trigger run animation
+   */
   void animateChase() {
     animator.stopAnimation();
     animator.startAnimation("run");
   }
 
+  /**
+   * trigger right facing run animation
+   */
   void animateChase_right() {
     animator.stopAnimation();
     animator.startAnimation("run_back");
