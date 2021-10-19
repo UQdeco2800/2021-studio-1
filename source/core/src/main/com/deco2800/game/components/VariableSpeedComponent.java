@@ -47,21 +47,30 @@ public class VariableSpeedComponent extends Component {
      * @param other second collision object
      */
     private void onCollisionStart(Fixture me, Fixture other) {
-        changeSpeedStart();
+        changeSpeedStart(true);
     }
 
-    private void changeSpeedStart() {
+    public void setTutorialComplete() {
+        tutorialCompleted = 1;
+        stopRunning = 1;
+    }
+
+    public void changeSpeedStart(boolean toggleSound) {
 
         Vector2 playerPos = target.getPosition();
         Vector2 entityPos = entity.getPosition();
 
         float distance = playerPos.x - entityPos.x;
-        ServiceLocator.getSoundService().setGiantDistance(distance);
+
+        if (toggleSound) {
+            ServiceLocator.getSoundService().setGiantDistance(distance);
+        }
 
         if (playerPos.x < 40 && tutorialCompleted == 0) {
             entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
             deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
             sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(0);
+
         } else if (stopRunning == 0) {
 
             tutorialCompleted = 1;
@@ -69,8 +78,9 @@ public class VariableSpeedComponent extends Component {
             deathGiant.getEvents().trigger("moveRight");
             sfx.getEvents().trigger("moveRight");
 
-            ServiceLocator.getSoundService().playSound("onstomp");
-
+            if (toggleSound) {
+                ServiceLocator.getSoundService().playSound("onstomp");
+            }
             entity.getComponent(PhysicsMovementComponent.class).setMaxSpeed(10);
             deathGiant.getComponent(PhysicsMovementComponent.class).setMaxSpeed(10);
             sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(10);
@@ -82,7 +92,7 @@ public class VariableSpeedComponent extends Component {
                 sfx.getComponent(PhysicsMovementComponent.class).setMaxSpeed(3);
 
                 stopRunning = 1;
-
+                setTutorialComplete();
             }
         }
 

@@ -3,6 +3,7 @@ package com.deco2800.game.areas;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.deco2800.game.areas.terrain.TerrainFactory;
+import com.deco2800.game.components.mainmenu.MainMenuDisplay;
 import com.deco2800.game.components.GroupDisposeComponent;
 import com.deco2800.game.components.gamearea.GameAreaDisplay;
 import com.deco2800.game.entities.Entity;
@@ -15,7 +16,13 @@ import org.slf4j.LoggerFactory;
 import com.deco2800.game.components.CameraShakeComponent;
 import com.deco2800.game.components.VariableSpeedComponent;
 import com.deco2800.game.components.FallDamageComponent;
+
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.MathUtils;
+
+
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
+
 
 import java.util.function.Function;
 
@@ -25,7 +32,16 @@ public class RagnarokArea extends GameArea {
 
     private static final float WALL_HEIGHT = 0.1f;
     private final String name; //initialise in the loader
+
+
+    private static final String TOWN_MUSIC = "sounds/town.mp3";
+    private static final String MAIN_MUSIC = "sounds/main.mp3";
+    private static final String RAIDER_MUSIC = "sounds/raider.mp3";
+    private static final String FIRE_MUSIC = "sounds/fire.mp3";
+    private static final String WALK_MUSIC = "sounds/walk.mp3";
+
     private static final int DEFAULT_SPEED =3;
+
 
     protected Entity player;
 
@@ -96,6 +112,9 @@ public class RagnarokArea extends GameArea {
     };
 
     private final TerrainFactory terrainFactory;
+    private Music music;
+    private Music fire;
+    private Music walk;
 
     public RagnarokArea(String name, TerrainFactory terrainFactory) {
         super();
@@ -140,7 +159,8 @@ public class RagnarokArea extends GameArea {
         GridPoint2 spearSpawn = new GridPoint2(x, y);
         GridPoint2 lightningSpawn = new GridPoint2(x+18,y);
         GridPoint2 spearObstacleSpawn = new GridPoint2(x+46,y);
-        GridPoint2 runSpawn = new GridPoint2(x+80,y);
+        GridPoint2 shieldSpawn = new GridPoint2(x+80,y);
+        GridPoint2 runSpawn = new GridPoint2(x+108,y);
 
         GridPoint2 textOffset = new GridPoint2(0,5);
 
@@ -161,6 +181,19 @@ public class RagnarokArea extends GameArea {
         // Offset text and spawn it in
         lightningSpawn.add(textOffset);
         spawnEntityAt(lightningTutorial, lightningSpawn, true, false);
+        spearSpawn.add(textOffset);
+        spawnEntityAt(spearTutorial, spearSpawn, true, false);
+
+        spawnShield(shieldSpawn.x, shieldSpawn.y);
+        Entity shieldTutorial = ObstacleFactory.createTutorialShield();
+
+        // Spawn enemies to test shield on
+        spawnSkeleton(shieldSpawn.x+12, shieldSpawn.y, 0);
+        spawnFireSpirit(shieldSpawn.x+14, shieldSpawn.y);
+
+        // Offset text and spawn it in
+        shieldSpawn.add(textOffset);
+        spawnEntityAt(shieldTutorial, shieldSpawn, true, false);
         spearSpawn.add(textOffset);
         spawnEntityAt(spearTutorial, spearSpawn, true, false);
 
@@ -412,6 +445,36 @@ public class RagnarokArea extends GameArea {
         this.player = spawnPlayer(x, y);
     }
 
+    /**
+     * Play all SFX in the game.
+     */
+    private void playMusic() {
+
+        String witchMusic;
+
+        switch (MathUtils.random(2)) {
+            case 1:
+                witchMusic = TOWN_MUSIC;
+                break;
+            case 2:
+                witchMusic = RAIDER_MUSIC;
+                break;
+            default:
+                witchMusic = MAIN_MUSIC;
+        }
+        music = ServiceLocator.getResourceService().getAsset(witchMusic, Music.class);
+        fire = ServiceLocator.getResourceService().getAsset(FIRE_MUSIC, Music.class);
+        walk = ServiceLocator.getResourceService().getAsset(WALK_MUSIC, Music.class);
+        music.setLooping(true);
+        fire.setLooping(true);
+        walk.setLooping(true);
+        music.setVolume(0.7f);
+        fire.setVolume(0.7f);
+        walk.setVolume(0.8f);
+        music.play();
+        fire.play();
+        walk.play();
+    }
     private void unloadAssets() {
         logger.debug("Unloading assets");
         ResourceService resourceService = ServiceLocator.getResourceService();

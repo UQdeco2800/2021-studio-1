@@ -21,15 +21,188 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//private TerrainFactory terrainFactory;
-//private TerrainComponent terrainComponent;
-
 @ExtendWith(GameExtension.class)
 class VariableSpeedComponentTest {
   @BeforeEach
   void beforeEach() {
     ServiceLocator.registerPhysicsService(new PhysicsService());
   }
+
+
+  /**
+   * If the distance between the player and wall of death is less than 25 units
+   */
+  @Test
+  void PlayerAndWallOfDeathLowestDistanceTest() {
+    short targetLayer = (1 << 3);
+    Entity attacker = createAttacker(targetLayer);
+    Entity wallOfDeath = createWallofDeath(targetLayer);
+    Entity target = createTarget(targetLayer,attacker,wallOfDeath);
+
+    float distance = attacker.getPosition().x - wallOfDeath.getPosition().x;
+
+    attacker.setPosition(15,0);
+    wallOfDeath.setPosition(10,0);
+
+    target.getComponent(VariableSpeedComponent.class).setTutorialComplete();
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    assertEquals("(2.0,2.0)",wallOfDeath.getComponent(PhysicsMovementComponent.class).getMaxSpeed().toString());
+  }
+
+
+
+  /**
+   * If the distance between the player and wall of death is greater than 25 but less than 45 units
+   */
+  @Test
+  void PlayerAndWallOfDeathLowDistanceTest() {
+    short targetLayer = (1 << 3);
+    Entity attacker = createAttacker(targetLayer);
+    Entity wallOfDeath = createWallofDeath(targetLayer);
+    Entity target = createTarget(targetLayer,attacker,wallOfDeath);
+
+    float distance = attacker.getPosition().x - wallOfDeath.getPosition().x;
+
+    attacker.setPosition(40,0);
+    wallOfDeath.setPosition(10,0);
+
+    target.getComponent(VariableSpeedComponent.class).setTutorialComplete();
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    assertEquals("(3.0,3.0)",wallOfDeath.getComponent(PhysicsMovementComponent.class).getMaxSpeed().toString());
+  }
+
+  /**
+   * If the distance between the player and wall of death is greater than 45 but less than 65 units
+   */
+  @Test
+  void PlayerAndWallOfDeathMediumDistanceTest() {
+    short targetLayer = (1 << 3);
+    Entity attacker = createAttacker(targetLayer);
+    Entity wallOfDeath = createWallofDeath(targetLayer);
+    Entity target = createTarget(targetLayer,attacker,wallOfDeath);
+
+    float distance = attacker.getPosition().x - wallOfDeath.getPosition().x;
+
+    attacker.setPosition(60,0);
+    wallOfDeath.setPosition(10,0);
+
+    target.getComponent(VariableSpeedComponent.class).setTutorialComplete();
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    assertEquals("(4.0,4.0)",wallOfDeath.getComponent(PhysicsMovementComponent.class).getMaxSpeed().toString());
+  }
+
+  /**
+   * If the distance between the player and wall of death is greater than 65 units
+   */
+  @Test
+  void PlayerAndWallOfDeathFarDistanceTest() {
+    short targetLayer = (1 << 3);
+    Entity attacker = createAttacker(targetLayer);
+    Entity wallOfDeath = createWallofDeath(targetLayer);
+    Entity target = createTarget(targetLayer,attacker,wallOfDeath);
+
+    float distance = attacker.getPosition().x - wallOfDeath.getPosition().x;
+
+    attacker.setPosition(80,0);
+    wallOfDeath.setPosition(10,0);
+
+    target.getComponent(VariableSpeedComponent.class).setTutorialComplete();
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    assertEquals("(6.0,6.0)",wallOfDeath.getComponent(PhysicsMovementComponent.class).getMaxSpeed().toString());
+  }
+
+  /**
+   * Checks if distance is being calculated and received properly
+   */
+  @Test
+  void CheckDistanceTest() {
+    short targetLayer = (1 << 3);
+    Entity attacker = createAttacker(targetLayer);
+    Entity wallOfDeath = createWallofDeath(targetLayer);
+    Entity target = createTarget(targetLayer,attacker,wallOfDeath);
+
+    float distance = attacker.getPosition().x - wallOfDeath.getPosition().x;
+
+    attacker.setPosition(60,0);
+    wallOfDeath.setPosition(0,0);
+
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    attacker.setPosition(70,0);
+    wallOfDeath.setPosition(50,0);
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    attacker.setPosition(100,0);
+    wallOfDeath.setPosition(80,0);
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    distance = attacker.getPosition().x - wallOfDeath.getPosition().x;
+
+    assertEquals(20, distance);
+    assertEquals("(10.0,10.0)",wallOfDeath.getComponent(PhysicsMovementComponent.class).getMaxSpeed().toString());
+  }
+
+  /**
+   * When the wall of death is running fast and approaches close to the player, slows down
+   */
+  @Test
+  void SlowDownWallOfDeathTest() {
+    short targetLayer = (1 << 3);
+    Entity attacker = createAttacker(targetLayer);
+    Entity wallOfDeath = createWallofDeath(targetLayer);
+    Entity target = createTarget(targetLayer,attacker,wallOfDeath);
+
+    attacker.setPosition(60,0);
+    wallOfDeath.setPosition(10,0);
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    attacker.setPosition(70,0);
+    wallOfDeath.setPosition(40,0);
+
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    assertEquals("(10.0,10.0)",wallOfDeath.getComponent(PhysicsMovementComponent.class).getMaxSpeed().toString());
+  }
+
+
+  /**
+   * When the player has not finished the tutorial yet, wall of death speed should be 0
+   */
+  @Test
+  void TutorialStartTest() {
+    short targetLayer = (1 << 3);
+    Entity attacker = createAttacker(targetLayer);
+    Entity wallOfDeath = createWallofDeath(targetLayer);
+    Entity target = createTarget(targetLayer,attacker,wallOfDeath);
+
+    attacker.setPosition(10,0);
+    wallOfDeath.setPosition(12,0);
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    assertEquals("(0.0,0.0)",wallOfDeath.getComponent(PhysicsMovementComponent.class).getMaxSpeed().toString());
+  }
+
+  /**
+   * When the player finishes the tutorial and the Wall of Death speeds up to maxspeed
+   */
+  @Test
+  void FastRunningTest() {
+    short targetLayer = (1 << 3);
+    Entity attacker = createAttacker(targetLayer);
+    Entity wallOfDeath = createWallofDeath(targetLayer);
+    Entity target = createTarget(targetLayer,attacker,wallOfDeath);
+
+    attacker.setPosition(60,0);
+    wallOfDeath.setPosition(0,0);
+    target.getComponent(VariableSpeedComponent.class).changeSpeedStart(false);
+
+    assertEquals("(10.0,10.0)",wallOfDeath.getComponent(PhysicsMovementComponent.class).getMaxSpeed().toString());
+  }
+
 
   /**
    * Sets and return the maxSpeed for attacker

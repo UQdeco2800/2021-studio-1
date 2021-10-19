@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -31,7 +32,8 @@ public class PlayerStatsDisplay extends UIComponent {
   public static boolean deadFlag = false;
   public static boolean lightningActive = false;
 
-  GameScore scoring = new GameScore();
+  public static GameScore scoring = new GameScore();
+
   private int health;
 
   /**
@@ -56,8 +58,10 @@ public class PlayerStatsDisplay extends UIComponent {
     table.top().left();
     table.setFillParent(true);
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    float windowHeight = UserSettings.get().fullscreen ? screenSize.height : UserSettings.getWindowHeight();
+    int screenWidth = Gdx.graphics.getWidth();
+    int screenHeight = Gdx.graphics.getHeight();
+
+    float windowHeight = UserSettings.get().fullscreen ? screenHeight : UserSettings.getWindowHeight();
 
     tableTwo = new Table();
     tableTwo.top().left();
@@ -121,7 +125,6 @@ public class PlayerStatsDisplay extends UIComponent {
     // flags that the player is dead
     if (entity.getComponent(CombatStatsComponent.class).isDead()){
       deadFlag = true;
-      entity.getEvents().trigger("start");
     }
     if(entity.getComponent(LightningPowerUpComponent.class).getActive()){
       lightningActive = true;
@@ -146,9 +149,12 @@ public class PlayerStatsDisplay extends UIComponent {
 
   }
 
-  public long getPlayerScore() {
-      return scoring.getCurrentScore();
-  }
+  public static long getPlayerScore() {return scoring.getCurrentScore();}
+
+  public static void resetPlayerScore() {
+      KeyboardPlayerInputComponent.isMoving = 0;
+      KeyboardPlayerInputComponent.isDirection = 0;
+      scoring.score = 0;}
 
   @Override
   public void dispose() {
