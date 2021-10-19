@@ -113,6 +113,7 @@ public class ServiceLocator {
     resourceService = null;
     areaService = null;
     terminal = null;
+    soundService = null;
   }
 
   private ServiceLocator() {
