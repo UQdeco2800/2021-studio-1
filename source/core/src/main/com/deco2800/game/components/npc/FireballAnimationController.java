@@ -10,7 +10,7 @@ public class FireballAnimationController extends Component {
     AnimationRenderComponent animator;
 
     /**
-     * Creating fireball nimation events
+     * Creating fireball animation events
      */
     @Override
     public void create() {
