@@ -59,7 +59,6 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     } else {
       this.owner.getEntity().getEvents().trigger("move_right");
     }
-//    this.owner.getEntity().getEvents().trigger("wanderStart");
   }
 
   @Override
@@ -92,7 +91,6 @@ public class WanderTask extends DefaultTask implements PriorityTask {
     } else {
       this.owner.getEntity().getEvents().trigger("move_right");
     }
-//    this.owner.getEntity().getEvents().trigger("wanderStart");
     swapTask(movementTask);
   }
 
