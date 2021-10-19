@@ -73,24 +73,26 @@ public class ShootTask extends DefaultTask implements PriorityTask {
      * Sets the target to continuously move at the players position
      */
     private void fire() {
-        Vector2 playerPos = this.player.getPosition();
-        Vector2 entityPos = owner.getEntity().getPosition();
+        if (!owner.getEntity().getDeath()) {
+            Vector2 playerPos = this.player.getPosition();
+            Vector2 entityPos = owner.getEntity().getPosition();
 
-        logger.debug("Shot Fired");
-        fireball = ProjectileFactory.fireBall();
-        Body body = fireball.getComponent(PhysicsComponent.class).getBody();
-        ServiceLocator.getEntityService().register(fireball);
-        fireball.setPosition(owner.getEntity().getPosition().x + 1, owner.getEntity().getPosition().y);
+            logger.debug("Shot Fired");
+            fireball = ProjectileFactory.fireBall();
+            Body body = fireball.getComponent(PhysicsComponent.class).getBody();
+            ServiceLocator.getEntityService().register(fireball);
+            fireball.setPosition(owner.getEntity().getPosition().x + 1, owner.getEntity().getPosition().y);
 
-        if (playerPos.x < entityPos.x) {
-            fireball.getComponent(PhysicsComponent.class).getBody().setLinearVelocity(-50, 2);
-            fireball.getEvents().trigger("fireball");
-        } else {
-            fireball.getComponent(PhysicsComponent.class).getBody().setLinearVelocity(50, 2);
-            fireball.getEvents().trigger("fireball_back");
+            if (playerPos.x < entityPos.x) {
+                fireball.getComponent(PhysicsComponent.class).getBody().setLinearVelocity(-50, 2);
+                fireball.getEvents().trigger("fireball");
+            } else {
+                fireball.getComponent(PhysicsComponent.class).getBody().setLinearVelocity(50, 2);
+                fireball.getEvents().trigger("fireball_back");
+            }
+
+            swapTask(waitTask);
         }
-
-        swapTask(waitTask);
     }
 
     private void waiting() {

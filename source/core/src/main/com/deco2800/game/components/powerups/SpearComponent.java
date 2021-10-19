@@ -7,9 +7,9 @@ import com.deco2800.game.components.Component;
 import com.deco2800.game.entities.factories.EntityTypes;
 import com.deco2800.game.physics.BodyUserData;
 import com.deco2800.game.physics.components.PhysicsComponent;
-import com.deco2800.game.services.ServiceLocator;
 
 public class SpearComponent extends Component {
+    public boolean wallCollision;
     /**
      * Add an event to the spear when it is created
      */
@@ -19,6 +19,7 @@ public class SpearComponent extends Component {
                 this::handleSpearCollision);
         entity.getEvents().addListener("collision",
                 this::spearCollisionWithPlayer);
+        wallCollision = false;
     }
 
     /**
@@ -58,25 +59,16 @@ public class SpearComponent extends Component {
                 (BodyUserData) otherFixture.getBody().getUserData();
         if (entity.getComponent(PhysicsComponent.class).getBody().getType() == BodyDef.BodyType.StaticBody) {
             if (other.entity.getType() == EntityTypes.PLAYERSPEAR) {
-                spear.entity.getEvents().trigger("dispose");
+                other.entity.getEvents().trigger("dispose");
             }
         } else {
             if (other.entity.getType() == EntityTypes.FIRESPIRIT
                     || other.entity.getType() == EntityTypes.SKELETON
                     || other.entity.getType() == EntityTypes.WOLF) {
-                switch (other.entity.getType()) {
-                    case FIRESPIRIT:
-                        ServiceLocator.getSoundService().playSound("spirit_death");
-                        break;
-                    case SKELETON:
-                        ServiceLocator.getSoundService().playSound("skeleton_death");
-                        break;
-                    case WOLF:
-                        ServiceLocator.getSoundService().playSound("wolf_death");
-                        break;
+                if (!other.entity.getDeath()) {
+                    other.entity.getEvents().trigger("death");
+                    spear.entity.getEvents().trigger("dispose");
                 }
-                other.entity.getEvents().trigger("death");
-                spear.entity.getEvents().trigger("dispose");
             }
         }
     }

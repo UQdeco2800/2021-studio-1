@@ -27,6 +27,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
     private boolean throwing;
     private boolean cantThrowSpear;
     private float wallX;
+    private float wallY;
     private int thrown;
     private long spearDelay;
 
@@ -62,7 +63,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
                 active = false;
             }
         }
-        if (wallX != 0) {
+        if (wallX != 0 && entity.getPosition().y <= wallY + 1 && entity.getPosition().y >= wallX - 1) {
             if (entity.getPosition().x <= wallX + 2 && entity.getPosition().x >= wallX - 2) {
                 if (entity.getPosition().x <= wallX + 2 && entity.getPosition().x >= wallX
                         && entity.getComponent(PlayerActions.class).getPreviousDirection().hasSameDirection(Vector2Utils.LEFT)) {
@@ -189,6 +190,10 @@ public class SpearPowerUpComponent extends PowerUpComponent {
      */
     public int getThrown() { return thrown;}
 
+    private void revertThrow() {
+        thrown -= 1;
+    }
+
     /**
      * Triggered when the spear should get deleted
      */
@@ -202,6 +207,7 @@ public class SpearPowerUpComponent extends PowerUpComponent {
         BodyUserData otherBody = (BodyUserData) other.getBody().getUserData();
         if (otherBody.entity.getType() == EntityTypes.OBSTACLE_COLLIDER && other.getBody().getPosition().y > 0) {
             wallX = other.getBody().getPosition().x;
+            wallY = otherBody.entity.getPosition().y;
         }
     }
 }

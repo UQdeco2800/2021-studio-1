@@ -29,39 +29,49 @@ public class NPCAnimationController extends Component {
    * trigger death animation
    */
   void animateDeath() {
-    animator.stopAnimation();
-    animator.startAnimation("death");
+    if (!entity.getDeath()) {
+      animator.stopAnimation();
+      animator.startAnimation("death");
+    }
   }
 
   /**
    * trigger run animation
    */
   void animateWander() {
-    animator.stopAnimation();
-    animator.startAnimation("run");
+    if (!entity.getDeath()) {
+      animator.stopAnimation();
+      animator.startAnimation("run");
+    }
   }
 
   /**
    * trigger right facing run animation
    */
   void animateWander_right() {
-    animator.stopAnimation();
-    animator.startAnimation("run_back");
+    if (!entity.getDeath()) {
+      animator.stopAnimation();
+      animator.startAnimation("run_back");
+    }
   }
 
   /**
    * trigger run animation
    */
   void animateChase() {
-    animator.stopAnimation();
-    animator.startAnimation("run");
+    if (!entity.getDeath()) {
+      animator.stopAnimation();
+      animator.startAnimation("run");
+    }
   }
 
   /**
    * trigger right facing run animation
    */
   void animateChase_right() {
-    animator.stopAnimation();
-    animator.startAnimation("run_back");
+    if (!entity.getDeath()) {
+      animator.stopAnimation();
+      animator.startAnimation("run_back");
+    }
   }
 }
