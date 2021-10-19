@@ -17,6 +17,7 @@ public class FireballAnimationController extends Component {
         super.create();
         animator = this.entity.getComponent(AnimationRenderComponent.class);
         entity.getEvents().addListener("fireball", this::animateFireball);
+        entity.getEvents().addListener("fireball_back", this::animateFireballBack);
         animateFireball();
     }
 
@@ -25,5 +26,12 @@ public class FireballAnimationController extends Component {
      */
     void animateFireball() {
         animator.startAnimation("fireball");
+    }
+
+    /**
+     * trigger right facing fireball animation
+     */
+    void animateFireballBack() {
+        animator.startAnimation("fireball_back");
     }
 }

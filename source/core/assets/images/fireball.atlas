@@ -1,40 +1,68 @@
 
 fireball.png
-size: 2048, 256
+size: 1024, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 default
   rotate: false
-  xy: 2, 2
+  xy: 2, 164
   size: 320, 160
   orig: 320, 160
   offset: 0, 0
   index: 0
 fireball
   rotate: false
-  xy: 2, 2
+  xy: 2, 164
   size: 320, 160
   orig: 320, 160
   offset: 0, 0
   index: 0
-fireball
-  rotate: false
-  xy: 646, 2
-  size: 320, 160
-  orig: 320, 160
-  offset: 0, 0
-  index: 1
 fireball
   rotate: false
   xy: 324, 2
   size: 320, 160
   orig: 320, 160
   offset: 0, 0
+  index: 1
+fireball
+  rotate: false
+  xy: 2, 2
+  size: 320, 160
+  orig: 320, 160
+  offset: 0, 0
   index: 2
 fireball
   rotate: false
-  xy: 968, 2
+  xy: 646, 164
+  size: 320, 160
+  orig: 320, 160
+  offset: 0, 0
+  index: 3
+fireball_back
+  rotate: false
+  xy: 324, 164
+  size: 320, 160
+  orig: 320, 160
+  offset: 0, 0
+  index: 0
+fireball_back
+  rotate: false
+  xy: 2, 326
+  size: 320, 160
+  orig: 320, 160
+  offset: 0, 0
+  index: 1
+fireball_back
+  rotate: false
+  xy: 646, 326
+  size: 320, 160
+  orig: 320, 160
+  offset: 0, 0
+  index: 2
+fireball_back
+  rotate: false
+  xy: 324, 326
   size: 320, 160
   orig: 320, 160
   offset: 0, 0
