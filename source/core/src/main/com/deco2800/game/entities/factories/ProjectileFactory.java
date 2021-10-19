@@ -51,6 +51,7 @@ public class ProjectileFactory {
                 new AnimationRenderComponent(
                         ServiceLocator.getResourceService().getAsset("images/fireball.atlas", TextureAtlas.class));
         animator.addAnimation("fireball", 0.04f, Animation.PlayMode.LOOP);
+        animator.addAnimation("fireball_back", 0.4f, Animation.PlayMode.LOOP);
 
         Entity baseProjectile = new Entity()
                 .addComponent(animator)
