@@ -182,8 +182,8 @@ public class ObstacleFactory {
                         .addComponent(new CombatStatsComponent(1, 100))
                         .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 0f));
         // Set the hit box
-        spikes.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.5f,
-                        0.3f), PhysicsComponent.AlignX.CENTER,
+        spikes.getComponent(HitboxComponent.class).setAsBoxAligned(new Vector2(0.35f,
+                        0.5f), PhysicsComponent.AlignX.CENTER,
                 PhysicsComponent.AlignY.BOTTOM);
 
         spikes.getComponent(PhysicsComponent.class).setBodyType(BodyType.StaticBody);
