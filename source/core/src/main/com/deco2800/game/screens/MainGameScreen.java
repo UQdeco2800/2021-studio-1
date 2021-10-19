@@ -114,7 +114,7 @@ public class MainGameScreen extends ScreenAdapter {
         ragnarokManager = new AreaManager(terrainFactory);
 
         // plays the music
-        ServiceLocator.getSoundService().playMusic("bob");
+        ServiceLocator.getSoundService().playMusic("mainmusic");
 
         // plays fire crackling sound effects
         ServiceLocator.getSoundService().playSound("fire");
@@ -139,11 +139,13 @@ public class MainGameScreen extends ScreenAdapter {
             if (player.getComponent(CombatStatsComponent.class).getHealth() == 0) {
 
                 long currentScore = player.getComponent(PlayerStatsDisplay.class).getPlayerScore();
+
                 if (currentScore > MainMenuDisplay.getHighScoreValues()[4]) {
 
                     recordHighScore("" + currentScore);
 
                 }
+
                 if (!gameEnded) {
                     Entity death;
                     if (!deathAnimation) {
