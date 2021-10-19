@@ -158,6 +158,8 @@ public class SoundService {
 
         // unloads the music
         resources.unloadAssets(musicArray);
+
+        isLoaded = false;
     }
 
     /**
