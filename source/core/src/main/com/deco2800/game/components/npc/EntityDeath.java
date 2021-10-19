@@ -7,15 +7,25 @@ import com.deco2800.game.components.TouchAttackComponent;
 import com.deco2800.game.physics.components.PhysicsMovementComponent;
 import com.deco2800.game.rendering.AnimationRenderComponent;
 
+/**
+ * Class handling the animations for enemy deaths
+ */
 public class EntityDeath extends Component {
     private boolean triggered;
     private Vector2 position;
 
+    /**
+     * Create the death event
+     */
     @Override
     public void create() {
         triggered = false;
         entity.getEvents().addListener("death", this::deathTriggered);
     }
+
+    /**
+     * updating the and deleting NPC
+     */
     @Override
     public void update() {
         if (triggered) {
@@ -25,6 +35,9 @@ public class EntityDeath extends Component {
         }
     }
 
+    /**
+     * Triggering the death event
+     */
     private void deathTriggered() {
         triggered = true;
         entity.getComponent(TouchAttackComponent.class).setKnockbackForce(0f);

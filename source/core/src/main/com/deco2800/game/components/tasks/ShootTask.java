@@ -84,8 +84,10 @@ public class ShootTask extends DefaultTask implements PriorityTask {
 
         if (playerPos.x < entityPos.x) {
             fireball.getComponent(PhysicsComponent.class).getBody().setLinearVelocity(-50, 2);
+            fireball.getEvents().trigger("fireball");
         } else {
             fireball.getComponent(PhysicsComponent.class).getBody().setLinearVelocity(50, 2);
+            fireball.getEvents().trigger("fireball_back");
         }
 
         swapTask(waitTask);

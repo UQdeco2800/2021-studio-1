@@ -24,20 +24,18 @@ public class ParticleEffectRenderComponent extends RenderComponent {
     private float y;
 
     /**
-     * Construct a particle effect that will play when an entity from the targetLayer collides
-     * with it.
+     * Play the given particle effect when an entity from the targetLayer collides with this entity.
      * <p>
-     * This particle effect is centred on the entity it is applied to. Whether it plays only once
-     * on collision or continuously is given by the information in effectData.
+     * This particle effect is centred on the x coordinate of the entity it is applied to. Its y coordinate is given
+     * by the y coordinate of the colliding entity.
+     * <p>
+     * Whether it plays only once on collision or continuously is given by the information in effectData.
      *
-     * @param effectData   particle data, should be a file saved from the LibGDX Particle Editor
-     * @param textureAtlas atlas of the image each particle will take
-     * @param targetLayer  PhysicsLayer to play on collision with
+     * @param particleEffect particle effect to play
+     * @param targetLayer    PhysicsLayer to play on collision with
      */
-    public ParticleEffectRenderComponent(FileHandle effectData, TextureAtlas textureAtlas,
-                                         short targetLayer) {
-        particleEffect = new ParticleEffect();
-        particleEffect.load(effectData, textureAtlas);
+    public ParticleEffectRenderComponent(ParticleEffect particleEffect, short targetLayer) {
+        this.particleEffect = particleEffect;
         particleEffect.scaleEffect(0.02f);
         this.targetLayer = targetLayer;
         this.y = 0;
@@ -48,7 +46,7 @@ public class ParticleEffectRenderComponent extends RenderComponent {
      */
     @Override
     public void create() {
-        ServiceLocator.getRenderService().register(this);
+        super.create();
         entity.getEvents().addListener("collisionStart", this::onCollisionStart);
         this.hitboxComponent = entity.getComponent(HitboxComponent.class);
     }
@@ -82,17 +80,6 @@ public class ParticleEffectRenderComponent extends RenderComponent {
      */
     @Override
     protected void draw(SpriteBatch batch) {
-        particleEffect.draw(batch);
-    }
-
-    /**
-     * Render the RenderComponent by updating the position and update the particle effect before
-     * drawing to the batch.
-     *
-     * @param batch Batch to render to.
-     */
-    @Override
-    public void render(SpriteBatch batch) {
         particleEffect.setPosition(entity.getPosition().x, this.y);
         particleEffect.update(Gdx.graphics.getDeltaTime());
         particleEffect.draw(batch);
@@ -108,7 +95,7 @@ public class ParticleEffectRenderComponent extends RenderComponent {
 
     @Override
     public void dispose() {
-        ServiceLocator.getRenderService().unregister(this);
+        super.dispose();
         particleEffect.dispose();
     }
 }

@@ -54,7 +54,7 @@ public class NPCFactory {
 
         AITaskComponent aiComponent =
                 new AITaskComponent()
-                        .addTask(new ChaseTask(target, 2, true, 100, 20));
+                        .addTask(new ChaseTask(target, 2, true, 300, 200));
 
         AnimationRenderComponent animator =
                 new AnimationRenderComponent(

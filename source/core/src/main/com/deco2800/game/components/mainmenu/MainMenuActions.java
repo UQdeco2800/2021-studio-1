@@ -7,6 +7,7 @@ import com.deco2800.game.services.ServiceLocator;
 import com.deco2800.game.ui.UIPop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.badlogic.gdx.audio.Music;
 
 /**
  * This class listens to events relevant to the Main Menu Screen and does something when one of the
@@ -16,6 +17,7 @@ public class MainMenuActions extends Component {
   private static final Logger logger = LoggerFactory.getLogger(MainMenuActions.class);
   private GdxGame game;
   private Entity mainMenuPop;
+  private Music music;
   private boolean muted = false;
 
   public MainMenuActions(GdxGame game) {
@@ -32,6 +34,17 @@ public class MainMenuActions extends Component {
     entity.getEvents().addListener("Leaderboard", this::onLeaderBoard);
     entity.getEvents().addListener("mute", this::onMute);
   }
+
+    private void playMusic() {
+      music = ServiceLocator.getResourceService().getAsset("sounds/main.mp3", Music.class);
+      music.setVolume(0.7f);
+      music.play();
+      logger.info(music.isPlaying() + "music playing");
+    }
+
+    private void stopMusic() {
+        music.setVolume(0f);
+    }
 
     /**
    * Swaps to the Main Game screen.
