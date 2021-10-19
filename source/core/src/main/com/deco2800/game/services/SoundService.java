@@ -196,6 +196,9 @@ public class SoundService {
      * @param music music to play
      */
     public void playMusic(String music) {
+
+        logger.debug("playMusic called");
+
         if (isLoaded) {
             if (musicTable.containsKey(music)) {
 
@@ -213,23 +216,44 @@ public class SoundService {
 
                 //currentTrackId = currentTrack.play();
                 //currentTrack.setVolume(currentTrackId, musicVolume);
+            } else if (music.equals("mainmusic")) {
+                mainMusic();
             } else {
-                logger.debug("{} is not a key", music);
+                logger.error("playMusic called without loading sounds");
             }
-        } else {
-            logger.error("playMusic called without loading sounds");
         }
     }
 
+    /**
+     * Subroutine for main game music. If "mainmusic" is sent to the control,
+     * this plays a random track.
+     */
+    private void mainMusic() {
+
+        logger.debug("mainMusic called");
+
+        int songAmount = 5;
+
+        String[] songs = new String[5];
+        songs[0] = "theme";
+        songs[1] = "town";
+        songs[2] = "hell";
+        songs[3] = "minecraft";
+        songs[4] = "bob";
+
+        int songChoice = (int)(Math.random() * songAmount);
+        playMusic(songs[songChoice]);
+
+    }
 
     /**
      * Function that remodels the previous Giant Sound effect manipulation
      * in the CameraShakeComponent.
      * <p>
      * If the giant is greater than 32f distance away, it's volume is determined by
-     * vol = sin(2pi*distance/120f)
+     * vol = sin(2pi*distance/97f)
      *
-     * @param distance a float value represnting the giant's distance
+     * @param distance a float value representing the giant's distance
      *                 from the player
      */
     public void setGiantDistance(float distance) {
