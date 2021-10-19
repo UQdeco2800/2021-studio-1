@@ -1,5 +1,6 @@
 package com.deco2800.game.components.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -57,8 +58,10 @@ public class PlayerStatsDisplay extends UIComponent {
     table.top().left();
     table.setFillParent(true);
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    float windowHeight = UserSettings.get().fullscreen ? screenSize.height : UserSettings.getWindowHeight();
+    int screenWidth = Gdx.graphics.getWidth();
+    int screenHeight = Gdx.graphics.getHeight();
+
+    float windowHeight = UserSettings.get().fullscreen ? screenHeight : UserSettings.getWindowHeight();
 
     tableTwo = new Table();
     tableTwo.top().left();
