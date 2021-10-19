@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.deco2800.game.components.mainmenu.MainMenuDisplay;
+import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.entities.Entity;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.deco2800.game.score.GameScore;
 import com.deco2800.game.files.UserSettings;
 import com.badlogic.gdx.audio.Music;
+import com.deco2800.game.services.ServiceLocator;
 
 import java.util.*;
 
@@ -72,6 +74,7 @@ public class UIPop extends UIComponent {
     private Music music;
     private Music music2;
     private Music music3;
+    private Music music4;
     private Music fire;
     private Music walk;
 
@@ -87,6 +90,8 @@ public class UIPop extends UIComponent {
     public UIPop(String screenName, Entity game) {
 
         this.game = game;
+
+
 
         if (!backGroundImages.containsKey(screenName)) {
             throw new NoSuchElementException("Wrong Screen Name");
@@ -152,17 +157,28 @@ public class UIPop extends UIComponent {
      * Applies changes on the user settings menu
      */
     private void applyChange() {
-        // Currently not used
-        //UserSettings.Settings settings = UserSettings.get();
-        //settings.fullscreen = fullScreenCheck.isChecked();
-        //volume = volumeSlider.getValue();
-        //volumeSlider.setValue(volume);
-        //music.setVolume(volume);
-        //music2.setVolume(volume);
-        //music3.setVolume(volume);
-        //fire.setVolume(volume);
-        //walk.setVolume(volume);
-        //UserSettings.set(settings, true);
+        music = ServiceLocator.getResourceService().getAsset("sounds/main.mp3", Music.class);
+        music2 = ServiceLocator.getResourceService().getAsset("sounds/town.mp3", Music.class);
+        music3 = ServiceLocator.getResourceService().getAsset("sounds/raider.mp3", Music.class);
+        music4 = ServiceLocator.getResourceService().getAsset("sounds/bobjob.mp3", Music.class);
+        UserSettings.Settings settings = UserSettings.get();
+        settings.fullscreen = fullScreenCheck.isChecked();
+        volume = volumeSlider.getValue();
+        volumeSlider.setValue(volume);
+        UserSettings.set(settings, true);
+        music.setLooping(true);
+        music4.setLooping(true);
+        music2.setLooping(true);
+        music3.setLooping(true);
+        music.setVolume(volume);
+        music4.setVolume(volume);
+        music2.setVolume(volume);
+        music3.setVolume(volume);
+        music.play();
+        music2.play();
+        music3.play();
+        music4.play();
+
     }
 
     // Adds actors based on screen name
@@ -176,7 +192,7 @@ public class UIPop extends UIComponent {
         title.setFontScale(2.5f);
 
         popUp.add(title).top();
-        popUp.row().padTop(2f);
+        popUp.row().padBottom(0.5f);
 
         getTable();
         return true;
@@ -255,27 +271,30 @@ public class UIPop extends UIComponent {
         TextButton returnButton;
         //Button - new game
         TextButton restartButton;
+        String currentScore = String.format("Score: %s", PlayerStatsDisplay.getPlayerScore());
 
         returnButton = new TextButton("Return to main menu", skin);
+        restartButton = new TextButton("Restart", skin);
+        Label score = new Label(currentScore, skin, POP_UP_FONT);
+
+        restartButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                game.getEvents().trigger("restart");
+            }
+        });
         returnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 game.getEvents().trigger("exit");
             }
         });
-
-        restartButton = new TextButton("Replay", skin);
-        restartButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                game.getEvents().trigger("start");
-            }
-        });
-
+        popUp.add(score).center().padTop(30f);
+        popUp.row();
         popUp.add(restartButton).center().padTop(30f);
         popUp.row();
-        popUp.row();
         popUp.add(returnButton).center().padTop(30f);
+
         return popUp;
     }
 
@@ -293,6 +312,11 @@ public class UIPop extends UIComponent {
             settingButton = new TextButton("Setting", skin);
             resumeButton = new TextButton("Resume", skin);
             quitButton = new TextButton("Return to main menu", skin);
+
+            String currentScore = String.format("Current Score: %s", PlayerStatsDisplay.getPlayerScore());
+            String playerName = String.format("Your Name: %s", MainMenuDisplay.getPlayerName());
+            Label score = new Label(currentScore, skin, POP_UP_FONT);
+            Label name = new Label(playerName, skin, POP_UP_FONT);
 
             resumeButton.addListener(new ChangeListener() {
                 @Override
@@ -315,7 +339,10 @@ public class UIPop extends UIComponent {
                     root.add(formatSettingsScreen()).expandX().expandY();
                 }
             });
-
+            popUp.add(name).center();
+            popUp.row();
+            popUp.add(score).center().padTop(10f);
+            popUp.row();
             popUp.add(resumeButton).center().padTop(30f);
             popUp.row();
             popUp.row();
@@ -502,10 +529,6 @@ public class UIPop extends UIComponent {
 
     @Override
     public void draw(SpriteBatch UIIndex) {
-        int screenHeight = Gdx.graphics.getHeight();
-        int screenWidth = Gdx.graphics.getHeight();
-        float offsetX = 10f;
-        float offsetY = 30f;
     }
 
     @Override

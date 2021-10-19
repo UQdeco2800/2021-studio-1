@@ -200,13 +200,9 @@ public class NPCFactory {
         }
 
         fireSpirit.getComponent(AnimationRenderComponent.class).startAnimation("run");
-        fireSpirit.setType(EntityTypes.WOLF);
+        fireSpirit.setType(EntityTypes.FIRESPIRIT);
 
         fireSpirit.setScale(1.3f, 1f);
-
-        fireSpirit.getComponent(AnimationRenderComponent.class).startAnimation("run");
-
-        fireSpirit.setType(EntityTypes.FIRESPIRIT);
 
         return fireSpirit;
     }
@@ -333,7 +329,7 @@ public class NPCFactory {
                         .addComponent(new ColliderComponent())
                         .addComponent(new HitboxComponent().setLayer(PhysicsLayer.NPC))
                         .addComponent(new TouchAttackComponent(PhysicsLayer.PLAYER, 7.5f))
-                        .addComponent(new GhostAnimationController())
+                        .addComponent(new NPCAnimationController())
                         .addComponent(new EntityDeath());
 
         PhysicsUtils.setScaledCollider(npc, 0f, 0f);

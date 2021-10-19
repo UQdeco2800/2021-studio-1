@@ -1,6 +1,7 @@
 package com.deco2800.game.score;
 
 import com.deco2800.game.components.Component;
+import com.deco2800.game.components.player.KeyboardPlayerInputComponent;
 import com.deco2800.game.components.player.PlayerStatsDisplay;
 import com.deco2800.game.services.ServiceLocator;
 
@@ -10,7 +11,7 @@ import com.deco2800.game.services.ServiceLocator;
  * are made on the scoring on basis of various interactions
  */
 public class GameScore extends Component  {
-    private  long score = 0;
+    public  long score = 0;
     private long previous_score = 1;
 
     /**
@@ -27,6 +28,7 @@ public class GameScore extends Component  {
         // if the game is not paused increment the score and pauses the scoring on player being dead
         if (ServiceLocator.getTimeSource().getDeltaTime() != 0
                 && PlayerStatsDisplay.deadFlag == false
+                && (KeyboardPlayerInputComponent.isMoving == 2 || KeyboardPlayerInputComponent.isMoving == 4 )
         ) {
             // checks if spear being thrown
             lightningComponent();
@@ -47,6 +49,5 @@ public class GameScore extends Component  {
             PlayerStatsDisplay.lightningActive = false;
         }
     }
-
 }
 

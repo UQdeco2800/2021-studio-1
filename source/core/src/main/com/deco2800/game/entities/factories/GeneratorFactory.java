@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.deco2800.game.ai.tasks.AITaskComponent;
 import com.deco2800.game.components.CombatStatsComponent;
 import com.deco2800.game.components.TouchAttackComponent;
-import com.deco2800.game.components.npc.GhostAnimationController;
+import com.deco2800.game.components.npc.NPCAnimationController;
 import com.deco2800.game.components.tasks.ObstacleTask;
 import com.deco2800.game.entities.Entity;
 import com.deco2800.game.entities.configs.BaseEntityConfig;
@@ -70,7 +70,7 @@ public class GeneratorFactory {
 //            .addComponent(new TextureRenderComponent("images/skeleton.png"))
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                 .addComponent(animator)
-                .addComponent(new GhostAnimationController());
+                .addComponent(new NPCAnimationController());
         skeleton.getComponent(AnimationRenderComponent.class).scaleEntity();
         skeleton.setScale(1f, 1.2f);
         return skeleton;
@@ -88,7 +88,7 @@ public class GeneratorFactory {
         wolf
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                 .addComponent(animator)
-                .addComponent(new GhostAnimationController());
+                .addComponent(new NPCAnimationController());
         wolf.getComponent(AnimationRenderComponent.class).scaleEntity();
 
         wolf.setScale(0.8f, 0.8f);
@@ -107,7 +107,7 @@ public class GeneratorFactory {
         fireSpirit
                 .addComponent(new CombatStatsComponent(config.health, config.baseAttack))
                 .addComponent(animator)
-                .addComponent(new GhostAnimationController());
+                .addComponent(new NPCAnimationController());
         fireSpirit.getComponent(AnimationRenderComponent.class).scaleEntity();
 
         fireSpirit.setScale(0.8f, 0.8f);
