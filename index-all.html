@@ -313,6 +313,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/physics/components/PhysicsComponent.AlignY.html#CENTER">CENTER</a></span> - com.deco2800.game.physics.components.<a href="com/deco2800/game/physics/components/PhysicsComponent.AlignY.html" title="enum in com.deco2800.game.physics.components">PhysicsComponent.AlignY</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/VariableSpeedComponent.html#changeSpeedStart(boolean)">changeSpeedStart(boolean)</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/VariableSpeedComponent.html" title="class in com.deco2800.game.components">VariableSpeedComponent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/deco2800/game/components/tasks/ChaseTask.html" title="class in com.deco2800.game.components.tasks"><span class="typeNameLink">ChaseTask</span></a> - Class in <a href="com/deco2800/game/components/tasks/package-summary.html">com.deco2800.game.components.tasks</a></dt>
 <dd>
 <div class="block">Chases a target entity until they get too far away or line of sight is lost</div>
@@ -706,6 +708,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/PowerUpFactory.html#createLightningPowerUp()">createLightningPowerUp()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/PowerUpFactory.html" title="class in com.deco2800.game.entities.factories">PowerUpFactory</a></dt>
 <dd>
 <div class="block">Create a lightning power up entity.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ParticleFactory.html#createParticleEffect(java.lang.String,java.lang.String)">createParticleEffect(String, String)</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ParticleFactory.html" title="class in com.deco2800.game.entities.factories">ParticleFactory</a></dt>
+<dd>
+<div class="block">Return a new particle effect loaded with the given effect data and particle image.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ObstacleFactory.html#createPlatform()">createPlatform()</a></span> - Static method in class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ObstacleFactory.html" title="class in com.deco2800.game.entities.factories">ObstacleFactory</a></dt>
 <dd>
@@ -2127,11 +2133,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Render a particle effect.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/ParticleEffectRenderComponent.html#%3Cinit%3E(com.badlogic.gdx.files.FileHandle,com.badlogic.gdx.graphics.g2d.TextureAtlas,short)">ParticleEffectRenderComponent(FileHandle, TextureAtlas, short)</a></span> - Constructor for class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/ParticleEffectRenderComponent.html" title="class in com.deco2800.game.rendering">ParticleEffectRenderComponent</a></dt>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/ParticleEffectRenderComponent.html#%3Cinit%3E(com.badlogic.gdx.graphics.g2d.ParticleEffect,short)">ParticleEffectRenderComponent(ParticleEffect, short)</a></span> - Constructor for class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/ParticleEffectRenderComponent.html" title="class in com.deco2800.game.rendering">ParticleEffectRenderComponent</a></dt>
 <dd>
-<div class="block">Construct a particle effect that will play when an entity from the targetLayer collides
- with it.</div>
+<div class="block">Play the given particle effect when an entity from the targetLayer collides with this entity.</div>
 </dd>
+<dt><a href="com/deco2800/game/entities/factories/ParticleFactory.html" title="class in com.deco2800.game.entities.factories"><span class="typeNameLink">ParticleFactory</span></a> - Class in <a href="com/deco2800/game/entities/factories/package-summary.html">com.deco2800.game.entities.factories</a></dt>
+<dd>
+<div class="block">Factory to create particle effects.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/entities/factories/ParticleFactory.html#%3Cinit%3E()">ParticleFactory()</a></span> - Constructor for class com.deco2800.game.entities.factories.<a href="com/deco2800/game/entities/factories/ParticleFactory.html" title="class in com.deco2800.game.entities.factories">ParticleFactory</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/screens/MainGameScreen.html#pause()">pause()</a></span> - Method in class com.deco2800.game.screens.<a href="com/deco2800/game/screens/MainGameScreen.html" title="class in com.deco2800.game.screens">MainGameScreen</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/screens/MainMenuScreen.html#pause()">pause()</a></span> - Method in class com.deco2800.game.screens.<a href="com/deco2800/game/screens/MainMenuScreen.html" title="class in com.deco2800.game.screens">MainMenuScreen</a></dt>
@@ -2478,11 +2489,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/screens/TutorialScreen2.html#render(float)">render(float)</a></span> - Method in class com.deco2800.game.screens.<a href="com/deco2800/game/screens/TutorialScreen2.html" title="class in com.deco2800.game.screens">TutorialScreen2</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/ParticleEffectRenderComponent.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch)">render(SpriteBatch)</a></span> - Method in class com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/ParticleEffectRenderComponent.html" title="class in com.deco2800.game.rendering">ParticleEffectRenderComponent</a></dt>
-<dd>
-<div class="block">Render the RenderComponent by updating the position and update the particle effect before
- drawing to the batch.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/rendering/Renderable.html#render(com.badlogic.gdx.graphics.g2d.SpriteBatch)">render(SpriteBatch)</a></span> - Method in interface com.deco2800.game.rendering.<a href="com/deco2800/game/rendering/Renderable.html" title="interface in com.deco2800.game.rendering">Renderable</a></dt>
 <dd>
 <div class="block">Render the renderable.</div>
@@ -2864,6 +2870,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">The game screen containing the settings.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/screens/SettingsScreen.html#%3Cinit%3E(com.deco2800.game.GdxGame)">SettingsScreen(GdxGame)</a></span> - Constructor for class com.deco2800.game.screens.<a href="com/deco2800/game/screens/SettingsScreen.html" title="class in com.deco2800.game.screens">SettingsScreen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/deco2800/game/components/VariableSpeedComponent.html#setTutorialComplete()">setTutorialComplete()</a></span> - Method in class com.deco2800.game.components.<a href="com/deco2800/game/components/VariableSpeedComponent.html" title="class in com.deco2800.game.components">VariableSpeedComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/deco2800/game/entities/Entity.html#setType(com.deco2800.game.entities.factories.EntityTypes)">setType(EntityTypes)</a></span> - Method in class com.deco2800.game.entities.<a href="com/deco2800/game/entities/Entity.html" title="class in com.deco2800.game.entities">Entity</a></dt>
 <dd>
