@@ -31,7 +31,8 @@ public class PlayerStatsDisplay extends UIComponent {
   public static boolean deadFlag = false;
   public static boolean lightningActive = false;
 
-  GameScore scoring = new GameScore();
+  public static GameScore scoring = new GameScore();
+
   private int health;
 
   /**
@@ -121,7 +122,6 @@ public class PlayerStatsDisplay extends UIComponent {
     // flags that the player is dead
     if (entity.getComponent(CombatStatsComponent.class).isDead()){
       deadFlag = true;
-      entity.getEvents().trigger("start");
     }
     if(entity.getComponent(LightningPowerUpComponent.class).getActive()){
       lightningActive = true;
@@ -146,9 +146,12 @@ public class PlayerStatsDisplay extends UIComponent {
 
   }
 
-  public long getPlayerScore() {
-      return scoring.getCurrentScore();
-  }
+  public static long getPlayerScore() {return scoring.getCurrentScore();}
+
+  public static void resetPlayerScore() {
+      KeyboardPlayerInputComponent.isMoving = 0;
+      KeyboardPlayerInputComponent.isDirection = 0;
+      scoring.score = 0;}
 
   @Override
   public void dispose() {
