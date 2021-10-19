@@ -1,8 +1,7 @@
 package com.deco2800.game.entities.factories;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -86,9 +85,8 @@ public class ObstacleFactory {
      */
     public static Entity createBifrost() {
         // Resource service does not deal with File Handles, so get manually.
-        FileHandle effectData = Gdx.files.internal("particles/rainbow_spread_2");
-        TextureAtlas particleImage = ServiceLocator.getResourceService()
-                .getAsset("particles/particles.atlas", TextureAtlas.class);
+        ParticleEffect particleEffect = ParticleFactory.createParticleEffect("particles/rainbow_spread_2",
+                "particles/particles.atlas");
 
         AnimationRenderComponent animator =
                 new BifrostAnimationRenderComponent(ServiceLocator.getResourceService().getAsset(
@@ -101,8 +99,7 @@ public class ObstacleFactory {
                 .addComponent(new BifrostAnimationController())
                 .addComponent(new PhysicsComponent())
                 .addComponent(new BifrostFXComponent())
-                .addComponent(new ParticleEffectRenderComponent(effectData, particleImage,
-                        PhysicsLayer.PLAYER));
+                .addComponent(new ParticleEffectRenderComponent(particleEffect, PhysicsLayer.PLAYER));
 
         bifrost.getComponent(BifrostAnimationRenderComponent.class).scaleEntity();
         bifrost.setType(EntityTypes.OBSTACLE);

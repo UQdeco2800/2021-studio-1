@@ -153,6 +153,6 @@ public class KeyboardPlayerInputComponent extends InputComponent {
   }
 
   private void triggerAnyMovement() {
-    entity.getEvents().trigger("anyMovement");
+    entity.getEvents().trigger("anyMovement", true);
   }
 }

@@ -40,8 +40,7 @@ public class MainMenuScreen extends ScreenAdapter {
                                                       "images/powerup-speed.png",
                                                       "images/star.png",
                                                       "images/star2.png",
-                                                      "images/star3.png",
-                                                      "images/plainBack.png"};
+                                                      "images/star3.png"};
 
   public MainMenuScreen(GdxGame game) {
     this.game = game;
